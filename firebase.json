@@ -16,7 +16,7 @@
   },
   "functions": {
     "source": ".",
-    "runtime": "nodejs10"
+    "runtime": "nodejs14"
   },
   "storage": {
     "rules": "storage.rules"

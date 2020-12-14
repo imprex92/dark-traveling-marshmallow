@@ -12,8 +12,11 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "firebase": "^8.2.0",
     "firebase-admin": "^9.4.1",
     "firebase-functions": "^3.13.0",
+    "jquery": "^3.5.1",
+    "materialize-css": "^1.0.0-rc.2",
     "next": "10.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1"

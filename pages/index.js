@@ -66,9 +66,13 @@
 
 
 
-
+import React, { useState, useEffect } from 'react';
 
 export default function Home(props) {
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log(process.env.HELLOWORLD);
+  });
   return (
     <>
       {props.ssrWorking ? (
