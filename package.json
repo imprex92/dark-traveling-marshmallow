@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting"
+    "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
+    "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
+    "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.scss:./styles/signIn.style.css"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
@@ -19,6 +21,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "next": "10.0.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "sass": "^1.32.0"
   }
 }
