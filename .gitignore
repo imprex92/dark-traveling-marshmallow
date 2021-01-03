@@ -36,3 +36,4 @@ yarn-error.log*
 
 # user dif
 /public/assets/planning/
+/firebase
