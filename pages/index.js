@@ -81,11 +81,7 @@ export default function Home(props) {
       
     }
   }, [ ]);
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   console.log(process.env.HELLOWORLD);
-    
-  // });
+ 
   return (
     <>
       {props.ssrWorking ? (
@@ -93,7 +89,7 @@ export default function Home(props) {
         <div>
           <img src="/assets/success.jpg" height="500" />
           <h2> Deployment Successful of Nextjs Application with SSR on Firebase. </h2>
-          <a className="waves-effect waves-light btn">buttonghghg</a>
+          <a className="waves-effect waves-light btn">button</a>
           <a className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>buttohghghn</a>
         
   <a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
