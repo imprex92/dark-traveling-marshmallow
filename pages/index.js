@@ -71,7 +71,7 @@ import React, { useState, useEffect } from 'react';
 export default function Home(props) {
   useEffect(() => {
     if(typeof window !== 'undefined'){
-      const M = require('materialize-css');
+      const M = require('../js/materialize');
       var sidenav = document.querySelectorAll(".sidenav");
       M.Sidenav.init(sidenav, {});
       
