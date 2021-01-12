@@ -12,7 +12,7 @@
     "start": "next start",
     "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
-    "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.scss:./styles/signIn.style.css"
+    "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -26,6 +26,10 @@
     "nookies": "^2.5.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "sass": "^1.32.0"
+    "sass": "^1.32.0",
+    "sharp": "^0.27.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^5.5.0"
   }
 }

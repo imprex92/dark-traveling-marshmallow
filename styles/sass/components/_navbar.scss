@@ -35,10 +35,10 @@ nav {
     position: relative;
     height: 100%;
   }
-
-  @media #{$large-and-up} {
-    a.sidenav-trigger { display: none; }
-  }
+  // Changed by developer
+  // @media #{$large-and-up} {
+  //   a.sidenav-trigger { display: none; }
+  // }
 
 
   // Collapse button

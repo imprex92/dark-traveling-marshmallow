@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { AuthProvider } from '../contexts/AuthContext'
 import '../styles/globals.css'
 import '../styles/materialize.css'
+import '../styles/signin.style.css'
 
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
