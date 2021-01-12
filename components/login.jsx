@@ -35,7 +35,7 @@ function login() {
 			setIsLoading(false)
 		}
 	}
-
+	//TODO felkoder!
 	async function handleGoogleSignup(e) {
 		e.preventDefault()
 		try{
@@ -44,9 +44,10 @@ function login() {
 			await loginWithGoogle()
 			router.push('/user/dashboard')
 		}
-		catch{
+		catch(err){
 			setIsLoading(false)
 			setError(err)
+			console.error(err);
 		}
 	}
 
