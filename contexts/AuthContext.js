@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
+import { projectAuth, projectGoogleAuthProvider } from "../firebase/config.js"
 // import nookies from "nookies"
-import { projectAuth } from "../firebase/config.js"
 // import { auth } from 'firebase-admin';
 
 const AuthContext = createContext();
@@ -36,40 +36,41 @@ export function AuthProvider({children}) {
 		})
 	}
 
+	//TODO Lägg try, catch i login/signup filen istället för här och få tillgång till felkoder.
+	async function loginWithGoogle() {
+		//? When login with google. Sets popup language to Devicelanguage
+		projectAuth.useDeviceLanguage();
 
-	function loginWithGoogle() {
-		console.log('inside context googleauth');
-		let provider = new firebase.auth.GoogleAuthProvider();
-		
-
-		projectAuth
-			.useDeviceLanguage()
-			.signInWithRedirect(provider)
-			.getRedirectResult()
-			.then((result) => {
-				console.log('auth is running');
-				if (result.credential) {
+		//TODO Lägg till "usePersistence()" för att automatiskt logga ut användare
+		try {
+			const result = await projectAuth
+				.signInWithPopup(projectGoogleAuthProvider);
+			if (result.credential) {
 				/** @type {firebase.auth.OAuthCredential} */
-				var credential = result.credential;
+				let credential = result.credential;
 
 				// This gives you a Google Access Token. You can use it to access the Google API.
-				var token = credential.accessToken;
-				
-				}
-				// The signed-in user info.
-				var user = result.user;
-				console.log(user, token);
-				
-			}).catch((error) => {
-				// Handle Errors here.
-				var errorCode = error.code;
-				var errorMessage = error.message;
-				// The email of the user's account used.
-				var email = error.email;
-				// The firebase.auth.AuthCredential type that was used.
-				var credential = error.credential;
-				console.error(errorCode, errorMessage);
-			});
+				let token = credential.accessToken;
+
+			}
+			// The signed-in user info.
+			let user = result.user;
+			console.log('user', user);
+			console.log('token', token);
+		} catch (error) {
+			// Handle Errors here.
+			let errorCode = error.code;
+			let errorMessage = error.message;
+			// The email of the user's account used.
+			let email = error.email;
+			// The firebase.auth.AuthCredential type that was used.
+			let credential_1 = error.credential;
+			let errors = [errorCode, errorMessage, email, credentials_1];
+			console.error(errorCode);
+			console.error(errorMessage);
+			console.error(email);
+			console.error(credential_1);
+		}
 
 		
 	}
