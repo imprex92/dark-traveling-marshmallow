@@ -1,5 +1,5 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
-import { projectAuth, projectGoogleAuthProvider } from "../firebase/config.js"
+import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
 // import nookies from "nookies"
 // import { auth } from 'firebase-admin';
 
@@ -15,14 +15,32 @@ export function AuthProvider({children}) {
 
 	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
+			console.log(user);
 			setCurrentUser(user)
 			setIsLoading(false)
 		})
 		return unsubscribe
 	}, [])
 
-	function signup(email, password){
-		return projectAuth.createUserWithEmailAndPassword(email, password)
+	async function signup(email, password){
+		await projectAuth.createUserWithEmailAndPassword(email, password)
+		.then(cred => {
+			console.log(cred);
+			try {
+				return projectFirestore.collection('userCollection').doc(cred.user.uid).set({
+					displayName: cred.user.displayName || 'null',
+					photoURL: cred.user.photoURL || 'null',
+					email: cred.user.email || 'null',
+					emailVerified: cred.user.emailVerified || 'null',
+					phoneNumber: cred.user.phoneNumber || 'null',
+					providerId: cred.additionalUserInfo.providerId,
+					created: projectTimestampNow
+				}, { merge: true });
+				// console.log("Document successfully written!");
+			} catch (error) {
+				return console.error("Error writing document: ", error);
+			}
+		})
 	}
 
 	function login(email, password){
@@ -65,7 +83,7 @@ export function AuthProvider({children}) {
 			let email = error.email;
 			// The firebase.auth.AuthCredential type that was used.
 			let credential_1 = error.credential;
-			let errors = [errorCode, errorMessage, email, credentials_1];
+			
 			console.error(errorCode);
 			console.error(errorMessage);
 			console.error(email);
