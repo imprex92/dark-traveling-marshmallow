@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
+// import { useFirestore } from '../contexts/DatabaseContext'
 import Googleicon from '../public/assets/icons8-google.svg'
 
 //TODO gör Autocompleat för alla inputfält 
@@ -15,6 +16,7 @@ function signup() {
 	const [isLoading, setIsLoading] = useState(false)
 	// currentUser can be removed, just for testing!
 	const {signup, loginWithGoogle, currentUser} = useAuth();
+	// const { createUserDocument } = useFirestore();
 
 	async function handleSubmit(e){
 		e.preventDefault()
@@ -28,6 +30,7 @@ function signup() {
 			setError('')
 			setIsLoading(true)
 			await signup(email, password)
+			console.log('try block 1 finished');
 			router.push('/user/dashboard')
 		}
 		catch(err){
