@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
+import { useFirestore } from '../contexts/DatabaseContext'
 import Googleicon from '../public/assets/icons8-google.svg'
 
 //TODO gör Autocompleat för alla inputfält 
@@ -17,6 +18,7 @@ function login() {
 	const [isLoading, setIsLoading] = useState(false)
 	// currentUser can be removed, just for testing!
 	const {login, loginWithGoogle, currentUser} = useAuth();
+	const {getUserDocument, userDatabaseData} = useFirestore();
 
 	async function handleSubmit(e){
 
@@ -27,6 +29,7 @@ function login() {
 			setError('')
 			setIsLoading(true)
 			await login(email, password)
+			await getUserDocument()
 			router.push('/user/dashboard')
 		}
 		catch(err){
@@ -42,6 +45,7 @@ function login() {
 			setError('')
 			setIsLoading(true)
 			await loginWithGoogle()
+			await getUserDocument()
 			router.push('/user/dashboard')
 		}
 		catch(err){
