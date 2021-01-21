@@ -12,7 +12,8 @@
     "start": "next start",
     "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
-    "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css"
+    "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
+    "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css"
   },
   "dependencies": {
     "cors": "^2.8.5",
