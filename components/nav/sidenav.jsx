@@ -25,29 +25,41 @@ export default function sidenav() {
 		try{
 			console.log('inside handdeler');
 			await logout()
+			// M.Sidenav.close()
 			router.push('/login')
 		}
 		catch{
 			setError("couldn't log you out")
 			console.log(error);
-			M.toast({html: "We couldn't log you out!", classes: 'rounded'});
+			M.toast({html: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
 
 	return (
 		<div>
-			{JSON.stringify(currentUser)}
+			{/* {JSON.stringify(currentUser)} */}
 
 
 
-			<nav><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></nav>
+			{/* <nav id="vertical-nav"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></nav> */}
 			
+			<div id="vertical-nav">
+				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
+					<i className="material-icons">menu</i>
+				</a>
+				<div className="wrapper">
+					<a className="contact" href="#">Instagram</a>
+					<a className="contact" href="#">Email</a>
+					<a className="contact" href="#">Credits</a>
+				</div>
+			</div>
+
 			<ul id="slide-out" className="sidenav">
 				<li><div className="user-view">
 					<div className="background">
-						<Image src="/assets/lighthouse-sidenav.jpg" alt="side navigation background image" height="211" width="300" quality={60} />
+						<Image src='/assets/lighthouse-sidenav.jpg' alt="side navigation background image" height="211" width="300" quality={60} />
 					</div>
-					<a href="#user"><Image className="circle" src="/assets/icons8-test-account.png" alt="User profile picture" width="96" height="96" quality={60}/></a>
+					<a href="#user"><Image className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
 					<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
 					<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 				</div></li>
