@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
+// import { useFirestore } from '../contexts/DatabaseContext'
 // import nookies from "nookies"
 // import { auth } from 'firebase-admin';
 
@@ -12,6 +13,9 @@ export function useAuth(){
 export function AuthProvider({children}) {
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
+	const [dbUserDocument, setDbUserData] = useState([])
+	const [error, setError] = useState('')
+	// const {getUserDocument} = useFirestore(' ');
 
 	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
@@ -24,10 +28,10 @@ export function AuthProvider({children}) {
 
 	async function signup(email, password){
 		await projectAuth.createUserWithEmailAndPassword(email, password)
-		.then(cred => {
+		.then(async (cred) => {
 			console.log(cred);
 			try {
-				return projectFirestore.collection('userCollection').doc(cred.user.uid).set({
+				await projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
 					displayName: cred.user.displayName || 'null',
 					photoURL: cred.user.photoURL || 'null',
 					email: cred.user.email || 'null',
@@ -36,15 +40,26 @@ export function AuthProvider({children}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow
 				}, { merge: true });
-				// console.log("Document successfully written!");
+				console.log("Document successfully written!");
 			} catch (error) {
 				return console.error("Error writing document: ", error);
 			}
 		})
+		.catch((err) => {
+			setError(err)
+		})
 	}
 
-	function login(email, password){
-		return projectAuth.signInWithEmailAndPassword(email, password)
+	async function login(email, password){
+		await projectAuth.signInWithEmailAndPassword(email, password)
+		.then(async(cred) => {
+			console.log(cred);
+			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
+			setDbUserData(userData)
+		})
+		.catch((err) => {
+			setError(err)
+		})
 	}
 
 	function updateUserInfo(userName, userAvatarURL){
@@ -58,39 +73,46 @@ export function AuthProvider({children}) {
 	async function loginWithGoogle() {
 		//? When login with google. Sets popup language to Devicelanguage
 		projectAuth.useDeviceLanguage();
-
 		//TODO Lägg till "usePersistence()" för att automatiskt logga ut användare
-		try {
 			const result = await projectAuth
-				.signInWithPopup(projectGoogleAuthProvider);
-			if (result.credential) {
-				/** @type {firebase.auth.OAuthCredential} */
-				let credential = result.credential;
-
-				// This gives you a Google Access Token. You can use it to access the Google API.
-				let token = credential.accessToken;
-
-			}
-			// The signed-in user info.
-			let user = result.user;
-			console.log('user', user);
-			console.log('token', token);
-		} catch (error) {
-			// Handle Errors here.
-			let errorCode = error.code;
-			let errorMessage = error.message;
-			// The email of the user's account used.
-			let email = error.email;
-			// The firebase.auth.AuthCredential type that was used.
-			let credential_1 = error.credential;
-			
-			console.error(errorCode);
-			console.error(errorMessage);
-			console.error(email);
-			console.error(credential_1);
-		}
-
-		
+				.signInWithPopup(projectGoogleAuthProvider)
+				.then( async (result) => {
+					console.log(result);
+					if(result.additionalUserInfo.isNewUser){
+						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
+							displayName: result.user.displayName || 'null',
+							photoURL: result.user.photoURL || 'null',
+							email: result.user.email || 'null',
+							emailVerified: result.user.emailVerified || 'null',
+							phoneNumber: result.user.phoneNumber || 'null',
+							providerId: result.additionalUserInfo.providerId,
+							created: projectTimestampNow
+						}, { merge: true })
+						.then((doc) => {
+							console.log('New userDoc created', doc);
+							setDbUserDocument(doc)
+						})
+						.catch((err) => {
+							setError(err)
+						})
+					}
+					else if(!result.additionalUserInfo.isNewUser){
+						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
+						setDbUserData(userData)
+					}
+				})
+				.catch((err) => {
+					console.log('this is the error',err);
+					setError(err)
+					let errorCode = err.code;
+					let errorMessage = err.message;
+					let email = err.email;
+					let credential_1 = err.credential;
+					console.error(errorCode);
+					console.error(errorMessage);
+					console.error(email);
+					console.error(credential_1);
+				})	
 	}
 
 	function logout(){
@@ -99,11 +121,13 @@ export function AuthProvider({children}) {
 	
 	const value = {
 		currentUser,
+		dbUserDocument,
+		error,
 		signup,
 		login,
 		logout,
 		loginWithGoogle,
-		updateUserInfo
+		updateUserInfo,
 	}
 
 	return (
