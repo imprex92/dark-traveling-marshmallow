@@ -4,6 +4,7 @@ import { DatabaseProvider } from '../contexts/DatabaseContext'
 import '../styles/globals.css'
 import '../styles/materialize.css'
 import '../styles/signin.style.css'
+import '../styles/dashboard.style.css'
 
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
@@ -13,7 +14,7 @@ function MyApp({Component,pageProps}) {
   return (
 	  <>
 	  	<AuthProvider>
-			<DatabaseProvider>
+			{/* <DatabaseProvider> */}
 				<Head>
 					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 					{/* <link type="text/css" rel="stylesheet" href="../styles/materialize.css"  media="screen,projection"/> */}
@@ -25,7 +26,7 @@ function MyApp({Component,pageProps}) {
 						
 				</Head>
 				<Component {...pageProps}/>
-			</DatabaseProvider>
+			{/* </DatabaseProvider> */}
 		</AuthProvider>
 	  </>
   );
