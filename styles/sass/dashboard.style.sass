@@ -1,0 +1,33 @@
+#vertical-nav
+	position: fixed
+	top: 0
+	bottom: 0 
+	left: 0
+	right: calc(100% - 48px)
+	background-color: #283070
+	border-radius: 0 15px 15px 0
+	& > a
+		display: flex
+		text-decoration: none
+		justify-content: center
+		justify-items: center
+		align-content: center
+		margin-top: 1em
+		color: #fff
+	& > .wrapper
+		margin: 4px
+		display: flex
+		flex-direction: row-reverse
+		position: absolute
+		margin-right: -100%
+		transform: rotate(-90deg) translate(20px, -243px)
+		transform-origin: right bottom
+		@media (min-width: 1200px)
+			transform: rotate(-90deg) translate(20px, -255px)
+		@media (min-width: 992px)
+			transform: rotate(-90deg) translate(20px, -244px)
+		@media (max-width: 991px)
+			transform: rotate(-90deg) translate(20px, -236px)
+		& > a
+			padding-right: 3em
+			color: #fff
