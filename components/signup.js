@@ -57,7 +57,7 @@ function signup() {
 	return (
 		<>
 				{/* {JSON.stringify(currentUser)} */}
-				{currentUser && currentUser.email}
+				{/* {currentUser && currentUser.email} */}
 			<div className="row valign-wrapper ">
 				
 					<form className="col s10 pull-s1 m6 pull-m3 xl4 pull-xl4 l4 pull-l4  center-align z-depth-5 lighten-2 myForm" onSubmit={handleSubmit}>
