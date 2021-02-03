@@ -1,4 +1,15 @@
+$pushFromNav: 3em
+@mixin tab-content-style
+	margin-top: 1em
+	padding-bottom: 1em !important
+	background-color: rgba(0, 0, 0, .5)
+	border-radius: 20px
+	
+.dashboard-main
+	background-color: #171c48	
+	
 #vertical-nav
+	z-index: 888
 	position: fixed
 	top: 0
 	bottom: 0 
@@ -12,7 +23,7 @@
 		justify-content: center
 		justify-items: center
 		align-content: center
-		margin-top: 1em
+		margin-top: 2.4em
 		color: #fff
 	& > .wrapper
 		margin: 4px
@@ -31,3 +42,132 @@
 		& > a
 			padding-right: 3em
 			color: #fff
+
+.tabs
+	margin: 4px
+	display: flex
+	flex-direction: row-reverse
+	position: absolute
+	margin-right: -100%
+	transform: rotate(-90deg) translate(20px, -190px)
+	transform-origin: right bottom
+	height: unset
+	width: unset
+	background-color: unset
+	margin: unset
+	& > .tab > a
+		color: white
+
+.add-form-post-section
+	margin-left: 3.5em
+
+.new-post-form-wrapper
+	margin-top: 3em
+
+.tabs-content 
+	&.carousel 
+		&.carousel-slider 
+			height: 98vh !important 
+			.carousel-item 
+				&.active 
+					position: relative 
+
+.autocomplete-content
+	max-height: 30vh !important
+
+
+.geoLocation-section
+	margin-top: 5%
+	margin-left: 1em !important
+	& > span
+		cursor: pointer
+		& > p
+			color: #fff
+		& > p > :not(i)
+			color: #fff
+		& > p > i
+			color: red
+
+.greeting-section
+	margin-left: $pushFromNav + 2em
+	& > h4
+		margin-bottom: 0px
+		font-weight: bold
+		color: #fff
+		font-family: 'Karma', serif
+	& > h5
+		margin-top: 0px
+		color: #999aad
+		font-family: 'Karma', serif
+
+.searchbar-section > .row > div
+	& > i
+		color: white
+
+.searchbar-section > .row > .input-field 
+	input[type=search]:focus 
+		&:not(.browser-default) 
+			background-color: unset 
+
+.post-carousel 
+	height: 450px !important
+	& > .post-carousel-item
+		width: 270px !important
+		height: 340px !important
+		@media (max-width: 600px)
+			width: 215px !important
+			height: 281px !important
+			
+
+.post-carousel-section
+	margin-left: $pushFromNav !important
+
+.carousel-item
+	img
+		border-radius: 30px
+		object-fit: cover
+
+.post-location-container
+	position: absolute
+	bottom: 0
+	left: 15px
+	color: white
+	& > i
+		color: lightgray
+		font-size: 20px
+
+.places-autocomplete
+	& > i:last-child
+		color: red
+		cursor: pointer
+
+.datepicker-section
+	& > i:last-child
+		cursor: pointer
+
+.newpost-img
+	object-fit: cover
+
+.tab-content
+	@include tab-content-style
+	& > a
+		margin: 0em 1em .5em 0em
+
+.file-input-icon
+	margin-right: 3px !important
+
+input
+	color: #fff
+
+label
+	color: #fff !important
+
+.autocomplete-suggestions-wrapper
+	background-color: #fff
+	position: absolute
+	z-index: 9
+	padding-bottom: 5px
+	left: 9%
+
+.Typewriter
+	min-height: 113px
