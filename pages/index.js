@@ -90,7 +90,7 @@ export default function Home(props) {
           <img src="/assets/success.jpg" height="500" />
           <h2> Deployment Successful of Nextjs Application with SSR on Firebase. </h2>
           <a className="waves-effect waves-light btn">button</a>
-          <a className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>buttohghghn</a>
+          <a className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>buttohghghn</a> 
         
   <a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
 
@@ -131,5 +131,6 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
+  // console.log(process.env.GOOGLE_API_KEY);
   return { props: { ssrWorking: true } };
 }
