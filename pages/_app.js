@@ -6,6 +6,7 @@ import '../styles/materialize.css'
 import '../styles/signin.style.css'
 import '../styles/dashboard.style.css'
 
+
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
 	}
@@ -33,6 +34,3 @@ function MyApp({Component,pageProps}) {
 }
 
 export default MyApp;
-
-
-
