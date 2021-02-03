@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
@@ -37,16 +37,13 @@ export default function sidenav() {
 
 	return (
 		<div>
-			{/* {JSON.stringify(currentUser)} */}
-
-
-
-			{/* <nav id="vertical-nav"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></nav> */}
-			
 			<div id="vertical-nav">
 				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
 					<i className="material-icons">menu</i>
 				</a>
+				<Link href="/user/newpost">
+					<i className="material-icons">add_circle_outline</i>
+				</Link>
 				<div className="wrapper">
 					<a className="contact" href="#">Instagram</a>
 					<a className="contact" href="#">Email</a>
@@ -67,9 +64,8 @@ export default function sidenav() {
 				<li><Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a></Link></li>
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Subheader</a></li>
-				<li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
-			</ul>
-			
+				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
+			</ul>		
 		</div>
 	)
 }
