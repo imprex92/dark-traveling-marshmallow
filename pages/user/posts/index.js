@@ -1,10 +1,12 @@
 import React from 'react'
 import Sidenav from '../../../components/nav/sidenav'
 
-export const index = () => {
+const index = () => {
 	return (
 		<div>
 			<Sidenav/>
 		</div>
 	)
 }
+
+export default index
