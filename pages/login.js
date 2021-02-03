@@ -7,10 +7,11 @@ function login() {
 	return (
 		<>
 			<Image
+			className="login-img"
 			src="/assets/simon-migaj.jpg"
 			alt="Picture of the author"
 			layout="fill"
-			objectfit="fit"
+			objectfit="cover"
 			objectposition="center bottom"
 			quality={75}		
 			/>

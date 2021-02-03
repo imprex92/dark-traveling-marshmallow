@@ -7,10 +7,11 @@ function signup() {
 	return (
 		<>
 			<Image
+			className="signUp-img"
 			src="/assets/simon-migaj.jpg"
 			alt="Picture of the author"
 			layout="fill"
-			objectfit="fit"
+			objectfit="cover"
 			objectposition="center bottom"
 			quality={75}		
 			/>
