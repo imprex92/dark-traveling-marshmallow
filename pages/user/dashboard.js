@@ -5,17 +5,20 @@ import withPrivateRoute from '../../components/HOC/withPrivateRoute'
 
 const dashboard = () => {
 	return (
-		<>
+		<div className="dashboard-main">
+			
 			<Sidenav/>
 			<Dashboard/>
-		</>
+			
+		</div>
 	)
 }
 
-dashboard.getInitialProps = async props => {
-	console.info("### Yay! you're Authorized!", props);
-	return {}
-}
+// dashboard.getInitialProps = async props => {
+// 	console.info("### Yay! you're Authorized!", props);
+// 	return {}
+// }
 
-export default withPrivateRoute(dashboard)
+export default dashboard
+// withPrivateRoute(dashboard)
 
