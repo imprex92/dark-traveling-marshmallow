@@ -1,7 +1,7 @@
 {
   "name": "dark-traveling-marshmello",
   "version": "0.1.0",
-  "main": "functions/functions.js",
+  "main": "functions.js",
   "private": true,
   "browser": {
     "child_process": false
@@ -13,19 +13,21 @@
     "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
     "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
-    "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css"
+    "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css",
+    "SASS-watch-Slides-component": "sass --watch ./styles/sass/slides-component.style.sass:./styles/slides-component.style.css"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "country-list": "^2.2.0",
+    "dotenv-webpack": "^6.0.0",
+    "express": "^4.17.1",
     "firebase": "^8.2.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
     "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",
     "next": "10.0.1",
-    "nookies": "^2.5.0",
     "react": "17.0.1",
     "react-cool-onclickoutside": "^1.5.9",
     "react-dom": "17.0.1",
