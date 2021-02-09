@@ -1,10 +1,12 @@
 import React from 'react'
-import Sidenav from '../../../components/nav/sidenav'
+import BlogList  from '../../../components/BlogList'
+import SideNav from '../../../components/nav/SideNav'
 
 const index = () => {
 	return (
 		<div>
-			<Sidenav/>
+			<SideNav/>
+			<BlogList/>
 		</div>
 	)
 }
