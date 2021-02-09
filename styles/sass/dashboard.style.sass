@@ -26,22 +26,28 @@ $pushFromNav: 3em
 		margin-top: 2.4em
 		color: #fff
 	& > .wrapper
+		left: -9px
+		top: 30%
 		margin: 4px
 		display: flex
 		flex-direction: row-reverse
 		position: absolute
-		margin-right: -100%
-		transform: rotate(-90deg) translate(20px, -243px)
-		transform-origin: right bottom
+		// margin-right: -100%
+		// transform: rotate(-90deg) translate(20px, -243px)
+		transform-origin: center
 		@media (min-width: 1200px)
-			transform: rotate(-90deg) translate(20px, -255px)
+			transform: rotate(-90deg) translate(20px, -258px)
 		@media (min-width: 992px) and (max-width: 1199px)
-			transform: rotate(-90deg) translate(20px, -244px)
+			transform: rotate(-90deg) translate(20px, -249px)
 		@media (max-width: 991px)
-			transform: rotate(-90deg) translate(20px, -236px)
+			transform: rotate(-90deg) translate(20px, -240px)
 		& > a
 			padding-right: 3em
 			color: #fff
+
+.vertical-menu-btn
+	& > i 
+		transform: rotate(90deg)
 
 .tabs
 	margin: 4px

@@ -22,32 +22,36 @@
   color: #fff;
 }
 #vertical-nav > .wrapper {
+  left: -9px;
+  top: 30%;
   margin: 4px;
   display: flex;
   flex-direction: row-reverse;
   position: absolute;
-  margin-right: -100%;
-  transform: rotate(-90deg) translate(20px, -243px);
-  transform-origin: right bottom;
+  transform-origin: center;
 }
 @media (min-width: 1200px) {
   #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -255px);
+    transform: rotate(-90deg) translate(20px, -258px);
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -244px);
+    transform: rotate(-90deg) translate(20px, -249px);
   }
 }
 @media (max-width: 991px) {
   #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -236px);
+    transform: rotate(-90deg) translate(20px, -240px);
   }
 }
 #vertical-nav > .wrapper > a {
   padding-right: 3em;
   color: #fff;
+}
+
+.vertical-menu-btn > i {
+  transform: rotate(90deg);
 }
 
 .tabs {
