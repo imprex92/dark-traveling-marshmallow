@@ -12,14 +12,16 @@ const login = '/login?redirected=true';
 // */
 
 const checkUserAuthentication = () => {
-	
-	return projectAuth.currentUser
+	let isAdmin = true
+	return isAdmin
+	//  projectAuth.currentUser
 }
 
 export default WrappedComponent => {
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
-
+	
 	hocComponent.getInitialProps = async (context) => {
+		
 		const userAuth = await checkUserAuthentication();
 
 		// Are you really allowed here?
