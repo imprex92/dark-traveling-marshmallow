@@ -2,30 +2,36 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
-import { getTime } from '../hooks/GetTime'
 import Image from 'next/image'
+if(typeof window !== 'undefined'){
+	M = require( 'materialize-css/dist/js/materialize.js')
+}
+// import { getTime } from '../utility/GetTime'
 
-export default function sidenav() {
+//TODO make sure siddenav closes after pagechange (instance.close())
+
+export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const router = useRouter()
-
 	const [error, setError] = useState(null)
+	const [loading, setLoading] = useState(true)
+	const [countriesVisited, setCountriesVisited] = useState([])
 	const { logout, currentUser } = useAuth()
-
 	useEffect(() => {
-		
-			const M = require('../../js/materialize');
-			let sidenav = document.querySelectorAll(".sidenav");
-      		M.Sidenav.init(sidenav, {});
-		
-		getTime()
+		setCountriesVisited(dbUserData.countriesVisited)
+		// console.log(dbUserData);
+		let sidenav = document.querySelectorAll(".sidenav");
+		M.Sidenav.init(sidenav, {});
+		// console.log(dbUserData);
+		// console.log(countriesVisited);
+		setLoading(false)
 	})
 
 	async function handleLogout() {
 		setError('')
 		try{
-			console.log('inside handdeler');
+			let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+			instance.close()
 			await logout()
-			// M.Sidenav.close()
 			router.push('/login')
 		}
 		catch{
@@ -34,23 +40,36 @@ export default function sidenav() {
 			M.toast({html: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
+	function handleNewPost(){
+		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		instance.close()
+		router.push('/user/newpost')
+	}
+	//! vid click, skickas textContent vidare till parent dashboard vidare till Slides componenten
+	function handleFilter(e){
+		let countryToFilter = e.currentTarget.textContent
+		console.log(e.currentTarget.textContent);
+		dataFromChildToParent(countryToFilter)
+	}
 
 	return (
 		<div>
 			<div id="vertical-nav">
+				<div className="wrapper">
 				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
 					<i className="material-icons">menu</i>
 				</a>
 				<Link href="/user/newpost">
-					<i className="material-icons">add_circle_outline</i>
+					<a href="#"><i className="material-icons">add_circle_outline</i></a>
 				</Link>
-				<div className="wrapper">
-					<a className="contact" href="#">Instagram</a>
+				<a onClick={handleFilter} defaultValue="All" className="contact" href="#">All</a>
+				{countriesVisited?.map((country, i) => {
+					return <a onClick={handleFilter} key={i} defaultValue={country} className="contact" href="#">{country}</a>
+				})}
 					<a className="contact" href="#">Email</a>
 					<a className="contact" href="#">Credits</a>
 				</div>
 			</div>
-
 			<ul id="slide-out" className="sidenav">
 				<li><div className="user-view">
 					<div className="background">
@@ -65,6 +84,7 @@ export default function sidenav() {
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Subheader</a></li>
 				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
+				<li><a onClick={handleNewPost} className="" href="#!"><i className="material-icons">edit</i>Write new post</a></li>
 			</ul>		
 		</div>
 	)
