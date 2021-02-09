@@ -1,7 +1,6 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
 // import { useFirestore } from '../contexts/DatabaseContext'
-// import nookies from "nookies"
 // import { auth } from 'firebase-admin';
 
 const AuthContext = createContext();
@@ -10,7 +9,7 @@ export function useAuth(){
 	return useContext(AuthContext)
 }
 
-export function AuthProvider({children}) {
+export function AuthProvider({children, data}) {
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
 	const [dbUserDocument, setDbUserData] = useState([])
@@ -137,3 +136,7 @@ export function AuthProvider({children}) {
 	)
 }
 
+AuthProvider.getInitialProps = async (ctx) => {
+	const hello = 'hello there'
+	return { data: hello }
+  }
