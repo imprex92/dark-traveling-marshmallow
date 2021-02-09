@@ -3,11 +3,11 @@ import { projectFirestore, projectTimestampNow, projectStorage } from '../../fir
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
-import { getCurrentDate } from '../hooks/getCurrentDate'
+import { getCurrentDate } from '../utility/getCurrentDate'
 import Image from 'next/image'
 import Typewriter from 'typewriter-effect';
-import countries from '../hooks/countries.json'
-import PlacesAutocomplete from '../hooks/GooglePlacesAutocomplete'
+import countries from '../utility/countries.json'
+import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
 import countryList from 'country-list'
 if(typeof window !== 'undefined'){
 	M = require( 'materialize-css/dist/js/materialize.js')
@@ -55,7 +55,7 @@ export default function StorageCommunicator() {
 		var autocomplete = document.querySelectorAll('.autocomplete');
 		var instances = M.Autocomplete.init(autocomplete, {data: countries, minLength: 1});
 		})
-
+		//TODO close sidenav on logout!
 	async function handleLogout() {
 		setError('')
 		try{
@@ -88,6 +88,12 @@ export default function StorageCommunicator() {
 
 	function dataFromChild(dataFromChild){
 		console.log('this is data from child' ,dataFromChild);
+	}
+
+	function createSlug(title){
+		let titleToSlug = title;
+		let slug = (titleToSlug.replace(/ /g, "-")) + (Math.floor((Math.random() * 10) + 1));
+		return slug
 	}
 
 	return (
