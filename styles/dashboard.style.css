@@ -2,75 +2,6 @@
   background-color: #171c48;
 }
 
-#vertical-nav {
-  z-index: 888;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: calc(100% - 48px);
-  background-color: #283070;
-  border-radius: 0 15px 15px 0;
-}
-#vertical-nav > a {
-  display: flex;
-  text-decoration: none;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
-  margin-top: 2.4em;
-  color: #fff;
-}
-#vertical-nav > .wrapper {
-  left: -9px;
-  top: 30%;
-  margin: 4px;
-  display: flex;
-  flex-direction: row-reverse;
-  position: absolute;
-  transform-origin: center;
-}
-@media (min-width: 1200px) {
-  #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -258px);
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -249px);
-  }
-}
-@media (max-width: 991px) {
-  #vertical-nav > .wrapper {
-    transform: rotate(-90deg) translate(20px, -240px);
-  }
-}
-#vertical-nav > .wrapper > a {
-  padding-right: 3em;
-  color: #fff;
-}
-
-.vertical-menu-btn > i {
-  transform: rotate(90deg);
-}
-
-.tabs {
-  margin: 4px;
-  display: flex;
-  flex-direction: row-reverse;
-  position: absolute;
-  margin-right: -100%;
-  transform: rotate(-90deg) translate(20px, -190px);
-  transform-origin: right bottom;
-  height: unset;
-  width: unset;
-  background-color: unset;
-  margin: unset;
-}
-.tabs > .tab > a {
-  color: white;
-}
-
 .add-form-post-section {
   margin-left: 3.5em;
 }
@@ -86,12 +17,18 @@
   position: relative;
 }
 
+.fileinput-error {
+  padding: 1em;
+  border-radius: 10px;
+  border: 1px solid red;
+}
+
 .autocomplete-content {
   max-height: 30vh !important;
 }
 
 .geoLocation-section {
-  margin-top: 5%;
+  margin-top: 2.5%;
   margin-left: 1em !important;
 }
 .geoLocation-section > span {
@@ -146,6 +83,17 @@
 
 .post-carousel-section {
   margin-left: 3em !important;
+  margin-top: 4em;
+}
+@media (min-width: 1100px) {
+  .post-carousel-section {
+    margin-top: 1em;
+  }
+}
+@media (max-width: 450px) {
+  .post-carousel-section {
+    margin-top: 0em;
+  }
 }
 
 .carousel-item img {
@@ -175,6 +123,11 @@
 
 .newpost-img {
   object-fit: cover;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .tab-content {
@@ -182,6 +135,7 @@
   padding-bottom: 1em !important;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 20px;
+  min-width: unset;
 }
 .tab-content > a {
   margin: 0em 1em 0.5em 0em;
@@ -204,11 +158,13 @@ label {
   position: absolute;
   z-index: 9;
   padding-bottom: 5px;
-  left: 9%;
+  left: 14%;
+  min-width: 205px;
+  top: 31px;
 }
 
 .Typewriter {
-  min-height: 113px;
+  min-height: 110px;
 }
 
 /*# sourceMappingURL=dashboard.style.css.map */
