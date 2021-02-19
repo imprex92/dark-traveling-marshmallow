@@ -7,14 +7,18 @@
     "child_process": false
   },
   "scripts": {
+    "dev-server": "node server.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start-server": "NODE_ENV=production node server.js",
     "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
     "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
     "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css",
-    "SASS-watch-Slides-component": "sass --watch ./styles/sass/slides-component.style.sass:./styles/slides-component.style.css"
+    "SASS-watch-blogPost-page-component": "sass --watch ./styles/sass/blogPost-page.style.sass:./styles/blogPost-page.style.css",
+    "SASS-watch-sidenav": "sass --watch ./styles/sass/sideNav.style.sass:./styles/sideNav.style.css",
+    "SASS-watch-singlepost": "sass --watch ./styles/sass/singlePost.style.sass:./styles/singlePost.style.css"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -25,8 +29,8 @@
     "firebase": "^8.2.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
-    "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.29.1",
     "next": "10.0.1",
     "react": "17.0.1",
     "react-cool-onclickoutside": "^1.5.9",
