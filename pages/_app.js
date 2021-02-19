@@ -6,6 +6,9 @@ import '../styles/materialize.css'
 import '../styles/signin.style.css'
 import '../styles/dashboard.style.css'
 import '../styles/slides-component.style.scss'
+import '../styles/blogPost-page.style.css'
+import '../styles/sideNav.style.css'
+import '../styles/singlePost.style.css'
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
 	}
@@ -21,7 +24,6 @@ function MyApp({Component,pageProps}) {
 					<meta charSet="utf-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-					{/* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossOrigin="anonymous"/>			 */}
 				</Head>
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}

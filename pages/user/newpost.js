@@ -1,12 +1,11 @@
-
+import withPrivateRoute from '../../components/HOC/withPrivateRoute'
 import StorageCommunicator from '../../components/communications/StorageCommunicator'
-import Image from 'next/image'
 
-const newpost = () => {
+const newpost = ({userAuth}) => {
 	return (
 		// !! navigation ner required! Already included in imported StorageCommunicator-file!
 		<div>
-			<Image
+			<img
 			className="newpost-img"
 			src="/assets/iceland-5104385_1920.jpg"
 			alt="Beautiful nature"
@@ -14,10 +13,16 @@ const newpost = () => {
 			objectfit="fit"
 			objectposition="center bottom"
 			quality={75}
+			
 			/>
-			<StorageCommunicator/>
+			<StorageCommunicator userAuth={userAuth}/>
 		</div>
 	)
 }
 
-export default newpost
+newpost.getInitialProps = async props => {
+	// console.info('##### Congratulations! You are authorized! ######', props);
+	return {};
+};
+
+export default withPrivateRoute(newpost)

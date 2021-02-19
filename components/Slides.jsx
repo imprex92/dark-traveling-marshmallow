@@ -1,5 +1,6 @@
 import React, {useReducer, useRef, useEffect, useState} from 'react'
 import Link from 'next/link'
+// let filteredBlogs;
 const slides = [
 	{
 	  title: "Machu Picchu",
@@ -104,9 +105,10 @@ const slides = [
   function Slide({ slide, offset }) {
 	const active = offset === 0 ? true : null;
 	const ref = useTilt(active);
-  
+
 	return (
-		// <Link as={`/user/posts/${post.slug}`} href={`/user/posts/?slug=${post.slug}`}>
+		
+		<Link as={`/user/posts/singlepost/${slide.slug}`} href={`/user/posts/singlepost?slug=${slide.slug}`}>
 			<div
 				ref={ref}
 				className="slide"
@@ -119,64 +121,61 @@ const slides = [
 				<div
 					className="slideBackground"
 					style={{
-						backgroundImage: `url('${slide.image}')`
+						backgroundImage: `url('${slide.imgURL ? slide.imgURL : 'https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/defaultData%2Fpexels-beth-easton-2433985.jpg?alt=media&token=e9ef12ed-0b53-4d6e-86a6-eb8a1775f048'}')`
 					}}
 				/>
 				<div
 					className="slideContent"
 					style={{
-						backgroundImage: `url('${slide.image}')`
+						backgroundImage: `url('${slide.imgURL ? slide.imgURL : 'https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/defaultData%2Fpexels-beth-easton-2433985.jpg?alt=media&token=e9ef12ed-0b53-4d6e-86a6-eb8a1775f048'}')`
 					}}
 				>
-					<div className="slideContentInner">
-						<h2 className="slideTitle">{slide.title}</h2>
-						<h3 className="slideSubtitle">{slide.subtitle}</h3>
-						<p className="slideDescription">{slide.description}</p>
+					<div className="slideContentInner white-text">
+						<h2 className="slideTitle">{slide.postTitle || 'No title'}</h2>
+						<h3 className="slideSubtitle">{slide.postLocationData.country || 'Secret location'}</h3>
+						<p className="slideDescription">{slide?.postMood + ' ' || 'User might be happy '}  {' ' + slide?.postWeather?.userWeather || " Weather is unknown"}</p>
 					</div>
 				</div>
 			</div>
-	    //</Link>
+	    </Link>
 	);
   }
 
 function Slides({searchByText, countrySearchTerm, userBlogs}) {
-	const [filterByCountry, setFilterByCountry] = useState(null)
+	const [filterByCountry, setFilterByCountry] = useState('')
+	const [fetchedUserBlogs, setFetchedUserBlogs] = useState([])
 	
 	useEffect(() => {
-		console.log('this us userBog', userBlogs);
-		applyFilter()
+		setFetchedUserBlogs(userBlogs)
+		setFilterByCountry(countrySearchTerm)
 		//! filter vid klick på land från navbar. skickat från dashboard component
 	}, [searchByText, countrySearchTerm, userBlogs])
 	const [state, dispatch] = useReducer(slidesReducer, initialState);
 	
-	function applyFilter(){
-		console.log('Im about to apply filter in filter funct...: ', countrySearchTerm);
-		console.log(searchByText);
-		let filteredBlogs = userBlogs?.filter(post => {
-			if(countrySearchTerm === 'all')
-			return post.postLocationData.country.toLowerCase().includes('')
-			else if(!searchByText.trim(' '))
-			return post.postLocationData.country.toLowerCase().includes(countrySearchTerm.toLowerCase())
-			else  
-			return post.postLocationData.country.toLowerCase().includes(searchByText.toLowerCase()) || 
-			post.postLocationData.state.toLowerCase().includes(searchByText.toLowerCase()) ||
-			post.postLocationData.city.toLowerCase().includes(searchByText.toLowerCase()) ||
-			post.postTitle.toLowerCase().includes(searchByText.toLowerCase())
-		})
-	}
+	let filteredBlogs = fetchedUserBlogs?.filter((post) => {
+		if(searchByText.trim(' '))
+		return 	post.postLocationData.country.toLowerCase().includes(searchByText.toLowerCase()) || 
+				post.postLocationData.state.toLowerCase().includes(searchByText.toLowerCase()) ||
+				post.postLocationData.city.toLowerCase().includes(searchByText.toLowerCase()) ||
+				post.postTitle.toLowerCase().includes(searchByText.toLowerCase())
+		if(!filterByCountry.trim(' '))
+		return post
+		else
+		return post.postLocationData.country.toLowerCase().includes(filterByCountry.toLowerCase())
+	})
 
 	return (
-	  <div className="slides">
-		<button onClick={() => dispatch({ type: "PREV" })}>‹</button>
-  
-		{[...slides, ...slides, ...slides].map((slide, i) => {
-		  let offset = slides.length + (state.slideIndex - i);
-		  return <Slide slide={slide} offset={offset} key={i} />;
-		})}
-		
-		<button onClick={() => dispatch({ type: "NEXT" })}>›</button>
-	  </div>
-	);
+		<div className="slides">
+		  <button onClick={() => dispatch({ type: "PREV" })}>‹</button>
+	
+		  {[...filteredBlogs, ...filteredBlogs, ...filteredBlogs].map((slide, i) => {
+			let offset = filteredBlogs.length + (state.slideIndex - i);
+			return <Slide slide={slide} offset={offset} key={i} />;
+		  })}
+		  
+		  <button onClick={() => dispatch({ type: "NEXT" })}>›</button>
+		</div>
+	  );
   }
 
 

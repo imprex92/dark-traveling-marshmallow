@@ -9,16 +9,15 @@ export function useAuth(){
 	return useContext(AuthContext)
 }
 
-export function AuthProvider({children, data}) {
+export function AuthProvider({children, userAuth}) {
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
 	const [dbUserDocument, setDbUserData] = useState([])
 	const [error, setError] = useState('')
-	// const {getUserDocument} = useFirestore(' ');
 
 	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
-			console.log(user);
+			// console.log(user);
 			setCurrentUser(user)
 			setIsLoading(false)
 		})
@@ -28,7 +27,7 @@ export function AuthProvider({children, data}) {
 	async function signup(email, password){
 		await projectAuth.createUserWithEmailAndPassword(email, password)
 		.then(async (cred) => {
-			console.log(cred);
+			// console.log(cred);
 			try {
 				await projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
 					displayName: cred.user.displayName || 'null',
@@ -39,7 +38,7 @@ export function AuthProvider({children, data}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow
 				}, { merge: true });
-				console.log("Document successfully written!");
+				// console.log("Document successfully written!");
 			} catch (error) {
 				return console.error("Error writing document: ", error);
 			}
@@ -52,7 +51,7 @@ export function AuthProvider({children, data}) {
 	async function login(email, password){
 		await projectAuth.signInWithEmailAndPassword(email, password)
 		.then(async(cred) => {
-			console.log(cred);
+			// console.log(cred);
 			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
 			setDbUserData(userData)
 		})
@@ -76,7 +75,7 @@ export function AuthProvider({children, data}) {
 			const result = await projectAuth
 				.signInWithPopup(projectGoogleAuthProvider)
 				.then( async (result) => {
-					console.log(result);
+					// console.log(result);
 					if(result.additionalUserInfo.isNewUser){
 						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
 							displayName: result.user.displayName || 'null',
@@ -88,7 +87,7 @@ export function AuthProvider({children, data}) {
 							created: projectTimestampNow
 						}, { merge: true })
 						.then((doc) => {
-							console.log('New userDoc created', doc);
+							// console.log('New userDoc created', doc);
 							setDbUserDocument(doc)
 						})
 						.catch((err) => {
@@ -136,7 +135,8 @@ export function AuthProvider({children, data}) {
 	)
 }
 
-AuthProvider.getInitialProps = async (ctx) => {
-	const hello = 'hello there'
-	return { data: hello }
-  }
+AuthProvider.getInitialProps = async props => {
+
+	// console.info('##### Congratulations! You are authorized! ######', props);
+	return {};
+};

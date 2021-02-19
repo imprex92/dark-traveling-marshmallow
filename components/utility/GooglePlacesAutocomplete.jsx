@@ -1,30 +1,34 @@
 import {useEffect} from 'react'
-import usePlacesAutocomplete, {	getGeocode,	getLatLng } from "use-places-autocomplete";
+import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
-import countryList from 'country-list'
 
-	const PlacesAutocomplete = ({dataFromChild, countryCodes}) => {
-		// useEffect(() => {
-		// 	const success = (pos) => {
-		// 	  const { latitude, longitude } = pos.coords;
+	const PlacesAutocomplete = ({dataFromChild, countryCode}) => {
+		//// useEffect(() => {
+		//// 	const success = (pos) => {
+		//// 	  const { latitude, longitude } = pos.coords;
 		
-		// 	  getGeocode({
-		// 		location: new google.maps.LatLng(latitude, longitude),
-		// 	  }).then((results) => {
-		// 		setValue(results[0].formatted_address);
-		// 	  });
-		// 	};
+		//// 	  getGeocode({
+		//// 		location: new google.maps.LatLng(latitude, longitude),
+		//// 	  }).then((results) => {
+		//// 		setValue(results[0].formatted_address);
+		//// 	  });
+		//// 	};
 		
-		// 	const error = () => {
-		// 	  console.log("> Unable to retrieve your location");
-		// 	};
+		//// 	const error = () => {
+		//// 	  console.log("> Unable to retrieve your location");
+		//// 	};
 		
-		// 	if (!navigator.geolocation) {
-		// 	  console.log("> Geolocation is not supported by your browser");
-		// 	} else {
-		// 	  navigator.geolocation.getCurrentPosition(success, error);
-		// 	}
-		//   }, [setValue]);
+		//// 	if (!navigator.geolocation) {
+		//// 	  console.log("> Geolocation is not supported by your browser");
+		//// 	} else {
+		//// 	  navigator.geolocation.getCurrentPosition(success, error);
+		//// 	}
+		////   }, [setValue]);
+
+		useEffect(() => {
+			// console.log(countryCode)
+			
+		}, [countryCode])
 
 		const getMyPosition = (() => {
 			const success = (pos) => {
@@ -33,7 +37,7 @@ import countryList from 'country-list'
 				getGeocode({
 				  location: new google.maps.LatLng(latitude, longitude),
 				}).then((results) => {
-					console.log(results);
+					// console.log(results);
 				  setValue(results[0].formatted_address);
 				});
 			  };
@@ -52,7 +56,7 @@ import countryList from 'country-list'
 		const {
 		  ready,
 		  value,
-		  suggestions: { status, data },
+		  suggestions: { status, data, structured_formatting },
 		  setValue,
 		  clearSuggestions,
 		} = usePlacesAutocomplete({
@@ -60,7 +64,7 @@ import countryList from 'country-list'
 			/* Define search scope here */
 			
 			componentRestrictions: {
-				country: countryCodes
+				country: countryCode
 			}
 			
 		},
@@ -79,47 +83,65 @@ import countryList from 'country-list'
 		  setValue(e.target.value);
 		};
 	  
-		const handleSelect = ({ description }) => () => {
+		const handleSelect = ({ description, place_id, structured_formatting }) => () => {
 		  // When user selects a place, we can replace the keyword without request data from API
 		  // by setting the second parameter to "false"
-		  let toSend = [];
+		  let additionalData = [];
+		  let coordinates = [];
+		  let locationData = [];
+		  
 		  setValue(description, false);
+		  additionalData.push({description, place_id, structured_formatting})
 		  clearSuggestions();
-		  toSend.push(description)
 		  
 		  // Get latitude and longitude via utility functions
-		  getGeocode({ address: description })
-		  .then(async(results) => {
-				await getLatLng(results[0])
-				console.log(results);
-				toSend.push(results[0])
-			})
-		  .then(({ lat, lng }) => {
-			  console.log("📍 Coordinates: ", { lat, lng });
-			})
-			.catch((error) => {
-				console.log("😱 Error: ", error);
-			});
-			dataFromChild(toSend)
+			getGeocode({ address: description})
+				.then((results) => getLatLng(results[0]))
+				.then(({ lat, lng }) => {
+					console.log("📍 Coordinates: ", { lat, lng });
+					coordinates.push({ lat, lng })
+				})
+				.catch((error) => {
+					console.log("😱 Error: ", error);
+					toSend.push(error)
+				});
+				
+				const parameter = {
+					// Use the "place_id" of suggestion from the dropdown (object), here just taking first suggestion for brevity
+					placeId: place_id,
+					// Specify the return data that you want (optional)
+					fields: ["name", "rating", 'address_component', 'formatted_phone_number',  "adr_address", "plus_code", "vicinity"],
+				  };
+				  //! HIGH DATA USAGE!!
+					getDetails(parameter)
+					  .then((details) => {
+						// console.log("Details: ", details);
+						locationData.push(details)
+					  })
+					  .catch((error) => {
+						console.log("Error: ", error);
+					  });
+			dataFromChild({coordinates, locationData, additionalData})
 		};
+		
+		
 	  
 		const renderSuggestions = () =>
 		  data.map((suggestion) => {
 			const {
 			  place_id,
-			  structured_formatting: { main_text, secondary_text },
+			  structured_formatting: { main_text, secondary_text, terms },
 			} = suggestion;
-	  
+			// console.log(suggestion);
 			return (
 			  <li key={place_id} onClick={handleSelect(suggestion)}>
-				<strong>{main_text}</strong> <small>{secondary_text}</small>
-				
+				<strong>{main_text}</strong> <small>{secondary_text}</small>	
 			  </li>
 			);
 		  });
 	  
 		return (
-			<div className="input-field s11 col l5 push-l1 places-autocomplete" ref={ref}>
+			<div className="input-field s11 col l5 places-autocomplete" ref={ref}>
 				<i className="material-icons prefix white-text">location_city</i>
 				<input
 					id="post_location"
@@ -128,7 +150,7 @@ import countryList from 'country-list'
 					disabled={!ready}
 					type="text"
 				/>
-				<label htmlFor="post_location">Post location</label>
+				<label htmlFor="post_location">Address</label>
 				<i onClick={getMyPosition} className="material-icons prefix">person_pin_circle</i>
 				{/* We can use the "status" to decide whether we should display the dropdown or not */}
 				{status === "OK" && <ul className="autocomplete-suggestions-wrapper">{renderSuggestions()}

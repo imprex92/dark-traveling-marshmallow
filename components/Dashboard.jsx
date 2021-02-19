@@ -11,7 +11,7 @@ function Dashboard() {
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
 	const [locationError, setLocationError] = useState(null)
-	const [searchText, setSearchText] = useState(null)
+	const [searchText, setSearchText] = useState('')
 
 	useEffect(() => {
 		if(currentUser){

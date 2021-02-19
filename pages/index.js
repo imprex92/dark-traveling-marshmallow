@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 export default function Home(props) {
   const router = useRouter()
   useEffect(() => {
-    // router.push('/login')
+    router.push('/login')
     if(typeof window !== 'undefined'){
       const M = require('../js/materialize');
       var sidenav = document.querySelectorAll(".sidenav");
@@ -21,7 +21,8 @@ export default function Home(props) {
  
   return (
     <>
-      {props.ssrWorking ? (
+      <div className="text-center">Move on to login</div>
+      {/* {props.ssrWorking ? (
         
         <div>
           <img src="/assets/success.jpg" height="500" />
@@ -62,7 +63,7 @@ export default function Home(props) {
         </div>
       ) : (
         <h2>SSR not working</h2>
-      )}
+      )} */}
     </>
   );
 }

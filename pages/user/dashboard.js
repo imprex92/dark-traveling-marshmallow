@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react'
-import Image from 'next/image'
 import axios from 'axios'
-import {projectFirestore, projectStorage, projectTimestampNow, projectAuth} from '../../firebase/config'
+import {projectFirestore} from '../../firebase/config'
 import Slides from '../../components/Slides'
 import { useAuth } from '../../contexts/AuthContext'
 import Sidenav from '../../components/nav/SideNav'
@@ -12,8 +11,8 @@ if(typeof window !== 'undefined'){
 }
 //TODO Write a title for every page
 
-const dashboard = (userData) => {
-	const logedInUserId = projectAuth.currentUser.uid
+const dashboard = ({userAuth}) => {
+	const logedInUserId = userAuth?.uid
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(logedInUserId)
 	const {currentUser} = useAuth()
 	const [UserFirstname, setUserFirstname] = useState(null)
@@ -21,14 +20,16 @@ const dashboard = (userData) => {
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
 	const [locationError, setLocationError] = useState(null)
-	const [searchText, setSearchText] = useState(null)
+	const [searchText, setSearchText] = useState('')
 	const [broadcastMessage, setBroadcastMessage] = useState(null)
 	const [blogPosts, setBlogPosts] = useState([])
 	const [stayingHotels, setStayingHotels] = useState([])
 	const [dbUserData, setDbUserData] = useState([])
 	const [byCountrySearchTerm, setByCountrySearchTerm] = useState('')
+	const [init, setInit] = useState(false)
 	let blogsToSend;
 	useEffect(() => {
+		// console.log('here you have the damn props again! ', userAuth);
 		//! ComponentWillMount!
 		const unsubscribePosts = userDbRef.collection('blogPosts').onSnapshot(blogPostListener, err => {
 			console.error('Subscibe to blogposts failed', err);
@@ -40,25 +41,26 @@ const dashboard = (userData) => {
 		const unsubscribeDbUserData = userDbRef.onSnapshot(DbUserDataListener, err => {
 			console.error('Subscribe to Firestore userData failed', err);
 		})
-		let carousel = document.querySelectorAll(".carousel")
-		M.Carousel.init(carousel, {
-			dist: -100,
-			shift: 0,
-			padding: 20,
-			numVisible: 5,
-			indicators: true,
-			fullWidth: false
-		})
-
+		if(!init){
+			let carousel = document.querySelectorAll(".carousel")
+			M.Carousel.init(carousel, {
+				dist: -100,
+				shift: 0,
+				padding: 20,
+				numVisible: 5,
+				indicators: true,
+				fullWidth: false
+			})
+			setInit(true)
+		}
 		
 		if(currentUser){
 			let userName = currentUser.displayName
-			let firstName = userName.split(' ')[0];
+			let firstName = userName;
 			setUserFirstname(firstName)
 		}
 		let lang = navigator.language || navigator.userLanguage;
 		let language = lang.split('-')[0];
-		console.log(language);
 
 		//! inside return, same as ComponentWillUnmount! unsubscribe firestore listeners
 		
@@ -71,20 +73,20 @@ const dashboard = (userData) => {
 
 	//! 3 firestore listeners!
 	function blogPostListener(){
-		fetchUserblog(userData.userAuth.uid)
+		fetchUserblog(userAuth.uid)
 		.then(blogs => {
 			blogsToSend = blogs
 			setBlogPosts(blogs)
 		})
 	}
 	function hotelListener(){
-		fetchUserHotels(userData.userAuth.uid)
+		fetchUserHotels(userAuth.uid)
 		.then(userHotels => {
 			setStayingHotels(userHotels)
 		})
 	}
 	function DbUserDataListener(){
-		fetchDbUserData(userData.userAuth.uid)
+		fetchDbUserData(userAuth.uid)
 		.then(user => {
 			setDbUserData(user)
 		})
@@ -98,7 +100,6 @@ const dashboard = (userData) => {
 				setUserLocation(position.coords)
 				reverseGeolocation(position)
 			})
-			// setLocationLoading(false)
 		}else {
 			setLocationLoading(false)
 			setLocationError('Browser does not support Geolocation')
@@ -131,7 +132,6 @@ const dashboard = (userData) => {
 		setByCountrySearchTerm(dataFromChildToParent)
 	}
 
-
 	return (
 		<div className="dashboard-main">	
 			<Sidenav dataFromChildToParent={filterCountry} dbUserData={dbUserData}/>
@@ -153,7 +153,7 @@ const dashboard = (userData) => {
 				<div className="row valign-wrapper">
 					<div className="greeting-section col">				
 						<h4>Hi {currentUser && UserFirstname}!</h4>
-						<h5>Let's start your jurney</h5>					
+						<h5>Let's start your journey</h5>					
 					</div>
 				</div>
 				<div className="row valign-wrapper">
@@ -161,8 +161,8 @@ const dashboard = (userData) => {
 						<div className="row">
 							<div className="input-field col s8 push-s2 m6 push-m3">
 								<i className="material-icons prefix">search</i>
-								<input type="search" onChange={(e) => setSearchText(e.target.value)} name="" id="search-field"/>
-								<label htmlFor="search-field">Make a search</label>
+								<input type="search" className="white-text" onChange={(e) => setSearchText(e.target.value)} name="" id="search-field"/>
+								<label className="white-text" htmlFor="search-field">Make a search</label>
 							</div>
 						</div>
 					</form>
@@ -170,152 +170,21 @@ const dashboard = (userData) => {
 				{/* //TODO mapa ut post i karusellen med bild och position */}
 				<div className="row valign-wrapper">
 					<div className="col s12 center-align post-carousel-section">
-
-
-					<div className="custom-body">
-						{/* //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten */}
-						{/* //! userBlogs, skickar vidare bloggarna vi fått med subscription från Firetore till Slides för att visa och visa eventuella sökresultat */}
-						<Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/>
+						<div className="custom-body">
+							{/* //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten */}
+							{/* //! userBlogs, skickar vidare bloggarna vi fått med subscription från Firetore till Slides för att visa och visa eventuella sökresultat */}
+							<Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/>
+						</div>
 					</div>
-
-
-
-
-
-						{/* <div className="carousel post-carousel"> */}
-						{/* {blogPosts.map((post) => (
-								<a href="#one!" className="carousel-item post-carousel-item">
-									<Image
-									src={post.imgURL}
-									alt="post image"
-									quality={75}
-									layout="fill"
-									/>
-									<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-								</a>
-							))} */}
-							{/* {userData.userBlogs.map((post) => (
-								<a href="#one!" className="carousel-item post-carousel-item" key={post.id}>
-									<img
-									src="https://res.cloudinary.com/allseeingeye/image/upload/v1605473801/nexusBoats/boat_019_lrefjr.jpg"
-									alt="post image"
-									/>
-									<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-								</a>
-							))} */}
-							 {/* <a href="#one!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/ben-white-qDY9ahp0Mto-unsplash.jpg" 
-								alt="test0"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a>
-							<a href="#two!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/green-chameleon-s9CC2SKySJM-unsplash.jpg" 
-								alt="test1"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a>
-							<a href="#three!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/jeshoots-com--2vD8lIhdnw-unsplash.jpg" 
-								alt="test2"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a>
-							<a href="#four!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/kendal-L4iKccAChOc-unsplash.jpg" 
-								alt="test3"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a>
-							<a href="#five!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/lacie-slezak-yHG6llFLjS0-unsplash.jpg" 
-								alt="test4"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a>
-							<a href="#six!" className="carousel-item post-carousel-item">
-								<Image
-								src="/../public/assets/testimages/scott-graham-5fNmWej4tAA-unsplash.jpg" 
-								alt="test5"
-								quality={75}
-								layout="fill"
-								/>
-								<p className="post-location-container"><i className=" material-icons">place</i>this is location</p>
-							</a> */}
-						{/* </div> */}
-					</div>
-				</div>
-			
+				</div>			
 		</div>
 	)
 }
 
 dashboard.getInitialProps = async props => {
-	console.info("### Yay! you're Authorized!", props);
-	if(projectAuth.currentUser){
-		const logedInUserId = projectAuth.currentUser.uid
-		const userDbRef = projectFirestore.collection('testUserCollection').doc(logedInUserId)
-		let userData;
-		// let userBlogs = [];
-		// let userStayingHotels = [];
-		if(logedInUserId == null){
-			userData = (await userDbRef.get()).data()
-			// if(userData){
-			// 	await userDbRef.collection('blogPosts').get()
-			// 	.then(docSet => {
-			// 		docSet.forEach(doc => {
-			// 			userBlogs.push({
-			// 				id: doc.id,
-			// 				...doc.data()
-			// 			})
-			// 		})
-			// 		console.log(userBlogs);
-			// 		return userBlogs
-			// 	})
-			// 	.catch(err => {
-			// 		console.error('Fetch user blogs Error', err);
-			// 		setBroadcastMessage(err)
-			// 	})
-			// 	await userDbRef.collection('stayingHotel').get()
-			// 	.then(docSet => {
-			// 		docSet.forEach(doc =>  {
-			// 			userStayingHotels.push({
-			// 				id: doc.id,
-			// 				...doc.data()
-			// 			})
-			// 		})
-			// 		return userStayingHotels
-			// 	})
-			// 	.catch(err => {
-			// 		console.error('Fetch user hotels Error', err);
-			// 		setBroadcastMessage(err)
-			// 	})
-			// }
-		console.log('userData from initialProps', userData);
-		return userData
-		// return {userData, userBlogs: userBlogs, userStayingHotels: userStayingHotels}
-	}else{
-		console.log('No user present');
-	}
-}
-	return {}
-}
+	// console.info('##### Congratulations! You are authorized! ######', props);
+	return {};
+};
 
-// export default dashboard
 export default withPrivateRoute(dashboard)
 
