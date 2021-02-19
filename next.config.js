@@ -1,11 +1,10 @@
 require('dotenv').config()
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
-// const webpack = require('webpack')
 
 module.exports = {
 	images: {
-		domains: ['lh3.googleusercontent.com', 'photos.app.goo.gl'],
+		domains: ['lh3.googleusercontent.com', 'photos.app.goo.gl', 'firebasestorage.googleapis.com'],
 	  },
 	webpack(config) {
 		config.node = {
@@ -16,7 +15,6 @@ module.exports = {
 				path: path.join(__dirname, '.env'),
 				systemvars: true
 			})
-			// new webpack.EnvironmentPlugin(process.env)
 		  )
 	  config.module.rules.push({
 		test: /\.svg$/,
