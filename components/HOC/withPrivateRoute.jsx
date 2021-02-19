@@ -3,6 +3,7 @@ import React from 'react'
 import { projectAuth } from '../../firebase/config';
 
 
+
 const login = '/login?redirected=true';
 
 // /**
@@ -11,19 +12,20 @@ const login = '/login?redirected=true';
 // // * @returns {{auth: null}}
 // */
 
-const checkUserAuthentication = () => {
-	let isAdmin = true
-	return isAdmin
-	//  projectAuth.currentUser
+
+const checkUserAuthentication = async () => {
+	
+	// return currentUser
+	return projectAuth.currentUser
 }
 
 export default WrappedComponent => {
+	
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 	
 	hocComponent.getInitialProps = async (context) => {
-		
 		const userAuth = await checkUserAuthentication();
-
+		// console.log(userAuth);
 		// Are you really allowed here?
 		if(!userAuth){
 			// Handle server-side and client-side rendering
