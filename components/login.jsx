@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
@@ -7,18 +7,8 @@ import Googleicon from '../public/assets/icons8-google.svg'
 
 //TODO gör Autocompleat för alla inputfält 
 
-function login() {
-	useEffect(() => {
-		setShowContent(false)
-		if(currentUser && currentUser.uid){
-			router.push('/user/dashboard')
-		}else if(!currentUser){
-			setShowContent(true)
-		}
-		router.prefetch('/user/dashboard')
-	}, [])
+function login(props) {
 	const router = useRouter()
-	const [showContent, setShowContent] = useState(false)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState('')
@@ -58,13 +48,6 @@ function login() {
 			console.error(err);
 		}
 	}
-	if(!showContent){
-		return(
-			<>
-			</>
-		)
-	}
-	else{
 		return (
 			<>
 					{/* {JSON.stringify(currentUser)} */}
@@ -75,7 +58,7 @@ function login() {
 						{error && <div className="customError">{error}</div>}
 						<div className="row">
 							<div className="input-field col s10 push-s1 m10 push-m1">
-								<input type="email" name="" className="validate white-text" id="email" onChange={(e) => setEmail(e.target.value)}/>
+								<input autoComplete="email" type="email" name="" className="validate white-text" id="email" onChange={(e) => setEmail(e.target.value)}/>
 								<label htmlFor="email">
 									Email
 								</label>
@@ -83,7 +66,7 @@ function login() {
 						</div>
 						<div className="row ">
 							<div className="input-field col s10 push-s1 m10 push-m1">
-								<input type="password" name="" className="validate white-text" id="password" onChange={(e) => setPassword(e.target.value)}/>
+								<input autoComplete="current-password" type="password" name="" className="validate white-text" id="password" onChange={(e) => setPassword(e.target.value)}/>
 								<label htmlFor="password">
 									Password
 								</label>
@@ -105,7 +88,7 @@ function login() {
 				</div>
 			</>
 		)
-	}
+	
 }
 
 export default login
