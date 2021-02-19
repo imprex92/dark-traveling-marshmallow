@@ -4859,11 +4859,6 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^6.1.0"
 
-"jquery@^3.5.1":
-  "integrity" "sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg=="
-  "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.5.1.tgz"
-  "version" "3.5.1"
-
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha1-GSA/tZmR35jjoocFDUZHzerzJJk="
   "resolved" "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz"
@@ -5423,6 +5418,11 @@
   "integrity" "sha1-PrXtYmInVteaXw4qIh3+utdcL34="
   "resolved" "https://registry.npm.taobao.org/mkdirp/download/mkdirp-1.0.4.tgz?cache=0&sync_timestamp=1598867243878&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz"
   "version" "1.0.4"
+
+"moment@^2.29.1":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
 
 "move-concurrently@^1.0.1":
   "integrity" "sha1-viwAX9oy4LKa8fBdfEszIUxwH5I="
