@@ -11,7 +11,7 @@ if(typeof window !== 'undefined'){
 }
 //TODO Write a title for every page
 
-const dashboard = ({userAuth}) => {
+const dashboard = ({userAuth, userBlogs}) => {
 	const logedInUserId = userAuth?.uid
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(logedInUserId)
 	const {currentUser} = useAuth()
@@ -29,7 +29,6 @@ const dashboard = ({userAuth}) => {
 	const [init, setInit] = useState(false)
 	let blogsToSend;
 	useEffect(() => {
-		// console.log('here you have the damn props again! ', userAuth);
 		//! ComponentWillMount!
 		const unsubscribePosts = userDbRef.collection('blogPosts').onSnapshot(blogPostListener, err => {
 			console.error('Subscibe to blogposts failed', err);
@@ -69,6 +68,9 @@ const dashboard = ({userAuth}) => {
 			unsubscribeHotels
 			unsubscribeDbUserData
 		}
+	}, [])
+	useEffect(() => {
+		blogPosts.length === 0 ? setBlogPosts(userBlogs) : ''
 	}, [])
 
 	//! 3 firestore listeners!
@@ -183,7 +185,16 @@ const dashboard = ({userAuth}) => {
 
 dashboard.getInitialProps = async props => {
 	// console.info('##### Congratulations! You are authorized! ######', props);
-	return {};
+	let userBlogs = []
+	console.log('this is props: ', props.auth.uid);
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(props.auth.uid)
+	await userDbRef.collection('blogPosts').get()
+	.then(docSet => {
+		if(docSet !== null){
+			docSet.forEach(doc => userBlogs.push(({...doc.data(), id: doc.id})))
+		}
+	})
+	return {userBlogs};
 };
 
 export default withPrivateRoute(dashboard)
