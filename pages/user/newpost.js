@@ -7,7 +7,7 @@ const newpost = ({userAuth}) => {
 		<div>
 			<img
 			className="newpost-img"
-			src="/assets/iceland-5104385_1920.jpg"
+			src="/assets/iceland-5104385_1920.jpeg"
 			alt="Beautiful nature"
 			layout="fill"
 			objectfit="fit"
