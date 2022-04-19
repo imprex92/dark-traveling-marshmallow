@@ -1,0 +1,170 @@
+.dashboard-main {
+  background-color: #171c48;
+}
+
+.add-form-post-section {
+  margin-left: 3.5em;
+}
+
+.new-post-form-wrapper {
+  margin-top: 3em;
+}
+
+.tabs-content.carousel.carousel-slider {
+  height: 98vh !important;
+}
+.tabs-content.carousel.carousel-slider .carousel-item.active {
+  position: relative;
+}
+
+.fileinput-error {
+  padding: 1em;
+  border-radius: 10px;
+  border: 1px solid red;
+}
+
+.autocomplete-content {
+  max-height: 30vh !important;
+}
+
+.geoLocation-section {
+  margin-top: 2.5%;
+  margin-left: 1em !important;
+}
+.geoLocation-section > span {
+  cursor: pointer;
+}
+.geoLocation-section > span > p {
+  color: #fff;
+}
+.geoLocation-section > span > p > :not(i) {
+  color: #fff;
+}
+.geoLocation-section > span > p > i {
+  color: red;
+}
+
+.greeting-section {
+  margin-left: 5em;
+}
+.greeting-section > h4 {
+  margin-bottom: 0px;
+  font-weight: bold;
+  color: #fff;
+  font-family: "Karma", serif;
+}
+.greeting-section > h5 {
+  margin-top: 0px;
+  color: #999aad;
+  font-family: "Karma", serif;
+}
+
+.searchbar-section > .row > div > i {
+  color: white;
+}
+
+.searchbar-section > .row > .input-field input[type=search]:focus:not(.browser-default) {
+  background-color: unset;
+}
+
+.post-carousel {
+  height: 450px !important;
+}
+.post-carousel > .post-carousel-item {
+  width: 270px !important;
+  height: 340px !important;
+}
+@media (max-width: 600px) {
+  .post-carousel > .post-carousel-item {
+    width: 215px !important;
+    height: 281px !important;
+  }
+}
+
+.post-carousel-section {
+  margin-left: 3em !important;
+  margin-top: 4em;
+}
+@media (min-width: 1100px) {
+  .post-carousel-section {
+    margin-top: 1em;
+  }
+}
+@media (max-width: 450px) {
+  .post-carousel-section {
+    margin-top: 0em;
+  }
+}
+
+.carousel-item img {
+  border-radius: 30px;
+  object-fit: cover;
+}
+
+.post-location-container {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  color: white;
+}
+.post-location-container > i {
+  color: lightgray;
+  font-size: 20px;
+}
+
+.places-autocomplete > i:last-child {
+  color: red;
+  cursor: pointer;
+}
+
+.datepicker-section > i:last-child {
+  cursor: pointer;
+}
+
+.newpost-img {
+  object-fit: cover;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.tab-content {
+  margin-top: 1em;
+  padding-bottom: 1em !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  min-width: unset;
+}
+.tab-content > a {
+  margin: 0em 1em 0.5em 0em;
+}
+
+.file-input-icon {
+  margin-right: 3px !important;
+}
+
+input {
+  color: #fff;
+}
+
+label {
+  color: #fff !important;
+}
+
+.autocomplete-suggestions-wrapper {
+  background-color: #fff;
+  position: absolute;
+  z-index: 9;
+  padding-bottom: 5px;
+  left: 14%;
+  min-width: 205px;
+  top: 31px;
+}
+
+.Typewriter {
+  min-height: 110px;
+}
+
+/*# sourceMappingURL=dashboard.style.css.map */

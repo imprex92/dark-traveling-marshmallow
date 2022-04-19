@@ -1,34 +1,35 @@
 import Head from 'next/head'
 import { AuthProvider } from '../contexts/AuthContext'
+import { DatabaseProvider } from '../contexts/DatabaseContext'
 import '../styles/globals.css'
 import '../styles/materialize.css'
 import '../styles/signin.style.css'
-
+import '../styles/dashboard.style.css'
+import '../styles/slides-component.style.scss'
+import '../styles/blogPost-page.style.css'
+import '../styles/sideNav.style.css'
+import '../styles/singlePost.style.css'
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
 	}
+
+	//TODO check if jquery is really needed!
 
 function MyApp({Component,pageProps}) {
   return (
 	  <>
 	  	<AuthProvider>
-			<Head>
-				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-				{/* <link type="text/css" rel="stylesheet" href="../styles/materialize.css"  media="screen,projection"/> */}
-				<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-				<script 
-					src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
-					crossOrigin="anonymous"
-					/>
-					
-			</Head>
-			<Component {...pageProps}/>
+			{/* <DatabaseProvider> */}
+				<Head>
+					<meta charSet="utf-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+				</Head>
+				<Component {...pageProps}/>
+			{/* </DatabaseProvider> */}
 		</AuthProvider>
 	  </>
   );
 }
 
 export default MyApp;
-
-
-

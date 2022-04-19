@@ -1,0 +1,38 @@
+.slides-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slides {
+  display: grid;
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+.slides > .slide {
+  grid-area: 1/-1;
+}
+
+.slide {
+  width: 30vw;
+  height: 40vh;
+  border: 1px solid;
+  background-size: cover;
+  background-position: center center;
+  --x: calc( var(--px) - .5 );
+  transform: translateX(calc( 100% * var(--offset))) rotateY(calc( -25deg * var(--dir) ));
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide[data-active] {
+  border-color: red;
+  color: red;
+  --x: calc( var(--px) - .5 );
+  --y: calc( var(--py) - .5 );
+}
+.slide[data-active]:hover {
+  transition-duration: 0.05s;
+  transform: rotateY(calc(var(--x) * 45deg )) rotateX(calc(var(--y) * -45deg ));
+}
+
+/*# sourceMappingURL=slides-component.style.css.map */

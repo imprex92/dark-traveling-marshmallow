@@ -4757,7 +4757,7 @@ small {
   will-change: left, right;
 }
 
-@media only screen and (max-width : 992px) {
+/* @media only screen and (max-width : 992px) {
   .tabs {
     display: flex;
   }
@@ -4767,7 +4767,7 @@ small {
   .tabs .tab a {
     padding: 0 12px;
   }
-}
+} */
 .material-tooltip {
   padding: 10px 8px;
   font-size: 1rem;
