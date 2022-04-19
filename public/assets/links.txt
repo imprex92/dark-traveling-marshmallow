@@ -1,0 +1,5 @@
+Style google maps
+https://mapstyle.withgoogle.com/
+
+Compress images
+https://tinyjpg.com/
