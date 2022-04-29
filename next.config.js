@@ -7,9 +7,11 @@ module.exports = {
 		domains: ['lh3.googleusercontent.com', 'photos.app.goo.gl', 'firebasestorage.googleapis.com'],
 	  },
 	webpack(config) {
-		config.node = {
-			fs: 'empty'
-		  }
+		config.node = { 
+			global: true,
+			__filename: true,
+			__dirname: true, 
+		}
 		config.plugins.push(
 			new Dotenv({
 				path: path.join(__dirname, '.env'),

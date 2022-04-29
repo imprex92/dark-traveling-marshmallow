@@ -21,6 +21,7 @@
     "SASS-watch-singlepost": "sass --watch ./styles/sass/singlePost.style.sass:./styles/singlePost.style.css"
   },
   "dependencies": {
+    "@babel/core": "^7.17.10",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "country-list": "^2.2.0",
@@ -45,6 +46,7 @@
     "@svgr/webpack": "^5.5.0",
     "@types/materialize-css": "^1.0.8",
     "cross-env": "^7.0.3",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "resolve-url-loader": "^5.0.0"
   }
 }
