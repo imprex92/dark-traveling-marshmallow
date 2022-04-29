@@ -38,3 +38,5 @@ env.json
 # user dif
 /public/assets/planning/
 /firebase
+.firebase/hosting.cHVibGlj.cache
+*.cache

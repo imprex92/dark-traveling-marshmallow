@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "functions.js",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
-    "firebase-functions": "^3.13.1"
+    "firebase-functions": "^3.20.1"
   }
 }
