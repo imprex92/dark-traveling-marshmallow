@@ -1,0 +1,49 @@
+.singlePost-main {
+  background-color: #171c48;
+  color: white;
+}
+
+.singlepost-wrapper {
+  margin-left: 3em;
+}
+.singlepost-wrapper h4 {
+  text-indent: 1em;
+}
+
+.main-image-wrapper {
+  padding: 0 !important;
+}
+@media (min-width: 992px) {
+  .main-image-wrapper > img {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: contain;
+  }
+}
+@media (max-width: 991px) {
+  .main-image-wrapper > img {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: fill;
+  }
+}
+
+.small-wrapper-left {
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .small-wrapper-left {
+    text-align: center;
+  }
+}
+
+.small-wrapper-right {
+  text-align: right;
+}
+@media (max-width: 600px) {
+  .small-wrapper-right {
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=singlePost.style.css.map */

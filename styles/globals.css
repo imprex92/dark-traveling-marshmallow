@@ -1,9 +1,13 @@
 html,
-body {
+      body,
+      body > div:first-child,
+      div#__next,
+      div#__next > div {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, serif, 'Baloo 2', cursive;
+  height: 100%;
 }
 
 a {
@@ -13,4 +17,12 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.signin-content{
+  height: 100vh;
+}
+
+.main-start-page{
+	background-color: #171c48;
 }
