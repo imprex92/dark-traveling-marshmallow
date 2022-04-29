@@ -1,0 +1,30 @@
+.blogItem-wrapper
+	background: rgba(0,0,0,.25)
+	cursor: pointer
+	height: 300px
+	padding: .5em
+	color: white
+	@media ( max-width: 560px )
+		height: 175px
+		& h3
+			margin-top: 0
+
+
+.all-post-backgroundimg
+	border: 1px solid black
+	border-radius: 20px
+	background-size: cover
+
+.post-item-wrapper
+	margin-left: 3.5em
+	display: inline-grid
+	
+	column-gap: 2em
+	row-gap: 2em
+	@media ( min-width: 801px )
+		grid-template-columns: 1fr 1fr 1fr
+	@media ( max-width: 800px )
+		grid-template-columns: 1fr 1fr
+	@media ( max-width: 560px )
+		grid-template-columns: 1fr
+		

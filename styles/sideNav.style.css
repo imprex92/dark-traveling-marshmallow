@@ -1,0 +1,122 @@
+#vertical-nav {
+  z-index: 888;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: calc(100% - 48px);
+  background-color: #283070;
+  border-radius: 0 15px 15px 0;
+}
+#vertical-nav > a {
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  margin-top: 2.4em;
+  color: #fff;
+}
+#vertical-nav > .wrapper {
+  left: 8px;
+  top: 0vh;
+  width: 0px;
+  margin: 4px;
+  display: flex;
+  flex-direction: row-reverse;
+  position: fixed;
+  transform-origin: top;
+}
+@media (min-width: 1200px) {
+  #vertical-nav > .wrapper {
+    transform: rotate(-90deg) translate(0px, 0px);
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  #vertical-nav > .wrapper {
+    transform: rotate(-90deg) translate(0px, 0px);
+  }
+}
+@media (max-width: 991px) {
+  #vertical-nav > .wrapper {
+    transform: rotate(-90deg) translate(0px, 0px);
+  }
+}
+#vertical-nav > .wrapper > a {
+  padding-right: 3em;
+  color: #fff;
+}
+
+#newpost-menu-btn {
+  transform: unset;
+}
+
+.vertical-menu-btn > i {
+  transform: rotate(90deg);
+}
+
+.tabs {
+  margin: 4px;
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  margin-right: -100%;
+  transform: rotate(-90deg) translate(20px, -224px);
+  transform-origin: right bottom;
+  height: unset;
+  width: unset;
+  background-color: unset;
+}
+.tabs > .tab > a {
+  color: white;
+}
+
+#vertical-nav-light {
+  z-index: 888;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: calc(100% - 48px);
+  background-color: #283070;
+  border-radius: 0 15px 15px 0;
+}
+#vertical-nav-light > a {
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  margin-top: 2.4em;
+  color: #fff;
+}
+#vertical-nav-light > .wrapper {
+  left: -9px;
+  top: 13%;
+  margin: 4px;
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  transform-origin: center;
+}
+@media (min-width: 1200px) {
+  #vertical-nav-light > .wrapper {
+    transform: rotate(-90deg) translate(20px, -72px);
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  #vertical-nav-light > .wrapper {
+    transform: rotate(-90deg) translate(20px, -70px);
+  }
+}
+@media (max-width: 991px) {
+  #vertical-nav-light > .wrapper {
+    transform: rotate(-90deg) translate(20px, -68px);
+  }
+}
+#vertical-nav-light > .wrapper > a {
+  padding-right: 3em;
+  color: #fff;
+}
+
+/*# sourceMappingURL=sideNav.style.css.map */
