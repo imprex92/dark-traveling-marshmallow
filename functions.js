@@ -3,16 +3,16 @@ const functions = require('firebase-functions');
 const cors = require('cors')({origin: true});
 const config = functions.config()
 const { default: next } = require('next');
-const isDev = process.env.NODE_ENV !== 'production';
 const express = require('express');
 const { createServer } = require('http')
 const { parse } = require('url')
 const app = express();
 
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 const server = next({
   dev: isDev,
-  //location of .next generated after running -> yarn build
   conf: { distDir: '.next' },
 });
 
