@@ -6,9 +6,14 @@ module.exports = {
 	images: {
 		domains: ['lh3.googleusercontent.com', 'photos.app.goo.gl', 'firebasestorage.googleapis.com'],
 	  },
-	webpack(config) {
-		config.node = {
-			fs: 'empty'
+	webpack(config, {isServer }) {
+		config.node = { 
+			global: true,
+			__filename: true,
+			__dirname: true, 
+		}
+		if (!isServer) {
+			config.resolve.fallback.fs = false;
 		  }
 		config.plugins.push(
 			new Dotenv({
