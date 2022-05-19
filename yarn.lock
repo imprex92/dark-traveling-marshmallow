@@ -1377,6 +1377,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@materializecss/materialize@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@materializecss/materialize/-/materialize-1.1.0.tgz#22096b7ab908bc7c6e00fe10c2c0295c0c9dcca6"
+  integrity sha512-W2MrDC8mzpMWyP2OpS0RWTWGcLiRRBz7kn2E9TsbardPyVNFdoNvXq5sLy3NcEfAlACc1+L7Q95+pBuUX44dRg==
+
 "@next/env@12.1.6":
   version "12.1.6"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-12.1.6.tgz#5f44823a78335355f00f1687cfc4f1dafa3eca08"
@@ -3338,11 +3343,6 @@ make-dir@^3.0.0:
   integrity sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==
   dependencies:
     semver "^6.0.0"
-
-materialize-css@^1.0.0-rc.2:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/materialize-css/-/materialize-css-1.0.0.tgz#8d5db1c4a81c6d65f3b2e2ca83a8e08daa24d1be"
-  integrity sha512-4/oecXl8y/1i8RDZvyvwAICyqwNoKU4or5uf8uoAd74k76KzZ0Llym4zhJ5lLNUskcqjO0AuMcvNyDkpz8Z6zw==
 
 mdn-data@2.0.14:
   version "2.0.14"
