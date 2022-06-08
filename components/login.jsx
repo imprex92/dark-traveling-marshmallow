@@ -4,13 +4,14 @@ import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
 // import { useFirestore } from '../contexts/DatabaseContext'
 import Googleicon from '../public/assets/icons8-google.svg'
+import { verifyEmail } from "../components/utility/verifyEmail";
 
 //TODO gör Autocompleat för alla inputfält 
 
 function login(props) {
 	const router = useRouter()
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+	const [email, setEmail] = useState(null)
+	const [password, setPassword] = useState(null)
 	const [error, setError] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 	// currentUser can be removed, just for testing!
@@ -19,13 +20,18 @@ function login(props) {
 
 	async function handleSubmit(e){
 		e.preventDefault()
-		//TODO signUp validation
 		try {
-			setError('')
 			setIsLoading(true)
-			await login(email, password)
-			await getUserDocument()
-			router.push('/user/dashboard')
+			if(email && password && verifyEmail(email)){
+				setError('')
+				await login(email, password)
+				//await getUserDocument()
+				router.push('/user/dashboard')
+				setIsLoading(false)
+			}else{
+				setError('Please check email and password')
+				setIsLoading(false)
+			}
 		}
 		catch(err){
 			console.error(err)
