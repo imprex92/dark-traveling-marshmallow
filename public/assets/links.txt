@@ -3,3 +3,6 @@ https://mapstyle.withgoogle.com/
 
 Compress images
 https://tinyjpg.com/
+
+On Deploy:
+If you get "Error 400" on firebase_functions, remove the chash folder in .next-folder. See https://github.com/firebase/firebase-tools/issues/1123

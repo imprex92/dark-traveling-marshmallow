@@ -11,7 +11,7 @@ import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
 import countryList from 'country-list'
 import ProgressBar from '../ProgressBar'
 if(typeof window !== 'undefined'){
-	M = require( 'materialize-css/dist/js/materialize.js')
+	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
 require('dotenv').config()
 
