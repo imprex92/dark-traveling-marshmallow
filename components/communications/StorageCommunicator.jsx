@@ -49,8 +49,6 @@ export default function StorageCommunicator({userAuth}) {
 	const [uploadedURL, setUploadedURL] = useState(null)
 
 	useEffect(() => {
-		
-		console.log(uploadedURL);
 
 		let sidenav = document.querySelectorAll(".sidenav");
 		let tabs = document.querySelectorAll(".tabs");
@@ -78,11 +76,12 @@ export default function StorageCommunicator({userAuth}) {
 			setInit(true)
 			}
 		}, [uploadedURL]) //! formCountry?
-		//TODO close sidenav on logout!
+		
 	async function handleLogout() {
 		setError('')
 		try{
 			await logout()
+			closeSideNav()
 			router.push('/login')
 		}
 		catch{
@@ -200,7 +199,7 @@ export default function StorageCommunicator({userAuth}) {
 		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 	}
-
+	
 	return (
 		<div>
 			{/* //! vertical navigation area! */}
@@ -237,15 +236,15 @@ export default function StorageCommunicator({userAuth}) {
 							<Typewriter 
 								onInit={(typewriter) => {
 									typewriter.changeDelay(50)
-									.typeString("<span style=font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>Greetings traveler!</span>")	
+									.typeString("<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>Greetings traveler!</span>")	
 									.pauseFor(350)
 									.deleteChars(9)
 									.pauseFor(200)
-									.typeString("<span style=font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>or...</span>")
+									.typeString("<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>or...</span>")
 									.pauseFor(350)
 									.deleteChars(5)
 									.pauseFor(200)
-									.typeString(`<span style=font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>${currentUser.displayName}!</span>`)
+									.typeString(`<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>${currentUser.displayName ? currentUser.displayName : 'traveler'}!</span>`)
 									.pauseFor(2000)
 									.typeString("<br/> <span style=font-size:1.17em;font-weight:bold;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;color:lightgray;>Start your journey by completing this 3-step form...</span>")
 									.start()
