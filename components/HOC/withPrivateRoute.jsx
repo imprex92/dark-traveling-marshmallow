@@ -1,8 +1,7 @@
 import Router from 'next/router';
 import React from 'react'
 import { projectAuth } from '../../firebase/config';
-
-
+import { getCookie } from "../utility/CookieHandler";
 
 const login = '/login?redirected=true';
 
@@ -24,7 +23,8 @@ export default WrappedComponent => {
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 	
 	hocComponent.getInitialProps = async (context) => {
-		const userAuth = await checkUserAuthentication();
+		const userAuth = getCookie(idToken) ?? await checkUserAuthentication();
+		console.log(userAuth);
 		// console.log(userAuth);
 		// Are you really allowed here?
 		if(!userAuth){
@@ -38,7 +38,9 @@ export default WrappedComponent => {
 				Router.replace(login);
 			}
 		} else if(WrappedComponent.getInitialProps){
-			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth});
+			let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
+			console.log('user token: ', token);
+			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth, additional: {idToken: token}});
 			return { ...wrappedProps, userAuth};
 		}
 
