@@ -7,7 +7,7 @@ import Sidenav from '../../components/nav/SideNav'
 import withPrivateRoute from '../../components/HOC/withPrivateRoute'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../components/utility/subscriptions'
 if(typeof window !== 'undefined'){
-	M = require( 'materialize-css/dist/js/materialize.js')
+	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
 //TODO Write a title for every page
 

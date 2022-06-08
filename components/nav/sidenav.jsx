@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
 if(typeof window !== 'undefined'){
-	M = require( 'materialize-css/dist/js/materialize.js')
+	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
 
 //TODO make sure siddenav closes after pagechange (instance.close())
