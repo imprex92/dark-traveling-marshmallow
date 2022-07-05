@@ -119,7 +119,7 @@ export function AuthProvider({children, userAuth}) {
 	}
 
 	function logout(){
-		removeCookie(idToken)
+		removeCookie('idToken')
 		return projectAuth.signOut()
 	}
 	

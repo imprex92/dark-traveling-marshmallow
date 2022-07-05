@@ -10,10 +10,11 @@ export function setCookie(cname, cvalue, exdays){
 }
 
 export function removeCookie(cname){
-	document.cookie = cname + '=; path=/;';
+	document.cookie = cname + '=' + null + ';' + 'path=/;';
 }
 
 export function getCookie(cname) {
+  if (typeof window !== 'undefined'){
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -26,5 +27,5 @@ export function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  return null;
+  return null;}
 }

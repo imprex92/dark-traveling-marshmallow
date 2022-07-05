@@ -19,11 +19,11 @@ const checkUserAuthentication = async () => {
 }
 
 export default WrappedComponent => {
-	
+	var userAuth = getCookie('idToken')
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 	
 	hocComponent.getInitialProps = async (context) => {
-		const userAuth = getCookie(idToken) ?? await checkUserAuthentication();
+		var userAuth = getCookie('idToken') ?? await checkUserAuthentication();
 		console.log(userAuth);
 		// console.log(userAuth);
 		// Are you really allowed here?
