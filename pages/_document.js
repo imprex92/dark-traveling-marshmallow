@@ -9,11 +9,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZt0vlObs4uTbyW87Qm2zBnuBBllmnf5A&libraries=places"></script>
+        </Head>
         <body>
           <Main />
           <NextScript />
-          <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZt0vlObs4uTbyW87Qm2zBnuBBllmnf5A&libraries=places"></script>
         </body>
       </Html>
     )
