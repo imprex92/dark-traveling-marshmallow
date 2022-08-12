@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
+import { setCookie, removeCookie } from "../components/utility/CookieHandler";
 // import { useFirestore } from '../contexts/DatabaseContext'
 // import { auth } from 'firebase-admin';
 
@@ -17,7 +18,6 @@ export function AuthProvider({children, userAuth}) {
 
 	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
-			// console.log(user);
 			setCurrentUser(user)
 			setIsLoading(false)
 		})
@@ -51,7 +51,8 @@ export function AuthProvider({children, userAuth}) {
 	async function login(email, password){
 		await projectAuth.signInWithEmailAndPassword(email, password)
 		.then(async(cred) => {
-			// console.log(cred);
+			let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
+			setCookie('idToken', token, 7)
 			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
 			setDbUserData(userData)
 		})
@@ -86,8 +87,10 @@ export function AuthProvider({children, userAuth}) {
 							providerId: result.additionalUserInfo.providerId,
 							created: projectTimestampNow
 						}, { merge: true })
-						.then((doc) => {
+						.then(async(doc) => {
 							// console.log('New userDoc created', doc);
+							let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
+							setCookie('idToken', token, 7)
 							setDbUserDocument(doc)
 						})
 						.catch((err) => {
@@ -95,6 +98,8 @@ export function AuthProvider({children, userAuth}) {
 						})
 					}
 					else if(!result.additionalUserInfo.isNewUser){
+						let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
+						setCookie('idToken', token, 7)
 						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
 						setDbUserData(userData)
 					}
@@ -114,6 +119,7 @@ export function AuthProvider({children, userAuth}) {
 	}
 
 	function logout(){
+		removeCookie('idToken')
 		return projectAuth.signOut()
 	}
 	
@@ -136,7 +142,5 @@ export function AuthProvider({children, userAuth}) {
 }
 
 AuthProvider.getInitialProps = async props => {
-
-	// console.info('##### Congratulations! You are authorized! ######', props);
 	return {};
 };
