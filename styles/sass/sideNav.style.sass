@@ -1,3 +1,5 @@
+@use 'variables'
+
 #vertical-nav
 	z-index: 888
 	position: absolute
@@ -5,7 +7,7 @@
 	bottom: 0
 	left: 0
 	right: calc(100% - 48px)
-	background-color: #283070
+	background-color: variables.$menu-base-background
 	border-radius: 0 15px 15px 0
 	& > a
 		display: flex
@@ -66,7 +68,7 @@
 	bottom: 0
 	left: 0
 	right: calc(100% - 48px)
-	background-color: #283070
+	background-color: variables.$menu-base-background
 	border-radius: 0 15px 15px 0
 	& > a
 		display: flex

@@ -1,18 +1,18 @@
-$pushFromNav: 3em
+@use 'variables'
 
 .singlePost-main
-	background-color: #171c48
+	background: variables.$base-gradiant
 	color: white
 
 .singlepost-wrapper
-	margin-left: $pushFromNav
+	margin-left: variables.$pushFromNav
 	& h4
 		text-indent: 1em
 
 .main-image-wrapper
 	padding: 0 !important
 	& > img
-		@media  ( min-width: 992px )			
+		@media  ( min-width: 992px )
 			width: 100%
 			max-height: 50vh
 			object-fit: contain
