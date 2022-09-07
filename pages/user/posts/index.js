@@ -64,7 +64,6 @@ const index = ({userAuth}) => {
 		<div className="dashboard-main">
 			<SideNav dataFromChildToParent={filterCountry} dbUserData={dbUserData}/>
 			<BlogList countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/>
-			{/* <BlogList searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/> */}
 		</div>
 	)
 }
