@@ -1,12 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import WeatherMaster from '../components/WeatherMaster'
+import OpenWeather from '../components/OpenWeather'
+import { useAuth } from '../contexts/AuthContext'
+import { fetchWeatherByCoords, fetchWeatherByQuery } from '../components/utility/WeatherHandler'
+import { getGeolocation } from '../components/utility/GetGeolocation'
+import { getSs, setSs } from '../components/utility/StateHandler'
 
 const weather = () => {
+	const { currentUser } = useAuth()
+	const isOnline = currentUser ? true : false
+	
+	const [weatherObj, setWeatherObj] = useState(null)
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		const getInitialWeather = async () => {
+			setIsLoading(true)
+			const geoLocation = await getGeolocation()
+			const coords = geoLocation && {latitude: geoLocation.data.latitude, longitude: geoLocation.data.longitude}
+			coords && await fetchWeatherByCoords(coords).then(data => {
+				console.log('fetch initial');
+				setWeatherObj(data)
+				setSs('userGeoLatest', data)
+				setIsLoading(false)
+			})
+		}
+		getSs('userGeoLatest') ? (setWeatherObj(getSs('userGeoLatest')), setIsLoading(false)) : getInitialWeather()
+	
+	  return () => {
+		
+	  }
+	}, [])
+	
+	async function handleFetchWeather(location){
+		//setIsLoading(true)
+		console.log(location);
+		await fetchWeatherByQuery(location).then(res => {
+			console.log(res);
+			setWeatherObj(res)
+			//setIsLoading(false)
+		})
+	}
+
 	return (
-		<div>
-			<span>This is the weather page</span>
-			<WeatherMaster/>
-		</div>
+		<>
+			<WeatherMaster isOnline={isOnline} />
+			<div className='dashboard-main weather'>
+				<h2>Weather</h2>
+				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} />}
+				{isLoading && <div>Shit is loading in here!</div>}
+			</div>
+		</>
 	)
 }
 
