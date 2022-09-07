@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import React from 'react'
 import { projectAuth } from '../../firebase/config';
-import { getCookie } from "../utility/CookieHandler";
+import { getCookie, setCookie } from "../utility/CookieHandler";
 
 const login = '/login?redirected=true';
 
@@ -11,7 +11,6 @@ const login = '/login?redirected=true';
 // // * @returns {{auth: null}}
 // */
 
-
 const checkUserAuthentication = async () => {
 	
 	// return currentUser
@@ -19,13 +18,11 @@ const checkUserAuthentication = async () => {
 }
 
 export default WrappedComponent => {
-	var userAuth = getCookie('idToken')
+	
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 	
 	hocComponent.getInitialProps = async (context) => {
-		var userAuth = getCookie('idToken') ?? await checkUserAuthentication();
-		console.log(userAuth);
-		// console.log(userAuth);
+		var userAuth = await checkUserAuthentication();
 		// Are you really allowed here?
 		if(!userAuth){
 			// Handle server-side and client-side rendering
@@ -38,9 +35,11 @@ export default WrappedComponent => {
 				Router.replace(login);
 			}
 		} else if(WrappedComponent.getInitialProps){
-			let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
-			console.log('user token: ', token);
-			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth, additional: {idToken: token}});
+			let additionalData = {
+				latestPosition: getCookie('latestLocation') || null
+			}
+			console.log(getCookie('latestLocation'));
+			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth, additional: additionalData});
 			return { ...wrappedProps, userAuth};
 		}
 

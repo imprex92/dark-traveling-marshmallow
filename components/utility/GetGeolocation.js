@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCookie, setCookie } from "../utility/CookieHandler";
 
 export function getGeolocation(){
 	return new Promise((resolve, reject) => {
@@ -13,8 +14,8 @@ export function getGeolocation(){
 				axios.get(fullURL)
 				.then(result => {
 					console.log("reverse OK", result);
+					setCookie('latestLocation', result.data, 7);
 					const reversedGeoData = result;
-					console.log('result', reversedGeoData);
 					resolve(reversedGeoData)
 				})
 				.catch(err => {
