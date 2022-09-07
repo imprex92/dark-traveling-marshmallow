@@ -1,8 +1,5 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
-import { setCookie, removeCookie } from "../components/utility/CookieHandler";
-// import { useFirestore } from '../contexts/DatabaseContext'
-// import { auth } from 'firebase-admin';
 
 const AuthContext = createContext();
 
@@ -13,7 +10,7 @@ export function useAuth(){
 export function AuthProvider({children, userAuth}) {
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
-	const [dbUserDocument, setDbUserData] = useState([])
+	const [dbUserDocument, setDbUserDocument] = useState([])
 	const [error, setError] = useState('')
 
 	useEffect(() => {
@@ -51,10 +48,8 @@ export function AuthProvider({children, userAuth}) {
 	async function login(email, password){
 		await projectAuth.signInWithEmailAndPassword(email, password)
 		.then(async(cred) => {
-			let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
-			setCookie('idToken', token, 7)
 			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
-			setDbUserData(userData)
+			setDbUserDocument(userData)
 		})
 		.catch((err) => {
 			setError(err)
@@ -76,7 +71,6 @@ export function AuthProvider({children, userAuth}) {
 			const result = await projectAuth
 				.signInWithPopup(projectGoogleAuthProvider)
 				.then( async (result) => {
-					// console.log(result);
 					if(result.additionalUserInfo.isNewUser){
 						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
 							displayName: result.user.displayName || 'null',
@@ -87,10 +81,7 @@ export function AuthProvider({children, userAuth}) {
 							providerId: result.additionalUserInfo.providerId,
 							created: projectTimestampNow
 						}, { merge: true })
-						.then(async(doc) => {
-							// console.log('New userDoc created', doc);
-							let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
-							setCookie('idToken', token, 7)
+						.then((doc) => {
 							setDbUserDocument(doc)
 						})
 						.catch((err) => {
@@ -98,8 +89,6 @@ export function AuthProvider({children, userAuth}) {
 						})
 					}
 					else if(!result.additionalUserInfo.isNewUser){
-						let token = await projectAuth.currentUser.getIdToken(true).then((idToken) => { return idToken });
-						setCookie('idToken', token, 7)
 						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
 						setDbUserData(userData)
 					}
@@ -119,7 +108,6 @@ export function AuthProvider({children, userAuth}) {
 	}
 
 	function logout(){
-		removeCookie('idToken')
 		return projectAuth.signOut()
 	}
 	
