@@ -9,6 +9,8 @@ import '../styles/slides-component.style.scss'
 import '../styles/blogPost-page.style.css'
 import '../styles/sideNav.style.css'
 import '../styles/singlePost.style.css'
+import '../styles/weather.style.css'
+
 if(typeof window !== 'undefined'){
 	require( '../js/materialize')
 	}
@@ -23,7 +25,6 @@ function MyApp({Component,pageProps}) {
 				<Head>
 					<meta charSet="utf-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 				</Head>
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}

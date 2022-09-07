@@ -11,6 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <script  src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}></script>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         </Head>
         <body>
           <Main />
