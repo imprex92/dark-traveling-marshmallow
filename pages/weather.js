@@ -12,6 +12,7 @@ const weather = () => {
 	
 	const [weatherObj, setWeatherObj] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
+	const [apiErr, setApiErr] = useState(null)
 
 	useEffect(() => {
 		const getInitialWeather = async () => {
@@ -35,10 +36,15 @@ const weather = () => {
 	async function handleFetchWeather(location){
 		//setIsLoading(true)
 		console.log(location);
+		setApiErr(null)
 		await fetchWeatherByQuery(location).then(res => {
 			console.log(res);
 			setWeatherObj(res)
 			//setIsLoading(false)
+		})
+		.catch(err => {
+			console.log('there was an error', err);
+			setApiErr(err)
 		})
 	}
 
@@ -47,7 +53,7 @@ const weather = () => {
 			<WeatherMaster isOnline={isOnline} />
 			<div className='dashboard-main weather'>
 				<h2>Weather</h2>
-				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} />}
+				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} />}
 				{isLoading && <div>Shit is loading in here!</div>}
 			</div>
 		</>
