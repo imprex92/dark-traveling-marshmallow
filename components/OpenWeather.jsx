@@ -3,9 +3,10 @@ import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
 if (typeof window !== 'undefined') {
   M = require('@materializecss/materialize/dist/js/materialize.min.js')
 }
+import Flag from 'react-world-flags'
 
-const OpenWeather = ({ fetchWeather, weatherObj }) => {
-  console.log('OpenWeather object from parent', weatherObj);
+const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
+  console.log('OpenWeather object from parent', weatherObj, 'error? : ', apiError);
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
@@ -37,6 +38,7 @@ const OpenWeather = ({ fetchWeather, weatherObj }) => {
     return () => {
     }
   }, [])
+  
   const chipSelected = (data) => {
     fetchWeather(data)
   }
@@ -76,8 +78,9 @@ const OpenWeather = ({ fetchWeather, weatherObj }) => {
                 <div className="row">
                   <div className="input-field col s8 push-s2 m6 push-m3 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
-                    <input type="search" className="white-text" onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
+                    <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
                     <label className="white-text" htmlFor="search-field">Enter location for weather</label>
+                    <span className='helper-text' data-error="Something went wrong. Did you spell correctly?"></span>
                   </div>
                 </div>
               </form>
@@ -86,7 +89,7 @@ const OpenWeather = ({ fetchWeather, weatherObj }) => {
               <div className="location-info">
                 <img className='weather-icon' src={`${process.env.OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
                 <div className='name-date'>
-                  <span className='name'>{name}, {sys?.country}</span>
+                  <span className='name'>{name}, {sys?.country} <Flag code={sys?.country} height="16" /></span>
                   <span className='date'>{unixConverter(dt)}</span>
                 </div>
               </div>
