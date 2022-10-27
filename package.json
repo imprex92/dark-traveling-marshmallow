@@ -45,7 +45,7 @@
     "use-places-autocomplete": "^1.8.1"
   },
   "devDependencies": {
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.5.0",
     "@types/materialize-css": "^1.0.8",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
