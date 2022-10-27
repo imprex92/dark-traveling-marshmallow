@@ -5,7 +5,6 @@ import { useAuth } from '../contexts/AuthContext'
 import { fetchWeatherByCoords, fetchWeatherByQuery } from '../components/utility/WeatherHandler'
 import { getGeolocation } from '../components/utility/GetGeolocation'
 import { getSs, setSs } from '../components/utility/StateHandler'
-import WeatherSkelleton from '../components/loaders/skelleton/WeatherSkelleton'
 
 const weather = () => {
 	const { currentUser } = useAuth()
@@ -55,7 +54,7 @@ const weather = () => {
 			<div className='dashboard-main weather'>
 				<h2>Weather</h2>
 				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} />}
-				{isLoading && <WeatherSkelleton />}
+				{isLoading && <span>things are loading...</span>}
 			</div>
 		</>
 	)
