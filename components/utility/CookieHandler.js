@@ -6,7 +6,7 @@ function cExpires(exdays){
 }
 
 export function setCookie(cname, cvalue, exdays){
-	document.cookie = cname + '=' + cvalue + ';'  + cExpires(exdays) + '; path=/'
+	document.cookie = cname + '=' + JSON.stringify(cvalue) + ';'  + cExpires(exdays) + '; path=/'
 }
 
 export function removeCookie(cname){
@@ -14,18 +14,7 @@ export function removeCookie(cname){
 }
 
 export function getCookie(cname) {
-  if (typeof window !== 'undefined'){
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return null;}
+ var result = document.cookie.match(new RegExp(cname + '=([^;]+)'));
+ result && (result = JSON.parse(result[1]));
+ return result;
 }

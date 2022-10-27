@@ -1,25 +1,26 @@
-$pushFromNav: 3em
+@use 'variables'
+
 @mixin tab-content-style
 	margin-top: 1em
 	padding-bottom: 1em !important
 	background-color: rgba(0, 0, 0, .5)
 	border-radius: 20px
-	
+
 .dashboard-main
-	background-color: #171c48	
-	
+	background: variables.$base-gradiant
+
 .add-form-post-section
 	margin-left: 3.5em
 
 .new-post-form-wrapper
 	margin-top: 3em
 
-.tabs-content 
-	&.carousel 
-		&.carousel-slider 
-			height: 98vh !important 
-			.carousel-item 
-				&.active 
+.tabs-content
+	&.carousel
+		&.carousel-slider
+			height: 98vh !important
+			.carousel-item
+				&.active
 					position: relative
 
 .fileinput-error
@@ -29,7 +30,6 @@ $pushFromNav: 3em
 
 .autocomplete-content
 	max-height: 30vh !important
-
 
 .geoLocation-section
 	margin-top: 2.5%
@@ -44,7 +44,7 @@ $pushFromNav: 3em
 			color: red
 
 .greeting-section
-	margin-left: $pushFromNav + 2em
+	margin-left: variables.$pushFromNav + 2em
 	& > h4
 		margin-bottom: 0px
 		font-weight: bold
@@ -59,12 +59,12 @@ $pushFromNav: 3em
 	& > i
 		color: white
 
-.searchbar-section > .row > .input-field 
-	input[type=search]:focus 
-		&:not(.browser-default) 
-			background-color: unset 
+.searchbar-section > .row > .input-field
+	input[type=search]:focus
+		&:not(.browser-default)
+			background-color: unset
 
-.post-carousel 
+.post-carousel
 	height: 450px !important
 	& > .post-carousel-item
 		width: 270px !important
@@ -72,16 +72,14 @@ $pushFromNav: 3em
 		@media (max-width: 600px)
 			width: 215px !important
 			height: 281px !important
-			
 
 .post-carousel-section
-	margin-left: $pushFromNav !important
+	margin-left: variables.$pushFromNav !important
 	margin-top: 4em
 	@media ( min-width: 1100px )
 		margin-top: 1em
 	@media ( max-width: 450px )
 		margin-top: 0em
-		
 
 .carousel-item
 	img
