@@ -1,7 +1,5 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
-// import { useFirestore } from '../contexts/DatabaseContext'
-// import { auth } from 'firebase-admin';
 
 const AuthContext = createContext();
 
@@ -12,12 +10,11 @@ export function useAuth(){
 export function AuthProvider({children, userAuth}) {
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
-	const [dbUserDocument, setDbUserData] = useState([])
+	const [dbUserDocument, setDbUserDocument] = useState([])
 	const [error, setError] = useState('')
 
 	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
-			// console.log(user);
 			setCurrentUser(user)
 			setIsLoading(false)
 		})
@@ -51,9 +48,8 @@ export function AuthProvider({children, userAuth}) {
 	async function login(email, password){
 		await projectAuth.signInWithEmailAndPassword(email, password)
 		.then(async(cred) => {
-			// console.log(cred);
 			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
-			setDbUserData(userData)
+			setDbUserDocument(userData)
 		})
 		.catch((err) => {
 			setError(err)
@@ -75,7 +71,6 @@ export function AuthProvider({children, userAuth}) {
 			const result = await projectAuth
 				.signInWithPopup(projectGoogleAuthProvider)
 				.then( async (result) => {
-					// console.log(result);
 					if(result.additionalUserInfo.isNewUser){
 						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
 							displayName: result.user.displayName || 'null',
@@ -87,7 +82,6 @@ export function AuthProvider({children, userAuth}) {
 							created: projectTimestampNow
 						}, { merge: true })
 						.then((doc) => {
-							// console.log('New userDoc created', doc);
 							setDbUserDocument(doc)
 						})
 						.catch((err) => {
@@ -136,7 +130,5 @@ export function AuthProvider({children, userAuth}) {
 }
 
 AuthProvider.getInitialProps = async props => {
-
-	// console.info('##### Congratulations! You are authorized! ######', props);
 	return {};
 };

@@ -40,3 +40,5 @@ env.json
 /firebase
 .firebase/hosting.cHVibGlj.cache
 *.cache
+*.log
+firebase-debug.log

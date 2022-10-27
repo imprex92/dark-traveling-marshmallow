@@ -14,6 +14,7 @@ function Dashboard() {
 	const [searchText, setSearchText] = useState('')
 
 	useEffect(() => {
+		console.log('hey');
 		if(currentUser){
 			let userName = currentUser.displayName
 			let firstName = userName.split(' ')[0];
@@ -70,11 +71,6 @@ function Dashboard() {
 		setLocationLoading(false)
 		console.log('reversing...', position);
 	}
-
-	function handleSearch(e){
-		
-	}
-
 
 	return (
 		<>

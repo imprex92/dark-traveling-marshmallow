@@ -1,8 +1,7 @@
 import Router from 'next/router';
 import React from 'react'
 import { projectAuth } from '../../firebase/config';
-
-
+import { getCookie, setCookie } from "../utility/CookieHandler";
 
 const login = '/login?redirected=true';
 
@@ -11,7 +10,6 @@ const login = '/login?redirected=true';
 // * It depends on you and your auth service provider.
 // // * @returns {{auth: null}}
 // */
-
 
 const checkUserAuthentication = async () => {
 	
@@ -24,8 +22,7 @@ export default WrappedComponent => {
 	const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
 	
 	hocComponent.getInitialProps = async (context) => {
-		const userAuth = await checkUserAuthentication();
-		// console.log(userAuth);
+		var userAuth = await checkUserAuthentication();
 		// Are you really allowed here?
 		if(!userAuth){
 			// Handle server-side and client-side rendering
@@ -38,7 +35,11 @@ export default WrappedComponent => {
 				Router.replace(login);
 			}
 		} else if(WrappedComponent.getInitialProps){
-			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth});
+			let additionalData = {
+				latestPosition: getCookie('latestLocation') || null
+			}
+			console.log(getCookie('latestLocation'));
+			const wrappedProps = await WrappedComponent.getInitialProps({...context, auth: userAuth, additional: additionalData});
 			return { ...wrappedProps, userAuth};
 		}
 
