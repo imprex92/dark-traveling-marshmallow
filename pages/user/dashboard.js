@@ -61,9 +61,9 @@ const dashboard = ({userAuth, userBlogs}) => {
 		//! inside return, same as ComponentWillUnmount! unsubscribe firestore listeners
 		
 		return () => {
-			unsubscribePosts
-			unsubscribeHotels
-			unsubscribeDbUserData
+			unsubscribePosts()
+			unsubscribeHotels()
+			unsubscribeDbUserData()
 		}
 	}, [])
 	useEffect(() => {
