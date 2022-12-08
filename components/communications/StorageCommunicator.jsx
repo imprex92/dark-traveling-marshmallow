@@ -344,7 +344,7 @@ export default function StorageCommunicator({userAuth}) {
 						<div className="col s6 push-s3">
 							{isSuccessful && <div className="white-text green fileinput-error"><strong>{isSuccessful}</strong></div>}
 							{hasError && <div className="white-text red darken-4 fileinput-error"><strong>{hasError}</strong></div>}
-							{postMainImage && <ProgressBar mainImage={postMainImage} setPostMainImage={setPostMainImage} setUploadedURL={setUploadedURL} />}
+							{postMainImage && <ProgressBar initiator='POST_UPLOAD' mainImage={postMainImage} isUploading={setPostMainImage} setUploadedURL={setUploadedURL} fireError={setHasError} />}
 							{/* {postAdditionalFiles && <ProgressBar additionalFiles={postAdditionalFiles}/>} */}
 						</div>
 					</div>
@@ -376,6 +376,11 @@ export default function StorageCommunicator({userAuth}) {
 				<li><a className="subheader">Submenu</a></li>
 				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
 				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">arrow_back</i>View all posts</a></Link></li>
+				<li onClick={closeSideNav}>
+					<Link href="/user/receipts/home">
+						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
+					</Link>
+				</li>
 			</ul>		
 		</div>
 	)

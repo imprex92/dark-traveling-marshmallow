@@ -68,12 +68,32 @@ export default function SideNavLight ({}) {
 				</div></li>
 				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a></Link></li>
-				<li><div className="divider"></div></li>
-				<li><a className="subheader">Submenu</a></li>
-				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
-				<li onClick={closeSideNav}><a onClick={handleNewPost} className="" href="/user/newpost"><i className="material-icons">edit</i>Write new post</a></li>
-				<li><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">arrow_back</i>Back to all posts</a></Link></li>
+				<li onClick={closeSideNav}>
+					<Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a>
+					</Link>
+				</li>
+				<li>
+					<div className="divider"></div>
+				</li>
+				<li>
+					<a className="subheader">Submenu</a>
+				</li>
+				<li>
+					<a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a>
+				</li>
+				<li onClick={closeSideNav}>
+					<a onClick={handleNewPost} className="" href="/user/newpost"><i className="material-icons">edit</i>Write new post</a>
+				</li>
+				<li>
+					<Link href="/user/posts"><a href="/user/posts">
+						<i className="material-icons">arrow_back</i>Back to all posts</a>
+					</Link>
+				</li>
+				<li onClick={closeSideNav}>
+					<Link href="/user/receipts/home">
+						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
+					</Link>
+				</li>
 			</ul>		
 		</div>
 	)

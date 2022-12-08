@@ -90,7 +90,7 @@ export function AuthProvider({children, userAuth}) {
 					}
 					else if(!result.additionalUserInfo.isNewUser){
 						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
-						setDbUserData(userData)
+						setDbUserDocument(userData)
 					}
 				})
 				.catch((err) => {

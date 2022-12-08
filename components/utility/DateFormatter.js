@@ -1,14 +1,25 @@
 import moment from 'moment'
 
-export default function DateFormatter ({timestamp}){
+// Supply with unix seconds
+
+export default function DateFormatter ({timestamp, timeFromNow = true}){
 	return(
-		<span>
-			{
-				moment.unix(timestamp).format('MMMM Do YYYY')
-			}, around  
-			{
-				' ' + moment.unix(timestamp).fromNow()
+		<>
+			{ timeFromNow ? 
+				<span>
+					{
+						moment.unix(timestamp).format('MMMM Do YYYY')
+					}, around  
+					{
+						' ' + moment.unix(timestamp).fromNow()
+					}
+				</span> : 
+				<span>
+					{
+						moment.unix(timestamp).format('MMMM Do YYYY')
+					}
+				</span>
 			}
-		</span>
+		</>
 	)
 }

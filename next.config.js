@@ -1,10 +1,16 @@
 require('dotenv').config()
 const path = require('path')
-const Dotenv = require('dotenv-webpack')
+const Dotenv = require('dotenv-webpack');
+const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
 	images: {
-		domains: ['lh3.googleusercontent.com', 'photos.app.goo.gl', 'firebasestorage.googleapis.com'],
+		domains: [
+			'lh3.googleusercontent.com',
+			'photos.app.goo.gl', 
+			'firebasestorage.googleapis.com',
+			'via.placeholder.com',
+		],
 	  },
 	webpack(config, {isServer }) {
 		config.node = { 
@@ -19,12 +25,21 @@ module.exports = {
 			new Dotenv({
 				path: path.join(__dirname, '.env'),
 				systemvars: true
+			}),
+			new StatsWriterPlugin({
+				filename: '../webpack-stats.json',
+				stats: {
+					assets: true,
+					chunks: true,
+					modules: true,
+					errorDetails: true
+				}
 			})
-		  )
-	  config.module.rules.push({
+		)
+		config.module.rules.push({
 		test: /\.svg$/,
 		use: ["@svgr/webpack"]
-	  });
+	  	});
   
 	  return config;
 	}

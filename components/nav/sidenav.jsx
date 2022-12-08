@@ -73,22 +73,59 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</div>
 			</div>
 			<ul id="slide-out" className="sidenav">
-				<li><div className="user-view">
-					<div className="background">
-						<img src='/assets/lighthouse-sidenav.jpg' alt="side navigation background image" height="211" width="300" quality={60} />
+				<li>
+					<div className="user-view">
+						<div className="background">
+							<img src='/assets/lighthouse-sidenav.jpg' alt="side navigation background image" height="211" width="300" quality={60} />
+						</div>
+						<a href="#user"><img className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
+						<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
+						<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 					</div>
-					<a href="#user"><img className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
-					<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
-					<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
-				</div></li>
-				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#" ><i className="material-icons">home</i>Dashboard</a></Link></li>
-				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li><Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a></Link></li>
-				<li><div className="divider"></div></li>
-				<li><a className="subheader">Submenu</a></li>
-				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
-				<li onClick={closeSideNav}><a onClick={handleNewPost} className="" href="#!"><i className="material-icons">edit</i>Write new post</a></li>
-				<li style={route === '/user/posts' ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">arrow_back</i>View all posts</a></Link></li>
+				</li>
+				<li onClick={closeSideNav}>
+					<Link href="/user/dashboard">
+						<a href="#" ><i className="material-icons">home</i>Dashboard</a>
+					</Link>
+				</li>
+				<li>
+					<a href="#!" onClick={handleLogout}>
+						<i className="material-icons">power_settings_new</i>Log out
+					</a>
+				</li>
+				<li>
+					<Link href="/user/settings">
+						<a href="#!"><i className="material-icons">settings</i>Settings</a>
+					</Link>
+				</li>
+				<li>
+					<div className="divider"></div>
+				</li>
+				<li>
+					<a className="subheader">Submenu</a>
+				</li>
+				<li>
+					<a className="sidenav-close waves-effect" href="#!">
+						<i className="material-icons">skip_previous</i>Close menu
+					</a>
+				</li>
+				<li onClick={closeSideNav}>
+					<a onClick={handleNewPost} className="" href="#!">
+						<i className="material-icons">edit</i>Write new post
+					</a>
+				</li>
+				<li style={route === '/user/posts' ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
+					<Link href="/user/posts">
+						<a href="/user/posts">
+							<i className="material-icons">arrow_back</i>View all posts
+						</a>
+					</Link>
+				</li>
+				<li onClick={closeSideNav}>
+					<Link href="/user/receipts/home">
+						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
+					</Link> 
+				</li>
 			</ul>		
 		</div>
 	)

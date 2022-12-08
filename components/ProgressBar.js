@@ -1,16 +1,20 @@
 import {useEffect} from 'react'
 import uploadFiles  from "./hooks/useStorage";
 
-function ProgressBar({mainImage, additionalFiles, setPostMainImage, setUploadedURL}) {
+function ProgressBar({mainImage, additionalFiles, setUploadedURL, reciptFile, initiator, fireError, isUploading}) {
 	console.log(mainImage);
-	console.log(additionalFiles);
-	const { url, progress } = uploadFiles(mainImage)
+	//console.log(additionalFiles);
+	const file = mainImage || reciptFile
+	
+	//const { url, progress } = uploadFiles(mainImage, initiator)
+	const { url, progress, error } = uploadFiles(file, initiator)
 	console.log(progress, url);
 
 useEffect(() => {
 	if(url){
 		setUploadedURL(url)
-		setPostMainImage(null)
+		isUploading(false)
+		fireError(error)
 	}
 	return () => {
 

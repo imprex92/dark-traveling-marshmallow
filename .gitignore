@@ -42,3 +42,4 @@ env.json
 *.cache
 *.log
 firebase-debug.log
+webpack-stats.json
