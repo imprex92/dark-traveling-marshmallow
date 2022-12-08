@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Script from 'next/script'
 import { AuthProvider } from '../contexts/AuthContext'
 import { DatabaseProvider } from '../contexts/DatabaseContext'
 import '../styles/globals.css'
@@ -26,6 +27,21 @@ function MyApp({Component,pageProps}) {
 					<meta charSet="utf-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 				</Head>
+				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
+				<Script
+				id='google-analytics'
+				strategy="afterInteractive"
+				dangerouslySetInnerHTML={{
+				__html: `
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${process.env.FIREBASE_MEASUREMENT_ID}', {
+				page_path: window.location.pathname,
+				});
+				`,
+				}}
+				/>
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}
 		</AuthProvider>
