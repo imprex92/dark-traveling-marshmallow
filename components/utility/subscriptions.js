@@ -24,8 +24,8 @@ function fetchUserblog(userID) {
 			if(docSet !== null){
 				docSet.forEach(doc => data.push(({...doc.data(), id: doc.id})))
 			}
+			resolve(data)
 		})
-		resolve(data)
 	})
 }
 
@@ -43,8 +43,27 @@ function fetchUserHotels(userID){
 					})
 				})
 			}
+			resolve(data)
 		})
-		resolve(data)
+	})
+}
+
+function fetchUserReceipts(userID){
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+	let data = []
+	return new Promise((resolve, reject) => {
+		userDbRef.collection('userReceipts').get()
+		.then(docSet => {
+			if(docSet !== null){
+				docSet.forEach(doc => {
+					data.push({
+						id: doc.id,
+						...doc.data()
+					})
+				})
+			}
+			resolve(data)
+		})
 	})
 }
 
@@ -116,4 +135,32 @@ function handleSaveNewPost({userID, dataToSave}){
 	})
 }
 
-export { fetchDbUserData, fetchUserblog, fetchUserHotels, fetchDocumentByFieldName, fetchOneDocument, handleSaveNewPost }
+function handleSaveRecipt ({ userID, dataToSave }){
+	console.log('userID: ', userID, 'Supplied data to save: ', dataToSave);
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+
+	return new Promise((resolve, reject) => {
+		userDbRef
+		.collection('userReceipts')
+		.add(dataToSave)
+		.then((docRef) => {
+			console.log('Ref to written document', docRef);
+			resolve({docRef})
+		})
+		.catch(err => {
+			console.error('Error writing receipt', err);
+			reject(err)
+		})
+	})
+}
+
+export {
+	fetchDbUserData, 
+	fetchUserblog,
+	fetchUserHotels,
+	fetchDocumentByFieldName,
+	fetchOneDocument,
+	fetchUserReceipts,
+	handleSaveNewPost, 
+	handleSaveRecipt 
+}
