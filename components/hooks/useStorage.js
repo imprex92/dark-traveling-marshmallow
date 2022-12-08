@@ -4,7 +4,8 @@ import {useAuth} from '../../contexts/AuthContext'
 
 //! Saving user defined files to upload to storage
 
-const useStorage = (file) => {
+const useStorage = (file, initiator) => {
+  console.log(file);
   const {currentUser} = useAuth();
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -12,7 +13,12 @@ const useStorage = (file) => {
 
   useEffect(() => {
     // references
-    const storageRef = projectStorage.ref().child(`userData/${currentUser.uid}/${file.name}`);
+    
+    const refToPostBucket = projectStorage.app.storage('gs://dark-traveling-marshmallow.appspot.com').ref(`userData/${currentUser.uid}/${file.name}`) ?? ''
+    const refToRecipeBucket = projectStorage.app.storage('gs://dark-traveling-marshmallow-recipes').ref(`userData/${currentUser.uid}/${file.name}`) ?? ''
+
+    const storageRef = initiator === 'POST_UPLOAD' ? refToPostBucket 
+    : initiator === 'RECIPE_UPLOAD' ? refToRecipeBucket : '';
     
     storageRef.put(file).on('state_changed', (snap) => {
       let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
