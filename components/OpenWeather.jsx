@@ -4,6 +4,7 @@ if (typeof window !== 'undefined') {
   M = require('@materializecss/materialize/dist/js/materialize.min.js')
 }
 import Flag from 'react-world-flags'
+import useBearStore from 'store/teststore'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
   console.log('OpenWeather object from parent', weatherObj, 'error? : ', apiError);
@@ -11,6 +12,11 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
   const searchBox = useRef(null)
+  const count = useBearStore(state => state.bears)
+  const inc = useBearStore(state => state.increasePopulation)
+  const dec = useBearStore(state => state.decreasePopulation)
+  const ext = useBearStore(state => state.exterminatePopulation)
+
 
   useEffect(() => {
     let triggerEl = document.querySelectorAll('.dropdown-trigger')
@@ -149,7 +155,10 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
             <div className="chips chips-initial"></div>
           </div>
           <div className="history-wrapper z-depth-4">
-
+            {count}
+            <button onClick={inc}>Increase</button>
+            <button onClick={dec}>Decrease</button>
+            <button onClick={ext}>Exterminate</button>
           </div>
         </div>
       </div>
