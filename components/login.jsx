@@ -5,10 +5,12 @@ import { useAuth } from '../contexts/AuthContext'
 // import { useFirestore } from '../contexts/DatabaseContext'
 import Googleicon from '../public/assets/icons8-google.svg'
 import { verifyEmail } from "../components/utility/verifyEmail";
+import useMessageCenter from 'store/messageTransmitter'
 
 //TODO gör Autocompleat för alla inputfält 
 
 function login(props) {
+	const notify = useMessageCenter(state => state.message)
 	const router = useRouter()
 	const [email, setEmail] = useState(null)
 	const [password, setPassword] = useState(null)
@@ -45,7 +47,6 @@ function login(props) {
 		try{
 			setError('')
 			setIsLoading(true)
-			await loginWithGoogle()
 			router.push('/user/dashboard')
 		}
 		catch(err){
