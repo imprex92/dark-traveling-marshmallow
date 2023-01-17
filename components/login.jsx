@@ -47,6 +47,7 @@ function login(props) {
 		try{
 			setError('')
 			setIsLoading(true)
+			await loginWithGoogle()
 			router.push('/user/dashboard')
 		}
 		catch(err){
@@ -91,7 +92,7 @@ function login(props) {
 						<Link href="/signup">
 							<a className="white-text"><b>No account? Click here!</b></a>
 						</Link>
-					</form>			
+					</form>
 				</div>
 			</>
 		)

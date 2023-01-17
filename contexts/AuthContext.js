@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
+import useMessageCenter from 'store/messageTransmitter'
 
 const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export function useAuth(){
 }
 
 export function AuthProvider({children, userAuth}) {
+	const hasError = useMessageCenter((state) => state.setError)
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
 	const [dbUserDocument, setDbUserDocument] = useState([])
@@ -95,6 +97,7 @@ export function AuthProvider({children, userAuth}) {
 				})
 				.catch((err) => {
 					console.log('this is the error',err);
+					hasError(err)
 					setError(err)
 					let errorCode = err.code;
 					let errorMessage = err.message;
