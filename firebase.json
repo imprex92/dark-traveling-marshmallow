@@ -16,7 +16,7 @@
   },
   "functions": {
     "source": ".",
-    "runtime": "nodejs14",
+    "runtime": "nodejs16",
     "ignore": [
       ".firebase/**",
       ".firebaserc",
