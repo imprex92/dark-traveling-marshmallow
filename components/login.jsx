@@ -44,17 +44,15 @@ function login(props) {
 	//TODO felkoder!
 	async function handleGoogleSignup(e) {
 		e.preventDefault()
-		try{
-			setError('')
-			setIsLoading(true)
-			await loginWithGoogle()
-			router.push('/user/dashboard')
-		}
-		catch(err){
-			setIsLoading(false)
-			setError(err)
-			console.error(err);
-		}
+		setError('')
+		setIsLoading(true)
+		loginWithGoogle().then(result => {
+			console.log('new login', result);
+		}).catch(err => {
+			console.log('new err login', err);
+		})
+
+
 	}
 		return (
 			<>

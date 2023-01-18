@@ -65,14 +65,13 @@ export function AuthProvider({children, userAuth}) {
 		})
 	}
 
-	//TODO Lägg try, catch i login/signup filen istället för här och få tillgång till felkoder.
-	async function loginWithGoogle() {
-		//? When login with google. Sets popup language to Devicelanguage
+	function loginWithGoogle(){
 		projectAuth.useDeviceLanguage();
-		//TODO Lägg till "usePersistence()" för att automatiskt logga ut användare
-			const result = await projectAuth
-				.signInWithPopup(projectGoogleAuthProvider)
-				.then( async (result) => {
+		return new Promise((resolve, reject) => {
+			projectAuth
+			.signInWithPopup(projectGoogleAuthProvider)
+			.then( async (result) => {
+				console.log('result',result);
 					if(result.additionalUserInfo.isNewUser){
 						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
 							displayName: result.user.displayName || 'null',
@@ -85,29 +84,28 @@ export function AuthProvider({children, userAuth}) {
 						}, { merge: true })
 						.then((doc) => {
 							setDbUserDocument(doc)
+							resolve('Login OK, new user', result)
 						})
 						.catch((err) => {
-							setError(err)
+							reject('Error new user: ', err)
 						})
 					}
 					else if(!result.additionalUserInfo.isNewUser){
 						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
 						setDbUserDocument(userData)
+						resolve('Login OK, existing user and result', result)
 					}
 				})
 				.catch((err) => {
-					console.log('this is the error',err);
 					hasError(err)
-					setError(err)
-					let errorCode = err.code;
-					let errorMessage = err.message;
-					let email = err.email;
-					let credential_1 = err.credential;
-					console.error(errorCode);
-					console.error(errorMessage);
-					console.error(email);
-					console.error(credential_1);
-				})	
+					reject({
+						code: err.code ?? 'Unknown',
+						message: err.message ?? 'Unknown',
+						email: err.email ?? 'Unknown',
+						credential: err.credential_1 ?? 'Unknown'
+					})
+				})
+		})
 	}
 
 	function logout(){
