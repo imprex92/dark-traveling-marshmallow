@@ -35,19 +35,17 @@ function signup() {
 			})		
 	}
 
-	async function handleGoogleSignup(e) {
+	function accessWithGoogle(e) {
 		e.preventDefault()
-		try{
-			setError('')
-			setIsLoading(true)
-			await loginWithGoogle()
-			router.push('/user/dashboard')
-		}
-		catch(err){
+		setError('')
+		setIsLoading(true)
+		loginWithGoogle().then(result => {
 			setIsLoading(false)
-			console.error(err.message);
-			setError(err)
-		}
+			router.push('/user/dashboard')
+		}).catch(err => {
+			setIsLoading(false)
+			setError(err.message ?? 'something went wrong')
+		})
 	}
 	
 	return (
@@ -87,7 +85,7 @@ function signup() {
 					<div className="divider"></div>
 					</div>
 					<div className="row">
-						<a onClick={handleGoogleSignup} className="btn-floating btn waves-effect waves-light blue"><Googleicon/></a>
+						<a onClick={accessWithGoogle} className="btn-floating btn waves-effect waves-light blue"><Googleicon/></a>
 					</div>
 					<Link href="/login">
 						<a className="white-text"><b>Have an account? Click here!</b></a>

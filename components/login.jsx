@@ -46,8 +46,8 @@ function login(props) {
 			setIsLoading(false)
 		}
 	}
-	//TODO felkoder!
-	function handleGoogleSignup(e) {
+
+	function accessWithGoogle(e) {
 		e.preventDefault()
 		setError('')
 		setIsLoading(true)
@@ -90,7 +90,7 @@ function login(props) {
 						<div className="divider"></div>
 						</div>
 						<div className="row">
-						<a onClick={handleGoogleSignup} className="btn-floating btn waves-effect waves-light blue"><Googleicon/></a>
+						<a onClick={accessWithGoogle} className="btn-floating btn waves-effect waves-light blue"><Googleicon/></a>
 						</div>
 						<Link href="/signup">
 							<a className="white-text"><b>No account? Click here!</b></a>
