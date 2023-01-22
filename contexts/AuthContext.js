@@ -23,12 +23,11 @@ export function AuthProvider({children, userAuth}) {
 		return unsubscribe
 	}, [])
 
-	async function signup(email, password){
-		await projectAuth.createUserWithEmailAndPassword(email, password)
-		.then(async (cred) => {
-			// console.log(cred);
-			try {
-				await projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
+	function signup(email, password){
+		return new Promise((resolve, reject) => {
+			projectAuth.createUserWithEmailAndPassword(email, password)
+			.then((cred) => {
+				projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
 					displayName: cred.user.displayName || 'null',
 					photoURL: cred.user.photoURL || 'null',
 					email: cred.user.email || 'null',
@@ -37,17 +36,42 @@ export function AuthProvider({children, userAuth}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow
 				}, { merge: true });
-				// console.log("Document successfully written!");
-			} catch (error) {
-				return console.error("Error writing document: ", error);
-			}
-		})
-		.catch((err) => {
-			setError(err)
+				console.log("Document successfully written!", cred);
+				resolve({
+					status: 'OK',
+					type: cred.operationType,
+					email: cred.user.email,
+					emailVerified: cred.user.emailVerified,
+					uid: cred.user.uid,
+					additionalInfo: cred.additionalUserInfo,
+				})
+			}).catch((err) => {
+				console.log(err);
+				reject({
+					status: 'ERROR',
+					code: err.code,
+					message: err.message,
+				})
+			})
+
 		})
 	}
 
-	async function login(email, password){
+	function login(email, password){
+		return new Promise((resolve, reject) => {
+			projectAuth.signInWithEmailAndPassword(email, password)
+			.then((cred) => {
+				resolve('Login OK')
+				const userData = projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
+				setDbUserDocument(userData)
+			})
+			.catch(err => {
+				reject(err)
+			})
+		})
+	}
+
+	async function login2(email, password){
 		await projectAuth.signInWithEmailAndPassword(email, password)
 		.then(async(cred) => {
 			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
@@ -70,41 +94,40 @@ export function AuthProvider({children, userAuth}) {
 		return new Promise((resolve, reject) => {
 			projectAuth
 			.signInWithPopup(projectGoogleAuthProvider)
-			.then( async (result) => {
-				console.log('result',result);
-					if(result.additionalUserInfo.isNewUser){
-						await projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
-							displayName: result.user.displayName || 'null',
-							photoURL: result.user.photoURL || 'null',
-							email: result.user.email || 'null',
-							emailVerified: result.user.emailVerified || 'null',
-							phoneNumber: result.user.phoneNumber || 'null',
-							providerId: result.additionalUserInfo.providerId,
-							created: projectTimestampNow
-						}, { merge: true })
-						.then((doc) => {
-							setDbUserDocument(doc)
-							resolve('Login OK, new user', result)
-						})
-						.catch((err) => {
-							reject('Error new user: ', err)
-						})
-					}
-					else if(!result.additionalUserInfo.isNewUser){
-						let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
-						setDbUserDocument(userData)
-						resolve('Login OK, existing user and result', result)
-					}
-				})
-				.catch((err) => {
-					hasError(err)
-					reject({
-						code: err.code ?? 'Unknown',
-						message: err.message ?? 'Unknown',
-						email: err.email ?? 'Unknown',
-						credential: err.credential_1 ?? 'Unknown'
+			.then((result) => {
+				if(result.additionalUserInfo.isNewUser){
+					projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
+						displayName: result.user.displayName || 'null',
+						photoURL: result.user.photoURL || 'null',
+						email: result.user.email || 'null',
+						emailVerified: result.user.emailVerified || 'null',
+						phoneNumber: result.user.phoneNumber || 'null',
+						providerId: result.additionalUserInfo.providerId,
+						created: projectTimestampNow
+					}, { merge: true })
+					.then((doc) => {
+						setDbUserDocument(doc)
+						resolve(result)
 					})
+					.catch((err) => {
+						reject(err)
+					})
+				}
+				else if(!result.additionalUserInfo.isNewUser){
+					const userData = projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
+					setDbUserDocument(userData)
+					resolve(result)
+				}
+			})
+			.catch((err) => {
+				hasError(err)
+				reject({
+					code: err.code ?? 'Unknown',
+					message: err.message ?? 'Unknown',
+					email: err.email ?? 'Unknown',
+					credential: err.credential_1 ?? 'Unknown'
 				})
+			})
 		})
 	}
 

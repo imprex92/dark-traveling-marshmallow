@@ -26,10 +26,15 @@ function login(props) {
 			setIsLoading(true)
 			if(email && password && verifyEmail(email)){
 				setError('')
-				await login(email, password)
-				//await getUserDocument()
-				router.push('/user/dashboard')
-				setIsLoading(false)
+				login(email, password)
+				.then(result => {
+					router.push('/user/dashboard')
+					setIsLoading(false)
+				})
+				.catch(err => {
+					setError(err.message)
+					setIsLoading(false)
+				})
 			}else{
 				setError('Please check email and password')
 				setIsLoading(false)
@@ -42,17 +47,17 @@ function login(props) {
 		}
 	}
 	//TODO felkoder!
-	async function handleGoogleSignup(e) {
+	function handleGoogleSignup(e) {
 		e.preventDefault()
 		setError('')
 		setIsLoading(true)
 		loginWithGoogle().then(result => {
-			console.log('new login', result);
+			setIsLoading(false)
+			router.push('/user/dashboard')
 		}).catch(err => {
-			console.log('new err login', err);
+			setIsLoading(false)
+			setError(err.message ?? 'something went wrong')
 		})
-
-
 	}
 		return (
 			<>

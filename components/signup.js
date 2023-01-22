@@ -17,22 +17,22 @@ function signup() {
 
 	async function handleSubmit(e){
 		e.preventDefault()
-		//TODO signUp validation
+		
 		if(password !== verifyPassword){
-			return setError('Password are not matching')
+			return setError('Passwords are not matching')
 		}	
-		try {
 			//TODO Toast messages
 			setError('')
 			setIsLoading(true)
-			await signup(email, password)
-			console.log('try block 1 finished');
-			router.push('/user/dashboard')
-		}
-		catch(err){
-			setError(err.message)
-			setIsLoading(false)
-		}
+			signup(email, password)
+			.then(result => {
+				console.log(result);
+				router.push('/user/dashboard')
+				setIsLoading(false)
+			}).catch(err => {
+				setError(err.message)
+				setIsLoading(false)
+			})		
 	}
 
 	async function handleGoogleSignup(e) {
