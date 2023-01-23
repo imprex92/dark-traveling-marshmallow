@@ -22,6 +22,7 @@ function login(props) {
 
 	async function handleSubmit(e){
 		e.preventDefault()
+		
 		try {
 			setIsLoading(true)
 			if(email && password && verifyEmail(email)){
