@@ -14,7 +14,7 @@ function Dashboard() {
 	const [searchText, setSearchText] = useState('')
 
 	useEffect(() => {
-		console.log('hey');
+		console.log('frferferf');
 		if(currentUser){
 			let userName = currentUser.displayName
 			let firstName = userName.split(' ')[0];

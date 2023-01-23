@@ -1,6 +1,6 @@
 #vertical-nav {
   z-index: 888;
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -14,7 +14,7 @@
   justify-content: center;
   justify-items: center;
   align-content: center;
-  margin-top: 2.4em;
+  margin-top: 3rem;
   color: #fff;
 }
 #vertical-nav > .wrapper {
@@ -43,7 +43,7 @@
   }
 }
 #vertical-nav > .wrapper > a {
-  padding-right: 3em;
+  padding-right: 3rem;
   color: #fff;
 }
 
@@ -87,12 +87,12 @@
   justify-content: center;
   justify-items: center;
   align-content: center;
-  margin-top: 2.4em;
+  margin-top: 3rem;
   color: #fff;
 }
 #vertical-nav-light > .wrapper {
   left: -9px;
-  top: 13%;
+  top: 7.2rem;
   margin: 4px;
   display: flex;
   flex-direction: row-reverse;
@@ -115,7 +115,7 @@
   }
 }
 #vertical-nav-light > .wrapper > a {
-  padding-right: 3em;
+  padding-right: 3rem;
   color: #fff;
 }
 

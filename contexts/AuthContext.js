@@ -1,4 +1,5 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
+import { useRouter } from 'next/router'
 import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
 import useMessageCenter from 'store/messageTransmitter'
 
@@ -9,6 +10,7 @@ export function useAuth(){
 }
 
 export function AuthProvider({children, userAuth}) {
+	const router = useRouter()
 	const hasError = useMessageCenter((state) => state.setError)
 	const [currentUser, setCurrentUser] = useState()
 	const [isLoading, setIsLoading] = useState(true)
@@ -71,17 +73,6 @@ export function AuthProvider({children, userAuth}) {
 		})
 	}
 
-	async function login2(email, password){
-		await projectAuth.signInWithEmailAndPassword(email, password)
-		.then(async(cred) => {
-			let userData = await projectFirestore.collection('testUserCollection').doc(result.user.uid).get()
-			setDbUserDocument(userData)
-		})
-		.catch((err) => {
-			setError(err)
-		})
-	}
-
 	function updateUserInfo(userName, userAvatarURL){
 		return projectAuth.currentUser.updateProfile({
 			displayName: projectAuth.currentUser.displayName || userName,
@@ -132,7 +123,7 @@ export function AuthProvider({children, userAuth}) {
 	}
 
 	function logout(){
-		return projectAuth.signOut()
+		return projectAuth.signOut().then((resp) => router.push('/login'))
 	}
 	
 	const value = {
