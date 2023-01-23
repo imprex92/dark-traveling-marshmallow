@@ -17,27 +17,32 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
-		let sidenav = document.querySelectorAll(".sidenav");
-		M.Sidenav.init(sidenav, {});
+		
+		const sidenav = document.querySelectorAll(".sidenav");
+		M.Sidenav.init(sidenav, {
+			onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+			onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+		});
 		setLoading(false)
+
 	}, [dbUserData])
-	let route = router.route;
+	
+	const route = router.route;
 	async function handleLogout() {
 		setError('')
 		try{
-			let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+			const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 			instance.close()
 			await logout()
-			router.push('/login')
 		}
 		catch{
-			setError("couldn't log you out")
+			setError("Couldn't log you out")
 			console.log(error);
 			M.toast({html: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
 	function handleNewPost(){
-		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 		router.push('/user/newpost')
 	}
@@ -52,7 +57,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		dataFromChildToParent(countryToFilter)
 	}
 	function closeSideNav(){
-		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 	}
 
