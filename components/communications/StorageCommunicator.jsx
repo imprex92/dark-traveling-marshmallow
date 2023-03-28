@@ -25,7 +25,6 @@ export default function StorageCommunicator({userAuth}) {
 	const [hasError, setHasError] = useState(null)
 	const [init, setInit] = useState(false)
 	
-	
 	//* TAB 1 inputs
 	let postCountry = useRef(null)
 	const [datePicker, setDatePicker] = useState(new Date())
@@ -72,7 +71,10 @@ export default function StorageCommunicator({userAuth}) {
 			M.Tabs.init(tabs, {
 				swipeable: true,
 				});
-			M.Sidenav.init(sidenav, {});
+			M.Sidenav.init(sidenav, {
+				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+				onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+			});
 			setInit(true)
 			}
 		}, [uploadedURL]) //! formCountry?
@@ -146,7 +148,7 @@ export default function StorageCommunicator({userAuth}) {
 			postTitle: postTitle.current.value || null,
 			postContent: postMainContent.current.value || null,
 			postMood: postMood.current.value || null,
-			postWeather: {
+			postWeather: { // ToDo weater
 				weatherUser: postWeather.current.value || null,
 				weatherAPI: '' //! koppla med väder API
 				// degrees:
@@ -207,13 +209,11 @@ export default function StorageCommunicator({userAuth}) {
 				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
 					<i id="newpost-menu-btn" className="material-icons">menu</i>
 				</a>
-				<div className="new">
 					<ul id="tabs" className="tabs center-align tabs">
 						<li className="tab active"><a href="#tab1">Step 1</a></li>
 						<li className="tab"><a href="#tab2">Step 2</a></li>
 						<li className="tab"><a href="#tab3">Step 3</a></li>
 					</ul>					
-				</div>
 			</div>
 
 
