@@ -1,19 +1,19 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { AuthProvider } from '../contexts/AuthContext'
-import { DatabaseProvider } from '../contexts/DatabaseContext'
-import '../styles/globals.css'
-import '../styles/materialize.css'
-import '../styles/signin.style.css'
-import '../styles/dashboard.style.css'
-import '../styles/slides-component.style.scss'
-import '../styles/blogPost-page.style.css'
-import '../styles/sideNav.style.css'
-import '../styles/singlePost.style.css'
-import '../styles/weather.style.css'
+import { AuthProvider } from 'contexts/AuthContext'
+import { DatabaseProvider } from 'contexts/DatabaseContext'
+import 'styles/global.style.css'
+import 'styles/materialize.css'
+import 'styles/signin.style.css'
+import 'styles/dashboard.style.css'
+import 'styles/slides-component.style.scss'
+import 'styles/blogPost-page.style.css'
+import 'styles/sideNav.style.css'
+import 'styles/singlePost.style.css'
+import 'styles/weather.style.css'
 
 if(typeof window !== 'undefined'){
-	require( '../js/materialize')
+	require( 'js/materialize')
 	}
 
 	//TODO check if jquery is really needed!
