@@ -67,6 +67,12 @@
   width: unset;
   background-color: unset;
 }
+@media (max-width: 992px) {
+  .tabs {
+    transform: rotateZ(-90deg) translate(-14rem, 20px);
+    transform-origin: left;
+  }
+}
 .tabs > .tab > a {
   color: white;
 }

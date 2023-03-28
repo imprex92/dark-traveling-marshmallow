@@ -1,0 +1,31 @@
+@use 'variables'
+@import 'components/loaders/skeletons/Skeleton.css'
+
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div
+  margin: 0
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, serif, 'Baloo 2', cursive
+
+a
+  color: inherit
+  text-decoration: none
+
+*
+  box-sizing: border-box
+
+.signin-content
+  height: 100vh
+
+#__next, #__next > div
+  min-height: 100vh
+
+.dark-theme, .light-theme
+  min-height: 100%
+.dark-theme
+  background: variables.$base-gradiant
+
+.light-theme
+  background: variables.$base-gradiant-light

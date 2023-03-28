@@ -8,7 +8,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html className='light-theme'>
         <Head>
           <script  src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}></script>
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>

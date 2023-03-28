@@ -20,13 +20,14 @@ const BlogList = ({searchByText, countrySearchTerm, userBlogs}) => {
 	})
 
 	return (
-
-		<div className="row post-item-wrapper">
-			{filteredBlogs.map((blog) => (
-				<div key={blog.id} style={{backgroundImage: `url(${blog.imgURL})`}} className="all-post-backgroundimg">
-					<BlogItem blog={blog} />
-				</div>
-			))}
+		<div className='main-wrapper'>
+			<div className="row post-item-wrapper">
+				{filteredBlogs.map((blog) => (
+					<div key={blog.id} style={{backgroundImage: `url(${blog.imgURL})`}} className="all-post-backgroundimg">
+						<BlogItem blog={blog} />
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }
