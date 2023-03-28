@@ -1,12 +1,19 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { withRouter } from 'next/router'
-import withPrivateRoute from '../../../components/HOC/withPrivateRoute'
-import { fetchDocumentByFieldName } from '../../../components/utility/subscriptions'
-import SideNavLight from '../../../components/nav/SideNavLight'
-import DateFormatter from '../../../components/utility/DateFormatter'
+import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import { fetchDocumentByFieldName } from 'components/utility/subscriptions'
+import SideNavLight from 'components/nav/SideNavLight'
+import DateFormatter from 'components/utility/DateFormatter'
+import SkeletonSinglePost from 'components/loaders/skeletons/SkeletonSinglePost'
+import usePostStorage from 'store/postStorage'
 
 const singlepost = ({router, userAuth}) => {
 	const [requestedBlog, setRequestedBlog] = useState(null)
+	const [isLoading, setIsLoading] = useState(true)
+	const [hasError, setHasError] = useState(false)
+	const currentPost = usePostStorage(state => state.data)
+	const updateCurrent = usePostStorage(state => state.setPreviouslyViewedPost)
+
 	useEffect(() => {
 		const logedInUserId = userAuth.uid
 		fetchDocumentByFieldName({
@@ -15,28 +22,38 @@ const singlepost = ({router, userAuth}) => {
 			userID: logedInUserId
 		})
 		.then(blog => {
-			// console.log(blog);
 			setRequestedBlog(blog)
-		})
+			updateCurrent(blog)
+			setIsLoading(false)
+		}).catch(err => {console.error(err), setHasError({error: true, message: 'ERROR: Post not found', code: err})})
 	}, [ ])
 
-	//TODO create better loading
+	if(isLoading){
+		return (<div className='skeleton-container full-center loadingskeleton'>
+					<SkeletonSinglePost />
+				</div>)
+	}
+
+	if(hasError){
+		return (<div className="singlepost-wrapper hasError"><SideNavLight/>{hasError && hasError.message}</div>)
+	}
+
 	if(requestedBlog === null){
-		return (<div className="singlepost-wrapper"><SideNavLight/>Loading...</div>)
+		return (<div className="singlepost-wrapper loading"><SideNavLight/>Loading...</div>)
 	}
 	else if(requestedBlog.empty === true)
-	return (<div className="singlepost-wrapper"><SideNavLight/>Not found!</div>)
+	return (<div className="singlepost-wrapper not-found"><SideNavLight/>Not found!</div>)
 	else
 	return (
 		<>
-			<div className="singlePost-main">
+			<div className="singlePost-main is-found">
 				<SideNavLight/>
 				<div className="singlepost-wrapper">
 					<div className="row">
 						<div className="col s12 main-image-wrapper">
 							<img
 							src={requestedBlog.imgURL || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
-							alt="Main imae"
+							alt="Main image"
 							/>
 						</div>
 					</div>
@@ -59,10 +76,10 @@ const singlepost = ({router, userAuth}) => {
 						<div className="divider col s10 push-s1"></div>
 						<div className="row">
 							<div className="col m5 s12 push-m1 small-wrapper-left">
-								<p><small>
-									{requestedBlog.postWeather} <br/>
-									{requestedBlog.postMood}	
-								</small></p>
+								{/*<p><small> // ToDo weater
+									{requestedBlog.postWeather ?? 'none'} <br/>
+									{requestedBlog.postMood ?? 'none'}	
+								</small></p>*/}
 							</div>
 							<div className="col m6 s12 small-wrapper-right">
 								<p><small>
@@ -77,10 +94,5 @@ const singlepost = ({router, userAuth}) => {
 		</>
 	)
 }
-
-singlepost.getInitialProps = async props => {
-	// console.info('##### Congratulations! You are authorized! ######', props);
-	return {};
-};
 
 export default withPrivateRoute(withRouter(singlepost))
