@@ -56,7 +56,7 @@ const weather = () => {
 				<h2>Weather</h2>
 				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} />}
 				{isLoading && (
-					<div className='skeleton-container'>
+					<div className='skeleton-container weather'>
 						<SkeletonWeather />
 						<SkeletonWeather />
 						<SkeletonWeather />
