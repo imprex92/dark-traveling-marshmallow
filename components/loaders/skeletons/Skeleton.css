@@ -30,6 +30,10 @@
 .skeleton.largeBox{
 
 }
+.skeleton.image{
+	width: 500px;
+	height: 500px;
+}
 
 .skeleton-wrapper{
 	position: relative;
@@ -47,10 +51,34 @@
  align-items: center;
 }
 
+/* Skeleton full center*/
+.skeleton-container.full-center{
+	display: flex;
+}
+.skeleton-container.full-center .skeleton-wrapper{
+	margin: auto;
+	width: 75%;
+	padding: 5rem;
+}
+.skeleton-container.full-center .image{
+	margin: 0 auto 3rem;
+}
+.skeleton-container.full-center .title{
+	margin-bottom: 2rem;
+}
+.skeleton-container.full-center .text{
+	width: 70%;
+}
+.skeleton-container.full-center .skeleton-single-post .text:nth-last-child(2) {
+	width: 30%;
+	height: 20px;
+	margin-left: auto;
+	margin-top: 2rem;
+}
 /* Skeleton weather */
 .skeleton-wrapper.weather{
 }
-.skeleton-container{
+.skeleton-container.weather{
 	display: grid;
 	grid-template-areas:
 		"box1 box2"
