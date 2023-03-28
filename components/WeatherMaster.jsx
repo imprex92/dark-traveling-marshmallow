@@ -26,10 +26,13 @@ const WeatherMaster = () => {
 		let datepicker = document.querySelectorAll(".datepicker")
 		let autocomplete = document.querySelectorAll('.autocomplete');
 		if(!init){
-			M.Sidenav.init(sidenav, {});
+			M.Sidenav.init(sidenav, {
+				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+				onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+			});
 			setInit(true)
-			}
-		}, []) //! formCountry?
+		}
+	}, []) //! formCountry?
 
   	function closeSideNav(){
 		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))

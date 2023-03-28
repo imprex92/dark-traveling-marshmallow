@@ -12,6 +12,8 @@ export default function SideNavLight ({}) {
 	const router = useRouter()
 	const [error, setError] = useState(null)
 	const { logout, currentUser } = useAuth()
+	const show_in = 'posts'
+	const route = router.route;
 
 	useEffect(() => {
 		const sidenav = document.querySelectorAll(".sidenav");
@@ -88,7 +90,7 @@ export default function SideNavLight ({}) {
 				<li onClick={closeSideNav}>
 					<a onClick={handleNewPost} className="" href="/user/newpost"><i className="material-icons">edit</i>Write new post</a>
 				</li>
-				<li>
+				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}}>
 					<Link href="/user/posts"><a href="/user/posts">
 						<i className="material-icons">arrow_back</i>Back to all posts</a>
 					</Link>

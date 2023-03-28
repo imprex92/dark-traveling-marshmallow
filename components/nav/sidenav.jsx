@@ -14,6 +14,8 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const [loading, setLoading] = useState(true)
 	const [countriesVisited, setCountriesVisited] = useState([])
 	const { logout, currentUser } = useAuth()
+	const show_in = 'posts'
+	const route = router.route;
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
@@ -27,7 +29,6 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 
 	}, [dbUserData])
 	
-	const route = router.route;
 	async function handleLogout() {
 		setError('')
 		try{
@@ -119,7 +120,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 						<i className="material-icons">edit</i>Write new post
 					</a>
 				</li>
-				<li style={route === '/user/posts' ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
+				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
 					<Link href="/user/posts">
 						<a href="/user/posts">
 							<i className="material-icons">arrow_back</i>View all posts
