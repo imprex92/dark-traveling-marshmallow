@@ -14,12 +14,13 @@ const BlogItem = ({blog}) => {
 
 	return (
 		<>
-			<Link as={`/user/posts/singlepost/${blog.slug}`} href={`/user/posts/singlepost?slug=${blog.slug}`}>
+			<Link as={`/user/posts/post/${blog.slug}`} href={`/user/posts/post?slug=${blog.slug}`}>
 				<div  className="blogItem-wrapper post-wrapper">
 					<div className="post-text-content">
 						<h4 className="postTitle center-align">
 							{blog.postTitle ?? 'No title'}
 						</h4>
+						//! link to user
 						<div className='post-info'>
 							<p className="postContent">
 								{blog.postContent ? textSlicer(blog.postContent, 70) : 'No text'}
