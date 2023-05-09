@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react'
-import { withRouter } from 'next/router'
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import React, {useEffect, useState, useRef} from 'react'
+import { useRouter, withRouter } from 'next/router'
+import { useAuth } from 'contexts/AuthContext'
 import { fetchDocumentByFieldName } from 'components/utility/subscriptions'
 import SideNavLight from 'components/nav/SideNavLight'
 import DateFormatter from 'components/utility/DateFormatter'
 import SkeletonSinglePost from 'components/loaders/skeletons/SkeletonSinglePost'
 import usePostStorage from 'store/postStorage'
+import withPrivateRoute from 'components/HOC/withPrivateRoute'
 
-const singlepost = ({router, userAuth}) => {
+const Post = (props) => {
+	const {isSlug = true} = props
+	const router = useRouter()
+	const { currentUser } = useAuth()
 	const [requestedBlog, setRequestedBlog] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [hasError, setHasError] = useState(false)
@@ -15,23 +19,35 @@ const singlepost = ({router, userAuth}) => {
 	const updateCurrent = usePostStorage(state => state.setPreviouslyViewedPost)
 
 	useEffect(() => {
-		const logedInUserId = userAuth.uid
+	  console.log('currentUser', currentUser, 'props', props, isSlug, 'route', router);
+	
+	  return () => {
+		
+	  }
+	}, [])
+
+	useEffect(() => {
+		const logedInUserId = currentUser.uid
 		fetchDocumentByFieldName({
 			fieldName: 'slug',
 			value: router.query.slug,
 			userID: logedInUserId
 		})
 		.then(blog => {
+			console.log('a blog', blog);
 			setRequestedBlog(blog)
 			updateCurrent(blog)
 			setIsLoading(false)
 		}).catch(err => {console.error(err), setHasError({error: true, message: 'ERROR: Post not found', code: err})})
 	}, [ ])
+	
 
-	if(isLoading){
-		return (<div className='skeleton-container full-center loadingskeleton'>
-					<SkeletonSinglePost />
-				</div>)
+  	if(isLoading){
+		return (
+			<div className='skeleton-container full-center loadingskeleton'>
+				<SkeletonSinglePost />
+			</div>
+		)
 	}
 
 	if(hasError){
@@ -95,4 +111,4 @@ const singlepost = ({router, userAuth}) => {
 	)
 }
 
-export default withPrivateRoute(withRouter(singlepost))
+export default Post
