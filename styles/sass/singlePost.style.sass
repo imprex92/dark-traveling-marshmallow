@@ -7,15 +7,20 @@
 	justify-content: center
 
 .singlepost-wrapper
-	margin-top: auto
-	margin-bottom: auto
-	margin-left: variables.$pushFromNav
+	width: calc(100% - 6rem)
+	margin: auto
+	> div.img-row
+		display: flex
+		justify-content: center
 	& h4
 		text-indent: 1em
 
 .main-image-wrapper
+	width: auto !important
 	padding: 0 !important
+	margin: auto
 	& > img
+		border-radius: 20px
 		@media  ( min-width: 992px )
 			width: 100%
 			max-height: 50vh

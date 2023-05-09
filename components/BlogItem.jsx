@@ -25,9 +25,9 @@ const BlogItem = ({blog}) => {
 							<p className="postContent">
 								{blog.postContent ? textSlicer(blog.postContent, 70) : 'No text'}
 							</p>
-							{ blog.createdByUser && <Link href="#">
+							{ blog.createdByUser && <><Link href="#">
 								<a>@{blog.createdByUser}</a> 
-							</Link> }
+							</Link><br/></> }
 							<DateFormatter timestamp={blog.timestamp.seconds}/>
 						</div>
 					</div>

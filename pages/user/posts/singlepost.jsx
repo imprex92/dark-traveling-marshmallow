@@ -49,7 +49,7 @@ const singlepost = ({router, userAuth}) => {
 			<div className="singlePost-main is-found">
 				<SideNavLight/>
 				<div className="singlepost-wrapper">
-					<div className="row">
+					<div className="row img-row">
 						<div className="col s12 main-image-wrapper">
 							<img
 							src={requestedBlog.imgURL || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
