@@ -1,0 +1,51 @@
+.widgetWrapper {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  min-height: unset !important;
+}
+
+.widgetContainer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.reload, .reload_loading {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  cursor: pointer;
+  transition-duration: 2.5s;
+  transition-property: transform;
+}
+.reload_loading {
+  animation-name: spin;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+.reload:hover, .reload_loading:hover {
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+}
+
+.degrees {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+
+/*# sourceMappingURL=weatherWidget.module.css.map */
