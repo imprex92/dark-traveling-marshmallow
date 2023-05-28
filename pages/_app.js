@@ -11,6 +11,7 @@ import 'styles/blogPost-page.style.css'
 import 'styles/sideNav.style.css'
 import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
+import WeatherWidget from 'components/widgets/WeatherWidget'
 
 if(typeof window !== 'undefined'){
 	require( 'js/materialize')
@@ -42,6 +43,7 @@ function MyApp({Component,pageProps}) {
 				`,
 				}}
 				/>
+				<WeatherWidget />
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}
 		</AuthProvider>
