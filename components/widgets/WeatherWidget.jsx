@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getGeolocation } from 'components/utility/GetGeolocation'
 import styles from 'styles/weatherWidget.module.css'
-import { fetchWeatherByCoords, fetchWeatherByQuery } from 'components/utility/WeatherHandler'
+import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
+import useSiteSettings from 'store/siteSettings';
 
 const WeatherWidget = () => {
 
@@ -10,6 +11,17 @@ const WeatherWidget = () => {
 	const [userLocation, setUserLocation] = useState(null)
 	const [locationError, setLocationError] = useState(null)
 	const [weatherObj, setWeatherObj] = useState(null)
+	const { units, weatherInitial, showWeaterWidget, latestLocation} = useSiteSettings(state => state.data)
+console.log(weatherObj, 'sitesetting', units, weatherInitial, showWeaterWidget, latestLocation);
+
+	useEffect(() => {
+	  fetchGeolocation()
+	
+	  return () => {
+		
+	  }
+	}, [])
+	
 
 	async function fetchGeolocation() {
 		setLocationLoading(true)
@@ -51,7 +63,7 @@ const WeatherWidget = () => {
 			<div className={styles.degrees}>
 				<sup>{weatherObj ? weatherObj?.main?.temp : 'Loading...'}</sup>
 			</div>
-			<img src="" alt="" />
+			{weatherObj ? <img className='weather-icon' src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : null}
 			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 		</div>
 	</div>

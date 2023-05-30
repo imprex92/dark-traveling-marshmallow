@@ -12,6 +12,7 @@ import 'styles/sideNav.style.css'
 import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
 import WeatherWidget from 'components/widgets/WeatherWidget'
+import useSiteSettings from 'store/siteSettings';
 
 if(typeof window !== 'undefined'){
 	require( 'js/materialize')
@@ -20,6 +21,7 @@ if(typeof window !== 'undefined'){
 	//TODO check if jquery is really needed!
 
 function MyApp({Component,pageProps}) {
+	const { showWeaterWidget } = useSiteSettings(state => state.data)
   return (
 	  <>
 	  	<AuthProvider>
@@ -43,7 +45,7 @@ function MyApp({Component,pageProps}) {
 				`,
 				}}
 				/>
-				<WeatherWidget />
+				{ showWeaterWidget ? <WeatherWidget /> : null}
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}
 		</AuthProvider>
