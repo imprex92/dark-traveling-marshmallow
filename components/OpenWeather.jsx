@@ -7,7 +7,6 @@ import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
-  console.log('OpenWeather object from parent', weatherObj, 'error? : ', apiError);
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
