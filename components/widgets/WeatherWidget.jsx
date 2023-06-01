@@ -12,7 +12,7 @@ const WeatherWidget = () => {
 	const [locationError, setLocationError] = useState(null)
 	const [weatherObj, setWeatherObj] = useState(null)
 	const { units, weatherInitial, showWeaterWidget, latestLocation} = useSiteSettings(state => state.data)
-console.log(weatherObj, 'sitesetting', units, weatherInitial, showWeaterWidget, latestLocation);
+	let isMetric = units === 'celcius' ? true : false
 
 	useEffect(() => {
 	  fetchGeolocation()
@@ -61,9 +61,13 @@ console.log(weatherObj, 'sitesetting', units, weatherInitial, showWeaterWidget, 
 	<div className={styles.widgetWrapper}>
 		<div className={styles.widgetContainer}>
 			<div className={styles.degrees}>
-				<sup>{weatherObj ? weatherObj?.main?.temp : 'Loading...'}</sup>
+				{weatherObj ? (<><span>{isMetric ? weatherObj.main.temp.toFixed(1) : !isMetric && toImperial(weatherObj.main.temp.toFixed(1), 'degrees') ? toImperial(weatherObj.main.temp.toFixed(1), 'degrees') : '??'}
+                </span>
+                <span>
+                  {isMetric ? '°C' : '°F'}
+                </span></> ) : null}
 			</div>
-			{weatherObj ? <img className='weather-icon' src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : null}
+			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : null}
 			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 		</div>
 	</div>
