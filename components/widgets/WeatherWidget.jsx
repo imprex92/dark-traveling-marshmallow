@@ -65,7 +65,7 @@ const WeatherWidget = () => {
                 </span>
                 <span>
                   {isMetric ? '°C' : '°F'}
-                </span></> ) : null}
+                </span></> ) : <span>Just a sec...</span>}
 			</div>
 			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : null}
 			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
