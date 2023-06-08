@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { getGeolocation } from './utility/GetGeolocation'
+import useSiteSettings from 'store/siteSettings';
 
 const Geolocator = () => {
-
+	const updateCurrent = useSiteSettings(state => state.setLatestLocation)
+	
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
 	const [userLocation, setUserLocation] = useState(null)
@@ -17,6 +19,7 @@ const Geolocator = () => {
 					await getGeolocation()
 					.then(position => {
 						setReversedGeolocation(position)
+						updateCurrent(position)
 						setLocationLoading(false)
 					})
 					.catch(err => {

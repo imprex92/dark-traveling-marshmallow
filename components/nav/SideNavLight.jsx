@@ -100,6 +100,11 @@ export default function SideNavLight ({}) {
 						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
 					</Link>
 				</li>
+				<li onClick={closeSideNav}>
+					<Link href="/weather">
+						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+					</Link> 
+				</li>
 			</ul>		
 		</div>
 	)

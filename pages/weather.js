@@ -6,10 +6,12 @@ import { fetchWeatherByCoords, fetchWeatherByQuery } from '../components/utility
 import { getGeolocation } from '../components/utility/GetGeolocation'
 import { getSs, setSs } from '../components/utility/StateHandler'
 import SkeletonWeather from 'components/loaders/skeletons/SkeletonWeather'
+import useSiteSettings from 'store/siteSettings';
 
 const weather = () => {
 	const { currentUser } = useAuth()
 	const isOnline = currentUser ? true : false
+	const updateInitialWeather = useSiteSettings(state => state.setLatestLocation)
 	
 	const [weatherObj, setWeatherObj] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
@@ -23,6 +25,7 @@ const weather = () => {
 			coords && await fetchWeatherByCoords(coords).then(data => {
 				console.log('fetch initial');
 				setWeatherObj(data)
+				updateInitialWeather(data)
 				setSs('userGeoLatest', data)
 				setIsLoading(false)
 			})

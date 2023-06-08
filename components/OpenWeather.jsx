@@ -7,7 +7,6 @@ import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
-  console.log('OpenWeather object from parent', weatherObj, 'error? : ', apiError);
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
@@ -155,10 +154,12 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
             <div className="chips chips-initial"></div>
           </div>
           <div className="history-wrapper z-depth-4">
+            <span className='white-text'>To be Search history soon...</span>
+            {/* //! Add search history for weather 
             {count}
             <button onClick={inc}>Increase</button>
             <button onClick={dec}>Decrease</button>
-            <button onClick={ext}>Exterminate</button>
+            <button onClick={ext}>Exterminate</button> */}
           </div>
         </div>
       </div>

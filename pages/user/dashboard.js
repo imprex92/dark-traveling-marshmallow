@@ -120,7 +120,7 @@ const dashboard = ({userAuth, userBlogs}) => {
 					</form>
 				</div>
 				{/* //TODO mapa ut post i karusellen med bild och position */}
-				<div className="row valign-wrapper">
+				<div className="row valign-wrapper post-slides">
 					<div className="col s12 center-align post-carousel-section">
 						<div className="custom-body">
 							{/* //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten */}
