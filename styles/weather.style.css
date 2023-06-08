@@ -68,6 +68,9 @@
   max-width: 700px;
   margin: 1rem auto;
 }
+.weather .weather-container .container-2 .additional-wrapper .chips .chip, .weather .weather-container .container-2 .history-wrapper .chips .chip {
+  cursor: pointer;
+}
 
 .vertical-line {
   border-left: 2px solid #fff;
