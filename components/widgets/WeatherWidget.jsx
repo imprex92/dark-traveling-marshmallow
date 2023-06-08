@@ -3,6 +3,7 @@ import { getGeolocation } from 'components/utility/GetGeolocation'
 import styles from 'styles/weatherWidget.module.css'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
+import SkeletonWeaterWidget from 'components/loaders/skeletons/SkeletonWeaterWidget';
 
 const WeatherWidget = () => {
 
@@ -67,7 +68,7 @@ const WeatherWidget = () => {
                   {isMetric ? '°C' : '°F'}
                 </span></> ) : <span>Just a sec...</span>}
 			</div>
-			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : null}
+			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeaterWidget />}
 			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 		</div>
 	</div>
