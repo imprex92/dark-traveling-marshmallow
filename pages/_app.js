@@ -30,7 +30,7 @@ function MyApp({Component,pageProps}) {
 					<meta charSet="utf-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 				</Head>
-				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.FIREBASE_MEASUREMENT_ID}`}/>
+				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.PROJECT_FIREBASE_MEASUREMENT_ID}`}/>
 				<Script
 				id='google-analytics'
 				strategy="afterInteractive"
@@ -39,7 +39,7 @@ function MyApp({Component,pageProps}) {
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
-				gtag('config', '${process.env.FIREBASE_MEASUREMENT_ID}', {
+				gtag('config', '${process.env.PROJECT_FIREBASE_MEASUREMENT_ID}', {
 				page_path: window.location.pathname,
 				});
 				`,
