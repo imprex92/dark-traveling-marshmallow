@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
+import { lazy } from 'react'
 import { AuthProvider } from 'contexts/AuthContext'
 import { DatabaseProvider } from 'contexts/DatabaseContext'
 import 'styles/global.style.css'
@@ -11,8 +12,9 @@ import 'styles/blogPost-page.style.css'
 import 'styles/sideNav.style.css'
 import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
-import WeatherWidget from 'components/widgets/WeatherWidget'
 import useSiteSettings from 'store/siteSettings';
+import {useRouter} from 'next/router';
+const WeatherWidget = lazy(() => import('components/widgets/WeatherWidget'))
 
 if(typeof window !== 'undefined'){
 	require( 'js/materialize')
@@ -21,7 +23,10 @@ if(typeof window !== 'undefined'){
 	//TODO check if jquery is really needed!
 
 function MyApp({Component,pageProps}) {
+	const widgetProhibited = ['/login', '/signup']
+	const router = useRouter()
 	const { showWeaterWidget } = useSiteSettings(state => state.data)
+
   return (
 	  <>
 	  	<AuthProvider>
@@ -45,7 +50,7 @@ function MyApp({Component,pageProps}) {
 				`,
 				}}
 				/>
-				{ showWeaterWidget ? <WeatherWidget /> : null}
+				{ showWeaterWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
 				<Component {...pageProps}/>
 			{/* </DatabaseProvider> */}
 		</AuthProvider>
