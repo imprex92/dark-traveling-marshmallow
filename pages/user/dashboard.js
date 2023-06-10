@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 
-import {projectFirestore} from '../../firebase/config'
+import { projectFirestore } from 'firebase/config'
 import Slides from '../../components/Slides'
 import { useAuth } from '../../contexts/AuthContext'
 import Sidenav from '../../components/nav/SideNav'

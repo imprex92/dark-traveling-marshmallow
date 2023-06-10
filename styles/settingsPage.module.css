@@ -1,0 +1,8 @@
+.main {
+  display: grid;
+}
+.main .sidePanel {
+  grid-area: side-panel;
+}
+
+/*# sourceMappingURL=settingsPage.module.css.map */
