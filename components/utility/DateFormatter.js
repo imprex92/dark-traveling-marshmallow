@@ -3,7 +3,7 @@ import moment from 'moment'
 // Supply with unix seconds
 
 export default function DateFormatter ({timestamp, timeFromNow = true}){
-	console.log(timestamp, typeof(timestamp));
+	
 	typeof(timestamp) !== 'number' && console.error('Dateformater error. Timestamp NaN');
 
 	if(typeof(timestamp) !== 'number') return(<span>No date</span>)
