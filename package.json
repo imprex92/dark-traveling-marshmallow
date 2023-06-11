@@ -54,6 +54,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "resolve-url-loader": "^5.0.0",
+    "webpack": "^5.86.0",
     "webpack-stats-plugin": "^1.1.1"
   }
 }

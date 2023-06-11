@@ -13,7 +13,7 @@ function login({userAuth}) {
 		if(currentUser){
 			router.push('/user/dashboard') 
 		}
-	}, [])
+	}, [currentUser])
 	return (
 		<>
 			<img
