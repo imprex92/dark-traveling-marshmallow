@@ -28,7 +28,7 @@ const BlogItem = ({blog}) => {
 							{ blog.createdByUser && <><Link href="#">
 								<a>@{blog.createdByUser}</a> 
 							</Link><br/></> }
-							<DateFormatter timestamp={blog.timestamp.seconds}/>
+							<DateFormatter timestamp={blog.timestamp?.seconds}/>
 						</div>
 					</div>
 				</div>
