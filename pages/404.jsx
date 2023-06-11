@@ -149,7 +149,7 @@ const FourOhFour = () => {
 				</div>
 			</div>
 		</>
-  )
+  	);
 }
 
 export default FourOhFour
