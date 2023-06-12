@@ -148,6 +148,7 @@ const FourOhFour = () => {
 					<button onClick={() => router.back()} className={styles.fourOhFourBtn}>Go back</button>
 				</div>
 			</div>
+			<small className={styles.cRights}>Copyright (c) 2022 Nothing_4us (https://codepen.io/nothing4us/pen/ExRREBv)</small>
 		</>
   	);
 }
