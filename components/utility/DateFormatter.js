@@ -1,4 +1,3 @@
-import { object } from 'firebase-functions/v1/storage'
 import moment from 'moment'
 
 // Supply with unix seconds
@@ -6,6 +5,8 @@ import moment from 'moment'
 export default function DateFormatter ({timestamp, timeFromNow = true}){
 	
 	typeof(timestamp) !== 'number' && console.error('Dateformater error. Timestamp NaN');
+
+	if(typeof(timestamp) !== 'number') return(<span>No date</span>)
 	
 	return(
 		<>
