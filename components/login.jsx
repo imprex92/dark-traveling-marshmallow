@@ -91,7 +91,7 @@ function login(props) {
 						<div className="divider"></div>
 						</div>
 						<div className="row">
-						<a onClick={accessWithGoogle} className="btn-floating btn waves-effect waves-light blue"><Googleicon/></a>
+							<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon"><Googleicon/></a>
 						</div>
 						<Link href="/signup">
 							<a className="white-text"><b>No account? Click here!</b></a>
