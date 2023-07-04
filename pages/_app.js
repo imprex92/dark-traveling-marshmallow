@@ -14,6 +14,8 @@ import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
 import useSiteSettings from 'store/siteSettings';
 import {useRouter} from 'next/router';
+import { Offline, Online } from "react-detect-offline";
+import OfflineComp from 'components/OfflineComp'
 const WeatherWidget = lazy(() => import('components/widgets/WeatherWidget'))
 
 if(typeof window !== 'undefined'){
@@ -50,8 +52,13 @@ function MyApp({Component,pageProps}) {
 				`,
 				}}
 				/>
-				{ showWeaterWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
-				<Component {...pageProps}/>
+				<Online>
+					{ showWeaterWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
+					<Component {...pageProps}/>
+				</Online>
+				<Offline>
+					<OfflineComp />
+				</Offline>
 			{/* </DatabaseProvider> */}
 		</AuthProvider>
 	  </>
