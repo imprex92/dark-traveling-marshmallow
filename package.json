@@ -52,6 +52,7 @@
     "@types/materialize-css": "^1.0.8",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "prettier": "2.8.8",
     "resolve-url-loader": "^5.0.0",
     "webpack-stats-plugin": "^1.1.1"
   }
