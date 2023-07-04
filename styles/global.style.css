@@ -37,4 +37,9 @@ a {
   background: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 
+.outline:focus {
+  outline: 1px solid white !important;
+  outline-width: 1px !important;
+}
+
 /*# sourceMappingURL=global.style.css.map */

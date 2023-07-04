@@ -50,4 +50,9 @@
   font-weight: 600;
 }
 
+a.btn.googleIcon:focus {
+  outline: 1px solid white !important;
+  outline-width: 1px !important;
+}
+
 /*# sourceMappingURL=signIn.style.css.map */

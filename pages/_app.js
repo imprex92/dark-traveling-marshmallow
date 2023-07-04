@@ -23,7 +23,7 @@ if(typeof window !== 'undefined'){
 	//TODO check if jquery is really needed!
 
 function MyApp({Component,pageProps}) {
-	const widgetProhibited = ['/login', '/signup']
+	const widgetProhibited = ['/login', '/signup', '/']
 	const router = useRouter()
 	const { showWeaterWidget } = useSiteSettings(state => state.data)
 
