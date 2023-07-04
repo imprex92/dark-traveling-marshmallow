@@ -84,14 +84,14 @@ function login(props) {
 								</label>
 							</div>
 						</div>					
-						<button className="btn waves-effect waves-light blue" type="submit" name="action" disabled={isLoading}>Signin
+						<button className="btn waves-effect waves-light blue outline" type="submit" name="action" disabled={isLoading}>Signin
 							<i className="material-icons right">send</i>
 						</button>
 						<div className="section">
 						<div className="divider"></div>
 						</div>
 						<div className="row">
-							<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon"><Googleicon/></a>
+							<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon outline"><Googleicon/></a>
 						</div>
 						<Link href="/signup">
 							<a className="white-text"><b>No account? Click here!</b></a>

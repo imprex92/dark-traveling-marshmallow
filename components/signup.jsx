@@ -78,14 +78,14 @@ function signup() {
 							</label>
 						</div>
 					</div>				
-					<button className="btn waves-effect waves-light blue" type="submit" name="action" disabled={isLoading}>SignUp
+					<button className="btn waves-effect waves-light blue outline" type="submit" name="action" disabled={isLoading}>SignUp
 						<i className="material-icons right">send</i>
 					</button>
 					<div className="section">
 					<div className="divider"></div>
 					</div>
 					<div className="row">
-						<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon"><Googleicon/></a>
+						<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon outline"><Googleicon/></a>
 					</div>
 					<Link href="/login">
 						<a className="white-text"><b>Have an account? Click here!</b></a>
