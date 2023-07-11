@@ -14,6 +14,7 @@ class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         </Head>
         <body>
+          <script id="CookieDeclaration" src="https://consent.cookiebot.com/f5fc7d0f-f0b3-46eb-b262-434f483563e1/cd.js" type="text/javascript" async></script>
           <Main />
           <NextScript />
         </body>
