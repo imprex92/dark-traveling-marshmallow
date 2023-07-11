@@ -54,6 +54,7 @@ function MyApp({Component,pageProps}) {
 				<Script strategy="afterInteractive" id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="f5fc7d0f-f0b3-46eb-b262-434f483563e1" type="text/javascript" async/>
 				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.PROJECT_FIREBASE_MEASUREMENT_ID}`}/>
 				<Script
+				data-cookieconsent="statistics"
 				id='google-analytics'
 				strategy="afterInteractive"
 				dangerouslySetInnerHTML={{
