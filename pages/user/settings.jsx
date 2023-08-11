@@ -112,7 +112,7 @@ const settings = ({userAuth, userData}) => {
 				</div>
 				<p>Profile picture</p>
 				<div className="row">
-					<div className="file-field input-field">
+					<div className={`file-field input-field ${styles.fileField}`}>
 						<div className="btn-small">
 							<span>File</span>
 							<input ref={fileInput} className='validate' type="file" id="change-profilePic" accept='image/*' onChange={(file) => {handlePictureUpload(file)}} />
