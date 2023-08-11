@@ -13,10 +13,11 @@ function login({userAuth}) {
 		if(currentUser){
 			router.push('/user/dashboard') 
 		}
-	}, [])
+	}, [currentUser])
 	return (
 		<>
 			<img
+			loading='eager'
 			className="login-img"
 			src="/assets/simon-migaj.jpg"
 			alt="Picture of the author"

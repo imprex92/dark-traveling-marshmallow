@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 
-import {projectFirestore} from '../../firebase/config'
+import { projectFirestore } from 'firebase/config'
 import Slides from '../../components/Slides'
 import { useAuth } from '../../contexts/AuthContext'
-import Sidenav from '../../components/nav/SideNav'
+import Sidenav from '../../components/nav/sidenav'
 import withPrivateRoute from '../../components/HOC/withPrivateRoute'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../components/utility/subscriptions'
 import Geolocator from '../../components/Geolocator'

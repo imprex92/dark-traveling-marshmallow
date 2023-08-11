@@ -30,11 +30,11 @@ export function AuthProvider({children, userAuth}) {
 			projectAuth.createUserWithEmailAndPassword(email, password)
 			.then((cred) => {
 				projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
-					displayName: cred.user.displayName || 'null',
-					photoURL: cred.user.photoURL || 'null',
-					email: cred.user.email || 'null',
-					emailVerified: cred.user.emailVerified || 'null',
-					phoneNumber: cred.user.phoneNumber || 'null',
+					displayName: cred.user.displayName || null,
+					photoURL: cred.user.photoURL || null,
+					email: cred.user.email || null,
+					emailVerified: cred.user.emailVerified || null,
+					phoneNumber: cred.user.phoneNumber || null,
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow
 				}, { merge: true });
@@ -88,11 +88,11 @@ export function AuthProvider({children, userAuth}) {
 			.then((result) => {
 				if(result.additionalUserInfo.isNewUser){
 					projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
-						displayName: result.user.displayName || 'null',
-						photoURL: result.user.photoURL || 'null',
+						displayName: result.user.displayName || null,
+						photoURL: result.user.photoURL || null,
 						email: result.user.email || 'null',
-						emailVerified: result.user.emailVerified || 'null',
-						phoneNumber: result.user.phoneNumber || 'null',
+						emailVerified: result.user.emailVerified || null,
+						phoneNumber: result.user.phoneNumber || null,
 						providerId: result.additionalUserInfo.providerId,
 						created: projectTimestampNow
 					}, { merge: true })

@@ -99,7 +99,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 						<i className="material-icons">power_settings_new</i>Log out
 					</a>
 				</li>
-				<li>
+				<li onClick={closeSideNav}>
 					<Link href="/user/settings">
 						<a href="#!"><i className="material-icons">settings</i>Settings</a>
 					</Link>
