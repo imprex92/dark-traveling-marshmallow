@@ -17,6 +17,7 @@ function signup({userAuth}) {
 	return (
 		<>
 			<img
+			loading='eager'
 			className="signUp-img"
 			src="/assets/simon-migaj.jpg"
 			alt="Picture of the author"
