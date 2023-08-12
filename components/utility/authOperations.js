@@ -91,7 +91,6 @@ async function uploadNewPic(data){
 			url
 		}
 	} catch (error) {
-		console.error('Error uploading new file or updating profile:', error);
 		throw Error(`Error uploading new file or updating profile:\n${error}`);
 	}
 }
