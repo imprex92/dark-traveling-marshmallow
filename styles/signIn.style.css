@@ -1,15 +1,5 @@
-.signUp-img {
+.signUp-img, .login-img {
   object-fit: cover;
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.login-img {
-  object-fit: cover;
-  pointer-events: none;
   position: absolute;
   width: 100%;
   height: 100%;

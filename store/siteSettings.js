@@ -7,7 +7,7 @@ let siteSettings = (set) => ({
 		theme: 'dark',
 		units: 'celcius',
 		language: 'en',
-		timeFormat: '24',
+		timeFormat: 24,
 		dateFormat: 'dd/mm/yyyy',
 		previouslyViewedPost: '',
 		latestLocation: null,

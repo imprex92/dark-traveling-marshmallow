@@ -1,0 +1,172 @@
+.main {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas: "nav wrap";
+  background: var(--primaryBackground);
+}
+
+.settingsWrapper {
+  grid-area: wrap;
+  position: relative;
+  display: grid;
+  grid-template-areas: "side-panel main-panel";
+  grid-template-columns: 0.7fr 1fr;
+  padding: 4rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  max-height: 75%;
+  min-height: 600px;
+  max-width: 1100px;
+  width: 90%;
+  border-radius: 20px;
+  margin: auto;
+  box-shadow: var(--primaryBoxShadow);
+  color: #fff;
+  overflow: scroll;
+}
+
+.sidePanel {
+  position: relative;
+  grid-area: side-panel;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 3rem;
+}
+.sidePanel > img {
+  margin-bottom: 1rem;
+}
+.sidePanel::after {
+  content: "";
+  background-color: lightgray;
+  position: absolute;
+  width: 2px;
+  height: 95%;
+  top: 10px;
+  right: 0;
+  display: block;
+}
+
+.sidePanelItems {
+  text-align: left;
+  width: 100%;
+}
+.sidePanelItems hr {
+  margin: 1.25rem 0 1.5rem;
+}
+.sidePanelItems .userInfo > h4 {
+  margin: 0;
+  font-size: 20px;
+}
+.sidePanelItems .menuItems .item {
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+.sidePanelItems .menuItems .item:first-child {
+  margin-top: 1rem;
+}
+.sidePanelItems .menuItems .item:hover, .sidePanelItems .menuItems .item_active {
+  text-decoration: underline;
+}
+
+.navigation {
+  grid-area: nav;
+}
+
+.mainPanel {
+  grid-area: main-panel;
+  padding-left: 3rem;
+  position: relative;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.tooltip > .tooltipText {
+  visibility: hidden;
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.tooltip > .tooltipText::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.tooltip:hover > .tooltipText {
+  opacity: 1;
+  visibility: visible;
+}
+
+.googleIconWrap > svg {
+  height: 25px;
+}
+
+.accountRemovalDialog {
+  position: absolute;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: var(--primaryBoxShadow);
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+.accountRemovalDialog > .closeDialog {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  width: 200%;
+  height: 150%;
+  z-index: 98;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.accountSettingsComp :is(.inputCancel, .inputUpdate) {
+  font-size: 1.5rem;
+  width: 2rem;
+  cursor: pointer;
+}
+.accountSettingsComp .inputCancel {
+  display: inline;
+}
+.accountSettingsComp .inputUpdate {
+  display: inline;
+  right: 28px;
+}
+.accountSettingsComp .inputUpdate::after {
+  content: "";
+  background-color: lightgray;
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  right: 5px;
+  display: block;
+}
+
+/*# sourceMappingURL=settingsPage.module.css.map */

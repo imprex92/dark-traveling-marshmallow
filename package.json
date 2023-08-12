@@ -21,6 +21,7 @@
     "SASS-watch-singlepost": "sass --watch ./styles/sass/singlePost.style.sass:./styles/singlePost.style.css",
     "SASS-watch-weather": "sass --watch ./styles/sass/weather.style.sass:./styles/weather.style.css",
     "SASS-watch-weatherWidget": "sass --watch ./styles/sass/weatherWidget.module.sass:./styles/weatherWidget.module.css",
+    "SASS-watch-settingsPage": "sass --watch ./styles/sass/settingsPage.module.sass:./styles/settingsPage.module.css",
     "SASS-watch-global": "sass --watch ./styles/sass/global.style.sass:./styles/global.style.css"
   },
   "dependencies": {
@@ -52,8 +53,9 @@
     "@types/materialize-css": "^1.0.8",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.0.0",
     "resolve-url-loader": "^5.0.0",
+    "webpack": "^5.86.0",
     "webpack-stats-plugin": "^1.1.1"
   }
 }

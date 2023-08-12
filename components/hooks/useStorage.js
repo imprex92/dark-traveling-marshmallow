@@ -5,7 +5,6 @@ import {useAuth} from '../../contexts/AuthContext'
 //! Saving user defined files to upload to storage
 
 const useStorage = (file, initiator) => {
-  console.log(file);
   const {currentUser} = useAuth();
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
