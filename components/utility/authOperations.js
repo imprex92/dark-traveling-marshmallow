@@ -96,13 +96,29 @@ async function uploadNewPic(data){
 }
 
 async function updateAccountData(data){
-	try {
-		await deleteExistingFile(user)
-		const result = await uploadNewPic(data)
-		return result;
-	} catch (error) {
-		return {status: 406, message: error.message}
-	}
+    try {
+        if (data.file) {
+            await deleteExistingFile(user);
+            const result = await uploadNewPic(data);
+            return result;
+        } else {
+            const refToAccountDoc = projectFirestore
+                .collection('testUserCollection')
+                .doc(user.uid);
+            
+            await refToAccountDoc.update({
+                displayName: data.name.value,
+                phoneNumber: data.number.value,
+            });
+            
+            return {
+                status: 200,
+                message: 'Profile data updated: OK',
+            };
+        }
+    } catch (error) {
+        return {status: 406, message: error.message};
+    }
 }
 
 /* END */

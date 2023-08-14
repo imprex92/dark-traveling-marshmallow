@@ -27,7 +27,7 @@ const settings = ({userAuth, userData}) => {
 
 	const phoneInput = useRef(phoneNumber)
 	const nameInput = useRef(displayName)
-	const fileInput = useRef()
+	const fileInput = useRef(null)
 
 	const handleAccountRemoval = () => {
 		const deletion = accountRemoval(user)
@@ -59,7 +59,7 @@ const settings = ({userAuth, userData}) => {
 	const handlePictureUpload = (file) => {
 
 		const inputEl = document.getElementById('change-profilePic')
-		const imgToUpload = file.target.files[0]
+		const imgToUpload = file.target.files[0] || null
 		if(imgToUpload && (fileTypeImage.includes(imgToUpload.type) && imgToUpload.size <= maxSize)){
 			inputEl.classList.remove('invalid');
 			inputEl.classList.add('valid')
@@ -76,7 +76,7 @@ const settings = ({userAuth, userData}) => {
 		let update = await updateAccountData({
 			name: nameInput.current,
 			number: phoneInput.current,
-			file: fileInput.current
+			file: fileInput.current || null
 		})
 	}
 
