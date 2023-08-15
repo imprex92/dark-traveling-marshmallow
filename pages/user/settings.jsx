@@ -22,8 +22,6 @@ const settings = ({userAuth, userData}) => {
 	console.groupEnd()
 
 	const [currentMenuItem, setCurrentMenuItem] = useState('about_me')
-	const [showPassword, setShowPassword] = useState(false)
-	const [profilePicToUpload, setProfilePicToUpload] = useState(null)
 
 	const phoneInput = useRef(phoneNumber)
 	const nameInput = useRef(displayName)
@@ -72,12 +70,25 @@ const settings = ({userAuth, userData}) => {
 		}
 	}
 	const handleUpdateAccountInfo = async (e) => {
-		e.preventDefault()
-		let update = await updateAccountData({
-			name: nameInput.current,
-			number: phoneInput.current,
-			file: fileInput.current || null
-		})
+		e.preventDefault();
+		
+		try {
+			let update = await updateAccountData({
+				name: nameInput.current,
+				number: phoneInput.current,
+				file: fileInput.current || null
+			});
+		
+			if ( update.status === 200 ) {
+				M.toast({html:`Success: ${update.message}`})
+			} else {
+				M.toast({html:`Failed: ${update.message}`})
+				throw new Error(`${update}`);
+			}
+		} catch (error) {
+			M.toast({html:`Something went wrong: ${error}`})
+			console.error('Something went wrong: ', error);
+		}
 	}
 
 	const changeVisibility = (e) => {
