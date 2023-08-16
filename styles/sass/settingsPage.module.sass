@@ -3,6 +3,8 @@
 	grid-template-columns: 50px 1fr
 	grid-template-areas: "nav wrap"
 	background: var(--primaryBackground)
+	& h6
+		font-weight: bold
 
 .settingsWrapper
 	grid-area: wrap
@@ -147,4 +149,17 @@
 			right: 5px
 			display: block
 
-.fileField > .btn-small
+.fileBtn
+	margin-left: 0.7rem
+	margin-top: 0.5rem
+	height: 32.4px !important
+	line-height: 32.4px !important
+	float: left !important
+
+.addressForm_header
+	margin-top: 2rem
+
+.addressForm_row
+	margin-bottom: 0
+	&:last-of-type
+		margin-bottom: 1rem

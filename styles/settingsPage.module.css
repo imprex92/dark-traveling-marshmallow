@@ -4,6 +4,9 @@
   grid-template-areas: "nav wrap";
   background: var(--primaryBackground);
 }
+.main h6 {
+  font-weight: bold;
+}
 
 .settingsWrapper {
   grid-area: wrap;
@@ -167,6 +170,25 @@
   top: 0;
   right: 5px;
   display: block;
+}
+
+.fileBtn {
+  margin-left: 0.7rem;
+  margin-top: 0.5rem;
+  height: 32.4px !important;
+  line-height: 32.4px !important;
+  float: left !important;
+}
+
+.addressForm_header {
+  margin-top: 2rem;
+}
+
+.addressForm_row {
+  margin-bottom: 0;
+}
+.addressForm_row:last-of-type {
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=settingsPage.module.css.map */
