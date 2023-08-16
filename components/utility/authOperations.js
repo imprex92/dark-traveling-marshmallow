@@ -2,6 +2,9 @@ import { projectAuth, projectFirestore, projectStorage } from "firebase/config";
 
 // File handles operations regarding user accounts
 const user = projectAuth.currentUser;
+const refToAccountDoc = user && projectFirestore
+	.collection('testUserCollection')
+	.doc(user.uid);
 const availableProviders = ['google.com']
 
 
@@ -75,10 +78,6 @@ async function uploadNewPic(data){
 			photoURL: url,
 		})
 
-		const refToAccountDoc = projectFirestore
-			.collection('testUserCollection')
-			.doc(user.uid);
-
 		await refToAccountDoc.update({
 			photoURL: url,
 			displayName: data.name.value,
@@ -107,11 +106,21 @@ async function updateAccountData(data){
 
 /* END */
 
+async function updateAddress(addressData) {
+	try {
+		await refToAccountDoc.set(addressData);
+		return {status: 200, message: 'Address update successful'};
+	} catch (error) {
+		throw {status: 500, message: `An error occurred while updating the address, ${error}`};
+	}
+}
+
 export {
 	accountRemoval,
 	reAuthenticate,
 	verifyEmail,
 	updateEmail,
 	updatePassword,
-	updateAccountData
+	updateAccountData,
+	updateAddress,
 }
