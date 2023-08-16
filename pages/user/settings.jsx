@@ -5,6 +5,7 @@ import styles from 'styles/settingsPage.module.css'
 import SideNav from 'components/nav/sidenav'
 import Googleicon from 'public/assets/icons8-google.svg'
 import { accountRemoval, updateEmail, updatePassword, verifyEmail, updateAccountData } from 'components/utility/authOperations'
+import AddressForm from 'components/AddressForm'
 
 if(typeof window !== 'undefined'){
 	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
@@ -22,8 +23,6 @@ const settings = ({userAuth, userData}) => {
 	console.groupEnd()
 
 	const [currentMenuItem, setCurrentMenuItem] = useState('about_me')
-	const [showPassword, setShowPassword] = useState(false)
-	const [profilePicToUpload, setProfilePicToUpload] = useState(null)
 
 	const phoneInput = useRef(phoneNumber)
 	const nameInput = useRef(displayName)
@@ -41,7 +40,6 @@ const settings = ({userAuth, userData}) => {
 				document.getElementById('email').classList.add('valid')
 				document.getElementById('email').classList.remove('invalid')
 				const emailUpdate = await updateEmail(data)
-				console.log(emailUpdate);
 			}
 			else{
 				document.getElementById('email').classList.add('invalid')
@@ -78,6 +76,11 @@ const settings = ({userAuth, userData}) => {
 			number: phoneInput.current,
 			file: fileInput.current
 		})
+		if (update.status === 200) {
+			M.toast({html:`${update.message}`})
+		} else{
+			M.toast({html:`Status: ${update.status}, ${update.message}`})
+		}
 	}
 
 	const changeVisibility = (e) => {
@@ -98,34 +101,35 @@ const settings = ({userAuth, userData}) => {
 
 		return(
 			<>
-			<form  className='col s12'>
-				<p>About me</p>
-				<div className="row">
-					<div className="input-field col s6">
-						<input ref={nameInput} type="text" id="full_name" defaultValue={displayName} className="validate" />
-						<label className='active' htmlFor="full_name">Full name</label>
-					</div>
-					<div className="input-field col s6">
-						<input ref={phoneInput} type="tel" id="tel" defaultValue={phoneNumber} className="validate" />
-						<label className='active' htmlFor="tel">Mobile number</label>
-					</div>
-				</div>
-				<p>Profile picture</p>
-				<div className="row">
-					<div className={`file-field input-field ${styles.fileField}`}>
-						<div className="btn-small">
-							<span>File</span>
-							<input ref={fileInput} className='validate' type="file" id="change-profilePic" accept='image/*' onChange={(file) => {handlePictureUpload(file)}} />
+				<form className='col s12'>
+					<h6 style={{marginBottom: '1rem'}}>About me</h6>
+					<div className="row">
+						<div className="input-field col s6">
+							<input autoComplete='name' ref={nameInput} type="text" id="full_name" defaultValue={displayName} className="validate" />
+							<label className='active' htmlFor="full_name">Full name</label>
 						</div>
-						<div className="file-path-wrapper">
-							<input placeholder='Upload picture' type="text" className="file-path validate" />
+						<div className="input-field col s6">
+							<input autoComplete='tel' ref={phoneInput} type="tel" id="tel" defaultValue={phoneNumber} className="validate" />
+							<label className='active' htmlFor="tel">Mobile number</label>
 						</div>
 					</div>
-				</div>
-				<button onClick={(e) => handleUpdateAccountInfo(e)} className="btn-small waves-effect waves-light" >Save
-					<i className="material-icons right">save</i>
-				</button>
-			</form>
+					<h6>Profile picture</h6>
+					<div className="row" style={{marginBottom: '10px'}}>
+						<div className={`file-field input-field`}>
+							<div className={`btn-small ${styles.fileBtn}`}>
+								<span>File</span>
+								<input autoComplete='off' ref={fileInput} className='validate' type="file" accept='image/*' onChange={(file) => {handlePictureUpload(file)}} />
+							</div>
+							<div className="file-path-wrapper">
+								<input id="change-profilePic" placeholder='Upload picture' type="text" className="file-path validate" />
+							</div>
+						</div>
+					</div>
+					<button onClick={(e) => handleUpdateAccountInfo(e)} className="btn-small waves-effect waves-light" >Save
+						<i className="material-icons right">save</i>
+					</button>
+				</form>
+				<AddressForm M={M} />
 			</>
 		)
 	}
@@ -135,7 +139,7 @@ const settings = ({userAuth, userData}) => {
 		let isSame = emailPrevValue === emailNewValue
 		return(
 			<div className={styles.accountSettingsComp}>
-				<p>Account Settings</p>
+				<h6>Account Settings</h6>
 				<p>Change email or password</p>
 				<form className="col s12">
 					{providerId === 'password' 
@@ -143,7 +147,7 @@ const settings = ({userAuth, userData}) => {
 					<>
 						<div className="row">
 							<div className="input-field col s10">
-								<input required="" aria-required="true" onChange={x => setEmailNewValue(x.target.value)} type="email" id="email" className="validate" defaultValue={email} />
+								<input autoComplete='email' required="" aria-required="true" onChange={x => setEmailNewValue(x.target.value)} type="email" id="email" className="validate" defaultValue={email} />
 								<label className='active' htmlFor="email">Change email</label>
 								<span className="helper-text" data-error="Doesn't look correct" data-success="Looks good"></span>
 									{ !isSame ? (
@@ -161,7 +165,7 @@ const settings = ({userAuth, userData}) => {
 						<div className="row">
 							<div className="input-field col s10">
 								<i style={{position: 'absolute', top: '15px', right: '15px', float: 'right'}} className="material-icons" id='passwordToggleBtn' onClick={(e) => {changeVisibility(e)}}>visibility_off</i>
-								<input type={'password'} name="" id="password" className="validate" />
+								<input autoComplete='new-password' type={'password'} name="" id="password" className="validate" />
 								<label htmlFor="password">Change password</label>
 							</div>
 						</div>
@@ -172,7 +176,7 @@ const settings = ({userAuth, userData}) => {
 						<p>Email and password cannot be changed when logged in with Google.</p>
 					)}
 				</form>
-				<p>Verify account</p>
+				<h6>Verify account</h6>
 				<button onClick={handleVerifyEmail} disabled={emailVerified} className={`btn waves-effect waves-light btn-small ${emailVerified && 'disabled'}`} type="submit" name="action">
 					{emailVerified ? 'Already verified' : 'Verify email'}
 					<i className="material-icons right">{emailVerified ? 'done' : 'warning_amber'}</i>
@@ -211,7 +215,7 @@ const settings = ({userAuth, userData}) => {
 		return(
 			<>
 				{open ? <div onClick={ () => setOpen(false) } className={styles.overlay}></div> : null}
-				<p>Remove Account</p>
+				<h6>Remove Account</h6>
 				<a className="waves-effect waves-light btn-small red darken-1" onClick={ () => setOpen(true) }>
 					<i className="material-icons right">delete_forever</i>
 					I want to remove my account!
