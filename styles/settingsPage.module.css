@@ -8,6 +8,11 @@
   font-weight: bold;
 }
 
+.status_operation {
+  display: none;
+  margin-left: 1rem;
+}
+
 .settingsWrapper {
   grid-area: wrap;
   position: relative;
@@ -24,7 +29,7 @@
   margin: auto;
   box-shadow: var(--primaryBoxShadow);
   color: #fff;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .sidePanel {
@@ -37,6 +42,8 @@
 }
 .sidePanel > img {
   margin-bottom: 1rem;
+  object-fit: cover;
+  object-position: center;
 }
 .sidePanel::after {
   content: "";
@@ -128,20 +135,30 @@
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: var(--primaryBoxShadow);
   border-radius: 20px;
-  padding: 1rem;
+  padding: 1rem 2rem;
   margin: 0.5rem 0;
 }
-.accountRemovalDialog > .closeDialog {
+
+.closeDialog {
   position: absolute;
   right: 1rem;
   top: 1rem;
   cursor: pointer;
 }
 
+.removeForeverBtn, .verifyEmailBtn {
+  margin: 1rem 0;
+}
+
+.removeAccMsg {
+  position: absolute;
+  color: red;
+}
+
 .overlay {
   position: absolute;
   width: 200%;
-  height: 150%;
+  height: 100%;
   z-index: 98;
   top: 0;
   right: 0;
@@ -149,6 +166,12 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+.accountSettingsComp .fieldRow:first-child {
+  margin-bottom: 0;
+}
+.accountSettingsComp .fieldRow:first-child > div {
+  margin-bottom: 0;
+}
 .accountSettingsComp :is(.inputCancel, .inputUpdate) {
   font-size: 1.5rem;
   width: 2rem;
@@ -189,6 +212,38 @@
 }
 .addressForm_row:last-of-type {
   margin-bottom: 1rem;
+}
+
+.reAuthOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 999;
+}
+.reAuthOverlay .reAuthWrapper {
+  position: relative;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.75);
+  height: 400px;
+  width: 600px;
+  padding: 3rem 4rem;
+  border-radius: var(--defaultBoxBorderRadius);
+  box-shadow: var(--primaryBoxShadow);
+}
+.reAuthOverlay .reAuthWrapper .reAuthContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.reAuthOverlay .reAuthWrapper .reAuthContainer .reAuthBtn[aria-disabled=true] {
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 /*# sourceMappingURL=settingsPage.module.css.map */
