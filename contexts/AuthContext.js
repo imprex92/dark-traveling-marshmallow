@@ -38,7 +38,6 @@ export function AuthProvider({children, userAuth}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow
 				}, { merge: true });
-				console.log("Document successfully written!", cred);
 				resolve({
 					status: 'OK',
 					type: cred.operationType,
@@ -90,7 +89,7 @@ export function AuthProvider({children, userAuth}) {
 					projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
 						displayName: result.user.displayName || null,
 						photoURL: result.user.photoURL || null,
-						email: result.user.email || 'null',
+						email: result.user.email || null,
 						emailVerified: result.user.emailVerified || null,
 						phoneNumber: result.user.phoneNumber || null,
 						providerId: result.additionalUserInfo.providerId,
@@ -122,8 +121,9 @@ export function AuthProvider({children, userAuth}) {
 		})
 	}
 
-	function logout(){
-		return projectAuth.signOut().then((resp) => router.push('/login'))
+	async function logout(){
+		const resp = await projectAuth.signOut();
+		return await router.push('/login');
 	}
 	
 	const value = {
