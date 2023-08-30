@@ -19,7 +19,6 @@ const settings = ({userAuth, userData}) => {
 	const { displayName, email, emailVerified, phoneNumber, photoURL = null, providerId} = userData
 	const fileTypeImage = ['image/jpeg', 'image/gif', 'image/png', 'image/raw', 'image/heif', 'image/webp', 'image/heic']
 	const maxSize = 2097152;
-	const {login, loginWithGoogle, currentUser} = useAuth();
 	const router = useRouter()
 	
 	const [currentMenuItem, setCurrentMenuItem] = useState('about_me')
