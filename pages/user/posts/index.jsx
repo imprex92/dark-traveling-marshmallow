@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import withPrivateRoute from '../../../components/HOC/withPrivateRoute'
 import {projectFirestore} from '../../../firebase/config'
 import BlogList  from '../../../components/BlogList'
-import SideNav from '../../../components/nav/SideNav'
+import SideNav from 'components/nav/Sidenav'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../../components/utility/subscriptions'
 
 const index = ({userAuth}) => {
