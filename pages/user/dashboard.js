@@ -13,8 +13,8 @@ if(typeof window !== 'undefined'){
 //TODO Write a title for every page
 
 const dashboard = ({userAuth, userBlogs}) => {
-	const logedInUserId = userAuth?.uid
-	const userDbRef = projectFirestore.collection('testUserCollection').doc(logedInUserId)
+	const loggedInUserId = userAuth?.uid
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(loggedInUserId)
 	const {currentUser} = useAuth()
 	const [UserFirstname, setUserFirstname] = useState(null)
 	const [searchText, setSearchText] = useState('')

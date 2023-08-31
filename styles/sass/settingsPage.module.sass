@@ -3,6 +3,12 @@
 	grid-template-columns: 50px 1fr
 	grid-template-areas: "nav wrap"
 	background: var(--primaryBackground)
+	& h6
+		font-weight: bold
+
+.status_operation
+	display: none
+	margin-left: 1rem
 
 .settingsWrapper
 	grid-area: wrap
@@ -20,7 +26,7 @@
 	margin: auto
 	box-shadow: var(--primaryBoxShadow)
 	color: #fff
-	overflow: scroll
+	overflow-y: auto
 
 .sidePanel
 	position: relative
@@ -31,6 +37,8 @@
 	padding-right: 3rem
 	& > img
 		margin-bottom: 1rem
+		object-fit: cover
+		object-position: center
 	&::after
 		content: ""
 		background-color: lightgray
@@ -109,18 +117,26 @@
 	background-color: rgba(0, 0, 0, 0.5)
 	box-shadow: var(--primaryBoxShadow)
 	border-radius: 20px
-	padding: 1rem
+	padding: 1rem 2rem
 	margin: 0.5rem 0
-	& > .closeDialog
-		position: absolute
-		right: 1rem
-		top: 1rem
-		cursor: pointer
+
+.closeDialog
+	position: absolute
+	right: 1rem
+	top: 1rem
+	cursor: pointer
+
+.removeForeverBtn, .verifyEmailBtn
+	margin: 1rem 0
+
+.removeAccMsg
+	position: absolute
+	color: red
 
 .overlay
 	position: absolute
 	width: 200%
-	height: 150%
+	height: 100%
 	z-index: 98
 	top: 0
 	right: 0
@@ -128,6 +144,10 @@
 	background-color: rgba(0, 0, 0, 0)
 
 .accountSettingsComp
+	& .fieldRow:first-child
+		margin-bottom: 0
+		& > div
+			margin-bottom: 0
 	& :is(.inputCancel, .inputUpdate)
 		font-size: 1.5rem
 		width: 2rem
@@ -147,4 +167,46 @@
 			right: 5px
 			display: block
 
-.fileField > .btn-small
+.fileBtn
+	margin-left: 0.7rem
+	margin-top: 0.5rem
+	height: 32.4px !important
+	line-height: 32.4px !important
+	float: left !important
+
+.addressForm_header
+	margin-top: 2rem
+
+.addressForm_row
+	margin-bottom: 0
+	&:last-of-type
+		margin-bottom: 1rem
+
+.reAuthOverlay
+	position: absolute
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	display: grid
+	place-content: center
+	background-color: rgba(0, 0, 0, .25)
+	z-index: 999
+	& .reAuthWrapper
+		position: relative
+		color: white
+		background-color: rgba(0, 0, 0, 0.75)
+		height: 400px
+		width: 600px
+		padding: 3rem 4rem
+		border-radius: var(--defaultBoxBorderRadius)
+		box-shadow: var(--primaryBoxShadow)
+		& .reAuthContainer
+			display: flex
+			flex-direction: column
+			justify-content: space-between
+			height: 100%
+			& .reAuthBtn
+				&[aria-disabled="true"]
+					pointer-events: none
+					cursor: not-allowed

@@ -2,27 +2,39 @@ import { projectAuth, projectFirestore, projectStorage } from "firebase/config";
 
 // File handles operations regarding user accounts
 const user = projectAuth.currentUser;
+const refToAccountDoc = user && projectFirestore
+	.collection('testUserCollection')
+	.doc(user.uid);
 const availableProviders = ['google.com']
 
 
-function accountRemoval() {
-	return new Promise((resolve, reject) => {
-		user.delete().then(data => resolve(data)).catch(error => reject(error))
-	})
+async function accountRemoval (reauthCallback) {
+	try {
+		const deletion = await user.delete()
+		.then(data => {return {code: 200, message: 'Account deleted'}})
+		.catch(err => {return err})
+		
+		if(deletion.code === "auth/requires-recent-login"){
+			await reauthCallback(deletion)
+		}
+		return deletion
+	} catch (error) {
+		return error
+	}
 }
-//! Should be called if accountRemoval failed due to expired auth. Prompt for credentials and then send answer as a parameter to this function
-//! Use <reauthenticateWithPopup> if user logged in with google.
-//! Use reauthenticateWithCredential if logged in with email and password
+
 function reAuthenticate(params) {
 	return new Promise((resolve, reject) => {
-		if(availableProviders.includes(user.providerId))
+		if(availableProviders.includes(params.providerId))
 			user.reauthenticateWithPopup(params).then(data => resolve(data)).catch(err => reject(err))
-		else
+		else if(params.providerId === 'password')
 			user.reauthenticateWithCredential(params).then(data => resolve(data)).catch(err => reject(err))
+		else
+			reject({code: 500, message: 'Something went wrong authenticating the user'})
 	})
 }
 
-function verifyEmail() {
+function verifyUserEmail() {
 	return new Promise((resolve, reject) => {
 		projectAuth.useDeviceLanguage()
 		user.sendEmailVerification()
@@ -75,10 +87,6 @@ async function uploadNewPic(data){
 			photoURL: url,
 		})
 
-		const refToAccountDoc = projectFirestore
-			.collection('testUserCollection')
-			.doc(user.uid);
-
 		await refToAccountDoc.update({
 			photoURL: url,
 			displayName: data.name.value,
@@ -107,11 +115,21 @@ async function updateAccountData(data){
 
 /* END */
 
+async function updateAddress(addressData) {
+	try {
+		await refToAccountDoc.set(addressData, {merge: true});
+		return {status: 200, message: 'Address update successful'};
+	} catch (error) {
+		throw {status: 500, message: `An error occurred while updating the address, ${error}`};
+	}
+}
+
 export {
 	accountRemoval,
 	reAuthenticate,
-	verifyEmail,
+	verifyUserEmail,
 	updateEmail,
 	updatePassword,
-	updateAccountData
+	updateAccountData,
+	updateAddress,
 }
