@@ -31,25 +31,25 @@ const AddressForm = props => {
 			!addressData.zipCode ||
 			!addressData.country
 		) {
-			M.toast({html:`Missing required address information.`})
+			M.toast({text:`Missing required address information.`})
 		} else {
 			try {
 				const address = await updateAddress(addressData)
 				if(address.status === 200){
-					M.toast({html:`Status: ${address.status}, ${address.message}`})
+					M.toast({text:`Status: ${address.status}, ${address.message}`})
 					addressStatusMsg.current.style.color = 'lightgreen'
 					addressStatusMsg.current.textContent = 'Update success!'
 					addressStatusMsg.current.style.display = 'inline'
 					setTimeout(()=>{addressStatusMsg.current.style.display = 'none'},2000);
 				} else {
-					M.toast({html:`Error: ${address.status}, ${address.message}`})
+					M.toast({text:`Error: ${address.status}, ${address.message}`})
 					addressStatusMsg.current.style.color = 'red'
 					addressStatusMsg.current.textContent = 'Update failed!'
 					addressStatusMsg.current.style.display = 'inline'
 					setTimeout(()=>{addressStatusMsg.current.style.display = 'none'},2000);
 				}
 			} catch (error) {
-				M.toast({html:`Error: ${error.status}, ${error.message}`})
+				M.toast({text:`Error: ${error.status}, ${error.message}`})
 				addressStatusMsg.current.style.color = 'red'
 				addressStatusMsg.current.textContent = 'Update failed!'
 				addressStatusMsg.current.style.display = 'inline'
