@@ -48,7 +48,7 @@ const WeatherMaster = () => {
 		catch{
 			setError("Couldn't log you out")
 			console.log(error);
-			M.toast({html: "We couldn't log you out!", error, classes: 'rounded'});
+			M.toast({text: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
   return (

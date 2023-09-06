@@ -38,13 +38,13 @@ const settings = ({userAuth, userData}) => {
 
 	const handleReauthCallback = () => {
 		setShowReAuthDialog(true)
-		M.toast({html:'Re-authentication needed!'})
+		M.toast({text:'Re-authentication needed!'})
 	}
 	const handleAccountRemoval = async() => {
 		removeAccMsg.current = false
 		const deletion = await accountRemoval(handleReauthCallback)
 		if(deletion.code === 200){
-			M.toast({html: `${deletion.message}! Redirecting...`})
+			M.toast({text: `${deletion.message}! Redirecting...`})
 			router.replace('/login')
 		}
 	}
@@ -76,7 +76,7 @@ const settings = ({userAuth, userData}) => {
 				emailStatusLoader.current = false
 				document.getElementById('email').classList.add('invalid')
 				document.getElementById('email').classList.remove('valid')
-				M.toast({html:'Password requirements: \n Between 6 - 20 characters. \n Contain at least: \n 1 number \n 1 uppercase and 1 lowercase.'})
+				M.toast({text:'Password requirements: \n Between 6 - 20 characters. \n Contain at least: \n 1 number \n 1 uppercase and 1 lowercase.'})
 			}
 		}
 		else if(type === 'password'){
@@ -113,7 +113,7 @@ const settings = ({userAuth, userData}) => {
 		else{
 			inputEl.classList.remove('valid');
 			inputEl.classList.add('invalid');
-			M.toast({html:'Please select a valid image with size less than 2mb'})
+			M.toast({text:'Please select a valid image with size less than 2mb'})
 		}
 	}
 	const handleUpdateAccountInfo = async (e) => {
@@ -125,7 +125,7 @@ const settings = ({userAuth, userData}) => {
 			file: fileInput.current
 		})
 		if (update.status === 200) {
-			M.toast({html:`${update.message}`})
+			M.toast({text:`${update.message}`})
 			profileStatusLoader.current = false
 			profileStatusMsg.current.style.color = 'lightgreen'
 			profileStatusMsg.current.textContent = 'Update success!'
@@ -133,7 +133,7 @@ const settings = ({userAuth, userData}) => {
 			setTimeout(()=>{profileStatusMsg.current.style.display = 'none'},2000);
 			console.log(fileInput.current);
 		} else{
-			M.toast({html:`Status: ${update.status}, ${update.message}`})
+			M.toast({text:`Status: ${update.status}, ${update.message}`})
 			profileStatusLoader.current = false
 			profileStatusMsg.current.style.color = 'red'
 			profileStatusMsg.current.textContent = 'Update failed!'

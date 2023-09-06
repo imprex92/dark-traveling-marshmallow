@@ -33,7 +33,7 @@ export default function SideNavLight ({}) {
 		}
 		catch{
 			setError("Couldn't log you out")
-			M.toast({html: "We couldn't log you out!", error, classes: 'rounded'});
+			M.toast({text: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
 	function handleNewPost(){
