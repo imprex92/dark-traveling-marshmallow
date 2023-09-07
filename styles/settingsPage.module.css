@@ -246,4 +246,46 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 640px) {
+  .settingsWrapper {
+    grid-template-areas: "side-panel" "main-panel";
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    width: 95%;
+  }
+
+  .sidePanel {
+    padding-right: 0;
+    justify-content: space-around;
+  }
+  .sidePanel::after {
+    width: 100%;
+    height: 2px;
+    top: unset;
+    bottom: 0;
+    right: 0;
+  }
+
+  .sidePanelItems {
+    padding-bottom: 1rem;
+  }
+
+  .mainPanel {
+    margin-top: 1rem;
+    padding-left: 0;
+  }
+
+  .addressForm_header {
+    margin-bottom: 2rem;
+  }
+
+  .addressForm {
+    padding-left: 0 !important;
+  }
+
+  .accountRemovalDialog {
+    position: relative;
+  }
+}
+
 /*# sourceMappingURL=settingsPage.module.css.map */
