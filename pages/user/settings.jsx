@@ -32,6 +32,8 @@ const settings = ({userAuth, userData}) => {
 	const emailStatusMsg = useRef(null)
 	const passwordStatusMsg = useRef(null)
 	const removeAccMsg = useRef(null)
+	const verificationEmailMsg = useRef(null)
+	const verificationEmailLoader = useRef(false)
 	const profileStatusLoader = useRef(false)
 	const emailStatusLoader = useRef(false)
 	const passwordStatusLoader = useRef(false)
@@ -48,8 +50,18 @@ const settings = ({userAuth, userData}) => {
 			router.replace('/login')
 		}
 	}
-	const handleVerifyEmail = () => {
-		const verification = verifyUserEmail()
+	const handleVerifyEmail = async() => {
+		verificationEmailLoader.current = true
+		const verification = await verifyUserEmail()
+		if (verification.code === 200) {
+			profileStatusLoader.current = false
+			verificationEmailMsg.current.style.color = 'lightgreen'
+			verificationEmailMsg.current.textContent = verification.message
+			verificationEmailMsg.current.style.display = 'inline'
+			setTimeout(()=>{verificationEmailMsg.current.style.display = 'none'},2000);
+		}
+		M.toast({text: verification.message})
+		verificationEmailLoader.current = false
 	}
 	const handlePassEmailUpdate = async(type, data) => {
 		if(type === 'email'){
@@ -231,11 +243,11 @@ const settings = ({userAuth, userData}) => {
 				<form className='col s12'>
 					<h6 style={{marginBottom: '1rem'}}>About me</h6>
 					<div className="row">
-						<div className="input-field col s6">
+						<div className="input-field col s12 m6">
 							<input autoComplete='name' ref={nameInput} type="text" id="full_name" defaultValue={displayName} className="validate" />
 							<label className={nameInput.current ? 'active' : ''} htmlFor="full_name">Full name</label>
 						</div>
-						<div className="input-field col s6">
+						<div className="input-field col s12 m6">
 							<input autoComplete='tel' ref={phoneInput} type="tel" id="tel" defaultValue={phoneNumber} className="validate" />
 							<label className={phoneInput.current ? 'active' : ''} htmlFor="tel">Mobile number</label>
 						</div>
@@ -276,7 +288,7 @@ const settings = ({userAuth, userData}) => {
 					? (
 					<>
 						<div style={{position: 'relative'}} className={`row ${styles.fieldRow}`}>
-							<div className="input-field col s10">
+							<div className="input-field col s12 m10">
 								<input autoComplete='email' required="" aria-required="true" onChange={x => setEmailNewValue(x.target.value)} type="email" id="email" className="validate" defaultValue={email} />
 								<label className='active' htmlFor="email">Change email</label>
 								<span className="helper-text" data-error="Doesn't look correct" data-success="Looks good"></span>
@@ -295,7 +307,7 @@ const settings = ({userAuth, userData}) => {
 							<span ref={emailStatusMsg} style={{position: 'absolute', left: '-5px', bottom: '-5px'}} className={styles.status_operation}></span>
 						</div>
 						<div style={{position: 'relative'}} className={`row ${styles.fieldRow}`}>
-							<div className="input-field col s10">
+							<div className="input-field col s12 m10">
 								<i style={{position: 'absolute', top: '15px', right: '15px', float: 'right', cursor: 'pointer'}} className="material-icons" id='passwordToggleBtn' onClick={(e) => {changeVisibility(e)}}>visibility_off</i>
 								<input autoComplete='new-password' type={'password'} name="" id="password" className="validate" />
 								<label htmlFor="password">Change password</label>
@@ -315,7 +327,8 @@ const settings = ({userAuth, userData}) => {
 					<i className="material-icons right">{emailVerified ? 'done' : 'warning_amber'}</i>
 				</button>
 				<span ref={passwordStatusMsg} className={styles.status_operation}></span>
-				{passwordStatusLoader.current ? <CircularLoader loaderColor='default' loaderSize='small' wrapperMargins='0.25rem 0 0 1rem' /> : null}
+				<span ref={verificationEmailMsg} className={styles.status_operation}></span>
+				{passwordStatusLoader.current || verificationEmailLoader.current ? <CircularLoader loaderColor='default' loaderSize='small' wrapperMargins='0.25rem 0 0 1rem' /> : null}
 			</div>
 		)
 	}
@@ -371,7 +384,7 @@ const settings = ({userAuth, userData}) => {
 			{showReAuthDialog ? <ReAuthDialogComp /> : null}
 			<div className={styles.settingsWrapper}>
 				<aside className={styles.sidePanel}>
-					<img loading='eager' className='circle' src={photoURL || "/assets/icons8-test-account.png"} width={120} height={120} />
+					<img loading='eager' style={{objectFit: 'cover'}} className='circle' src={photoURL || "/assets/icons8-test-account.png"} width={120} height={120} />
 					<div className={styles.sidePanelItems}>
 						<div className={styles.userInfo}>
 							<h4>{displayName ? displayName : 'No name yet.'}</h4>
