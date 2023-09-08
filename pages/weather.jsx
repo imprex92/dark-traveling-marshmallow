@@ -54,9 +54,8 @@ const weather = () => {
 
 	return (
 		<>
-			<WeatherMaster isOnline={isOnline} />
 			<div className='dashboard-main weather'>
-				<h2>Weather</h2>
+			<WeatherMaster isOnline={isOnline} />
 				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} />}
 				{isLoading && (
 					<div className='skeleton-container weather'>
