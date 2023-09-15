@@ -8,7 +8,6 @@ import { accountRemoval, updateEmail, updatePassword, verifyUserEmail, updateAcc
 import AddressForm from 'components/AddressForm'
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 import { useRouter } from 'next/router'
-import { useAuth } from 'contexts/AuthContext'
 import { verifyEmail } from 'components/utility/verifyEmail'
 
 if(typeof window !== 'undefined'){
