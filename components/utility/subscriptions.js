@@ -154,6 +154,25 @@ function handleSaveRecipt ({ userID, dataToSave }){
 	})
 }
 
+function fetchUserWeatherData(userID){
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+	let data = []
+	return new Promise((resolve, reject) => {
+		userDbRef.collection('weatherData').get()
+		.then(docSet => {
+			if(docSet !== null){
+				docSet.forEach(doc => {
+					data.push({
+						id: doc.id,
+						...doc.data()
+					})
+				})
+			}
+			resolve(data)
+		})
+	})
+}
+
 export {
 	fetchDbUserData, 
 	fetchUserblog,
@@ -162,5 +181,6 @@ export {
 	fetchOneDocument,
 	fetchUserReceipts,
 	handleSaveNewPost, 
-	handleSaveRecipt 
+	handleSaveRecipt,
+	fetchUserWeatherData
 }
