@@ -12,7 +12,7 @@ let siteSettings = (set) => ({
 		previouslyViewedPost: '',
 		latestLocation: null,
 		weatherInitial: null,
-		showWeaterWidget: true,
+		showWeatherWidget: true,
 	},
 	setPreviouslyViewedPost: (value) => set((state) => ({data : {...state.data, previouslyViewedPost : value}})),
 	setLatestLocation: (value) => set((state) => ({data : {...state.data, latestLocation : value}})),

@@ -92,7 +92,7 @@ const Post = (props) => {
 						<div className="divider col s10 push-s1"></div>
 						<div className="row">
 							<div className="col m5 s12 push-m1 small-wrapper-left">
-								{/*<p><small> // ToDo weater
+								{/*<p><small> // ToDo weather
 									{requestedBlog.postWeather ?? 'none'} <br/>
 									{requestedBlog.postMood ?? 'none'}	
 								</small></p>*/}
