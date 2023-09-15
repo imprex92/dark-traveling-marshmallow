@@ -53,7 +53,7 @@ const WeatherMaster = () => {
 	}
   return (
 	<>
-    <div id="vertical-nav">
+    <div style={{gridArea: 'nav'}} id="vertical-nav">
 		<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
 			<i id="newpost-menu-btn" className="material-icons">menu</i>
 		</a>
@@ -71,7 +71,7 @@ const WeatherMaster = () => {
 			<div className="background">
 				<img src='/assets/lighthouse-sidenav.jpg' alt="side navigation background image" height="211" width="300" quality={60} />
 			</div>
-			<a href="#user"><img className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
+			<a href="#user"><img style={{objectFit: 'cover'}} className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
 			<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
 			<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 		</div></li>
