@@ -1,18 +1,25 @@
 @use 'variables'
 
 .weather
-	display: flex
-	flex-direction: column
+	display: grid
+	grid-template-columns: 50px 1fr
+	grid-template-rows: 80px 1fr
+	grid-template-areas: ".header" "nav wrap"
 	background: variables.$base-gradiant
-	padding: 2.5em 2em 2.5em variables.$pushFromNav + 2em !important
+	padding: 0
 	*
 		box-sizing: border-box
 	h2
+		grid-area: header
 		color: #fff
+		margin-left: 2rem
 	.weather-container
-		margin: auto 0
+		grid-area: wrap
+		margin: auto
 		display: flex
 		height: 100%
+		width: calc(100% - 4rem)
+		max-width: 2048px
 		column-gap: 2rem
 		align-items: center
 		.container-1, .container-2
@@ -56,6 +63,7 @@
 					margin: 1rem auto
 					.chip
 						cursor: pointer
+						text-transform: capitalize
 
 .vertical-line
 	border-left: 2px solid #fff
@@ -75,6 +83,11 @@
 		.date
 			font-size: 18px
 			font-weight: lighter
+
+.additional-info.desktop-only
+	display: block
+.additional-wrapper.mobile-only
+	display: none
 
 .additional-info
 	width: 100%
@@ -103,7 +116,7 @@
 	display: flex
 	flex-direction: column
 	color: #fff
-	top: 0
+	top: 1rem
 	right: 0
 	font-size: 15px
 	span
@@ -115,8 +128,10 @@
 	label
 		color: #000
 
-@media (max-width: 1250px)
-	.weather-container
+@media (max-width: 930px)
+	.weather h2
+		font-size: 2rem
+	.weather .weather-container
 		flex-direction: column
 		margin-top: 2rem
 		row-gap: 2rem
@@ -124,3 +139,57 @@
 			width: 100%
 			max-width: 700px
 			min-width: 490px
+
+@media ( max-width: variables.$breakpoint-phone )
+	.weather
+		.weather-container
+			width: calc(100% - 2rem)
+			.container-1, .container-2
+				min-width: unset
+
+	.main-temp
+		& span:first-child
+			font-size: 5rem !important
+			& span:last-child
+				top: 1.4rem !important
+				font-size: 1.5em !important
+
+	.name-date
+		.name
+			font-size: 21px !important
+		.date
+			font-size: 15px !important
+
+	.weather-icon
+		width: 85px
+
+	.additional-info.desktop-only
+		display: none
+
+	.additional-wrapper.mobile-only
+		display: flex
+		padding: 0 !important
+
+	.additional-info
+		max-width: unset
+		width: 100%
+		color: #fff
+		display: flex
+		flex-direction: row
+		flex-wrap: wrap
+		justify-content: flex-start
+		align-items: flex-start
+		.info-box
+			flex: 0 0 calc( 33.333% - 0rem )
+			min-width: calc( 33.333% - 0rem )
+			display: flex
+			flex-direction: column
+			align-items: center
+			padding: 1rem 0
+			&:not(:nth-child(n+4):nth-child(-n+6))
+				border-bottom: 1px solid #1800ff17
+			&:not(:nth-child(3), :last-child)
+				border-right: 1px solid #1800ff17
+
+			& > img
+				width: 27px
