@@ -5,17 +5,51 @@ if (typeof window !== 'undefined') {
 }
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
+import { fetchUserWeatherData } from './utility/subscriptions'
 
-const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
+const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
+  const fetchedData = useRef(null)
   const searchBox = useRef(null)
   const count = useBearStore(state => state.bears)
   const inc = useBearStore(state => state.increasePopulation)
   const dec = useBearStore(state => state.decreasePopulation)
   const ext = useBearStore(state => state.exterminatePopulation)
 
+  async function fetchTags() {
+      const data = await fetchUserWeatherData(currentUser.uid)
+      .then(data => { initializeChips(data[0].tags) })
+      .catch(err => { console.error('Error while loading tags', err); M.toast({text: `Error loading tags, ${err}`}) })
+  }
+
+  function initializeChips(chipsData){
+    let chips = document.querySelectorAll(".chips")
+      M.Chips.init(chips, {
+        data: [
+          {
+              "tag": "Gothenburg"
+          },
+          {
+              "tag": "Paris"
+          },
+          {
+              "tag": "Tokyo"
+          },
+          {
+              "tag": "Uddevalla"
+          }
+      ],
+      placeholder: 'Enter city to save',
+      limit: 7,
+      secondaryPlaceholder: '+City',
+      onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
+    })
+  }
+  useEffect(() => {
+    //fetchTags()
+  }, [])
 
   useEffect(() => {
     let triggerEl = document.querySelectorAll('.dropdown-trigger')
@@ -24,25 +58,31 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
       hover: true,
       closeOnClick: false
     })
-
-    let chips = document.querySelectorAll(".chips")
-    M.Chips.init(chips, {
-      data: [{
-        tag: 'Gothenburg',
-      }, {
-        tag: 'Shanghai',
-      }, {
-        tag: 'Paris',
-      }],
+      let chips = document.querySelectorAll(".chips")
+      M.Chips.init(chips, {
+        data: [
+          {
+              "tag": "Gothenburg"
+          },
+          {
+              "tag": "Paris"
+          },
+          {
+              "tag": "Tokyo"
+          },
+          {
+              "tag": "Uddevalla"
+          }
+      ],
       placeholder: 'Enter city to save',
       limit: 7,
       secondaryPlaceholder: '+City',
       onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
     })
-
+    
     return () => {
     }
-  }, [])
+  }, [fetchedData])
   
   const chipSelected = (data) => {
     fetchWeather(data)
@@ -55,6 +95,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
 
   return (
     <>
+      <h2>Weather</h2>
       <div className='weather-container'>
         <div className='container-1 z-depth-4'>
           <div className='current-wrapper'>
@@ -76,12 +117,10 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
                 </label>
               </div></a></li>
             </ul>
-
-
             <div className="row valign-wrapper">
-              <form className="col s12 searchbar-section">
+              <form className="col s11 pull-s1 m12 searchbar-section">
                 <div className="row">
-                  <div className="input-field col s8 push-s2 m6 push-m3 searchBox">
+                  <div className="input-field col s11 m8 push-m2 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
                     <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
                     <label className="white-text" htmlFor="search-field">Enter location for weather</label>
@@ -105,42 +144,42 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
                   {isMetric ? '°C' : '°F'}
                 </span>
               </div>
-              <div className="additional-info">
+              <div className="additional-info desktop-only">
                 <div className='info-container-1'>
                   <div>
-                    <img src="https://img.icons8.com/ios/50/FFFFFF/thermometer-down.png" />
+                    <img src="/assets/icons/thermometer-down.png" />
                     <span>Min Temp</span>
                     <span>{isMetric ? main.temp_min.toFixed(1) : !isMetric && toImperial(main.temp_min.toFixed(1), 'degrees') ? toImperial(main.temp_min.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                   <div className='vertical-line'></div>
                   <div>
-                    <img src="https://img.icons8.com/ios/50/FFFFFF/thermometer-up.png" />
+                    <img src="/assets/icons/thermometer-up.png" />
                     <span>Max Temp</span>
                     <span>{isMetric ? main.temp_max.toFixed(1) : !isMetric && toImperial(main.temp_max.toFixed(1), 'degrees') ? toImperial(main.temp_max.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                 </div>
                 <div className='info-container-1'>
                   <div>
-                    <img src="https://img.icons8.com/ios/50/FFFFFF/visible--v2.png" />
+                    <img src="/assets/icons/visible--v2.png" />
                     <span>Visibility</span>
                     <span>{isMetric && mToKm(visibility) ? `${mToKm(visibility)}` : !isMetric && toImperial(visibility, 'length') ? toImperial(visibility, 'length') : 'Unknown'} {isMetric ? 'Km' : 'mi'}</span>
                   </div>
                   <div className='vertical-line'></div>
                   <div>
-                    <img src="https://img.icons8.com/ios/50/FFFFFF/temperature--v2.png" />
+                    <img src="/assets/icons/temperature--v2.png" />
                     <span>Feels like</span>
                     <span>{isMetric ? main.feels_like.toFixed(1) : !isMetric && toImperial(main.feels_like.toFixed(1), 'degrees') ? toImperial(main.feels_like.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                 </div>
                 <div className='info-container-2'>
                   <div>
-                    <img src="https://img.icons8.com/external-line-adri-ansyah/64/FFFFFF/external-humidity-world-ozone-day-line-adri-ansyah.png" />
+                    <img src="/assets/icons/humidity.png" />
                     <span>Humidity</span>
-                    <span>{main?.humidity ?? 'Unknow'} %</span>
+                    <span>{main?.humidity ?? 'Unknown'} %</span>
                   </div>
                   <div className='vertical-line'></div>
                   <div>
-                    <img src="https://img.icons8.com/ios-glyphs/30/FFFFFF/wind--v1.png" />
+                    <img src="/assets/icons/wind--v1.png" />
                     <span>Wind</span>
                     <span>{isMetric && wind?.speed ? wind.speed : !isMetric && wind?.speed ? toImperial(wind.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}</span>
                   </div>
@@ -152,6 +191,52 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError }) => {
         <div className='container-2'>
           <div className="additional-wrapper z-depth-4">
             <div className="chips chips-initial"></div>
+          </div>
+          <div className="additional-wrapper z-depth-4 mobile-only">
+            <div className="additional-info info-boxes">
+              <div className='info-box'>
+                <img src="/assets/icons/thermometer-down.png" />
+                <span>Min Temp</span>
+                <span>
+                  {isMetric ? main.temp_min.toFixed(1) : !isMetric && toImperial(main.temp_min.toFixed(1), 'degrees') ? toImperial(main.temp_min.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                </span>
+              </div>
+              <div className='info-box'>
+                <img src="/assets/icons/thermometer-up.png" />
+                <span>Max Temp</span>
+                <span>
+                  {isMetric ? main.temp_max.toFixed(1) : !isMetric && toImperial(main.temp_max.toFixed(1), 'degrees') ? toImperial(main.temp_max.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                </span>
+              </div>
+              <div className='info-box'>
+                <img src="/assets/icons/visible--v2.png" />
+                <span>Visibility</span>
+                <span>
+                  {isMetric && mToKm(visibility) ? `${mToKm(visibility)}` : !isMetric && toImperial(visibility, 'length') ? toImperial(visibility, 'length') : 'Unknown'} {isMetric ? 'Km' : 'mi'}
+                </span>
+              </div>
+              <div className='info-box'>
+                <img src="/assets/icons/temperature--v2.png" />
+                <span>Feels like</span>
+                <span>
+                  {isMetric ? main.feels_like.toFixed(1) : !isMetric && toImperial(main.feels_like.toFixed(1), 'degrees') ? toImperial(main.feels_like.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                </span>
+              </div>
+              <div className='info-box'>
+                <img src='/assets/icons/humidity.png' />
+                <span>Humidity</span>
+                <span>
+                  {main?.humidity ?? 'Unknown'} %
+                </span>
+              </div>
+              <div className='info-box'>
+                <img src="/assets/icons/wind--v1.png" />
+                <span>Wind</span>
+                <span>
+                  {isMetric && wind?.speed ? wind.speed : !isMetric && wind?.speed ? toImperial(wind.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}
+                </span>
+              </div>
+            </div>
           </div>
           <div className="history-wrapper z-depth-4">
             <span className='white-text'>To be Search history soon...</span>
