@@ -22,6 +22,7 @@
     "SASS-watch-weather": "sass --watch ./styles/sass/weather.style.sass:./styles/weather.style.css",
     "SASS-watch-weatherWidget": "sass --watch ./styles/sass/weatherWidget.module.sass:./styles/weatherWidget.module.css",
     "SASS-watch-settingsPage": "sass --watch ./styles/sass/settingsPage.module.sass:./styles/settingsPage.module.css",
+    "SASS-watch-blogpostsFeed": "sass --watch ./styles/sass/blogPostsFeed.module.sass:./styles/blogPostsFeed.module.css",
     "SASS-watch-global": "sass --watch ./styles/sass/global.style.sass:./styles/global.style.css"
   },
   "dependencies": {
