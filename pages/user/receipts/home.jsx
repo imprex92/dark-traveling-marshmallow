@@ -132,7 +132,7 @@ const receiptHome = () => {
   }
 
   return (
-	<div className='dashboard-main'>
+	<div className='recipt-container'>
     <SideNavLight />
     <div className='recipt-wrapper container'>
       <ul className="collapsible">
@@ -144,7 +144,7 @@ const receiptHome = () => {
           </div>
           <div className="collapsible-body">
             <div className="row">
-              <div className="input-field col s6">
+              <div className="input-field col l6 s11">
                 <i className="material-icons prefix white-text">title</i>
                 <input ref={postTitle} id="title" type="text" className="validate" />
                 <label htmlFor="title">Title</label>
@@ -160,12 +160,12 @@ const receiptHome = () => {
             <div className="row">
               <form id='receipt-form' action="#" className="col s12">
                 <div className="row">
-                  <div className="input-field col s6">
+                  <div className="input-field col m6 s11">
                     <i className="material-icons prefix white-text">store</i>
                     <input ref={postStore} id="store" type="text" className="validate" />
                     <label htmlFor="store">Store of Purchase</label>
                   </div>
-                  <div className="input-field col s6">
+                  <div className="input-field col m6 s11">
                     <i className="material-icons prefix white-text">calendar_month</i>
                     <input type="text" className="datepicker" />
                     <label htmlFor="datepicker">Date of Purchase</label>
@@ -229,6 +229,12 @@ const receiptHome = () => {
       </div>
     </div>
     <style jsx scoped>{`
+      .recipt-container{
+        display: grid;
+        background: var(--primaryBackground);
+        grid-template-columns: 50px 1fr;
+	      grid-template-areas: "nav wrap";
+      }
       .view-layout{
         margin-left: auto;
       }
@@ -259,8 +265,8 @@ const receiptHome = () => {
         margin-bottom: 0;
       }
       .recipt-wrapper {
-        padding-top: 3rem;
-        padding-left: 3rem;
+        margin-top: 8rem;
+        grid-area: wrap
       }
       .collapsible-upload .chevron{
         margin: 0 0 0 auto;
@@ -308,8 +314,25 @@ const receiptHome = () => {
       .gallery-content{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 2.7rem;
-        padding: 2.7rem;
+        gap: 1.5rem;
+        padding: 2rem;
+      }
+
+      @media (max-width: 768px){
+        .gallery-content{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+          padding: 2rem;
+        }
+      }
+      @media (max-width: 600px){
+        .gallery-content{
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          padding: 2rem;
+        }
       }
       
     `}</style>

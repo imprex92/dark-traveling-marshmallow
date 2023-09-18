@@ -12,7 +12,6 @@ const OutputGallery = ({data}) => {
     if(trigger === 'dropdown'){
       console.log('dropDown');
       const i = event.target.classList[1]
-      console.log(event.target.classList[1]);
       const el = document.getElementsByClassName(`hidden-section-${i}`)
       const el2 = document.getElementsByClassName(`dropdown-${i}`) 
       el[0].classList.toggle('showing')
@@ -24,15 +23,11 @@ const OutputGallery = ({data}) => {
   const popupTrigger = ({event, trigger, additional}) =>{
     event.stopPropagation();
     if(trigger === 'popup'){
-      console.log('Trigger', additional);
       setPopupToOpen(additional.index)
     }
   }
   function reset(e){
-    
-    console.log('reseting');
    setPopupToOpen(null)
-    console.log(popupToOpen);
   }
 
   return (
@@ -41,8 +36,8 @@ const OutputGallery = ({data}) => {
       trigger:'popup',
       additional: {id: id, index: data.index}
       })}}>
-        { popupToOpen !== null  ? <div onClick={(e) => {e.stopPropagation(),reset(e)}} className={`overlay ${popupToOpen ? 'open' : ''}`}>
-      <Gallerypopup key={data.index}  data={data} resetPopup={() => reset()} popupToOpen={popupToOpen}/>
+      { popupToOpen !== null  ? <div onClick={(e) => {e.stopPropagation(),reset(e)}} className={`overlay ${popupToOpen ? 'open' : ''}`}>
+        <Gallerypopup key={data.index}  data={data} resetPopup={() => reset()} popupToOpen={popupToOpen}/>
       </div> : null}
       <div className='item-image'>
         <Image 
@@ -52,7 +47,7 @@ const OutputGallery = ({data}) => {
           width="50%"
           height="50%"
           objectFit='cover' 
-          />
+        />
       </div>
       <div className='item-text'>
         <span className='title'>{title}</span>
@@ -82,12 +77,9 @@ const OutputGallery = ({data}) => {
           transform: rotate(0deg);
           transition: transform 0.3s linear;
         }
-      .dropdown-${data?.index}.active .chevron{
-        transform: rotate(-90deg);
-        transition: transform 0.3s linear;
-      }
-        .item-container{
-
+        .dropdown-${data?.index}.active .chevron{
+          transform: rotate(-90deg);
+          transition: transform 0.3s linear;
         }
         .item-text{
           display: flex;
@@ -98,14 +90,23 @@ const OutputGallery = ({data}) => {
           object-fit: cover;
         }
         .overlay{
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: 3;
-				backdrop-filter: blur(35px);
-			}
+          display: grid;
+          place-content: center;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 20px;
+          z-index: 3;
+          backdrop-filter: blur(35px);
+			  }
+
+        @media (max-width: 640px){
+          .overlay{
+            width: 100%;
+            height: 100%;
+			    }
+        }
       `}</style>
     </div>
   )

@@ -21,11 +21,11 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 		setPopup(null)
 		resetPopup(e)
 	}
-	
+	// TODO finish popup
   return (
 	<>
 	<div className={`popup popup-${i} ${popup === i ? 'active' : ''}`}>
-		<div className="close-btn" onClick={e => {e.stopPropagation(), reset(e)}}>&times;</div>
+		<div className="close-btn material-icons" onClick={e => {e.stopPropagation(), reset(e)}}>close</div>
 		<div className='item-image'>
 			<Image 
 			src={imgURL} 
@@ -33,9 +33,9 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 			layout="responsive"
 			width="50%"
 			height="50%"
-			objectFit='cover' 
+			objectFit='cover'
 			/>
-      	</div>
+      	</div> 
 		<h1>Cool Popup</h1>
 		<p>
 			Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quibusdam omnis repellendus, 
@@ -44,12 +44,18 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 		</p>
 	</div>
 		<style jsx scoped>{`
+			.close-btn{
+				position: absolute;
+				top: 0.5rem;
+				right: 0.5rem;
+				cursor: pointer;
+			}
 			.popup {
 				position:fixed;
 				top:-150%;
 				left:50%;
 				transform:translate(-50%,-50%) scale(1.2);
-				opacity:0;
+				opacity: 0;
 				background:rgba(255,255,255,0.2);
 				border:1px solid rgba(255,255,255,0.15);
 				box-shadow:inset 0px 0px 20px 5px rgba(255,255,255,0.05);
@@ -57,15 +63,22 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 				-webkit-backdrop-filter:blur(8px);
 				width:100%;
 				max-width: 1000px;
-				padding:20px 30px;
+				padding: 40px 30px;
 				border-radius:10px;
 				z-index:1000;
 				transition:top 0ms ease-in-out 300ms,
 						opacity 300ms ease-in-out 0ms,
 						transform 300ms ease-in-out 0ms;
 			}
+			.item-image img{
+				border-radius: var(--defaultBorderRadius);
+			}
 			.popup.popup-${popupToOpen}.active {
+				max-width: 560px;
+          		max-height: 800px;
+				position: relative;
 				top:50%;
+				width: calc(100% - 105px);
 				transform:translate(-50%,-50%) scale(1);
 				opacity:1;
 				transition:top 0ms ease-in-out 0ms,
