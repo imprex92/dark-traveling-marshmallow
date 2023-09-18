@@ -47,7 +47,7 @@ export default function SideNavLight ({}) {
 	}
 
 	return (
-		<div>
+		<>
 			<div id="vertical-nav-light">
 				<div className="wrapper">
 					<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
@@ -106,6 +106,6 @@ export default function SideNavLight ({}) {
 					</Link> 
 				</li>
 			</ul>		
-		</div>
+		</>
 	)
 }

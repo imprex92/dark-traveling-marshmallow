@@ -1,4 +1,5 @@
 #vertical-nav {
+  grid-area: nav;
   z-index: 888;
   position: fixed;
   top: 0;

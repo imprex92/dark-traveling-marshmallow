@@ -63,7 +63,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	}
 
 	return (
-		<div>
+		<>
 			<div id="vertical-nav">
 				<div className="wrapper">
 					<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
@@ -123,7 +123,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
 					<Link href="/user/posts">
 						<a href="/user/posts">
-							<i className="material-icons">arrow_back</i>View all posts
+							<i className="material-icons">grid_on</i>View all posts
 						</a>
 					</Link>
 				</li>
@@ -138,6 +138,6 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 					</Link> 
 				</li>
 			</ul>		
-		</div>
+		</>
 	)
 }
