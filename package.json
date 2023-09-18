@@ -16,7 +16,6 @@
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
     "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
     "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css",
-    "SASS-watch-blogPost-page-component": "sass --watch ./styles/sass/blogPost-page.style.sass:./styles/blogPost-page.style.css",
     "SASS-watch-sidenav": "sass --watch ./styles/sass/sideNav.style.sass:./styles/sideNav.style.css",
     "SASS-watch-singlepost": "sass --watch ./styles/sass/singlePost.style.sass:./styles/singlePost.style.css",
     "SASS-watch-weather": "sass --watch ./styles/sass/weather.style.sass:./styles/weather.style.css",
