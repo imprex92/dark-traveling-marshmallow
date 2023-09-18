@@ -81,7 +81,7 @@ const WeatherMaster = () => {
 		<li><div className="divider"></div></li>
 		<li><a className="subheader">Submenu</a></li>
 		<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
-		<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">arrow_back</i>View all posts</a></Link></li>
+		<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View all posts</a></Link></li>
 		<li onClick={closeSideNav}>
 			<Link href="/user/receipts/home">
 				<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
