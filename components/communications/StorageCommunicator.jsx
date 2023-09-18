@@ -148,7 +148,7 @@ export default function StorageCommunicator({userAuth}) {
 			postTitle: postTitle.current.value || null,
 			postContent: postMainContent.current.value || null,
 			postMood: postMood.current.value || null,
-			postWeather: { // ToDo weather
+			postWeather: { // TODO weather
 				weatherUser: postWeather.current.value || null,
 				weatherAPI: '' //! koppla med väder API
 				// degrees:
