@@ -4,6 +4,7 @@ import {projectFirestore} from '../../../firebase/config'
 import BlogList  from '../../../components/BlogList'
 import SideNav from 'components/nav/Sidenav'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../../components/utility/subscriptions'
+import styles from 'styles/blogPostsFeed.module.css'
 
 const index = ({userAuth}) => {
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userAuth.uid)
@@ -61,7 +62,7 @@ const index = ({userAuth}) => {
 	}
 
 	return (
-		<div className="dashboard-main">
+		<div className={styles.container}>
 			<SideNav dataFromChildToParent={filterCountry} dbUserData={dbUserData}/>
 			<BlogList countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/>
 		</div>
