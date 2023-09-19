@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Image from 'next/image'
 import DateFormatter from 'components/utility/DateFormatter'
 import Gallerypopup from 'components/popups/Gallerypopup'
@@ -10,7 +10,6 @@ const OutputGallery = ({data}) => {
   const toggleDropdown = ({event, trigger}) => {
     event.stopPropagation();
     if(trigger === 'dropdown'){
-      console.log('dropDown');
       const i = event.target.classList[1]
       const el = document.getElementsByClassName(`hidden-section-${i}`)
       const el2 = document.getElementsByClassName(`dropdown-${i}`) 
@@ -22,14 +21,16 @@ const OutputGallery = ({data}) => {
 
   const popupTrigger = ({event, trigger, additional}) =>{
     event.stopPropagation();
+    document.getElementsByTagName('html')[0].style.overflow = 'hidden'
     if(trigger === 'popup'){
       setPopupToOpen(additional.index)
     }
   }
   function reset(e){
    setPopupToOpen(null)
+   document.getElementsByTagName('html')[0].style.overflow = null
   }
-
+ // TODO popup not finished
   return (
     <div className={`item-container`} onClick={(e) => {popupTrigger({
       event: e, 
@@ -46,7 +47,7 @@ const OutputGallery = ({data}) => {
           layout="responsive"
           width="50%"
           height="50%"
-          objectFit='cover' 
+          objectFit='cover'
         />
       </div>
       <div className='item-text'>
@@ -85,6 +86,7 @@ const OutputGallery = ({data}) => {
           display: flex;
           flex-direction: column;
           margin: 1rem;
+          color: white;
         }
         .item-image img{
           object-fit: cover;
@@ -105,7 +107,13 @@ const OutputGallery = ({data}) => {
           .overlay{
             width: 100%;
             height: 100%;
+            position: fixed;
 			    }
+        }
+      `}</style>
+      <style>{`
+        .item-image img{
+          border-radius: 20px;
         }
       `}</style>
     </div>
