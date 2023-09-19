@@ -1,0 +1,79 @@
+.container {
+  display: grid;
+  background: var(--primaryBackground);
+  grid-template-areas: "nav wrap";
+  grid-template-columns: 50px 1fr;
+}
+
+.innerWrapper {
+  grid-area: wrap;
+  place-self: normal;
+}
+
+.postItemsWrapper {
+  max-width: 960px;
+  margin: 9rem auto 3rem auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+}
+@media (max-width: 1024px) {
+  .postItemsWrapper {
+    padding: 0 1rem;
+    gap: 1rem;
+    max-width: unset;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .postItemsWrapper {
+    grid-template-columns: 1fr 1fr;
+    max-width: unset;
+  }
+}
+@media (max-width: 640px) {
+  .postItemsWrapper {
+    grid-template-columns: 1fr;
+    max-width: unset;
+  }
+}
+
+.itemsWrapper {
+  border-radius: var(--defaultBoxBorderRadius);
+  background-size: cover;
+  background-position: center;
+}
+
+.postItemWrapper {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--defaultBoxBorderRadius);
+  cursor: pointer;
+  height: 300px;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: white;
+}
+.postItemWrapper:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.postTextContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.postTextContent > .postInfo {
+  margin-bottom: 1rem;
+}
+.postTextContent .postTitle {
+  font-size: 23px;
+}
+.postTextContent .postContent {
+  font-size: 15px;
+}
+.postTextContent .userLink:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=blogPostsFeed.module.css.map */

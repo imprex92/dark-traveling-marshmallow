@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import DateFormatter from '../components/utility/DateFormatter'
+import styles from 'styles/blogPostsFeed.module.css'
 
 const BlogItem = ({blog}) => {
 
@@ -15,20 +16,24 @@ const BlogItem = ({blog}) => {
 	return (
 		<>
 			<Link as={`/user/posts/post/${blog.slug}`} href={`/user/posts/post?slug=${blog.slug}`}>
-				<div  className="blogItem-wrapper post-wrapper">
-					<div className="post-text-content">
+				<div  className={styles.postItemWrapper}>
+					<div className={styles.postTextContent}>
 						<h4 className="postTitle center-align">
 							{blog.postTitle ?? 'No title'}
 						</h4>
-						//! link to user
-						<div className='post-info'>
-							<p className="postContent">
-								{blog.postContent ? textSlicer(blog.postContent, 70) : 'No text'}
+						<div className={styles.postInfo}>
+							<p className={styles.postContent}>
+								{blog.postContent ? textSlicer(blog.postContent, 50) : 'No text'}
 							</p>
-							{ blog.createdByUser && <><Link href="#">
-								<a>@{blog.createdByUser}</a> 
-							</Link><br/></> }
-							<DateFormatter timestamp={blog.timestamp?.seconds}/>
+							{ blog.createdByUser && 
+								<>
+									<Link href="#">
+										<a className={styles.userLink}>@{blog.createdByUser}</a> 
+									</Link>
+									<br/>
+								</> 
+							}
+							<DateFormatter timeFromNow={false} timestamp={blog.timestamp?.seconds}/>
 						</div>
 					</div>
 				</div>

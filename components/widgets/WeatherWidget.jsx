@@ -3,7 +3,7 @@ import { getGeolocation } from 'components/utility/GetGeolocation'
 import styles from 'styles/weatherWidget.module.css'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
-import SkeletonWeaterWidget from 'components/loaders/skeletons/SkeletonWeaterWidget';
+import SkeletonWeatherWidget from 'components/loaders/skeletons/SkeletonWeatherWidget';
 
 const WeatherWidget = () => {
 
@@ -12,7 +12,7 @@ const WeatherWidget = () => {
 	const [userLocation, setUserLocation] = useState(null)
 	const [locationError, setLocationError] = useState(null)
 	const [weatherObj, setWeatherObj] = useState(null)
-	const { units, weatherInitial, showWeaterWidget, latestLocation} = useSiteSettings(state => state.data)
+	const { units, weatherInitial, showWeatherWidget, latestLocation} = useSiteSettings(state => state.data)
 	let isMetric = units === 'celcius' ? true : false
 
 	useEffect(() => {
@@ -68,7 +68,7 @@ const WeatherWidget = () => {
                   {isMetric ? '°C' : '°F'}
                 </span></> ) : <span>Just a sec...</span>}
 			</div>
-			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeaterWidget />}
+			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeatherWidget />}
 			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 		</div>
 	</div>

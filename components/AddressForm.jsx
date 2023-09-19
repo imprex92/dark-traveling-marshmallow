@@ -61,7 +61,7 @@ const AddressForm = props => {
   return (
 	<div className={`row`}>
 		<h6 className={styles.addressForm_header}>My home address</h6>
-		<form className={`col s12`}>
+		<form className={`col s12 ${styles.addressForm}`}>
 			<div className={`row ${styles.addressForm_row}`}>
 				<div className="input-field col s12">
 					<i className="material-icons prefix">apartment</i>
@@ -77,12 +77,12 @@ const AddressForm = props => {
 				</div>
 			</div>
 			<div className={`row ${styles.addressForm_row}`}>
-				<div className="input-field col s6">
+				<div className="input-field col s12 m6">
 					<i className="material-icons prefix">location_city</i>
 					<input defaultValue={cityName} autoCapitalize='sentences' autoComplete='address-level2' ref={refs.city} required={true} type="text" id="city" className="validate" />
 					<label className={cityName ? 'active' : ''} htmlFor="city">City</label>
 				</div>
-				<div className="input-field col s6">
+				<div className="input-field col s12 m6">
 					<i className="material-icons prefix">123</i>
 					<input defaultValue={zipCode} autoComplete='postal-code' ref={refs.zip} required={true} type="text" id="zipCode" className="validate" />
 					<label className={zipCode ? 'active' : ''} htmlFor="zipCode">Zip code</label>

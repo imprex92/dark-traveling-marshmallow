@@ -92,8 +92,6 @@ const receiptHome = () => {
     console.log('location', formCountry);
     setisUploading(true)
     //! MOVING THEN ON TO onImgSuccess()!
-
-    
   }
   const onImgSuccess = () => {
     if(uploadedURL){
@@ -132,7 +130,7 @@ const receiptHome = () => {
   }
 
   return (
-	<div className='dashboard-main'>
+	<div className='recipt-container'>
     <SideNavLight />
     <div className='recipt-wrapper container'>
       <ul className="collapsible">
@@ -144,7 +142,7 @@ const receiptHome = () => {
           </div>
           <div className="collapsible-body">
             <div className="row">
-              <div className="input-field col s6">
+              <div className="input-field col l6 s11">
                 <i className="material-icons prefix white-text">title</i>
                 <input ref={postTitle} id="title" type="text" className="validate" />
                 <label htmlFor="title">Title</label>
@@ -160,12 +158,12 @@ const receiptHome = () => {
             <div className="row">
               <form id='receipt-form' action="#" className="col s12">
                 <div className="row">
-                  <div className="input-field col s6">
+                  <div className="input-field col m6 s11">
                     <i className="material-icons prefix white-text">store</i>
                     <input ref={postStore} id="store" type="text" className="validate" />
                     <label htmlFor="store">Store of Purchase</label>
                   </div>
-                  <div className="input-field col s6">
+                  <div className="input-field col m6 s11">
                     <i className="material-icons prefix white-text">calendar_month</i>
                     <input type="text" className="datepicker" />
                     <label htmlFor="datepicker">Date of Purchase</label>
@@ -173,7 +171,7 @@ const receiptHome = () => {
                 </div>
                 <div className="row">
                   <div className="file-field input-field col s12 cameraFile">
-                    <div className={`btn ${userDefinedFile && 'disabled'}`}>
+                    <div className={`btn-small ${userDefinedFile && 'disabled'}`}>
                       <span>Camera</span>
                       <i className="material-icons left">photo_camera</i>
                       <input capture type="file" accept="image/*" onClick={() => console.log('click')} onChange={(e) => handleimageUpload(e, 'CAMERA_FILE')} />
@@ -186,7 +184,7 @@ const receiptHome = () => {
                 </div>
                 <div className="row">
                   <div className="file-field input-field col s12 localeFile">
-                    <div className={`btn ${userDefinedCameraFile && 'disabled'}`}>
+                    <div className={`btn-small ${userDefinedCameraFile && 'disabled'}`}>
                       <span>File</span>
                       <i className="material-icons left">attach_file</i>
                       <input disabled={userDefinedCameraFile} type="file" accept="image/*" onChange={(e) => handleimageUpload(e, 'ATTACH_FILE')} />
@@ -197,8 +195,8 @@ const receiptHome = () => {
                     </div>
                   </div>
                   <div className="col submit-btn">
-                    <button className="btn waves-effect waves-light" type="submit" onClick={(e) => onSubmit(e)} name="action">Submit
-                      <i className="material-icons right">send</i>
+                    <button className="btn-small waves-effect waves-light" type="submit" onClick={(e) => onSubmit(e)} name="action">Save
+                      <i className="material-icons right">backup</i>
                     </button>
                   </div>
                 </div>
@@ -229,6 +227,12 @@ const receiptHome = () => {
       </div>
     </div>
     <style jsx scoped>{`
+      .recipt-container{
+        display: grid;
+        background: var(--primaryBackground);
+        grid-template-columns: 50px 1fr;
+	      grid-template-areas: "nav wrap";
+      }
       .view-layout{
         margin-left: auto;
       }
@@ -259,8 +263,8 @@ const receiptHome = () => {
         margin-bottom: 0;
       }
       .recipt-wrapper {
-        padding-top: 3rem;
-        padding-left: 3rem;
+        margin-top: 8rem;
+        grid-area: wrap
       }
       .collapsible-upload .chevron{
         margin: 0 0 0 auto;
@@ -278,6 +282,10 @@ const receiptHome = () => {
       .collapsible-upload.hasDefinedCameraFile .file-field.input-field.col.s12.cameraFile input,
       .collapsible-upload.hasDefinedFile .file-field.input-field.col.s12.localeFile input{
         width: 100%;
+      }
+      .file-field .btn-small{
+        height: 32.4px;
+        line-height: 32.4px;
       }
       .collapsible-upload .file-path-wrapper{
         position: relative;
@@ -308,8 +316,26 @@ const receiptHome = () => {
       .gallery-content{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 2.7rem;
-        padding: 2.7rem;
+        gap: 1rem;
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 1.5rem;
+      }
+
+      @media (max-width: 768px){
+        .gallery-content{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+      }
+      @media (max-width: 600px){
+        .gallery-content{
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
       }
       
     `}</style>

@@ -63,7 +63,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	}
 
 	return (
-		<div>
+		<>
 			<div id="vertical-nav">
 				<div className="wrapper">
 					<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
@@ -84,7 +84,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 						<div className="background">
 							<img src='/assets/lighthouse-sidenav.jpg' alt="side navigation background image" height="211" width="300" quality={60} />
 						</div>
-						<a href="#user"><img className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
+						<a href="#user"><img style={{objectFit: 'cover'}} className="circle" src={(currentUser && currentUser.photoURL) || "/assets/icons8-test-account.png"} alt="User profile picture" width="96" height="96" quality={60}/></a>
 						<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
 						<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 					</div>
@@ -123,7 +123,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
 					<Link href="/user/posts">
 						<a href="/user/posts">
-							<i className="material-icons">arrow_back</i>View all posts
+							<i className="material-icons">grid_on</i>View all posts
 						</a>
 					</Link>
 				</li>
@@ -138,6 +138,6 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 					</Link> 
 				</li>
 			</ul>		
-		</div>
+		</>
 	)
 }

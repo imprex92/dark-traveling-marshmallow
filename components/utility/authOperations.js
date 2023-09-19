@@ -38,10 +38,8 @@ function verifyUserEmail() {
 	return new Promise((resolve, reject) => {
 		projectAuth.useDeviceLanguage()
 		user.sendEmailVerification()
-		.then((data) => {
-			console.log("email sent")
-			resolve(data)
-		}).catch((err) => reject(err))
+		.then((data) => resolve({code: 200, message: 'Email sent!'}))
+		.catch((err) => reject(err))
 	})
 }
 function updateEmail(email) {

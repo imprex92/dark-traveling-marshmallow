@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Image from 'next/image'
 import DateFormatter from 'components/utility/DateFormatter'
 import Gallerypopup from 'components/popups/Gallerypopup'
@@ -10,9 +10,7 @@ const OutputGallery = ({data}) => {
   const toggleDropdown = ({event, trigger}) => {
     event.stopPropagation();
     if(trigger === 'dropdown'){
-      console.log('dropDown');
       const i = event.target.classList[1]
-      console.log(event.target.classList[1]);
       const el = document.getElementsByClassName(`hidden-section-${i}`)
       const el2 = document.getElementsByClassName(`dropdown-${i}`) 
       el[0].classList.toggle('showing')
@@ -23,26 +21,24 @@ const OutputGallery = ({data}) => {
 
   const popupTrigger = ({event, trigger, additional}) =>{
     event.stopPropagation();
+    document.getElementsByTagName('html')[0].style.overflow = 'hidden'
     if(trigger === 'popup'){
-      console.log('Trigger', additional);
       setPopupToOpen(additional.index)
     }
   }
   function reset(e){
-    
-    console.log('reseting');
    setPopupToOpen(null)
-    console.log(popupToOpen);
+   document.getElementsByTagName('html')[0].style.overflow = null
   }
-
+ // TODO popup not finished
   return (
     <div className={`item-container`} onClick={(e) => {popupTrigger({
       event: e, 
       trigger:'popup',
       additional: {id: id, index: data.index}
       })}}>
-        { popupToOpen !== null  ? <div onClick={(e) => {e.stopPropagation(),reset(e)}} className={`overlay ${popupToOpen ? 'open' : ''}`}>
-      <Gallerypopup key={data.index}  data={data} resetPopup={() => reset()} popupToOpen={popupToOpen}/>
+      { popupToOpen !== null  ? <div onClick={(e) => {e.stopPropagation(),reset(e)}} className={`overlay ${popupToOpen ? 'open' : ''}`}>
+        <Gallerypopup key={data.index}  data={data} resetPopup={() => reset()} popupToOpen={popupToOpen}/>
       </div> : null}
       <div className='item-image'>
         <Image 
@@ -51,8 +47,8 @@ const OutputGallery = ({data}) => {
           layout="responsive"
           width="50%"
           height="50%"
-          objectFit='cover' 
-          />
+          objectFit='cover'
+        />
       </div>
       <div className='item-text'>
         <span className='title'>{title}</span>
@@ -82,30 +78,43 @@ const OutputGallery = ({data}) => {
           transform: rotate(0deg);
           transition: transform 0.3s linear;
         }
-      .dropdown-${data?.index}.active .chevron{
-        transform: rotate(-90deg);
-        transition: transform 0.3s linear;
-      }
-        .item-container{
-
+        .dropdown-${data?.index}.active .chevron{
+          transform: rotate(-90deg);
+          transition: transform 0.3s linear;
         }
         .item-text{
           display: flex;
           flex-direction: column;
           margin: 1rem;
+          color: white;
         }
         .item-image img{
           object-fit: cover;
         }
         .overlay{
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: 3;
-				backdrop-filter: blur(35px);
-			}
+          display: grid;
+          place-content: center;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 20px;
+          z-index: 3;
+          backdrop-filter: blur(35px);
+			  }
+
+        @media (max-width: 640px){
+          .overlay{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+			    }
+        }
+      `}</style>
+      <style>{`
+        .item-image img{
+          border-radius: 20px;
+        }
       `}</style>
     </div>
   )

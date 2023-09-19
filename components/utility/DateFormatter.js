@@ -1,8 +1,9 @@
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
 // Supply with unix seconds
 
-export default function DateFormatter ({timestamp, timeFromNow = true}){
+export default function DateFormatter ({timestamp, timeFromNow = false}){
 	
 	typeof(timestamp) !== 'number' && console.error('Dateformater error. Timestamp NaN');
 
@@ -27,4 +28,9 @@ export default function DateFormatter ({timestamp, timeFromNow = true}){
 			}
 		</>
 	)
+}
+
+DateFormatter.propTypes={
+	timeFromNow: PropTypes.bool,
+	timestamp: PropTypes.number.isRequired
 }

@@ -8,7 +8,6 @@ import 'styles/materialize.css'
 import 'styles/signin.style.css'
 import 'styles/dashboard.style.css'
 import 'styles/slides-component.style.scss'
-import 'styles/blogPost-page.style.css'
 import 'styles/sideNav.style.css'
 import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
@@ -27,7 +26,7 @@ if(typeof window !== 'undefined'){
 function MyApp({Component,pageProps}) {
 	const widgetProhibited = ['/login', '/signup', '/']
 	const router = useRouter()
-	const { showWeaterWidget } = useSiteSettings(state => state.data)
+	const { showWeatherWidget } = useSiteSettings(state => state.data)
 	const isOnline = useOnlineStatus()
 
 	useEffect(() => {
@@ -68,7 +67,7 @@ function MyApp({Component,pageProps}) {
 				`,
 				}}
 				/>
-					{ isOnline && showWeaterWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
+					{ isOnline && showWeatherWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
 					{ isOnline ? <Component {...pageProps}/> : <OfflineComp />}
 			{/* </DatabaseProvider> */}
 		</AuthProvider>

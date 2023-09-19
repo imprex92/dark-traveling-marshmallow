@@ -1,14 +1,14 @@
 import SkeletonElement from "./SkeletonElement"
 import Shimmer from "./Shimmer"
 
-const SkeletonWeaterWidget = ({ theme }) => {
+const SkeletonWeatherWidget = ({ theme }) => {
 	const themeClass = theme || 'light'
 	
   return (
 	<div className={`skeleton-wrapper weatherWidget ${themeClass}`}>
 		<div className="skeleton-weatherWidget">
 			<div>
-				<SkeletonElement type="weaterWidgetImg" />
+				<SkeletonElement type="weatherWidgetImg" />
 				<Shimmer />
 			</div>
 		</div>
@@ -16,4 +16,4 @@ const SkeletonWeaterWidget = ({ theme }) => {
   )
 }
 
-export default SkeletonWeaterWidget
+export default SkeletonWeatherWidget

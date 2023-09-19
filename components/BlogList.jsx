@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import BlogItem from './BlogItem'
+import styles from 'styles/blogPostsFeed.module.css'
 
 const BlogList = ({searchByText, countrySearchTerm, userBlogs}) => {
 	const [filterByCountry, setFilterByCountry] = useState('')
@@ -20,10 +21,10 @@ const BlogList = ({searchByText, countrySearchTerm, userBlogs}) => {
 	})
 
 	return (
-		<div className='main-wrapper'>
-			<div className="row post-item-wrapper">
+		<div className={styles.innerWrapper}>
+			<div className={styles.postItemsWrapper}>
 				{filteredBlogs.map((blog) => (
-					<div key={blog.id} style={{backgroundImage: `url(${blog.imgURL})`}} className="all-post-backgroundimg">
+					<div key={blog.id} style={{backgroundImage: `url(${blog.imgURL})`}} className={styles.itemsWrapper}>
 						<BlogItem blog={blog} />
 					</div>
 				))}

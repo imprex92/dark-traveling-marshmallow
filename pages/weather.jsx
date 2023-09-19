@@ -54,15 +54,15 @@ const weather = () => {
 
 	return (
 		<>
-			<WeatherMaster isOnline={isOnline} />
 			<div className='dashboard-main weather'>
-				<h2>Weather</h2>
-				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} />}
-				{isLoading && (
-					<div className='skeleton-container weather'>
-						<SkeletonWeather />
-						<SkeletonWeather />
-						<SkeletonWeather />
+				<WeatherMaster isOnline={isOnline} />
+				{(weatherObj && isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} currentUser={currentUser} />}
+				{!isLoading && (
+					<div className='skeleton-container weather-skeleton'>
+						<SkeletonWeather position={'main'} />
+						<SkeletonWeather position={'tags'} />
+						<SkeletonWeather position={'additionalInfo'} />
+						<SkeletonWeather position={'history'} />
 					</div>
 				) }
 			</div>
