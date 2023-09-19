@@ -92,8 +92,6 @@ const receiptHome = () => {
     console.log('location', formCountry);
     setisUploading(true)
     //! MOVING THEN ON TO onImgSuccess()!
-
-    
   }
   const onImgSuccess = () => {
     if(uploadedURL){
@@ -173,7 +171,7 @@ const receiptHome = () => {
                 </div>
                 <div className="row">
                   <div className="file-field input-field col s12 cameraFile">
-                    <div className={`btn ${userDefinedFile && 'disabled'}`}>
+                    <div className={`btn-small ${userDefinedFile && 'disabled'}`}>
                       <span>Camera</span>
                       <i className="material-icons left">photo_camera</i>
                       <input capture type="file" accept="image/*" onClick={() => console.log('click')} onChange={(e) => handleimageUpload(e, 'CAMERA_FILE')} />
@@ -186,7 +184,7 @@ const receiptHome = () => {
                 </div>
                 <div className="row">
                   <div className="file-field input-field col s12 localeFile">
-                    <div className={`btn ${userDefinedCameraFile && 'disabled'}`}>
+                    <div className={`btn-small ${userDefinedCameraFile && 'disabled'}`}>
                       <span>File</span>
                       <i className="material-icons left">attach_file</i>
                       <input disabled={userDefinedCameraFile} type="file" accept="image/*" onChange={(e) => handleimageUpload(e, 'ATTACH_FILE')} />
@@ -197,8 +195,8 @@ const receiptHome = () => {
                     </div>
                   </div>
                   <div className="col submit-btn">
-                    <button className="btn waves-effect waves-light" type="submit" onClick={(e) => onSubmit(e)} name="action">Submit
-                      <i className="material-icons right">send</i>
+                    <button className="btn-small waves-effect waves-light" type="submit" onClick={(e) => onSubmit(e)} name="action">Save
+                      <i className="material-icons right">backup</i>
                     </button>
                   </div>
                 </div>
@@ -284,6 +282,10 @@ const receiptHome = () => {
       .collapsible-upload.hasDefinedCameraFile .file-field.input-field.col.s12.cameraFile input,
       .collapsible-upload.hasDefinedFile .file-field.input-field.col.s12.localeFile input{
         width: 100%;
+      }
+      .file-field .btn-small{
+        height: 32.4px;
+        line-height: 32.4px;
       }
       .collapsible-upload .file-path-wrapper{
         position: relative;
