@@ -316,8 +316,11 @@ const receiptHome = () => {
       .gallery-content{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 1.5rem;
-        padding: 2rem;
+        gap: 1rem;
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 1.5rem;
       }
 
       @media (max-width: 768px){
@@ -325,15 +328,13 @@ const receiptHome = () => {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
-          padding: 2rem;
         }
       }
       @media (max-width: 600px){
         .gallery-content{
           display: grid;
           grid-template-columns: 1fr;
-          gap: 1rem;
-          padding: 2rem;
+          gap: 3rem;
         }
       }
       
