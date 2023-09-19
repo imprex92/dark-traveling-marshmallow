@@ -2,14 +2,14 @@
   &:focus {
     outline: none;
     background-color: $chip-selected-color;
-    color: #fff;
+    color: $chip-selected-font-color;
   }
 
   display: inline-block;
   height: 32px;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(0,0,0,.6);
+  color: $chip-font-color;
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
@@ -55,7 +55,7 @@
   input:not([type]):not(.browser-default).input {
     background: none;
     border: 0;
-    color: rgba(0,0,0,.6);
+    color: $input-color;
     display: inline-block;
     font-size: $input-font-size;
     height: $input-height;
