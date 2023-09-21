@@ -1,4 +1,4 @@
-//require('dotenv').config()
+require('dotenv').config()
 const path = require('path')
 const Dotenv = require('dotenv-webpack');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
