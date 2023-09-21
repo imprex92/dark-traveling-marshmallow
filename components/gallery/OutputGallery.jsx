@@ -31,6 +31,7 @@ const OutputGallery = ({data}) => {
    document.getElementsByTagName('html')[0].style.overflow = null
   }
  // TODO popup not finished
+ // TODO Fix <Image /> tag
   return (
     <div className={`item-container`} onClick={(e) => {popupTrigger({
       event: e, 
@@ -41,14 +42,15 @@ const OutputGallery = ({data}) => {
         <Gallerypopup key={data.index}  data={data} resetPopup={() => reset()} popupToOpen={popupToOpen}/>
       </div> : null}
       <div className='item-image'>
-        <Image 
+        {/*<Image 
           src={imgURL} 
           quality={50} 
           layout="responsive"
-          width="50%"
-          height="50%"
+          width={402}
+          height={402}
           objectFit='cover'
-        />
+        />*/}
+        <img src={imgURL} width={402} height={402} style={{objectFit: 'cover'}} />
       </div>
       <div className='item-text'>
         <span className='title'>{title}</span>

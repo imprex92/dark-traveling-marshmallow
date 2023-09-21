@@ -1,7 +1,6 @@
 const express = require('express')
 const next = require('next')
-
-const config = require('next.config.js')
+const config = require('./next.config.js')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev, config })
 const handle = app.getRequestHandler()
@@ -25,10 +24,3 @@ app.prepare().then(() => {
 	console.error(ex.stack);
 	process.exit(1)
 })
-
-// app.get('/user/posts/singlepost/:slug', (req, res) => {
-// 	console.log('hello');
-// 	const actualPage = '/user/posts/singlepost'
-// 	const query = { slug: req.params.slug }
-// 	app.render(req, res, actualPage, query)
-// })
