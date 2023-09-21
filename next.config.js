@@ -1,4 +1,4 @@
-//require('dotenv').config()
+require('dotenv').config()
 const path = require('path')
 const Dotenv = require('dotenv-webpack');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
@@ -6,12 +6,13 @@ const { StatsWriterPlugin } = require('webpack-stats-plugin');
 module.exports = {
 	images: {
 		domains: [
+			'firebasestorage.googleapis.com',
 			'lh3.googleusercontent.com',
 			'photos.app.goo.gl', 
-			'firebasestorage.googleapis.com',
 			'via.placeholder.com',
+			'dark-traveling-marshmallow.web.app'
 		],
-	  },
+	},
 	webpack(config, {isServer }) {
 		config.node = { 
 			global: true,
