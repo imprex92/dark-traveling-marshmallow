@@ -6,7 +6,7 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 	const {id, title, imgURL, pickedDateForPost, locationData} = data?.elm
 	const i = data?.index;
 	const [popup, setPopup] = useState(popupToOpen)
-
+	console.log('data', data);
 	useEffect(() => {
 	  console.log('changed', popupToOpen, popup);
 		setPopup(popupToOpen)
@@ -21,28 +21,30 @@ const Gallerypopup = ({data, popupToOpen, resetPopup}) => {
 		setPopup(null)
 		resetPopup(e)
 	}
-	// TODO finish popup
+ // TODO popup not finished
+ // TODO Fix <Image /> tag
   return (
 	<>
-	<div className={`popup popup-${i} ${popup === i ? 'active' : ''}`}>
-		<div className="close-btn material-icons" onClick={e => {e.stopPropagation(), reset(e)}}>close</div>
-		<div className='item-image'>
-			<Image 
-			src={imgURL} 
-			quality={90} 
-			layout="responsive"
-			width="50%"
-			height="50%"
-			objectFit='cover'
-			/>
-      	</div> 
-		<h1>Cool Popup</h1>
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quibusdam omnis repellendus, 
-			atque similique magnam alias recusandae veniam, quisquam magni,
-			itaque quaerat dolor? Veniam animi exercitationem at quasi molestiae! Doloremque.
-		</p>
-	</div>
+		<div className={`popup popup-${i} ${popup === i ? 'active' : ''}`}>
+			<div className="close-btn material-icons" onClick={e => {e.stopPropagation(), reset(e)}}>close</div>
+			<div className='item-image'>
+				{ /*<Image 
+				src={imgURL} 
+				quality={90} 
+				layout="responsive"
+				width="50%"
+				height="50%"
+				objectFit='cover'
+				/> */}
+				<img src={imgURL} width={402} height={402} style={{objectFit: 'cover'}} />
+			</div> 
+			<h2>Cool Popup</h2>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quibusdam omnis repellendus, 
+				atque similique magnam alias recusandae veniam, quisquam magni,
+				itaque quaerat dolor? Veniam animi exercitationem at quasi molestiae! Doloremque.
+			</p>
+		</div>
 		<style jsx scoped>{`
 			.close-btn{
 				position: absolute;
