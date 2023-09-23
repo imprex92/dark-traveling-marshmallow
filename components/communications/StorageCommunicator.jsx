@@ -424,11 +424,11 @@ export default function StorageCommunicator() {
 				</div></li>
 				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a></Link></li>
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Submenu</a></li>
-				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
-				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View all posts</a></Link></li>
+				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons material-symbols-outlined">chevron_left</i>Close menu</a></li>
+				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View gallery</a></Link></li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/receipts/home">
 						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
@@ -436,7 +436,7 @@ export default function StorageCommunicator() {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
 					</Link> 
 				</li>
 			</ul>		

@@ -101,7 +101,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/settings">
-						<a href="#!"><i className="material-icons">settings</i>Settings</a>
+						<a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a>
 					</Link>
 				</li>
 				<li>
@@ -112,7 +112,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li>
 					<a className="sidenav-close waves-effect" href="#!">
-						<i className="material-icons">skip_previous</i>Close menu
+						<i className="material-icons material-symbols-outlined">chevron_left</i>Close menu
 					</a>
 				</li>
 				<li onClick={closeSideNav}>
@@ -123,7 +123,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
 					<Link href="/user/posts">
 						<a href="/user/posts">
-							<i className="material-icons">grid_on</i>View all posts
+							<i className="material-icons">grid_on</i>View gallery
 						</a>
 					</Link>
 				</li>
@@ -134,7 +134,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
 					</Link> 
 				</li>
 			</ul>		
