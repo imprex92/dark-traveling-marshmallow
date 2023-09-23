@@ -4,25 +4,21 @@ import styles from 'styles/weatherWidget.module.css'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
 import SkeletonWeatherWidget from 'components/loaders/skeletons/SkeletonWeatherWidget';
+import { toImperial } from 'components/utility/UnitConverter';
+import { projectTimestampNow } from 'firebase/config';
 
 const WeatherWidget = () => {
+	const updateWeatherState = useSiteSettings(state => state.setLatestWeather)
 
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
 	const [userLocation, setUserLocation] = useState(null)
 	const [locationError, setLocationError] = useState(null)
 	const [weatherObj, setWeatherObj] = useState(null)
-	const { units, weatherInitial, showWeatherWidget, latestLocation} = useSiteSettings(state => state.data)
-	let isMetric = units === 'celcius' ? true : false
+	const { units } = useSiteSettings(state => state.data)
+	const isMetric = units === 'celsius' ? true : false
 
-	useEffect(() => {
-	  fetchGeolocation()
-	
-	  return () => {
-		
-	  }
-	}, [])
-	
+	useEffect(() => { fetchGeolocation() }, [])
 
 	async function fetchGeolocation() {
 		setLocationLoading(true)
@@ -35,8 +31,9 @@ const WeatherWidget = () => {
 						const coords = {latitude: position.data.latitude, longitude: position.data.longitude}
 						setReversedGeolocation(position)
 						await fetchWeatherByCoords(coords).then(weather => {
+							weather.data.timestamp = projectTimestampNow;
+							updateWeatherState(weather.data)
 							setWeatherObj(weather.data)
-							console.log(weather.data);
 						})
 						setLocationLoading(false)
 					})
