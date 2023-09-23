@@ -24,7 +24,6 @@ export function toImperial(value, unit){
 	}
 	else if(unit === 'degrees'){
   		let cToFahr = value * 9 / 5 + 32
-		  console.log(cToFahr, 'degrees');
 		return cToFahr.toFixed(1)
 	}
 	else if(unit === 'speed'){

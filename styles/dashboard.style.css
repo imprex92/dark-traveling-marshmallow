@@ -124,9 +124,12 @@
   font-size: 20px;
 }
 
-.places-autocomplete > i:last-child {
+.places-autocomplete > i {
   color: red;
   cursor: pointer;
+}
+.places-autocomplete > i.active {
+  color: red;
 }
 
 .datepicker-section > i:last-child {
@@ -169,10 +172,20 @@ label {
   background-color: #fff;
   position: absolute;
   z-index: 9;
-  padding-bottom: 5px;
   left: 14%;
   min-width: 205px;
   top: 31px;
+}
+.autocomplete-suggestions-wrapper > li {
+  padding: 4px 1rem;
+  font-size: 14px;
+}
+.autocomplete-suggestions-wrapper > li:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+.autocomplete-suggestions-wrapper > li:hover {
+  background-color: rgba(0, 0, 0, 0.14);
+  cursor: pointer;
 }
 
 .Typewriter {

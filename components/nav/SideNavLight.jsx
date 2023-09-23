@@ -54,7 +54,7 @@ export default function SideNavLight ({}) {
 						<i className="material-icons">menu</i>
 					</a>
 					<Link href="/user/newpost">
-						<a onClick={closeSideNav} href="#"><i className="material-icons">add_circle_outline</i></a>
+						<a onClick={closeSideNav} href="#"><i className="material-icons">add_box</i></a>
 					</Link>
 					<Link href="/user/posts">
 						<a onClick={closeSideNav} href="#"><i className="material-icons white-text">arrow_upward</i></a>

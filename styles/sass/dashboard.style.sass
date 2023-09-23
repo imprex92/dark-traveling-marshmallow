@@ -106,9 +106,11 @@
 		font-size: 20px
 
 .places-autocomplete
-	& > i:last-child
+	& > i
 		color: red
 		cursor: pointer
+		&.active
+			color: red
 
 .datepicker-section
 	& > i:last-child
@@ -142,10 +144,17 @@ label
 	background-color: #fff
 	position: absolute
 	z-index: 9
-	padding-bottom: 5px
 	left: 14%
 	min-width: 205px
 	top: 31px
+	& > li
+		padding: 4px 1rem
+		font-size: 14px
+		&:nth-child(odd)
+			background-color: #f2f2f2
+		&:hover
+			background-color: rgba(0, 0, 0, 0.14)
+			cursor: pointer
 
 .Typewriter
 	min-height: 110px

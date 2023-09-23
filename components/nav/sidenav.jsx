@@ -70,7 +70,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 						<i className="material-icons">menu</i>
 					</a>
 					<Link href="/user/newpost">
-						<a onClick={closeSideNav} href="#"><i className="material-icons">add_circle_outline</i></a>
+						<a onClick={closeSideNav} href="#"><i className="material-icons">add_box</i></a>
 					</Link>
 					<a onClick={handleFilter} defaultValue="All" className="contact" href="#">All</a>
 					{countriesVisited?.map((country, i) => {
