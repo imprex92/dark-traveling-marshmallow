@@ -26,7 +26,7 @@ if(typeof window !== 'undefined'){
 function MyApp({Component,pageProps}) {
 	const widgetProhibited = ['/login', '/signup', '/']
 	const router = useRouter()
-	const { showWeatherWidget } = useSiteSettings(state => state.data)
+	const { showWeatherWidget } = useSiteSettings(state => state.data) ?? { showWeatherWidget: true } 
 	const isOnline = useOnlineStatus()
 
 	useEffect(() => {
