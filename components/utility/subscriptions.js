@@ -123,14 +123,11 @@ function handleSaveNewPost({userID, dataToSave}){
 			userDbRef.update({
 				countriesVisited: projectFirebase.firestore.FieldValue.arrayUnion(country)
 			}).then(res => {
-				console.log(res);
-			}).catch(err => {console.log(err);})
-			// console.log("Document written with ID: ", docRef);
-			resolve({docRef})
+				resolve({status: 200, message: 'Success! Post saved!'})
+			}).catch(err => reject({status: 500, message: `Error: ${err}`}))
 		})
 		.catch(err => {
-			console.log('Error during upload to DB: ', err);
-			reject(err)
+			reject({status: 500, message: `Error: ${err}`})
 		})	
 	})
 }
