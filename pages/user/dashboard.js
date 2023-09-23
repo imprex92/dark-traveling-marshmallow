@@ -1,16 +1,15 @@
 import {useState, useEffect} from 'react'
 
 import { projectFirestore } from 'firebase/config'
-import Slides from '../../components/Slides'
-import { useAuth } from '../../contexts/AuthContext'
-import Sidenav from '../../components/nav/Sidenav'
-import withPrivateRoute from '../../components/HOC/withPrivateRoute'
-import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../components/utility/subscriptions'
-import Geolocator from '../../components/Geolocator'
+import { useAuth } from 'contexts/AuthContext'
+import Sidenav from 'components/nav/Sidenav'
+import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import { fetchUserblog, fetchUserHotels, fetchDbUserData } from 'components/utility/subscriptions'
+import Geolocator from 'components/Geolocator'
+import Slides from 'components/Slides'
 if(typeof window !== 'undefined'){
 	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
-//TODO Write a title for every page
 
 const dashboard = ({userAuth, userBlogs}) => {
 	const loggedInUserId = userAuth?.uid
@@ -23,42 +22,31 @@ const dashboard = ({userAuth, userBlogs}) => {
 	const [stayingHotels, setStayingHotels] = useState([])
 	const [dbUserData, setDbUserData] = useState([])
 	const [byCountrySearchTerm, setByCountrySearchTerm] = useState('')
-	const [init, setInit] = useState(false)
 	let blogsToSend;
+
 	useEffect(() => {
 		//! ComponentWillMount!
 		const unsubscribePosts = userDbRef.collection('blogPosts').onSnapshot(blogPostListener, err => {
-			console.error('Subscibe to blogposts failed', err);
+			console.error('Subscribe to blogposts failed', err);
+			M.toast({text: `Subscribe to blogposts failed, ${err}`})
 		})
 		//! Subscribe to hotels as well?
 		const unsubscribeHotels = userDbRef.collection('stayingHotel').onSnapshot(hotelListener, err => {
 			console.error('Subscribe to Hotels failed', err);
+			M.toast({text: `Subscribe to hotels failed, ${err}`})
 		})
 		const unsubscribeDbUserData = userDbRef.onSnapshot(DbUserDataListener, err => {
-			console.error('Subscribe to Firestore userData failed', err);
+			console.error('Subscribe to DB failed', err);
+			M.toast({text: `Subscribe to DB failed, ${err}`})
 		})
-		if(!init){
-			let carousel = document.querySelectorAll(".carousel")
-			M.Carousel.init(carousel, {
-				dist: -100,
-				shift: 0,
-				padding: 20,
-				numVisible: 5,
-				indicators: true,
-				fullWidth: false
-			})
-			setInit(true)
-		}
 		
 		if(currentUser){
-			let userName = currentUser.displayName
-			let firstName = userName;
+			const userName = currentUser.displayName
+			const firstName = userName;
 			setUserFirstname(firstName)
 		}
-		let lang = navigator.language || navigator.userLanguage;
-		let language = lang.split('-')[0];
-
-		//! inside return, same as ComponentWillUnmount! unsubscribe firestore listeners
+		const lang = navigator.language || navigator.userLanguage;
+		const language = lang.split('-')[0];
 		
 		return () => {
 			unsubscribePosts()
@@ -125,10 +113,19 @@ const dashboard = ({userAuth, userBlogs}) => {
 						<div className="custom-body">
 							{/* //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten */}
 							{/* //! userBlogs, skickar vidare bloggarna vi fått med subscription från Firetore till Slides för att visa och visa eventuella sökresultat */}
-							<Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/>
+							{userBlogs.length > 0 ? <Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts}/> : <AddFirstPost /> }
 						</div>
 					</div>
 				</div>			
+		</div>
+	)
+}
+
+const AddFirstPost = () => {
+
+	return(
+		<div className='noPost'>
+			<span>Currently no posts</span>
 		</div>
 	)
 }
