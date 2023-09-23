@@ -1,8 +1,7 @@
-import {useEffect} from 'react'
 import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-	const PlacesAutocomplete = ({dataFromChild, countryCode}) => {
+	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue}) => {
 		const getMyPosition = (() => {
 			const success = (pos) => {
 				const { latitude, longitude } = pos.coords;
@@ -24,7 +23,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			  } else {
 				navigator.geolocation.getCurrentPosition(success, error);
 			  }
-		})
+			})
 
 		const {
 		  ready,
@@ -51,7 +50,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 		  clearSuggestions();
 		});
 	  
-		const handleInput = (e) => { setValue(e.target.value) };
+		const handleInput = (e) => { setValue(e.target.value); inputValue(e.target.value); };
 	  
 		const handleSelect = ({ description, place_id, structured_formatting }) => () => {
 			// When user selects a place, we can replace the keyword without request data from API

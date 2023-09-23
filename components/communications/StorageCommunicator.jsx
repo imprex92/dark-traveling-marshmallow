@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import firebase from 'firebase/app'
-import {projectTimestampNow} from '../../firebase/config'
+import { projectTimestampNow } from '../../firebase/config'
 import { handleSaveNewPost } from '../utility/subscriptions'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,7 +11,8 @@ import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
 import { overwrite, getCode } from 'country-list'
 import ProgressBar from '../ProgressBar'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
-import Flag from 'react-world-flags'
+import useSiteSettings from 'store/siteSettings';
+import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 if(typeof window !== 'undefined'){
 	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
@@ -38,6 +39,10 @@ export default function StorageCommunicator() {
 	const [isSuccessful, setIsSuccessful] = useState(null)
 	const [hasError, setHasError] = useState(null)
 	const [init, setInit] = useState(false)
+	const [isUploadLoading, setUploadLoading] = useState(false)
+	const placesInputValue = useRef('')
+	const countryIfOffline = useRef(null)
+	const { latestWeather } = useSiteSettings(state => state.data) ?? { latestWeather: {} } 
 	
 	//* TAB 1 inputs
 	const postCountry = useRef(null)
@@ -71,7 +76,7 @@ export default function StorageCommunicator() {
 			const instances = M.Autocomplete.init(autocomplete, {
 				data: countries,
 				minLength: 1,
-				onAutocomplete: (selected) => getCountryCode(selected)
+				onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
 			});
 			M.Datepicker.init(datepicker, {
 				autoClose: true,
@@ -146,20 +151,38 @@ export default function StorageCommunicator() {
 
 	async function handlePostSubmit(e) {
 	e.preventDefault();
-
-	// Extract address components
-	const addressComponents = getAddressComponents(postLocation.locationData);
-	const { weatherData, geoPoint } = await getGeoPointAndWeather(postLocation.coordinates)
-
-	// Create postLocationData object
-	const postLocationData = {
-		country: getComponentValue(addressComponents, 'country') || null,
-		state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation.locationData[0].vicinity,
-		city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
-		geopoint: geoPoint || 'Coordinates not found',
-		plusCode: postLocation.locationData[0]?.plus_code || null,
+	setUploadLoading(true)
+	let postLocationData = {
+		country: countryIfOffline.current ?? formCountry,
+		state: null,
+		city: null,
+		geopoint: 'Coordinates not found',
+		plusCode:  null,
+		offlineAddress: placesInputValue.current
 	};
+	let postWeatherData = {
+		weatherUser: postWeather.current.value || null,
+		weatherAPI: latestWeather || null,
+	}
 
+	if( postLocation.length > 0 ){
+		const addressComponents = getAddressComponents(postLocation.locationData);
+		const { weatherData, geoPoint } = await getGeoPointAndWeather(postLocation.coordinates)
+
+		// Create postLocationData object
+		postLocationData = {
+			country: getComponentValue(addressComponents, 'country') || null,
+			state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation.locationData[0].vicinity,
+			city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
+			geopoint: geoPoint || 'Coordinates not found',
+			plusCode: postLocation.locationData[0]?.plus_code || null,
+			offlineAddress: null
+		};
+		postWeatherData = {
+			weatherUser: postWeather.current.value || null,
+			weatherAPI: weatherData.data || latestWeather || null,
+		}
+	}
 	// Create formData object
 	const formData = {
 		user_uid: currentUser.uid,
@@ -168,10 +191,7 @@ export default function StorageCommunicator() {
 		postTitle: postTitle.current.value || null,
 		postContent: postMainContent.current.value || null,
 		postMood: postMood.current.value || null,
-		postWeather: {
-			weatherUser: postWeather.current.value || null,
-			weatherAPI: weatherData.data || null,
-		},
+		postWeatherData,
 		postLocationData,
 		timestamp: projectTimestampNow,
 		pickedDateForPost: datePicker,
@@ -183,9 +203,17 @@ export default function StorageCommunicator() {
 		userID: currentUser.uid,
 		dataToSave: formData,
 		});
-		setIsSuccessful('Success! Post saved!');
+		setUploadLoading(false)
+		M.toast({text: res.message})
+		setIsSuccessful(res.message);
+		setTimeout(() => {
+			setIsSuccessful(null)
+			router.push('/user/posts')
+		}, 1000);
 	} catch (err) {
 		setHasError('Sorry! Something went wrong while uploading');
+		M.toast({text: err.message})
+		setUploadLoading(false)
 	}
 	}
 
@@ -284,7 +312,7 @@ export default function StorageCommunicator() {
 										<label htmlFor="autocomplete-input">Enter country</label>
 										<span className="helper-text yellow-text">Enter country first to filter addresses below</span>
 									</div>
-										<PlacesAutocomplete countryCode={countryCode} dataFromChild={dataFromChild}/>						
+										<PlacesAutocomplete inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>						
 								</div>
 								<div className="row">
 									<div className="input-field col s11 l6 datepicker-section">
@@ -367,6 +395,7 @@ export default function StorageCommunicator() {
 					<div className="row">
 						<div className="col s6 push-s3">
 							{isSuccessful && <div className="white-text green fileinput-error"><strong>{isSuccessful}</strong></div>}
+							{isUploadLoading ? <CircularLoader loaderColor='spinner-green-only' loaderSize='small' /> : null}
 							{hasError && <div className="white-text red darken-4 fileinput-error"><strong>{hasError}</strong></div>}
 							{postMainImage && <ProgressBar initiator='POST_UPLOAD' mainImage={postMainImage} isUploading={setPostMainImage} setUploadedURL={setUploadedURL} fireError={setHasError} />}
 							{/* {postAdditionalFiles && <ProgressBar additionalFiles={postAdditionalFiles}/>} */}
