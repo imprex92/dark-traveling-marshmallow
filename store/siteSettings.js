@@ -3,20 +3,20 @@ import { devtools, persist } from 'zustand/middleware'
 
 let siteSettings = (set) => ({
 	data: {
-		name: '',
+		name: null,
 		theme: 'dark',
-		units: 'celcius',
+		units: 'celsius',
 		language: 'en',
 		timeFormat: 24,
 		dateFormat: 'dd/mm/yyyy',
 		previouslyViewedPost: '',
 		latestLocation: null,
-		weatherInitial: null,
+		latestWeather: null,
 		showWeatherWidget: true,
 	},
 	setPreviouslyViewedPost: (value) => set((state) => ({data : {...state.data, previouslyViewedPost : value}})),
 	setLatestLocation: (value) => set((state) => ({data : {...state.data, latestLocation : value}})),
-	setInitialWeather: (value) => set((state) => ({data : {...state.data, weatherInitial : value}})),
+	setLatestWeather: (value) => set((state) => ({data : {...state.data, latestWeather : value}})),
 })
 
 siteSettings = devtools(siteSettings)
