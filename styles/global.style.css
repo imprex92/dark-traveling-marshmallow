@@ -48,4 +48,8 @@ a {
   --defaultBoxBorderRadius: 20px;
 }
 
+.Typewriter {
+  min-height: 110px;
+}
+
 /*# sourceMappingURL=global.style.css.map */
