@@ -22,12 +22,12 @@
   overflow: hidden;
   height: 700px;
 }
-
 @media (max-width: 769px) {
   .post-slides {
     height: unset;
   }
 }
+
 .fileinput-error {
   padding: 1rem;
   border-radius: 10px;
@@ -186,10 +186,6 @@ label {
 .autocomplete-suggestions-wrapper > li:hover {
   background-color: rgba(0, 0, 0, 0.14);
   cursor: pointer;
-}
-
-.Typewriter {
-  min-height: 110px;
 }
 
 /*# sourceMappingURL=dashboard.style.css.map */
