@@ -158,11 +158,13 @@ export default function StorageCommunicator() {
 		city: null,
 		geopoint: 'Coordinates not found',
 		plusCode:  null,
-		offlineAddress: placesInputValue.current
+		offlineAddress: placesInputValue.current,
+		wasApiOffline: true
 	};
 	let postWeatherData = {
 		weatherUser: postWeather.current.value || null,
 		weatherAPI: latestWeather || null,
+		wasApiOffline: true
 	}
 
 	if( postLocation.length > 0 ){
@@ -176,11 +178,13 @@ export default function StorageCommunicator() {
 			city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
 			geopoint: geoPoint || 'Coordinates not found',
 			plusCode: postLocation.locationData[0]?.plus_code || null,
-			offlineAddress: null
+			offlineAddress: null,
+			wasApiOffline: false
 		};
 		postWeatherData = {
 			weatherUser: postWeather.current.value || null,
 			weatherAPI: weatherData.data || latestWeather || null,
+			wasApiOffline: false
 		}
 	}
 	// Create formData object
