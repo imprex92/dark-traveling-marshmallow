@@ -121,12 +121,12 @@ const dashboard = ({userAuth, userBlogs}) => {
 						</div>
 					</form>
 				</div>
-				<div className={`row valign-wrapper ${styles.postSlides} ${userBlogs.length > 1 ? styles.hasContent : styles.postSlides_empty}`}>
-					<div className={`col s12 center-align ${userBlogs.length > 1 ? styles.postCarouselSection : styles.postCarouselSection_empty}`}>
+				<div className={`row valign-wrapper ${styles.postSlides} ${userBlogs.length > 0 ? styles.hasContent : styles.postSlides_empty}`}>
+					<div className={`col s12 center-align ${userBlogs.length > 0 ? styles.postCarouselSection : styles.postCarouselSection_empty}`}>
 						<div className="custom-body">
 							{/* //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten */}
 							{/* //! userBlogs, skickar vidare bloggarna vi fått med subscription från Firestore till Slides för att visa och visa eventuella sökresultat */}
-							{userBlogs.length > 1 ? 
+							{userBlogs.length > 0 ? 
 							<Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs=
 							{blogPosts}/> 
 							: <AddFirstPost route={route} sentences={sentences} randomIndex={randomIndex} /> 
