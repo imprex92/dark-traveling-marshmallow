@@ -13,6 +13,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [countriesVisited, setCountriesVisited] = useState([])
+	const [currentFilter, setCurrentFilter] = useState('All')
 	const { logout, currentUser } = useAuth()
 	const show_in = 'posts'
 	const route = router.route;
@@ -54,8 +55,10 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		if(e.currentTarget.textContent === 'All'){
 			countryToFilter = ' '
 			dataFromChildToParent(countryToFilter)
+			setCurrentFilter(countryToFilter)
 		}
 		dataFromChildToParent(countryToFilter)
+		setCurrentFilter(countryToFilter)
 	}
 	function closeSideNav(){
 		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
@@ -72,9 +75,9 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 					<Link href="/user/newpost">
 						<a onClick={closeSideNav} href="#"><i className="material-icons">add_box</i></a>
 					</Link>
-					<a onClick={handleFilter} defaultValue="All" className="contact" href="#">All</a>
+					<a onClick={handleFilter} defaultValue="All" className={`contact ${currentFilter === 'All' ? 'filterActive' : ''}`} href="#">All</a>
 					{countriesVisited?.map((country, i) => {
-						return <a onClick={handleFilter} key={i} defaultValue={country} className="contact" href="#">{country}</a>
+						return <a onClick={handleFilter} key={i} defaultValue={country} className={`contact ${country === currentFilter ? 'filterActive' : ''}`} href="#">{country}</a>
 					})}
 				</div>
 			</div>
