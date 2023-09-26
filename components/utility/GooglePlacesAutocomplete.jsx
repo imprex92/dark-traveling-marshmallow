@@ -1,7 +1,24 @@
+import React, {useEffect} from 'react'
 import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
 	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue}) => {
+		useEffect(() => {
+			const existingScript = document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`);
+
+			if(!existingScript){
+				const script = document.createElement('script');
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap`;
+				script.async = true;
+				script.defer = true;
+				document.head.appendChild(script);
+			}
+			
+			return () => {
+				document.head.removeChild(script);
+			};
+		}, []);
+
 		const getMyPosition = (() => {
 			const success = (pos) => {
 				const { latitude, longitude } = pos.coords;
@@ -40,8 +57,9 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			}
 			
 		},
-		  debounce: 300,
-		//   cache: 24 * 60 * 60,
+			callbackName: "initMap",
+		  	debounce: 300,
+			cache: 24 * 60 * 60,
 		});
 		
 		const ref = useOnclickOutside(() => {
