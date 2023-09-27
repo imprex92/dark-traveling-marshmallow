@@ -13,6 +13,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [countriesVisited, setCountriesVisited] = useState([])
+	const [currentFilter, setCurrentFilter] = useState('All')
 	const { logout, currentUser } = useAuth()
 	const show_in = 'posts'
 	const route = router.route;
@@ -54,8 +55,10 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		if(e.currentTarget.textContent === 'All'){
 			countryToFilter = ' '
 			dataFromChildToParent(countryToFilter)
+			setCurrentFilter(countryToFilter)
 		}
 		dataFromChildToParent(countryToFilter)
+		setCurrentFilter(countryToFilter)
 	}
 	function closeSideNav(){
 		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
@@ -70,11 +73,11 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 						<i className="material-icons">menu</i>
 					</a>
 					<Link href="/user/newpost">
-						<a onClick={closeSideNav} href="#"><i className="material-icons">add_circle_outline</i></a>
+						<a onClick={closeSideNav} href="#"><i className="material-icons">add_box</i></a>
 					</Link>
-					<a onClick={handleFilter} defaultValue="All" className="contact" href="#">All</a>
+					<a onClick={handleFilter} defaultValue="All" className={`contact ${currentFilter === 'All' ? 'filterActive' : ''}`} href="#">All</a>
 					{countriesVisited?.map((country, i) => {
-						return <a onClick={handleFilter} key={i} defaultValue={country} className="contact" href="#">{country}</a>
+						return <a onClick={handleFilter} key={i} defaultValue={country} className={`contact ${country === currentFilter ? 'filterActive' : ''}`} href="#">{country}</a>
 					})}
 				</div>
 			</div>
@@ -101,7 +104,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/settings">
-						<a href="#!"><i className="material-icons">settings</i>Settings</a>
+						<a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a>
 					</Link>
 				</li>
 				<li>
@@ -112,7 +115,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li>
 					<a className="sidenav-close waves-effect" href="#!">
-						<i className="material-icons">skip_previous</i>Close menu
+						<i className="material-icons material-symbols-outlined">chevron_left</i>Close menu
 					</a>
 				</li>
 				<li onClick={closeSideNav}>
@@ -123,7 +126,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}} onClick={closeSideNav}>
 					<Link href="/user/posts">
 						<a href="/user/posts">
-							<i className="material-icons">grid_on</i>View all posts
+							<i className="material-icons">grid_on</i>View gallery
 						</a>
 					</Link>
 				</li>
@@ -134,7 +137,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
 					</Link> 
 				</li>
 			</ul>		

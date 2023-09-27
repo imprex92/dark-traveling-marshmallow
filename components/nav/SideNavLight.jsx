@@ -54,7 +54,7 @@ export default function SideNavLight ({}) {
 						<i className="material-icons">menu</i>
 					</a>
 					<Link href="/user/newpost">
-						<a onClick={closeSideNav} href="#"><i className="material-icons">add_circle_outline</i></a>
+						<a onClick={closeSideNav} href="#"><i className="material-icons">add_box</i></a>
 					</Link>
 					<Link href="/user/posts">
 						<a onClick={closeSideNav} href="#"><i className="material-icons white-text">arrow_upward</i></a>
@@ -75,7 +75,7 @@ export default function SideNavLight ({}) {
 				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
 				<li onClick={closeSideNav}>
-					<Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a>
+					<Link href="/user/settings"><a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a>
 					</Link>
 				</li>
 				<li>
@@ -85,14 +85,14 @@ export default function SideNavLight ({}) {
 					<a className="subheader">Submenu</a>
 				</li>
 				<li>
-					<a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a>
+					<a className="sidenav-close waves-effect" href="#!"><i className="material-icons material-symbols-outlined">chevron_left</i>Close menu</a>
 				</li>
 				<li onClick={closeSideNav}>
 					<a onClick={handleNewPost} className="" href="/user/newpost"><i className="material-icons">edit</i>Write new post</a>
 				</li>
 				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}}>
 					<Link href="/user/posts"><a href="/user/posts">
-						<i className="material-icons">arrow_back</i>Back to all posts</a>
+						<i className="material-icons">grid_on</i>Back to gallery</a>
 					</Link>
 				</li>
 				<li onClick={closeSideNav}>
@@ -102,7 +102,7 @@ export default function SideNavLight ({}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
 					</Link> 
 				</li>
 			</ul>		

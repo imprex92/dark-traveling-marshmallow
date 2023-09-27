@@ -1,0 +1,89 @@
+@use 'variables'
+
+@mixin tab-content-style
+	margin-top: 1em
+	padding-bottom: 1em !important
+	background-color: rgba(0, 0, 0, .5)
+	border-radius: 20px
+
+.dashboardMain
+	display: grid
+	grid-template-areas: "nav wrap"
+	grid-template-columns: 50px 1fr
+	background: variables.$base-gradiant
+	.wrapper
+		grid-area: wrap
+		margin: 0 1.5rem
+		.greetingSection
+			& > :is(h4, h5)
+				font-family: 'Karma', serif
+			& > h4
+				margin-bottom: 0px
+				font-weight: bold
+				color: #fff
+			& > h5
+				margin-top: 0px
+				color: #999aad
+		.searchbarSection .searchBox
+			& > i
+				color: white
+			& > input[type=search]:focus
+				&:not(.browser-default)
+					background-color: unset
+					border-bottom: 1px solid #9e9e9e
+		.postSlides_empty
+			max-width: 1400px
+			max-height: 860px
+			height: 100% !important
+			overflow: visible !important
+			@media ( max-width: variables.$breakpoint-tablet )
+				max-height: 747px
+				margin-top: 3rem
+			@media ( max-width: variables.$breakpoint-phone )
+				max-height: 434px
+
+		.postSlides
+			overflow: hidden
+			height: 700px
+			@media (max-width: 769px)
+				height: unset
+			& > .postCarouselSection
+				margin-top: 4rem
+				@media ( min-width: 1100px )
+					margin-top: 1rem
+				@media ( max-width: 450px )
+					margin-top: 0rem
+				&_empty
+					@extend .postCarouselSection
+					height: calc( 100% - 1rem )
+					border: 4px solid rgba(255, 255, 255, 0.21)
+					border-radius: 20px
+					&:hover
+						border: 4px solid rgba(255, 255, 255, 0.43)
+						cursor: pointer
+					& > div
+						height: 100%
+					& .noPosts_root
+						height: 100%
+						width: 100%
+						& > .noPostContainer
+							height: 100%
+							display: grid
+							place-content: center
+							justify-items: center
+							color: #c6c6c6
+							row-gap: 2rem
+							& > .sentence
+								text-align: center
+							& > .noPostIcon
+								font-size: 80px
+							@media ( max-width: variables.$breakpoint-tablet )
+								& > .sentence
+									font-size: 18px
+									line-height: 145%
+								& > .noPostIcon
+									font-size: 67px
+
+.postCarouselSection:hover .noPostContainer
+	color: #d9d9d9
+	filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4))

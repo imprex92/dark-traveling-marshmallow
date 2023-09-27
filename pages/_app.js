@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script'
-import { lazy, useEffect } from 'react'
+import { lazy } from 'react'
 import { AuthProvider } from 'contexts/AuthContext'
 import { DatabaseProvider } from 'contexts/DatabaseContext'
 import 'styles/global.style.css'
@@ -17,21 +17,12 @@ import { useOnlineStatus } from 'components/hooks/useOnlineStatus'
 import OfflineComp from 'components/OfflineComp'
 const WeatherWidget = lazy(() => import('components/widgets/WeatherWidget'))
 
-if(typeof window !== 'undefined'){
-	require( 'js/materialize')
-	}
-
-	//TODO check if jquery is really needed!
 
 function MyApp({Component,pageProps}) {
 	const widgetProhibited = ['/login', '/signup', '/']
 	const router = useRouter()
-	const { showWeatherWidget } = useSiteSettings(state => state.data)
+	const { showWeatherWidget } = useSiteSettings(state => state.data) ?? { showWeatherWidget: true } 
 	const isOnline = useOnlineStatus()
-
-	useEffect(() => {
-
-	}, [])
 
   return (
 	  <>

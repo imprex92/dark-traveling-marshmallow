@@ -16,6 +16,7 @@
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
     "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
     "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css",
+    "SASS-Watch-userDashboard": "sass --watch ./styles/sass/dashboard.module.sass:./styles/dashboard.module.css",
     "SASS-watch-sidenav": "sass --watch ./styles/sass/sideNav.style.sass:./styles/sideNav.style.css",
     "SASS-watch-singlepost": "sass --watch ./styles/sass/singlePost.style.sass:./styles/singlePost.style.css",
     "SASS-watch-weather": "sass --watch ./styles/sass/weather.style.sass:./styles/weather.style.css",
@@ -27,7 +28,7 @@
   "dependencies": {
     "@babel/core": "^7.17.10",
     "@materializecss/materialize": "^1.1.0",
-    "axios": "^0.21.1",
+    "axios": "^1.5.0",
     "cors": "^2.8.5",
     "country-list": "^2.2.0",
     "dotenv-webpack": "^6.0.0",

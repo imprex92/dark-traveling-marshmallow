@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { getGeolocation } from './utility/GetGeolocation'
 import useSiteSettings from 'store/siteSettings';
+import { projectTimestampNow } from 'firebase/config';
 
 const Geolocator = () => {
-	const updateCurrent = useSiteSettings(state => state.setLatestLocation)
+	const updateLocationState = useSiteSettings(state => state.setLatestLocation)
 	
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
@@ -19,7 +20,8 @@ const Geolocator = () => {
 					await getGeolocation()
 					.then(position => {
 						setReversedGeolocation(position)
-						updateCurrent(position)
+						position.data.timestamp = projectTimestampNow;
+						updateLocationState(position)
 						setLocationLoading(false)
 					})
 					.catch(err => {

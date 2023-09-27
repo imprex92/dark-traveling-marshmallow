@@ -102,9 +102,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
 
             {/* <!-- Dropdown Trigger --> */}
             <div className='light-settings dropdown-trigger' href='#' data-target='weather-settings-dropdown'>
-              <span></span>
-              <span></span>
-              <span></span>
+              <span class="material-icons">settings</span>
             </div>
             {/* <!-- Dropdown Structure --> */}
             <ul id='weather-settings-dropdown' className='dropdown-content'>
@@ -123,7 +121,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                   <div className="input-field col s11 m8 push-m2 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
                     <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
-                    <label className="white-text" htmlFor="search-field">Enter location for weather</label>
+                    <label className="white-text" htmlFor="search-field">Search location</label>
                     <span className='helper-text' data-error="Something went wrong. Did you spell correctly?"></span>
                   </div>
                 </div>

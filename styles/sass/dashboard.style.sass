@@ -27,9 +27,7 @@
 .post-slides
 	overflow: hidden
 	height: 700px
-
-@media (max-width: 769px)
-	.post-slides
+	@media (max-width: 769px)
 		height: unset
 
 .fileinput-error
@@ -74,7 +72,7 @@
 		&:not(.browser-default)
 			background-color: unset
 
-.post-carousel
+.post-carousel //! other page?
 	height: 450px !important
 	& > .post-carousel-item
 		width: 270px !important
@@ -83,7 +81,7 @@
 			width: 215px !important
 			height: 281px !important
 
-.post-carousel-section
+.post-carousel-section 
 	margin-left: variables.$pushFromNav !important
 	margin-top: 4em
 	@media ( min-width: 1100px )
@@ -106,9 +104,11 @@
 		font-size: 20px
 
 .places-autocomplete
-	& > i:last-child
+	& > i
 		color: red
 		cursor: pointer
+		&.active
+			color: red
 
 .datepicker-section
 	& > i:last-child
@@ -142,10 +142,15 @@ label
 	background-color: #fff
 	position: absolute
 	z-index: 9
-	padding-bottom: 5px
 	left: 14%
 	min-width: 205px
 	top: 31px
+	& > li
+		padding: 4px 1rem
+		font-size: 14px
+		&:nth-child(odd)
+			background-color: #f2f2f2
+		&:hover
+			background-color: rgba(0, 0, 0, 0.14)
+			cursor: pointer
 
-.Typewriter
-	min-height: 110px

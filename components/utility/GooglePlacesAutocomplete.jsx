@@ -1,34 +1,23 @@
-import {useEffect} from 'react'
+import React, {useEffect} from 'react'
 import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-	const PlacesAutocomplete = ({dataFromChild, countryCode}) => {
-		//// useEffect(() => {
-		//// 	const success = (pos) => {
-		//// 	  const { latitude, longitude } = pos.coords;
-		
-		//// 	  getGeocode({
-		//// 		location: new google.maps.LatLng(latitude, longitude),
-		//// 	  }).then((results) => {
-		//// 		setValue(results[0].formatted_address);
-		//// 	  });
-		//// 	};
-		
-		//// 	const error = () => {
-		//// 	  console.log("> Unable to retrieve your location");
-		//// 	};
-		
-		//// 	if (!navigator.geolocation) {
-		//// 	  console.log("> Geolocation is not supported by your browser");
-		//// 	} else {
-		//// 	  navigator.geolocation.getCurrentPosition(success, error);
-		//// 	}
-		////   }, [setValue]);
-
+	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue}) => {
 		useEffect(() => {
-			// console.log(countryCode)
+			const existingScript = document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`);
+
+			if(!existingScript){
+				const script = document.createElement('script');
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap`;
+				script.async = true;
+				script.defer = true;
+				document.head.appendChild(script);
+			}
 			
-		}, [countryCode])
+			return () => {
+				document.head.removeChild(script);
+			};
+		}, []);
 
 		const getMyPosition = (() => {
 			const success = (pos) => {
@@ -51,7 +40,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			  } else {
 				navigator.geolocation.getCurrentPosition(success, error);
 			  }
-		})
+			})
 
 		const {
 		  ready,
@@ -68,8 +57,9 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			}
 			
 		},
-		  debounce: 300,
-		//   cache: 24 * 60 * 60,
+			callbackName: "initMap",
+		  	debounce: 300,
+			cache: 24 * 60 * 60,
 		});
 		
 		const ref = useOnclickOutside(() => {
@@ -78,49 +68,46 @@ import useOnclickOutside from "react-cool-onclickoutside";
 		  clearSuggestions();
 		});
 	  
-		const handleInput = (e) => {
-		  // Update the keyword of the input element
-		  setValue(e.target.value);
-		};
+		const handleInput = (e) => { setValue(e.target.value); inputValue(e.target.value); };
 	  
 		const handleSelect = ({ description, place_id, structured_formatting }) => () => {
-		  // When user selects a place, we can replace the keyword without request data from API
-		  // by setting the second parameter to "false"
-		  let additionalData = [];
-		  let coordinates = [];
-		  let locationData = [];
+			// When user selects a place, we can replace the keyword without request data from API
+			// by setting the second parameter to "false"
+			let additionalData = [];
+			let coordinates = [];
+			let locationData = [];
+			
+			setValue(description, false);
+			additionalData.push({description, place_id, structured_formatting})
+			clearSuggestions();
 		  
-		  setValue(description, false);
-		  additionalData.push({description, place_id, structured_formatting})
-		  clearSuggestions();
-		  
-		  // Get latitude and longitude via utility functions
+		  	// Get latitude and longitude via utility functions
 			getGeocode({ address: description})
-				.then((results) => getLatLng(results[0]))
-				.then(({ lat, lng }) => {
-					console.log("📍 Coordinates: ", { lat, lng });
-					coordinates.push({ lat, lng })
-				})
-				.catch((error) => {
-					console.log("😱 Error: ", error);
-					toSend.push(error)
-				});
+			.then((results) => getLatLng(results[0]))
+			.then(({ lat, lng }) => {
+				console.log("📍 Coordinates: ", { lat, lng });
+				coordinates.push({ lat, lng })
+			})
+			.catch((error) => {
+				console.log("😱 Error: ", error);
+				toSend.push(error)
+			});
+			
+			const parameter = {
+				// Use the "place_id" of suggestion from the dropdown (object), here just taking first suggestion for brevity
+				placeId: place_id,
 				
-				const parameter = {
-					// Use the "place_id" of suggestion from the dropdown (object), here just taking first suggestion for brevity
-					placeId: place_id,
-					// Specify the return data that you want (optional)
-					fields: ["name", "rating", 'address_component', 'formatted_phone_number',  "adr_address", "plus_code", "vicinity"],
-				  };
-				  //! HIGH DATA USAGE!!
-					getDetails(parameter)
-					  .then((details) => {
-						// console.log("Details: ", details);
-						locationData.push(details)
-					  })
-					  .catch((error) => {
-						console.log("Error: ", error);
-					  });
+				// Specify the return data that you want (optional)
+				fields: ["name", "rating", 'address_component', 'formatted_phone_number',  "adr_address", "plus_code", "vicinity"],
+			};
+			getDetails(parameter)
+			.then((details) => {
+			console.log("Details: ", details);
+			locationData.push(details)
+			})
+			.catch((error) => {
+			console.log("Error: ", error);
+			});
 			dataFromChild({coordinates, locationData, additionalData})
 		};
 		
@@ -153,11 +140,11 @@ import useOnclickOutside from "react-cool-onclickoutside";
 				<label htmlFor="post_location">Address</label>
 				<i onClick={getMyPosition} className="material-icons prefix">person_pin_circle</i>
 				{/* We can use the "status" to decide whether we should display the dropdown or not */}
-				{status === "OK" && <ul className="autocomplete-suggestions-wrapper">{renderSuggestions()}
-				<img
-				src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
-				alt="Powered by Google"
-			/></ul>}
+				{status === "OK" && 
+					<ul className="autocomplete-suggestions-wrapper">
+						{renderSuggestions()}
+					</ul>
+				}
 		  </div>
 		);
 	  };

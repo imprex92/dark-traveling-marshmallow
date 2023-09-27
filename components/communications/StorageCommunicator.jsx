@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import firebase from 'firebase/app'
-import {projectTimestampNow} from '../../firebase/config'
+import { projectTimestampNow } from '../../firebase/config'
 import { handleSaveNewPost } from '../utility/subscriptions'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,14 +8,29 @@ import { useAuth } from '../../contexts/AuthContext'
 import Typewriter from 'typewriter-effect';
 import countries from '../utility/countries.json'
 import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
-import countryList from 'country-list'
+import { overwrite, getCode } from 'country-list'
 import ProgressBar from '../ProgressBar'
+import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
+import useSiteSettings from 'store/siteSettings';
+import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 if(typeof window !== 'undefined'){
 	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
 }
 require('dotenv').config()
 
-export default function StorageCommunicator({userAuth}) {
+//? Temporary fix for country-list not finding some selected countries
+overwrite([
+	{
+		"code": "UK",
+		"name": "United Kingdom"
+	},
+	{
+		"code": "US",
+		"name": "United States"
+	}
+])
+
+export default function StorageCommunicator() {
 	const router = useRouter()
 	const [error, setError] = useState(null)
 	const { logout, currentUser } = useAuth()
@@ -24,17 +39,21 @@ export default function StorageCommunicator({userAuth}) {
 	const [isSuccessful, setIsSuccessful] = useState(null)
 	const [hasError, setHasError] = useState(null)
 	const [init, setInit] = useState(false)
+	const [isUploadLoading, setUploadLoading] = useState(false)
+	const placesInputValue = useRef('')
+	const countryIfOffline = useRef(null)
+	const { latestWeather } = useSiteSettings(state => state.data) ?? { latestWeather: {} } 
 	
 	//* TAB 1 inputs
-	let postCountry = useRef(null)
+	const postCountry = useRef(null)
 	const [datePicker, setDatePicker] = useState(new Date())
 	const [postLocation, setPostLocation] = useState([])
 
 	//* TAB 2 inputs
-	let postTitle = useRef(null)
-	let postMainContent = useRef(null)
-	let postMood = useRef(null)
-	let postWeather = useRef(null)
+	const postTitle = useRef(null)
+	const postMainContent = useRef(null)
+	const postMood = useRef(null)
+	const postWeather = useRef(null)
 
 	//* TAB 3 inputs
 	const [postMainImage, setPostMainImage] = useState(null)
@@ -49,15 +68,15 @@ export default function StorageCommunicator({userAuth}) {
 
 	useEffect(() => {
 
-		let sidenav = document.querySelectorAll(".sidenav");
-		let tabs = document.querySelectorAll(".tabs");
-		let datepicker = document.querySelectorAll(".datepicker")
-		let autocomplete = document.querySelectorAll('.autocomplete');
+		const sidenav = document.querySelectorAll(".sidenav");
+		const tabs = document.querySelectorAll(".tabs");
+		const datepicker = document.querySelectorAll(".datepicker")
+		const autocomplete = document.querySelectorAll('.autocomplete');
 		if(!init){
-			let instances = M.Autocomplete.init(autocomplete, {
+			const instances = M.Autocomplete.init(autocomplete, {
 				data: countries,
 				minLength: 1,
-				onAutocomplete: (selected) => getCountryCode(selected)
+				onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
 			});
 			M.Datepicker.init(datepicker, {
 				autoClose: true,
@@ -70,7 +89,7 @@ export default function StorageCommunicator({userAuth}) {
 			})
 			M.Tabs.init(tabs, {
 				swipeable: true,
-				});
+			});
 			M.Sidenav.init(sidenav, {
 				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
 				onCloseEnd: (el) => { el.classList.toggle('nav-open') }
@@ -88,28 +107,25 @@ export default function StorageCommunicator({userAuth}) {
 		}
 		catch{
 			setError("couldn't log you out")
-			console.log(error);
+			console.error(error);
 			M.toast({text: "We couldn't log you out!", error, classes: 'rounded'});
 		}
 	}
-	function getCountryCode(country){
-		setCountryCode(countryList.getCode(country).toLowerCase())
-		console.log(countryCode);
-	}
+
+	const getCountryCode = (country) => { setCountryCode(getCode(country).toLowerCase()) ?? country }
 
 	function goToTab(tabId) {
-		let instance = M.Tabs.getInstance(document.querySelector(".tabs"));
+		const instance = M.Tabs.getInstance(document.querySelector(".tabs"));
 		instance.select(tabId);
 		instance.updateTabIndicator();
 	}
 
 	function handleMainImage(e){
 		
-		let selectedImage = e.target.files[0]
-		console.log(selectedImage)
+		const selectedImage = e.target.files[0]
 		if(selectedImage && fileTypeImage.includes(selectedImage.type)){
 			setHasError(null)
-			let element = document.getElementById('main-image-upload')
+			const element = document.getElementById('main-image-upload')
 			element.classList.add('invalid')
 			setPostMainImage(selectedImage)
 		}else{
@@ -121,8 +137,7 @@ export default function StorageCommunicator({userAuth}) {
 	}
 	function handleAdditionalFiles(e){
 		
-		let selectedFiles = e.target.files
-		console.log(selectedFiles)
+		const selectedFiles = e.target.files
 		if(selectedFiles && (fileTypeImage.includes(selectedFiles.type) || filetypeVideo.includes(selectedFiles.type)) && selectedFiles.size <= maxSize){
 			setHasError(null)
 			document.getElementById('additional-file-upload').classList.add('valid')
@@ -134,59 +149,108 @@ export default function StorageCommunicator({userAuth}) {
 		}
 	}
 
-	async function handlePostSubmit(e){
-		e.preventDefault();
-		const addressDetails = postLocation.locationData[0].address_components;
-		let getCountry = addressDetails.find(el => el.types[0] === 'country')
-		let getState = addressDetails.find(el => el.types[0] === 'administrative_area_level_1')
-		let getCity = addressDetails.find(el => el.types[0] === 'postal_town')
-		let getCity2 = addressDetails.find(el => el.types[0] === 'locality')
+	async function handlePostSubmit(e) {
+	e.preventDefault();
+	setUploadLoading(true)
+	let postLocationData = {
+		country: countryIfOffline.current ?? formCountry,
+		state: null,
+		city: null,
+		geopoint: 'Coordinates not found',
+		plusCode:  null,
+		offlineAddress: placesInputValue.current,
+		wasApiOffline: true
+	};
+	let postWeatherData = {
+		weatherUser: postWeather.current.value || null,
+		weatherAPI: latestWeather || null,
+		wasApiOffline: true
+	}
 
-		let formData = {
-			createdByUser: currentUser.displayName,
-			imgURL: uploadedURL ||'No image selected',
-			postTitle: postTitle.current.value || null,
-			postContent: postMainContent.current.value || null,
-			postMood: postMood.current.value || null,
-			postWeather: { // TODO weather
-				weatherUser: postWeather.current.value || null,
-				weatherAPI: '' //! koppla med väder API
-				// degrees:
-			},			
-			postLocationData: {
-				country: getCountry?.long_name || null,
-				state: getState?.long_name || postLocation.locationData[0].vicinity,
-				city: getCity?.long_name || getCity2?.long_name || postLocation?.locationData[0].name,
-				geopoint: new firebase.firestore.GeoPoint(postLocation.coordinates[0].lat, postLocation.coordinates[0].lng) || 'Coordinates not found',
-				plusCode: postLocation?.locationData[0].plus_code || null 
-			},
-			timestamp: projectTimestampNow,
-			pickedDateForPost: datePicker,
-			slug: createSlug(postTitle.current.value),
+	if( postLocation.length > 0 ){
+		const addressComponents = getAddressComponents(postLocation.locationData);
+		const { weatherData, geoPoint } = await getGeoPointAndWeather(postLocation.coordinates)
+
+		// Create postLocationData object
+		postLocationData = {
+			country: getComponentValue(addressComponents, 'country') || null,
+			state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation.locationData[0].vicinity,
+			city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
+			geopoint: geoPoint || 'Coordinates not found',
+			plusCode: postLocation.locationData[0]?.plus_code || null,
+			offlineAddress: null,
+			wasApiOffline: false
+		};
+		postWeatherData = {
+			weatherUser: postWeather.current.value || null,
+			weatherAPI: weatherData.data || latestWeather || null,
+			wasApiOffline: false
 		}
-		handleSaveNewPost({
-			userID: currentUser.uid, 
-			dataToSave: formData
-		})
-		.then(res => {
-			console.log('Success! ID: ', res);
-			setIsSuccessful('Success! Post saved!')
-		})
-		.catch(err => {
-			console.log('Something went wrong! ', err);
-			setHasError('Sorry! Something went wrong while uploading')
-		})
+	}
+	// Create formData object
+	const formData = {
+		user_uid: currentUser.uid,
+		createdByUser: currentUser.displayName,
+		imgURL: uploadedURL || null,
+		postTitle: postTitle.current.value || null,
+		postContent: postMainContent.current.value || null,
+		postMood: postMood.current.value || null,
+		postWeatherData,
+		postLocationData,
+		timestamp: projectTimestampNow,
+		pickedDateForPost: datePicker,
+		slug: createSlug(postTitle.current.value),
+	};
 
+	try {
+		const res = await handleSaveNewPost({
+		userID: currentUser.uid,
+		dataToSave: formData,
+		});
+		setUploadLoading(false)
+		M.toast({text: res.message})
+		setIsSuccessful(res.message);
+		setTimeout(() => {
+			setIsSuccessful(null)
+			router.push('/user/posts')
+		}, 1000);
+	} catch (err) {
+		setHasError('Sorry! Something went wrong while uploading');
+		M.toast({text: err.message})
+		setUploadLoading(false)
+	}
+	}
+
+	// Function to extract address components
+	function getAddressComponents(locationData) {
+	return locationData[0]?.address_components || [];
+	}
+
+	// Function to get a component's value by its type
+	function getComponentValue(components, type) {
+	const component = components.find(el => el.types[0] === type);
+	return component?.long_name || null;
+	}
+
+	// Function to create a GeoPoint object
+	async function getGeoPointAndWeather(coordinates) {
+		if (coordinates.length > 0) {
+			const { lat, lng } = coordinates[0];
+
+			const weatherData = await fetchWeatherByCoords({ latitude: lat, longitude: lng })
+			const geoPoint = new firebase.firestore.GeoPoint(lat, lng)
+			
+			return { weatherData, geoPoint };
+		}
+		return null;
 	}
 
 	function dataFromChild(dataFromChild){
-		// console.log('this is data from child' ,dataFromChild);
 		setPostLocation(dataFromChild)
-		// console.log(postLocation);
 	}
 
 	function createSlug(title){
-		let titleToSlug = title
+		const titleToSlug = title
 		.replace(/å/g, 'a')
 		.replace(/Å/g, 'A')
 		.replace(/ä/g, 'a')
@@ -194,11 +258,11 @@ export default function StorageCommunicator({userAuth}) {
 		.replace(/ö/g, 'o')
 		.replace(/Ö/g, 'o')
 		.replace(/[.,!?/]/g, '')
-		let slug = (titleToSlug.replace(/ /g, "-")) + (Math.floor((Math.random() * 10) + 1));
+		const slug = (titleToSlug.replace(/ /g, "-")) + (Math.floor((Math.random() * 10) + 1));
 		return slug
 	}
 	function closeSideNav(){
-		let instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 	}
 	
@@ -236,16 +300,8 @@ export default function StorageCommunicator({userAuth}) {
 							<Typewriter 
 								onInit={(typewriter) => {
 									typewriter.changeDelay(50)
-									.typeString("<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>Greetings traveler!</span>")	
-									.pauseFor(350)
-									.deleteChars(9)
-									.pauseFor(200)
-									.typeString("<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>or...</span>")
-									.pauseFor(350)
-									.deleteChars(5)
-									.pauseFor(200)
-									.typeString(`<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>${currentUser.displayName ? currentUser.displayName : 'traveler'}!</span>`)
-									.pauseFor(2000)
+									.typeString("<span style=color:lightgray;font-size:1.5em;font-weight:bold;margin-block-start:0.83em;margin-block-end:0.83em;margin-inline-start:0px;margin-inline-end:0px;>Greetings traveler!</span>")
+									.pauseFor(1000)
 									.typeString("<br/> <span style=font-size:1.17em;font-weight:bold;margin-block-start:1em;margin-block-end:1em;margin-inline-start:0px;margin-inline-end:0px;color:lightgray;>Start your journey by completing this 3-step form...</span>")
 									.start()
 								}}
@@ -260,7 +316,7 @@ export default function StorageCommunicator({userAuth}) {
 										<label htmlFor="autocomplete-input">Enter country</label>
 										<span className="helper-text yellow-text">Enter country first to filter addresses below</span>
 									</div>
-										<PlacesAutocomplete countryCode={countryCode} dataFromChild={dataFromChild}/>						
+										<PlacesAutocomplete inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>						
 								</div>
 								<div className="row">
 									<div className="input-field col s11 l6 datepicker-section">
@@ -343,6 +399,7 @@ export default function StorageCommunicator({userAuth}) {
 					<div className="row">
 						<div className="col s6 push-s3">
 							{isSuccessful && <div className="white-text green fileinput-error"><strong>{isSuccessful}</strong></div>}
+							{isUploadLoading ? <CircularLoader loaderColor='spinner-green-only' loaderSize='small' /> : null}
 							{hasError && <div className="white-text red darken-4 fileinput-error"><strong>{hasError}</strong></div>}
 							{postMainImage && <ProgressBar initiator='POST_UPLOAD' mainImage={postMainImage} isUploading={setPostMainImage} setUploadedURL={setUploadedURL} fireError={setHasError} />}
 							{/* {postAdditionalFiles && <ProgressBar additionalFiles={postAdditionalFiles}/>} */}
@@ -371,11 +428,11 @@ export default function StorageCommunicator({userAuth}) {
 				</div></li>
 				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">settings</i>Settings</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a></Link></li>
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Submenu</a></li>
-				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons">skip_previous</i>Close menu</a></li>
-				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View all posts</a></Link></li>
+				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons material-symbols-outlined">chevron_left</i>Close menu</a></li>
+				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View gallery</a></Link></li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/receipts/home">
 						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
@@ -383,7 +440,7 @@ export default function StorageCommunicator({userAuth}) {
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons">sunny</i>Weather</a>
+						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
 					</Link> 
 				</li>
 			</ul>		

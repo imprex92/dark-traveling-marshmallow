@@ -18,6 +18,10 @@
   margin-top: 3rem;
   color: #fff;
 }
+#vertical-nav .contact.filterActive {
+  text-decoration: underline #ee6e73;
+  text-underline-offset: 9px;
+}
 #vertical-nav > .wrapper {
   left: 8px;
   top: 0vh;

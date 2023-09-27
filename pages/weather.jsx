@@ -23,7 +23,6 @@ const weather = () => {
 			const geoLocation = await getGeolocation()
 			const coords = geoLocation && {latitude: geoLocation.data.latitude, longitude: geoLocation.data.longitude}
 			coords && await fetchWeatherByCoords(coords).then(data => {
-				console.log('fetch initial');
 				setWeatherObj(data)
 				updateInitialWeather(data)
 				setSs('userGeoLatest', data)
@@ -39,15 +38,12 @@ const weather = () => {
 	
 	async function handleFetchWeather(location){
 		//setIsLoading(true)
-		console.log(location);
 		setApiErr(null)
 		await fetchWeatherByQuery(location).then(res => {
-			console.log(res);
 			setWeatherObj(res)
 			//setIsLoading(false)
 		})
 		.catch(err => {
-			console.log('there was an error', err);
 			setApiErr(err)
 		})
 	}
