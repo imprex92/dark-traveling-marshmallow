@@ -19,7 +19,7 @@
   color: #fff;
 }
 #vertical-nav .contact.filterActive {
-  text-decoration: underline;
+  text-decoration: underline #ee6e73;
   text-underline-offset: 9px;
 }
 #vertical-nav > .wrapper {
