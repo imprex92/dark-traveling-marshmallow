@@ -8,9 +8,6 @@ import Geolocator from 'components/Geolocator'
 import Slides from 'components/Slides'
 import styles from 'styles/dashboard.module.css'
 import { useRouter } from 'next/router'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 
 const dashboard = ({userAuth, userBlogs}) => {
 	const loggedInUserId = userAuth?.uid

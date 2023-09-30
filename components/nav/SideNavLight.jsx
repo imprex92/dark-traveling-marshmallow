@@ -2,11 +2,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
-
-//TODO make sure siddenav closes after pagechange (instance.close())
 
 export default function SideNavLight ({}) {
 	const router = useRouter()

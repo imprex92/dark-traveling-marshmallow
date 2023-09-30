@@ -4,9 +4,6 @@ import SideNavLight from 'components/nav/SideNavLight'
 import ProgressBar from 'components/ProgressBar'
 import countries from 'components/utility/countries.json'
 import { useAuth } from 'contexts/AuthContext'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 import Deleteicon from 'public/assets/delete-forever.svg'
 import Image from 'next/image'
 import { fetchUserReceipts, handleSaveRecipt } from 'components/utility/subscriptions'

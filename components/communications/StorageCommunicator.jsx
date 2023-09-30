@@ -13,9 +13,6 @@ import ProgressBar from '../ProgressBar'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 require('dotenv').config()
 
 //? Temporary fix for country-list not finding some selected countries

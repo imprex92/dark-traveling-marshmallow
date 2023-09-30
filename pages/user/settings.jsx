@@ -10,10 +10,6 @@ import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 import { useRouter } from 'next/router'
 import { verifyEmail } from 'components/utility/verifyEmail'
 
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
-
 const settings = ({userAuth, userData}) => {
 	const { displayName, email, emailVerified, phoneNumber, photoURL = null, providerId} = userData
 	const fileTypeImage = ['image/jpeg', 'image/gif', 'image/png', 'image/raw', 'image/heif', 'image/webp', 'image/heic']

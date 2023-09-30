@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
-if (typeof window !== 'undefined') {
-  M = require('@materializecss/materialize/dist/js/materialize.min.js')
-}
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
 import { fetchUserWeatherData } from './utility/subscriptions'

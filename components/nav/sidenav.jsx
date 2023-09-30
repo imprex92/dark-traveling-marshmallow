@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 
-//TODO make sure siddenav closes after pagechange (instance.close())
 
 export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const router = useRouter()
@@ -20,9 +16,9 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
-		
+				
 		const sidenav = document.querySelectorAll(".sidenav");
-		M.Sidenav.init(sidenav, {
+		var instances = M.Sidenav.init(sidenav, {
 			onOpenEnd: (el) => { el.classList.toggle('nav-open') },
 			onCloseEnd: (el) => { el.classList.toggle('nav-open') }
 		});
