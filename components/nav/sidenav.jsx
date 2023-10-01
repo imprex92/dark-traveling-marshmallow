@@ -16,12 +16,14 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
-				
-		const sidenav = document.querySelectorAll(".sidenav");
-		var instances = M.Sidenav.init(sidenav, {
-			onOpenEnd: (el) => { el.classList.toggle('nav-open') },
-			onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+		document.addEventListener('DOMContentLoaded', function() {
+			var sidenav = document.querySelectorAll(".sidenav");
+			var instances = M.Sidenav.init(sidenav, {
+				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+				onCloseEnd: (el) => { el.classList.toggle('nav-open') },
+			});
 		});
+
 		setLoading(false)
 
 	}, [dbUserData])
@@ -29,7 +31,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	async function handleLogout() {
 		setError('')
 		try{
-			const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+			var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 			instance.close()
 			await logout()
 		}
@@ -40,7 +42,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		}
 	}
 	function handleNewPost(){
-		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 		router.push('/user/newpost')
 	}
@@ -57,7 +59,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		setCurrentFilter(countryToFilter)
 	}
 	function closeSideNav(){
-		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 	}
 
