@@ -154,7 +154,6 @@ const AddFirstPost = ({sentences, randomIndex, route}) => {
 }
 
 dashboard.getInitialProps = async props => {
-	// console.info('##### Congratulations! You are authorized! ######', props);
 	let userBlogs = []
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(props.auth.uid)
 	await userDbRef.collection('blogPosts').get()

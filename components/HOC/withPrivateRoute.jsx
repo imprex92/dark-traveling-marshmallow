@@ -53,14 +53,14 @@ const withAuthentication = (WrappedComponent) => {
 
     // If WrappedComponent has getInitialProps, call it
     if (WrappedComponent.getInitialProps) {
-      const additionalData = {
+      /*const additionalData = {
         latestPosition: getCookie('latestLocation') || null,
-      };
+      };*/
 
       const wrappedProps = await WrappedComponent.getInitialProps({
         ...context,
         auth: userAuth,
-        additional: additionalData,
+       // additional: additionalData,
       });
 
       return { ...wrappedProps, userAuth };
