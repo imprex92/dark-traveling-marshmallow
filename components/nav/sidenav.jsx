@@ -16,13 +16,11 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
-		document.addEventListener('DOMContentLoaded', function() {
 			var sidenav = document.querySelectorAll(".sidenav");
 			var instances = M.Sidenav.init(sidenav, {
 				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
 				onCloseEnd: (el) => { el.classList.toggle('nav-open') },
 			});
-		});
 
 		setLoading(false)
 
