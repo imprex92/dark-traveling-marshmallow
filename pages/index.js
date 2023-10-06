@@ -1,22 +1,35 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router'
 
+import Image from 'next/image';
+import styles from 'styles/startpage.module.css'
+import Link from 'next/link';
+import imageAsset from 'public/assets/overview_tokyo_orginal.webp'
 
-//TODO redo startpage
+const Home = () => {
+  const headerText = 'Dark Marshmallow'
+  const btnText = 'Get started'
+  const smallHeader = 'Your travel companion app'
 
-export default function Home(props) {
-  const router = useRouter()
-  useEffect(() => {
-    //router.push('/login')
-  }, [ ]);
- 
   return (
-    <>
-        
-    </>
+    <div className={styles.root}>
+        <Image layout='fill' objectFit='cover' src={imageAsset} priority={true} alt='Overlook Tokyo'/>
+        <div className={styles.container}>
+            <h5 className={styles.miniHeader}>{smallHeader}</h5>
+            <div>
+                <div className={styles.headerContainer}>
+                    <h2 className={styles.header}>
+                        <span className={styles.iconContainer}>         
+                            {headerText}
+                        </span>
+                        <span className={`material-symbols-outlined ${styles.icon}`}>
+                            travel
+                        </span>
+                    </h2>
+                </div>
+            </div>
+            <Link href={'/login'}>{btnText}</Link>
+        </div>
+    </div>
   );
 }
 
-export async function getServerSideProps() {
-  return { props: { ssrWorking: true } };
-}
+export default Home;
