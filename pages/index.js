@@ -28,7 +28,7 @@ export default function Home(props) {
  
   return (
     <div className={styles.root}>
-        <Image layout='fill' objectPosition={'top right'} objectFit='cover' src={'/assets/overview_tokyo_orginal.webp'} priority={true} alt='Overlook Tokyo'/>
+        <Image layout='fill' objectFit='cover' src={'/assets/overview_tokyo_orginal.webp'} priority={true} alt='Overlook Tokyo'/>
         <div className={styles.container}>
             <h5 className={styles.miniHeader}>{smallHeader}</h5>
             <div>

@@ -1,6 +1,14 @@
 .root {
   position: relative;
 }
+.root img {
+  object-position: top right;
+}
+@media (max-width: 640px) {
+  .root img {
+    object-position: 82%;
+  }
+}
 
 .container {
   position: absolute;
@@ -39,12 +47,22 @@
   position: relative;
   margin: 0;
 }
+@media (max-width: 640px) {
+  .container > div > .headerContainer > .header {
+    text-align: center;
+  }
+}
 .container > div > .headerContainer > .header > .iconContainer {
   position: relative;
   font-size: larger;
   font-weight: 600;
   font-family: var(--primaryHeaderFont);
   z-index: 2;
+}
+@media (max-width: 640px) {
+  .container > div > .headerContainer > .header > .iconContainer {
+    font-size: 46px;
+  }
 }
 .container > div > .headerContainer > .header > .icon {
   z-index: 1;

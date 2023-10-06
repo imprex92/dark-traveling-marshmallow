@@ -1,5 +1,11 @@
+@use 'variables'
+
 .root
 	position: relative
+	& img
+		object-position: top right
+		@media ( max-width: variables.$breakpoint-phone )
+			object-position: 82%
 
 .container
 	position: absolute
@@ -32,12 +38,16 @@
 			& > .header
 				position: relative
 				margin: 0
+				@media ( max-width: variables.$breakpoint-phone )
+					text-align: center
 				& > .iconContainer
 					position: relative
 					font-size: larger
 					font-weight: 600
 					font-family: var(--primaryHeaderFont)
 					z-index: 2
+					@media ( max-width: variables.$breakpoint-phone )
+						font-size: 46px
 				& > .icon
 					z-index: 1
 					position: absolute
