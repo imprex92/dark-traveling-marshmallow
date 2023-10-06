@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from 'styles/startpage.module.css'
 import Link from 'next/link';
+import imageAsset from 'public/assets/overview_tokyo_orginal.webp'
 
 //TODO redo startpage
 
@@ -11,7 +12,7 @@ const Home = () => {
 
   return (
     <div className={styles.root}>
-        <Image layout='fill' objectFit='cover' src={'/assets/overview_tokyo_orginal.webp'} priority={true} alt='Overlook Tokyo'/>
+        <Image layout='fill' objectFit='cover' src={imageAsset} priority={true} alt='Overlook Tokyo'/>
         <div className={styles.container}>
             <h5 className={styles.miniHeader}>{smallHeader}</h5>
             <div>
