@@ -18,6 +18,11 @@
   height: 100%;
   grid-template-rows: 0.3fr 0.2fr 0.2fr;
 }
+@media (max-width: 640px) {
+  .container {
+    grid-template-rows: 0.3fr 0.3fr 0.24fr;
+  }
+}
 .container > .miniHeader {
   color: #353535;
   font-weight: 700;
@@ -29,6 +34,11 @@
   padding: 1rem 2rem;
   font-size: x-large;
   border-radius: 10px;
+}
+@media (max-width: 640px) {
+  .container > a {
+    padding: 1rem 1.5rem;
+  }
 }
 .container > div {
   width: 100%;
@@ -75,6 +85,12 @@
   font-size: 300%;
   transform: rotate(45deg);
   top: 0.2rem;
+}
+@media (max-width: 640px) {
+  .container > div > .headerContainer > .header > .icon {
+    top: 0;
+    bottom: -0.3rem;
+  }
 }
 
 :is(a, .header) {
