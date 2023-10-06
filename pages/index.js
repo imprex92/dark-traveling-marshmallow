@@ -1,73 +1,34 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
+import Image from 'next/image';
+import styles from 'styles/startpage.module.css'
+import Link from 'next/link';
 
 //TODO redo startpage
 
-export default function Home(props) {
-  const router = useRouter()
-  useEffect(() => {
-    router.push('/login')
-    if(typeof window !== 'undefined'){
-      const M = require('../js/materialize');
-      var sidenav = document.querySelectorAll(".sidenav");
-      M.Sidenav.init(sidenav, {});
-      
-        var elems = document.querySelectorAll('.dropdown-trigger');
-        M.Dropdown.init(elems, {});
-      
-      
-    }
-  }, [ ]);
- 
+const Home = () => {
+  const headerText = 'Dark Marshmallow'
+  const btnText = 'Get started'
+  const smallHeader = 'Your travel companion app'
+
   return (
-    <>
-      <div className="text-center">Move on to login</div>
-      {/* {props.ssrWorking ? (
-        
-        <div>
-          <img src="/assets/success.jpg" height="500" />
-          <h2> Deployment Successful of Nextjs Application with SSR on Firebase. </h2>
-          <a className="waves-effect waves-light btn">button</a>
-          <a className="waves-effect waves-light btn"><i className="material-icons left">cloud</i>buttohghghn</a> 
-        
-  <a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
-
-  
-  <ul id='dropdown1' className='dropdown-content'>
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li className="divider" tabIndex="-1"></li>
-    <li><a href="#!">three</a></li>
-    <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
-    <li><a href="#!"><i className="material-icons">cloud</i>five</a></li>
-  </ul>
-
-  <nav> hu </nav>
-
-<ul id="slide-out" className="sidenav">
-  <li><div className="user-view">
-    <div className="background">
-      <img src="images/office.jpg"/>
-    </div>
-    <a href="#user"><img className="circle" src="images/yuna.jpg"/></a>
-    <a href="#name"><span className="white-text name">John Doe</span></a>
-    <a href="#email"><span className="white-text email">jdandturk@gmail.com</span></a>
-  </div></li>
-  <li><a href="#!"><i className="material-icons">cloud</i>First Link With Icon</a></li>
-  <li><a href="#!">Second Link</a></li>
-  <li><div className="divider"></div></li>
-  <li><a className="subheader">Subheader</a></li>
-  <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
-</ul>
-<a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+    <div className={styles.root}>
+        <Image layout='fill' objectFit='cover' src={'/assets/overview_tokyo_orginal.webp'} priority={true} alt='Overlook Tokyo'/>
+        <div className={styles.container}>
+            <h5 className={styles.miniHeader}>{smallHeader}</h5>
+            <div>
+                <div className={styles.headerContainer}>
+                    <h2 className={styles.header}>
+                        <span className={styles.iconContainer}>         
+                            {headerText}
+                        </span>
+                        <span className={`material-symbols-outlined ${styles.icon}`}>
+                            travel
+                        </span>
+                    </h2>
+                </div>
+            </div>
+            <Link href={'/login'}>{btnText}</Link>
         </div>
-      ) : (
-        <h2>SSR not working</h2>
-      )} */}
-    </>
+    </div>
   );
 }
-
-export async function getServerSideProps() {
-  return { props: { ssrWorking: true } };
-}
+export default Home;

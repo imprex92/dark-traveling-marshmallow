@@ -7,6 +7,8 @@
     "child_process": false
   },
   "scripts": {
+    "SASS-Watch": "sass --watch ./styles/sass:./styles",
+    "SASS-Compile": "sass ./styles/sass:./styles",
     "dev": "next dev",
     "dev-server": "node server.js",
     "build": "next build",
@@ -14,6 +16,7 @@
     "start-server": "NODE_ENV=production node server.js",
     "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css",
+    "SASS-Watch-startpage": "sass --watch ./styles/sass/startpage.module.sass:./styles/startpage.module.css",
     "SASS-Watch-SignIn": "sass --watch ./styles/sass/signIn.style.sass:./styles/signIn.style.css",
     "SASS-Watch-dashboard": "sass --watch ./styles/sass/dashboard.style.sass:./styles/dashboard.style.css",
     "SASS-Watch-userDashboard": "sass --watch ./styles/sass/dashboard.module.sass:./styles/dashboard.module.css",
