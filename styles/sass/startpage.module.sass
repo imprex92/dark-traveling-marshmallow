@@ -1,0 +1,75 @@
+@use 'variables'
+
+.root
+	position: relative
+	& img
+		object-position: top right
+		@media ( max-width: variables.$breakpoint-phone )
+			object-position: 82%
+
+.container
+	position: absolute
+	display: grid
+	place-items: end
+	width: 100%
+	height: 100%
+	grid-template-rows: 0.3fr 0.2fr 0.2fr
+	@media ( max-width: variables.$breakpoint-phone )
+		grid-template-rows: 0.3fr 0.3fr 0.24fr
+	& > .miniHeader
+		color: #353535
+		font-weight: 700
+		margin: auto auto 4rem
+	& > a
+		background-color: #2e2eff
+		margin: auto auto 0 auto
+		padding: 1rem 2rem
+		font-size: x-large
+		border-radius: 10px
+		@media ( max-width: variables.$breakpoint-phone )
+			padding: 1rem 1.5rem
+	& > div
+		width: 100%
+		display: flex
+		flex-direction: column
+		row-gap: 2rem
+		& > .headerContainer
+			display: flex
+			justify-content: center
+			align-content: center
+			padding: 2rem 0
+			background-color: #54b60029
+			& > .header
+				position: relative
+				margin: 0
+				@media ( max-width: variables.$breakpoint-phone )
+					text-align: center
+				& > .iconContainer
+					position: relative
+					font-size: larger
+					font-weight: 600
+					font-family: var(--primaryHeaderFont)
+					z-index: 2
+					@media ( max-width: variables.$breakpoint-phone )
+						font-size: 46px
+				& > .icon
+					z-index: 1
+					position: absolute
+					display: flex
+					justify-content: center
+					align-items: center
+					inset: 0
+					color: #000
+					font-size: 300%
+					transform: rotate(45deg)
+					top: 0.2rem
+					@media ( max-width: variables.$breakpoint-phone )
+						top: 0
+						bottom: -0.3rem
+
+:is(a, .header)
+	color: #e1e1e1
+
+:is(.miniHeader, .header)
+	user-select: none
+	cursor: default
