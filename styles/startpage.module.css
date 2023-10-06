@@ -1,0 +1,71 @@
+.root {
+  position: relative;
+}
+
+.container {
+  position: absolute;
+  display: grid;
+  place-items: end;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: 0.3fr 0.2fr 0.2fr;
+}
+.container > .miniHeader {
+  color: #353535;
+  font-weight: 700;
+  margin: auto auto 4rem;
+}
+.container > a {
+  background-color: #2e2eff;
+  margin: auto auto 0 auto;
+  padding: 1rem 2rem;
+  font-size: x-large;
+  border-radius: 10px;
+}
+.container > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+.container > div > .headerContainer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 2rem 0;
+  background-color: rgba(84, 182, 0, 0.1607843137);
+}
+.container > div > .headerContainer > .header {
+  position: relative;
+  margin: 0;
+}
+.container > div > .headerContainer > .header > .iconContainer {
+  position: relative;
+  font-size: larger;
+  font-weight: 600;
+  font-family: var(--primaryHeaderFont);
+  z-index: 2;
+}
+.container > div > .headerContainer > .header > .icon {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  color: #000;
+  font-size: 300%;
+  transform: rotate(45deg);
+  top: 0.2rem;
+}
+
+:is(a, .header) {
+  color: #e1e1e1;
+}
+
+:is(.miniHeader, .header) {
+  user-select: none;
+  cursor: default;
+}
+
+/*# sourceMappingURL=startpage.module.css.map */
