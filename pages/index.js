@@ -1,31 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
 import Image from 'next/image';
 import styles from 'styles/startpage.module.css'
 import Link from 'next/link';
 
 //TODO redo startpage
 
-export default function Home(props) {
-  const router = useRouter()
+const Home = () => {
   const headerText = 'Dark Marshmallow'
   const btnText = 'Get started'
   const smallHeader = 'Your travel companion app'
 
-  useEffect(() => {
-    //router.push('/login')
-    if(typeof window !== 'undefined'){
-      const M = require('../js/materialize');
-      var sidenav = document.querySelectorAll(".sidenav");
-      M.Sidenav.init(sidenav, {});
-      
-        var elems = document.querySelectorAll('.dropdown-trigger');
-        M.Dropdown.init(elems, {});
-      
-      
-    }
-  }, [ ]);
- 
   return (
     <div className={styles.root}>
         <Image layout='fill' objectFit='cover' src={'/assets/overview_tokyo_orginal.webp'} priority={true} alt='Overlook Tokyo'/>
@@ -48,7 +31,4 @@ export default function Home(props) {
     </div>
   );
 }
-
-export async function getServerSideProps() {
-  return { props: { ssrWorking: true } };
-}
+export default Home;
