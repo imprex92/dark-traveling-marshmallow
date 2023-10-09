@@ -97,6 +97,17 @@ $button-floating-color: #fff !default;
 $button-floating-size: 40px !default;
 $button-floating-radius: 50% !default;
 
+// Buttons custom CSS
+$custom-button-background-primary: #F89F5B;
+$custom-button-background-primary-hover: #653780;
+$custom-button-text-primary-hover: #E6E6FA;
+$custom-button-text-primary: #3F1651;
+$custom-button-border-radius: 20px;
+
+// Chips custom CSS
+$custom-chip-background-selected: #E53F71;
+$custom-chip-text-selected: $custom-button-text-primary-hover;
+
 
 // 4. Cards
 // ==========================================================================

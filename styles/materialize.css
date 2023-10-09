@@ -4866,20 +4866,24 @@ small {
 
 .btn:focus, .btn-small:focus, .btn-large:focus,
 .btn-floating:focus {
-  background-color: #1d7d74;
+  background-color: #653780;
+  outline-width: 2px;
+  color: #E6E6FA;
 }
 
 .btn, .btn-small, .btn-large {
   text-decoration: none;
-  color: #fff;
-  background-color: #26a69a;
+  color: #3F1651;
+  background-color: #F89F5B;
   text-align: center;
   letter-spacing: 0.5px;
   transition: background-color 0.2s ease-out;
+  border-radius: 20px;
   cursor: pointer;
 }
 .btn:hover, .btn-small:hover, .btn-large:hover {
-  background-color: #2bbbad;
+  color: #E6E6FA;
+  background-color: #653780;
 }
 
 .btn-floating {
@@ -5533,8 +5537,8 @@ body.keyboard-focused .dropdown-content li:focus {
 }
 .chip:focus {
   outline: none;
-  background-color: #26a69a;
-  color: #fff;
+  background-color: #E53F71;
+  color: #E6E6FA;
 }
 .chip > img {
   float: left;

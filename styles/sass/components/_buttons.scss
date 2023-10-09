@@ -57,22 +57,26 @@
 .btn,
 .btn-floating {
   &:focus {
-    background-color: darken($button-raised-background, 10%);
+    background-color: $custom-button-background-primary-hover;
+    outline-width: 2px;
+    color: $custom-button-text-primary-hover;
   }
 }
 
 // Raised Button
 .btn {
   text-decoration: none;
-  color: $button-raised-color;
-  background-color: $button-raised-background;
+  color: $custom-button-text-primary;
+  background-color: $custom-button-background-primary;
   text-align: center;
   letter-spacing: .5px;
   @extend .z-depth-1;
   transition: background-color .2s ease-out;
+  border-radius: $custom-button-border-radius;
   cursor: pointer;
   &:hover {
-    background-color: $button-raised-background-hover;
+    color: $custom-button-text-primary-hover;
+    background-color: $custom-button-background-primary-hover;
     @extend .z-depth-1-half;
   }
 }
