@@ -1,0 +1,36 @@
+.backgroundImage {
+  z-index: -1;
+  object-position: center bottom;
+}
+
+.formWrapper {
+  z-index: 1;
+  position: relative;
+}
+
+.customError {
+  border: 2px solid #ff0000;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1em;
+  font-weight: 600;
+}
+
+.myForm {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding-bottom: 1em !important;
+}
+.myForm button {
+  border-radius: 20px;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+.myForm .googleRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/*# sourceMappingURL=useGateway.module.css.map */
