@@ -6123,7 +6123,7 @@ body.keyboard-focused .dropdown-content li:focus {
 
 .chips {
   border: none;
-  border-bottom: 1px solid var(--font-color-medium);
+  border-bottom: 1px solid #9e9e9e;
   box-shadow: none;
   margin: 0 0 8px 0;
   min-height: 45px;
@@ -6227,7 +6227,7 @@ button:focus {
 
 label {
   font-size: 0.8rem;
-  color: var(--font-color-medium);
+  color: #9e9e9e;
 }
 
 /* Text Inputs + Textarea
@@ -6277,12 +6277,12 @@ textarea.materialize-textarea {
 .input-field input, .input-field textarea {
   box-sizing: border-box;
   /* https://stackoverflow.com/questions/1377719/padding-within-inputs-breaks-width-100*/
-  padding: 0 16px;
+  padding: 0 5px;
   padding-top: 20px;
-  background-color: var(--surface-color);
+  background-color: transparent;
   border: none;
   border-radius: 4px;
-  border-bottom: 1px solid var(--font-color-medium);
+  border-bottom: 1px solid #9e9e9e;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -6309,24 +6309,24 @@ textarea.materialize-textarea {
   user-select: none;
 }
 .input-field > label {
-  color: var(--font-color-medium);
+  color: #9e9e9e;
   user-select: none;
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
-  left: 16px;
-  top: 16px;
+  left: 5px;
+  top: 20px;
   cursor: text;
   transform-origin: top left;
   transition: left 0.2s ease-out, top 0.2s ease-out, transform 0.2s ease-out;
 }
 .input-field .supporting-text {
-  color: var(--font-color-medium);
+  color: #9e9e9e;
   font-size: 12px;
   padding: 0 16px;
   margin-top: 4px;
 }
 .input-field .character-counter {
-  color: var(--font-color-medium);
+  color: #9e9e9e;
   font-size: 12px;
   float: right;
   padding: 0 16px;
@@ -6358,7 +6358,7 @@ textarea.materialize-textarea {
 .input-field.outlined input, .input-field.outlined textarea {
   padding-top: 0;
   background-color: var(--background-color);
-  border: 1px solid var(--font-color-medium);
+  border: 1px solid #9e9e9e;
   border-radius: 4px;
 }
 .input-field.outlined input:focus:not([readonly]), .input-field.outlined textarea:focus:not([readonly]) {
