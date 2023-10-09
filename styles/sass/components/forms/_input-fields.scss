@@ -62,10 +62,10 @@ textarea.materialize-textarea {
   input, textarea {
     box-sizing: border-box; /* https://stackoverflow.com/questions/1377719/padding-within-inputs-breaks-width-100*/
 
-    padding: 0 16px;
+    padding: 0 5px;
     padding-top: 20px;
 
-    background-color: $surface-color;
+    background-color: transparent;
 
     border: none; // reset
     border-radius: 4px; // md.sys.shape.corner.extra-small.top
@@ -109,10 +109,10 @@ textarea.materialize-textarea {
   & > label {
     color: $input-border-color;
     user-select: none;
-    font-size: 16px;
+    font-size: 14px;
     position: absolute;
-    left: 16px;
-    top: 16px;
+    left: 5px;
+    top: 20px;
     cursor: text;
     transform-origin: top left;
     transition:
