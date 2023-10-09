@@ -102,7 +102,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
 
             {/* <!-- Dropdown Trigger --> */}
             <div className='light-settings dropdown-trigger' href='#' data-target='weather-settings-dropdown'>
-              <span class="material-icons">settings</span>
+              <span className="material-icons">settings</span>
             </div>
             {/* <!-- Dropdown Structure --> */}
             <ul id='weather-settings-dropdown' className='dropdown-content'>

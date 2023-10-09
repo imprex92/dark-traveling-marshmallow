@@ -84,7 +84,7 @@ function login(props) {
 								</label>
 							</div>
 						</div>					
-						<button className="btn waves-effect waves-light blue outline" type="submit" name="action" disabled={isLoading}>Signin
+						<button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign in
 							<i className="material-icons right">send</i>
 						</button>
 						<div className="section">
