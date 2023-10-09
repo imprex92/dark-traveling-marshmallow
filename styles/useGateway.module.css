@@ -7,6 +7,14 @@
   z-index: 1;
   position: relative;
 }
+@media (min-width: 2100px) {
+  .formWrapper {
+    display: flex;
+    justify-content: center;
+    width: 713px;
+    margin: auto !important;
+  }
+}
 
 .customError {
   border: 2px solid #ff0000;
@@ -31,6 +39,12 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
+}
+@media (min-width: 2100px) {
+  .myForm {
+    max-width: 716px;
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=useGateway.module.css.map */
