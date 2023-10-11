@@ -102,7 +102,7 @@ const dashboard = ({userAuth, userBlogs}) => {
 			<div className={styles.wrapper}>
 				<Geolocator />
 				<div className="row valign-wrapper">
-					<div className={`col ${styles.greetingSection}`}>				
+					<div className={`col m12 s10 ${styles.greetingSection}`}>				
 						<h4>Hi {currentUser && UserFirstname}!</h4>
 						<h5>Let's start your journey</h5>					
 					</div>
@@ -110,9 +110,9 @@ const dashboard = ({userAuth, userBlogs}) => {
 				<div className="row valign-wrapper">
 					<form className={`col s12 ${styles.searchbarSection}`}>
 						<div className="row">
-							<div className={`input-field col s8 push-s2 m6 push-m3 ${styles.searchBox}`}>
+							<div className={`input-field col s8 offset-s1 offset-m3 m6 ${styles.searchBox}`}>
 								<i className="material-icons prefix">search</i>
-								<input type="search" className="white-text" onChange={(e) => setSearchText(e.target.value)} name="" id="search-field"/>
+								<input type="search" className="white-text" onChange={(e) => setSearchText(e.target.value)} name="" placeholder=' ' id="search-field"/>
 								<label className="white-text" htmlFor="search-field">Make a search</label>
 							</div>
 						</div>
