@@ -52,5 +52,24 @@ a {
 .Typewriter {
   min-height: 110px;
 }
+.Typewriter .autocomplete-suggestions-wrapper {
+  background-color: #fff;
+  position: absolute;
+  z-index: 9;
+  left: 14%;
+  min-width: 205px;
+  top: 31px;
+}
+.Typewriter > li {
+  padding: 4px 1rem;
+  font-size: 14px;
+}
+.Typewriter > li:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+.Typewriter > li:hover {
+  background-color: rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=global.style.css.map */
