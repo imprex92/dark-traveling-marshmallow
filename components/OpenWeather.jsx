@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
-import { fetchUserWeatherData } from './utility/subscriptions'
+import { fetchUserWeatherChips } from './utility/subscriptions'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
@@ -16,36 +16,26 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const ext = useBearStore(state => state.exterminatePopulation)
 
   async function fetchTags() {
-      const data = await fetchUserWeatherData(currentUser.uid)
+      await fetchUserWeatherChips(currentUser.uid)
       .then(data => { initializeChips(data[0].tags) })
       .catch(err => { console.error('Error while loading tags', err); M.toast({text: `Error loading tags, ${err}`}) })
   }
 
+  
   function initializeChips(chipsData){
     let chips = document.querySelectorAll(".chips")
       M.Chips.init(chips, {
-        data: [
-          {
-              "tag": "Gothenburg"
-          },
-          {
-              "tag": "Paris"
-          },
-          {
-              "tag": "Tokyo"
-          },
-          {
-              "tag": "Uddevalla"
-          }
-      ],
-      placeholder: 'Enter city to save',
-      limit: 7,
-      secondaryPlaceholder: '+City',
-      onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
+        data: chipsData,
+        placeholder: 'Enter city to save shortcuts',
+        limit: 7,
+        secondaryPlaceholder: '+City',
+        onChipSelect: (data, i) => { fetchWeather(i.firstChild.textContent.toString()) },
+        onChipAdd: (data, i) => {},
+        onChipDelete: (data, i) => {}
     })
   }
   useEffect(() => {
-    //fetchTags()
+    fetchTags()
   }, [])
 
   useEffect(() => {
@@ -55,35 +45,10 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
       hover: true,
       closeOnClick: false
     })
-      let chips = document.querySelectorAll(".chips")
-      M.Chips.init(chips, {
-        data: [
-          {
-              "tag": "Gothenburg"
-          },
-          {
-              "tag": "Paris"
-          },
-          {
-              "tag": "Tokyo"
-          },
-          {
-              "tag": "Uddevalla"
-          }
-      ],
-      placeholder: 'Enter city to save',
-      limit: 7,
-      secondaryPlaceholder: '+City',
-      onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
-    })
     
     return () => {
     }
   }, [fetchedData])
-  
-  const chipSelected = (data) => {
-    fetchWeather(data)
-  }
 
   const handleSearch = (e) => {
     e.key === 'Enter' && e.preventDefault()
@@ -99,7 +64,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
 
             {/* <!-- Dropdown Trigger --> */}
             <div className='light-settings dropdown-trigger' href='#' data-target='weather-settings-dropdown'>
-              <span class="material-icons">settings</span>
+              <span className="material-icons">settings</span>
             </div>
             {/* <!-- Dropdown Structure --> */}
             <ul id='weather-settings-dropdown' className='dropdown-content'>
@@ -185,7 +150,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
         </div>
         <div className='container-2'>
           <div className="additional-wrapper z-depth-4">
-            <div className="chips chips-initial"></div>
+            <div className="chips chips-placeholder"></div>
           </div>
           <div className="additional-wrapper z-depth-4 mobile-only">
             <div className="additional-info info-boxes">
