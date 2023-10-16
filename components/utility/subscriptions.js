@@ -69,21 +69,6 @@ function fetchUserReceipts(userID){
 	})
 }
 
-function fetchOneDocument({userID, docID}){
-	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
-	return new Promise((resolve, reject) => {
-		userDbRef.collection('blogPosts').doc(docID).get()
-		.then(doc => {
-			if(doc.exists){
-				resolve({
-					id: doc.id,
-					...doc.data()
-				})
-			} else resolve({})
-		})
-	})
-}
-
 function fetchDocumentByFieldName({fieldName, value, userID, docID}){
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
 	return new Promise((resolve, reject) => {
@@ -179,7 +164,6 @@ export {
 	fetchUserblog,
 	fetchUserHotels,
 	fetchDocumentByFieldName,
-	fetchOneDocument,
 	fetchUserReceipts,
 	handleSaveNewPost, 
 	handleSaveRecipt,

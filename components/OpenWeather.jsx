@@ -78,9 +78,9 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
               </div></a></li>
             </ul>
             <div className="row valign-wrapper">
-              <form className="col s11 pull-s1 m12 searchbar-section">
+              <form className="col s11 offset-s1 m12 searchbar-section">
                 <div className="row">
-                  <div className="input-field col s11 m8 push-m2 searchBox">
+                  <div className="input-field col s11 m8 offset-m2 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
                     <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
                     <label className="white-text" htmlFor="search-field">Search location</label>
