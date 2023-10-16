@@ -85,7 +85,7 @@ export default function SideNavLight ({}) {
 				<li onClick={closeSideNav}>
 					<a onClick={handleNewPost} className="" href="/user/newpost"><i className="material-icons">edit</i>Write new post</a>
 				</li>
-				<li style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}}>
+				<li onClick={closeSideNav} style={route.includes(show_in) ? {display: 'none'} : {display: 'block'}}>
 					<Link href="/user/posts"><a href="/user/posts">
 						<i className="material-icons">grid_on</i>Back to gallery</a>
 					</Link>
