@@ -748,7 +748,7 @@
   --background-color: var(--md-sys-color-background);
   --font-color-main: var(--md-sys-color-on-background);
   --font-color-medium: var(--md-sys-color-on-surface-variant);
-  --font-color-disabled: var(--md-sys-color-on-surface);
+  --font-color-disabled: var(--md-sys-color-surface-variant-light);
   --font-on-primary-color-main: var(--md-sys-color-on-primary);
   --font-on-primary-color-dark-main: var(--md-sys-color-on-primary-dark);
   --font-on-primary-color-dark-medium: var(--md-sys-color-on-surface-variant-dark);
@@ -758,7 +758,7 @@
   --hover-color: rgba(0, 0, 0, 0.04);
   --focus-color: rgba(0, 0, 0, 0.12);
   --focus-color-solid: #E0E0E0;
-  --background-color-disabled: rgba(0, 0, 0, 0.12);
+  --background-color-disabled: var(--md-ref-palette-secondary40);
   --background-color-level-4dp: rgba(0, 0, 0, 0.09);
   --background-color-level-16dp-solid: var(--surface-color);
   --background-color-slight-emphasis: rgba(0, 0, 0, 0.08);
@@ -6093,7 +6093,7 @@ body.keyboard-focused .dropdown-content li:focus {
   height: 32px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--font-color-medium);
+  color: var(--md-ref-palette-primary100);
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
@@ -6140,7 +6140,7 @@ body.keyboard-focused .dropdown-content li:focus {
 .chips input:not([type]):not(.browser-default).input {
   background: none;
   border: 0;
-  color: var(--font-color-main);
+  color: var(--md-ref-palette-primary100);
   display: inline-block;
   font-size: 16px;
   height: 3rem;
@@ -6148,7 +6148,10 @@ body.keyboard-focused .dropdown-content li:focus {
   outline: 0;
   margin: 0;
   padding: 0;
-  width: 120px;
+  width: 220px;
+}
+.chips input:not([type]):not(.browser-default).input::placeholder {
+  color: var(--md-ref-palette-primary100);
 }
 .chips input:not([type]):not(.browser-default).input:focus {
   border: 0;
@@ -6234,7 +6237,7 @@ label {
    ========================================================================== */
 /* Style Placeholders */
 ::placeholder {
-  color: var(--font-color-medium);
+  color: var(--md-sys-color-on-secondary-light);
 }
 
 /* Text inputs */
@@ -6253,7 +6256,7 @@ input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
   outline: none;
-  color: var(--font-color-main);
+  color: var(--md-sys-color-on-secondary-light);
   width: 100%;
   font-size: 16px;
   height: 56px;
@@ -6477,7 +6480,7 @@ textarea.materialize-textarea {
 
 /* Autocomplete Items */
 .autocomplete-content li .highlight {
-  color: var(--font-color-main);
+  color: var(--md-ref-palette-primary100);
 }
 .autocomplete-content li img {
   height: 40px;
@@ -7016,7 +7019,7 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
   border-top: 1px solid var(--hover-color);
 }
 .select-dropdown li.optgroup.selected > span {
-  color: var(--font-color-main);
+  color: var(--md-ref-palette-primary100);
 }
 .select-dropdown li.optgroup > span {
   color: var(--font-color-medium);
@@ -7229,7 +7232,7 @@ input[type=range]::-ms-thumb {
   border-left: 1px solid var(--separator-color);
 }
 .table-of-contents a:hover {
-  color: var(--font-color-main);
+  color: var(--md-ref-palette-primary100);
   padding-left: 15px;
 }
 .table-of-contents a.active {
@@ -8248,14 +8251,19 @@ input[type=range]::-ms-thumb {
 }
 .datepicker-controls .select-year input {
   width: 50px;
+  color: var(--md-sys-color-secondary);
+  padding-top: 0;
 }
 .datepicker-controls .select-month input {
   width: 80px;
+  color: var(--md-sys-color-secondary);
+  padding-top: 0;
 }
 .datepicker-controls .month-prev,
 .datepicker-controls .month-next {
   display: inline-flex;
   align-items: center;
+  padding-top: 0.5rem;
 }
 .datepicker-controls .month-prev > svg,
 .datepicker-controls .month-next > svg {
@@ -8315,19 +8323,19 @@ input[type=range]::-ms-thumb {
   color: var(--font-color-medium);
 }
 .datepicker-table td {
-  color: var(--font-color-main);
+  color: var(--md-sys-color-secondary);
   border-radius: 50%;
   padding: 0;
 }
 .datepicker-table td.is-today {
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 .datepicker-table td.is-selected {
-  background-color: var(--primary-color);
-  color: var(--font-on-primary-color-main);
+  background-color: var(--secondary-color);
+  color: var(--font-on-secondary-color-main);
 }
 .datepicker-table td.is-outside-current-month, .datepicker-table td.is-disabled {
-  color: var(--font-color-disabled);
+  color: var(--md-ref-palette-secondary80);
   pointer-events: none;
 }
 
@@ -8343,7 +8351,8 @@ input[type=range]::-ms-thumb {
   color: inherit;
 }
 .datepicker-day-button:hover {
-  background-color: var(--primary-color-hover-opaque);
+  background-color: var(--md-sys-color-secondary);
+  color: white;
 }
 .datepicker-day-button:focus {
   background-color: var(--primary-color-focus-opaque);
@@ -8362,7 +8371,7 @@ input[type=range]::-ms-thumb {
 .datepicker-clear,
 .datepicker-today,
 .datepicker-done {
-  color: var(--primary-color);
+  color: var(--secondary-color);
   padding: 0 1rem;
 }
 

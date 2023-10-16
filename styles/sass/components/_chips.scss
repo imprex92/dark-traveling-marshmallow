@@ -9,7 +9,7 @@
   height: 32px;
   font-size: 13px;
   font-weight: 500;
-  color: $chip-font-color;
+  color: $chip-font-color-2;
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
@@ -55,7 +55,7 @@
   input:not([type]):not(.browser-default).input {
     background: none;
     border: 0;
-    color: $input-color;
+    color: $chip-font-color-2;
     display: inline-block;
     font-size: $input-font-size;
     height: $input-height;
@@ -63,7 +63,11 @@
     outline: 0;
     margin: 0;
     padding: 0;
-    width: 120px;
+    width: 220px;
+
+    &::placeholder{
+      color: $chip-font-color-2;
+    }
 
     &:focus {
       border: 0;

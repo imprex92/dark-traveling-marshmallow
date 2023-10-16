@@ -2,9 +2,9 @@
     --surface-color: var(--md-sys-color-surface);
     --background-color: var(--md-sys-color-background);
 
-    --font-color-main: var(--md-sys-color-on-background);
+    --font-color-main:  var(--md-sys-color-on-background);
     --font-color-medium: var(--md-sys-color-on-surface-variant);
-    --font-color-disabled: var(--md-sys-color-on-surface);
+    --font-color-disabled: var(--md-sys-color-surface-variant-light);
 
     --font-on-primary-color-main: var(--md-sys-color-on-primary);
     --font-on-primary-color-dark-main: var(--md-sys-color-on-primary-dark);
@@ -17,7 +17,7 @@
     --focus-color: rgba(0, 0, 0, 0.12);
     --focus-color-solid: #E0E0E0;
 
-    --background-color-disabled: rgba(0, 0, 0, 0.12);
+    --background-color-disabled: var(--md-ref-palette-secondary40);
     --background-color-level-4dp: rgba(0, 0, 0, 0.09);
     --background-color-level-16dp-solid: var(--surface-color);
     --background-color-slight-emphasis: rgba(0, 0, 0, 0.08);

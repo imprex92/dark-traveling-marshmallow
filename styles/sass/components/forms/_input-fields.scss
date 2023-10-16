@@ -22,7 +22,7 @@ input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea.materialize-textarea { 
   outline: none;
-  color: $input-color;
+  color: $placeholder-text-color;
   width: 100%;  
   font-size: $md_sys_typescale_body-large_size; //$input-font-size; // => 16 dp
   height: 56px; // 56dp $input-height;

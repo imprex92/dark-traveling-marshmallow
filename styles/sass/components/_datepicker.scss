@@ -40,16 +40,21 @@
 
   .select-year input {
     width: 50px;
+    color: var(--md-sys-color-secondary);
+    padding-top: 0;
   }
 
   .select-month input {
     width: 80px;
+    color: var(--md-sys-color-secondary);
+    padding-top: 0;
   }
 
   .month-prev,
   .month-next {
     display: inline-flex;
     align-items: center;
+    padding-top: 0.5rem;
   }
 
   .month-prev > svg,
@@ -122,12 +127,12 @@
     color: $datepicker-day-font-color;
 
     &.is-today {
-      color: $primary-color;
+      color: $secondary-color;
     }
 
     &.is-selected {
-      background-color: $primary-color;
-      color: $font-on-primary-color-main;
+      background-color: $secondary-color;
+      color: $font-on-secondary-color-main;
     }
 
     &.is-outside-current-month,
@@ -153,7 +158,8 @@
   color: inherit;
 
   &:hover {
-    background-color: $datepicker-day-hover;
+    background-color: $datepicker-day-font-color;
+    color: white;
   }
 
   &:focus {
@@ -175,7 +181,7 @@
 .datepicker-clear,
 .datepicker-today,
 .datepicker-done {
-  color: $primary-color;
+  color: $secondary-color;
   padding: 0 1rem;
 }
 
