@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware'
 
 let postStorage = (set) => ({
 	data: {},
-	setPreviouslyViewedPost: (value) => set({data: value})
+	setPreviouslyViewedPost: (blog) => set({data: blog})
 })
 
 postStorage = devtools(postStorage)

@@ -141,23 +141,21 @@ const receiptHome = () => {
             <div className="row">
               <div className="input-field col l6 s11">
                 <i className="material-icons prefix white-text">title</i>
-                <input ref={postTitle} id="title" type="text" className="validate" />
+                <input placeholder=' ' ref={postTitle} id="title" type="text" className="validate" />
                 <label htmlFor="title">Title</label>
               </div>
-              <div className="row">
                 <div className="input-field col s11 l6">
                   <i className="material-icons prefix white-text">public</i>
-                  <input ref={postCountry} onChange={(e) => setFormCountry(e.target.value)} type="text" id="autocomplete-input" className="autocomplete"/>
+                  <input placeholder=' ' ref={postCountry} onChange={(e) => setFormCountry(e.target.value)} type="text" id="autocomplete-input" className="autocomplete"/>
                   <label htmlFor="autocomplete-input">Enter country</label>
-                </div>					
-              </div>
+                </div>
             </div>
             <div className="row">
               <form id='receipt-form' action="#" className="col s12">
                 <div className="row">
                   <div className="input-field col m6 s11">
                     <i className="material-icons prefix white-text">store</i>
-                    <input ref={postStore} id="store" type="text" className="validate" />
+                    <input placeholder=' ' ref={postStore} id="store" type="text" className="validate" />
                     <label htmlFor="store">Store of Purchase</label>
                   </div>
                   <div className="input-field col m6 s11">
@@ -197,7 +195,7 @@ const receiptHome = () => {
                     </button>
                   </div>
                 </div>
-                {imgPreview ? <Image src={imgPreview} quality={50} width={150} height={150}/> : null}
+                {imgPreview ? <Image src={imgPreview} style={{marginTop: '1rem'}} quality={50} width={150} height={150}/> : null}
                 {isUploading ? <ProgressBar isUploading={setisUploading} fireError={setHasError} setUploadedURL={setUploadedURL} initiator='RECIPE_UPLOAD' reciptFile={userDefinedCameraFile || userDefinedFile} /> : null}
               </form>
             </div>
@@ -258,6 +256,7 @@ const receiptHome = () => {
       }
       .collapsible-body div.row{
         margin-bottom: 0;
+        gap: 1rem;
       }
       .recipt-wrapper {
         margin-top: 8rem;
@@ -283,6 +282,11 @@ const receiptHome = () => {
       .file-field .btn-small{
         height: 32.4px;
         line-height: 32.4px;
+        width: max-content;
+        margin-top: 1rem;
+      }
+      .btn-small{
+        width: max-content;
       }
       .collapsible-upload .file-path-wrapper{
         position: relative;
@@ -290,7 +294,7 @@ const receiptHome = () => {
       }
       .file-path-wrapper div{
         position: absolute;
-        top: 0;
+        top: 1rem;
         bottom: 0;
         right: 0;
         width: 25px;
