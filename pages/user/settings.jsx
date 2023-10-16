@@ -109,7 +109,6 @@ const settings = ({userAuth, userData}) => {
 		}
 	}
 	const handlePictureUpload = (file) => {
-
 		const inputEl = document.getElementById('change-profilePic')
 		const imgToUpload = file.target.files[0]
 		if(imgToUpload && (fileTypeImage.includes(imgToUpload.type) && imgToUpload.size <= maxSize)){
@@ -138,7 +137,6 @@ const settings = ({userAuth, userData}) => {
 			profileStatusMsg.current.textContent = 'Update success!'
 			profileStatusMsg.current.style.display = 'inline'
 			setTimeout(()=>{profileStatusMsg.current.style.display = 'none'},2000);
-			console.log(fileInput.current);
 		} else{
 			M.toast({text:`Status: ${update.status}, ${update.message}`})
 			profileStatusLoader.current = false
@@ -195,7 +193,8 @@ const settings = ({userAuth, userData}) => {
 						<div className="row">
 							<div className="col s12 m6">
 								<div className="input-field outlined" style={{margin: '0 4px'}}>
-									<input 
+									<input
+									placeholder=' ' 
 									onChange={(e) => setReauthEmail(e.target.value)} 
 									autoComplete='email' 
 									id="reauthEmail" 
@@ -209,7 +208,7 @@ const settings = ({userAuth, userData}) => {
 							</div>
 							<div className="col s12 m6">
 								<div className="input-field outlined" style={{margin: '0 4px'}}>
-								<input onChange={(e) => setReauthPassword(e.target.value)} autoComplete='current-password' id="reauthPassword" 
+								<input placeholder=' ' onChange={(e) => setReauthPassword(e.target.value)} autoComplete='current-password' id="reauthPassword" 
 								type="password" className="validate" 
 								required={true}
 								aria-required="true" 
@@ -237,19 +236,19 @@ const settings = ({userAuth, userData}) => {
 			<>
 				<form className='col s12'>
 					<h6 style={{marginBottom: '1rem'}}>About me</h6>
-					<div className="row">
+					<div style={{gap: '1rem'}} className="row">
 						<div className="input-field col s12 m6">
-							<input autoComplete='name' ref={nameInput} type="text" id="full_name" defaultValue={displayName} className="validate" />
+							<input placeholder=' ' autoComplete='name' ref={nameInput} type="text" id="full_name" defaultValue={displayName} className="validate" />
 							<label className={nameInput.current ? 'active' : ''} htmlFor="full_name">Full name</label>
 						</div>
 						<div className="input-field col s12 m6">
-							<input autoComplete='tel' ref={phoneInput} type="tel" id="tel" defaultValue={phoneNumber} className="validate" />
+							<input placeholder=' ' autoComplete='tel' ref={phoneInput} type="number" id="tel" defaultValue={phoneNumber} className="validate" />
 							<label className={phoneInput.current ? 'active' : ''} htmlFor="tel">Mobile number</label>
 						</div>
 					</div>
 					<h6>Profile picture</h6>
 					<div className="row" style={{marginBottom: '10px'}}>
-						<div className={`file-field input-field`}>
+						<div className={`s12 file-field input-field`}>
 							<div className={`btn-small ${styles.fileBtn}`}>
 								<span>File</span>
 								<input autoComplete='off' ref={fileInput} className='validate' type="file" accept='image/*' onChange={(file) => {handlePictureUpload(file)}} />
@@ -304,7 +303,7 @@ const settings = ({userAuth, userData}) => {
 						<div style={{position: 'relative'}} className={`row ${styles.fieldRow}`}>
 							<div className="input-field col s12 m10">
 								<i style={{position: 'absolute', top: '15px', right: '15px', float: 'right', cursor: 'pointer'}} className="material-icons" id='passwordToggleBtn' onClick={(e) => {changeVisibility(e)}}>visibility_off</i>
-								<input autoComplete='new-password' type={'password'} name="" id="password" className="validate" />
+								<input placeholder=' ' autoComplete='new-password' type={'password'} name="" id="password" className="validate" />
 								<label htmlFor="password">Change password</label>
 							</div>
 							<span ref={passwordStatusMsg} style={{position: 'absolute', left: '-5px', bottom: '-10px'}} className={styles.status_operation}></span>
