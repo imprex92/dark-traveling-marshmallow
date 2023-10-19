@@ -63,36 +63,32 @@ export default function StorageCommunicator() {
 	//* onUpload finish
 	const [uploadedURL, setUploadedURL] = useState(null)
 
-	useEffect(() => {
+	const sidenav = document.querySelectorAll(".sidenav");
+	const tabs = document.querySelectorAll(".tabs");
+	const datepicker = document.querySelectorAll(".datepicker")
+	const autocomplete = document.querySelectorAll('.autocomplete');
 
-		const sidenav = document.querySelectorAll(".sidenav");
-		const tabs = document.querySelectorAll(".tabs");
-		const datepicker = document.querySelectorAll(".datepicker")
-		const autocomplete = document.querySelectorAll('.autocomplete');
-		if(!init){
-			const instances = M.Autocomplete.init(autocomplete, {
-				data: countries,
-				minLength: 1,
-				onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
-			});
-			M.Datepicker.init(datepicker, {
-				autoClose: true,
-				format: 'mmmm d, yyyy',
-				defaultDate: new Date(),
-				setDefaultDate: true,
-				firstDay: 1,
-				maxDate: new Date(),
-				onSelect: (date) => {setDatePicker(date)},			
-			})
-			M.Tabs.init(tabs, {
-				swipeable: true,
-			});
-			M.Sidenav.init(sidenav, {
-				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
-				onCloseEnd: (el) => { el.classList.toggle('nav-open') }
-			});
-			setInit(true)
-			}
+	M.Tabs.init(tabs, {});
+	M.Autocomplete.init(autocomplete, {
+		data: countries,
+		minLength: 1,
+		onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
+	});
+	M.Datepicker.init(datepicker, {
+		autoClose: true,
+		format: 'mmmm d, yyyy',
+		defaultDate: new Date(),
+		setDefaultDate: true,
+		firstDay: 1,
+		maxDate: new Date(),
+		onSelect: (date) => {setDatePicker(date)},			
+	})
+	M.Sidenav.init(sidenav, {
+		onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+		onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+	});
+
+	useEffect(() => {
 		}, [uploadedURL]) //! formCountry?
 		
 	async function handleLogout() {
@@ -288,8 +284,8 @@ export default function StorageCommunicator() {
 			*/} 
 
 			
-		<div className="add-form-post-section">
-			<div className="container row">
+		<div className="add-form-post-section row">
+			<div className="container col s12">
       			<div id="tab1" className="valign-wrapper">
         			<div className="col s12 tab-content">
 						<h5 className="center-align white-text">Step 1</h5>			
