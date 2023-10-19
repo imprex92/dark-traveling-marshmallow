@@ -85,7 +85,7 @@ function login() {
 							</label>
 						</div>
 					</div>					
-					<button className="btn waves-effect waves-light blue outline" type="submit" name="action" disabled={isLoading}>
+					<button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>
 						Sign in
 						<i className="material-icons right">send</i>
 					</button>

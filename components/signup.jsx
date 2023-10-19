@@ -80,7 +80,7 @@ function signup() {
 							</label>
 						</div>
 					</div>				
-					<button className="btn waves-effect waves-light blue outline" type="submit" name="action" disabled={isLoading}>Sign Up
+					<button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign Up
 						<i className="material-icons right">send</i>
 					</button>
 					<div className="section">

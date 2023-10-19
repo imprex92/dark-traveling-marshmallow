@@ -1,8 +1,8 @@
 .chip {
   &:focus {
     outline: none;
-    background-color: $chip-selected-color;
-    color: $chip-selected-font-color;
+    background-color: $custom-chip-background-selected;
+    color: $custom-chip-text-selected;
   }
 
   display: inline-block;
