@@ -5654,6 +5654,9 @@ small {
   color: #E6E6FA;
   background-color: #653780;
 }
+.btn:focus, .btn-small:focus, .btn-large:focus {
+  background-color: var(--primary-color-raised-focus-solid);
+}
 
 .btn-floating {
   display: inline-block;
