@@ -81,7 +81,7 @@
     @extend .z-depth-1-half;
   }
   &:focus {
-    background-color: $button-raised-background-focus;
+    background-color: $custom-primary-button-background-color-hover;
     @extend .z-depth-1-half;
   }
 }
