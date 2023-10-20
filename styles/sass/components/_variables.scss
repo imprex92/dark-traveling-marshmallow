@@ -30,15 +30,26 @@
 //  24. Collections
 //  25. Progress Bar
 
+@use "sass:math";
 
 // TypeScale
 $md_sys_typescale_body-large_size: 16px;
+
+// 0. Custom
+// ==========================================================================
+$custom-primary-button-background-color: var(--primaryBtnColor) !default;
+$custom-primary-button-background-color-hover: var(--primaryBtnColorHover) !default;
+$custom-primary-button-text-color: var(--primaryBtnTextColor) !default;
+$custom-primary-button-text-color-hover: var(--primaryBtnTextColorHover) !default;
+
+$custom-switch-track: $custom-primary-button-background-color !default;
+$custom-switch-thumb: $custom-primary-button-background-color-hover !default;
+$custom-switch-disabled-track: $custom-switch-track !default;
 
 
 // 1. Colors
 // ==========================================================================
 
-@use "sass:math";
 
 $primary-color: var(--primary-color) !default;
 $primary-color-dark: var(--primary-color-dark) !default;
@@ -133,10 +144,10 @@ $button-floating-size: 40px !default;
 $button-floating-radius: 50% !default;
 
 // Buttons custom CSS
-$custom-button-background-primary: #F89F5B;
-$custom-button-background-primary-hover: #653780;
-$custom-button-text-primary-hover: #E6E6FA;
-$custom-button-text-primary: #3F1651;
+$custom-button-background-primary: $custom-primary-button-background-color;
+$custom-button-background-primary-hover: $custom-primary-button-background-color-hover;
+$custom-button-text-primary-hover: $custom-primary-button-text-color-hover;
+$custom-button-text-primary: $custom-primary-button-text-color;
 $custom-button-border-radius: 20px;
 
 // Chips custom CSS

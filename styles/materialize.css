@@ -5635,15 +5635,15 @@ small {
 
 .btn:focus, .btn-small:focus, .btn-large:focus,
 .btn-floating:focus {
-  background-color: #653780;
+  background-color: var(--primaryBtnColorHover);
   outline-width: 2px;
-  color: #E6E6FA;
+  color: var(--primaryBtnTextColorHover);
 }
 
 .btn, .btn-small, .btn-large {
   text-decoration: none;
-  color: #3F1651;
-  background-color: #F89F5B;
+  color: var(--primaryBtnTextColor);
+  background-color: var(--primaryBtnColor);
   text-align: center;
   letter-spacing: 0.5px;
   transition: background-color 0.2s ease-out;
@@ -5651,8 +5651,8 @@ small {
   cursor: pointer;
 }
 .btn:hover, .btn-small:hover, .btn-large:hover {
-  color: #E6E6FA;
-  background-color: #653780;
+  color: var(--primaryBtnTextColorHover);
+  background-color: var(--primaryBtnColorHover);
 }
 .btn:focus, .btn-small:focus, .btn-large:focus {
   background-color: var(--primary-color-raised-focus-solid);
@@ -6113,7 +6113,7 @@ body.keyboard-focused .dropdown-content li:focus {
 .chip:focus {
   outline: none;
   background-color: #E53F71;
-  color: #E6E6FA;
+  color: var(--primaryBtnTextColorHover);
 }
 .chip > img {
   float: left;
@@ -6793,13 +6793,13 @@ textarea.materialize-textarea {
   height: 0;
 }
 .switch label input[type=checkbox]:checked + .lever {
-  background-color: rgba(var(--primary-color-numeric), 0.32);
+  background-color: var(--primaryBtnColor);
 }
 .switch label input[type=checkbox]:checked + .lever:before, .switch label input[type=checkbox]:checked + .lever:after {
   left: 18px;
 }
 .switch label input[type=checkbox]:checked + .lever:after {
-  background-color: var(--primary-color);
+  background-color: var(--primaryBtnColorHover);
 }
 
 .switch label .lever {
@@ -6808,7 +6808,7 @@ textarea.materialize-textarea {
   position: relative;
   width: 36px;
   height: 14px;
-  background-color: var(--slider-track-color);
+  background-color: var(--primaryBtnColorHover);
   border-radius: 15px;
   margin-right: 10px;
   transition: background 0.3s ease;
@@ -6827,7 +6827,7 @@ textarea.materialize-textarea {
   transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease, transform 0.1s ease;
 }
 .switch label .lever:after {
-  background-color: var(--switch-thumb-off-color);
+  background-color: var(--primaryBtnColor);
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 
