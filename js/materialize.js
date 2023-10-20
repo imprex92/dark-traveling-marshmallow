@@ -2388,14 +2388,11 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, und: function (a) {
       return "undefined" === typeof a;
     }, hex: function (a) {
-      return (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a)
-      );
+      return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a);
     }, rgb: function (a) {
-      return (/^rgb/.test(a)
-      );
+      return /^rgb/.test(a);
     }, hsl: function (a) {
-      return (/^hsl/.test(a)
-      );
+      return /^hsl/.test(a);
     }, col: function (a) {
       return h.hex(a) || h.rgb(a) || h.hsl(a);
     } },
@@ -9986,8 +9983,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_isDate",
       value: function _isDate(obj) {
-        return (/Date/.test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime())
-        );
+        return /Date/.test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
       }
     }, {
       key: "_isWeekend",
