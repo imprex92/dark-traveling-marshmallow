@@ -82,7 +82,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                 <div className="row">
                   <div className="input-field col s11 m8 offset-m2 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
-                    <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
+                    <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" placeholder=' ' />
                     <label className="white-text" htmlFor="search-field">Search location</label>
                     <span className='helper-text' data-error="Something went wrong. Did you spell correctly?"></span>
                   </div>
