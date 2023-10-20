@@ -60,46 +60,44 @@ function login(props) {
 			setError(err.message ?? 'something went wrong')
 		})
 	}
-		return (
-			<>
-					{/* {JSON.stringify(currentUser)} */}
-					{currentUser && currentUser.email}
-				<div className="row valign-wrapper ">					
-					<form className="col s10 pull-s1 m6 pull-m3 xl4 pull-xl4 l4 pull-l4  center-align z-depth-5 lighten-2 myForm" onSubmit={handleSubmit}>
-						<h2 className="white-text">Sign in</h2>
-						{error && <div className="customError">{error}</div>}
-						<div className="row">
-							<div className="input-field col s10 push-s1 m10 push-m1">
-								<input autoComplete="email" type="email" name="" className="validate white-text" id="email" onChange={(e) => setEmail(e.target.value)}/>
-								<label htmlFor="email">
-									Email
-								</label>
-							</div>
-						</div>
-						<div className="row ">
-							<div className="input-field col s10 push-s1 m10 push-m1">
-								<input autoComplete="current-password" type="password" name="" className="validate white-text" id="password" onChange={(e) => setPassword(e.target.value)}/>
-								<label htmlFor="password">
-									Password
-								</label>
-							</div>
-						</div>					
-						<button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign in
-							<i className="material-icons right">send</i>
-						</button>
-						<div className="section">
-						<div className="divider"></div>
-						</div>
-						<div className="row">
-							<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon outline"><Googleicon/></a>
-						</div>
-						<Link href="/signup">
-							<a className="white-text"><b>No account? Click here!</b></a>
-						</Link>
-					</form>
-				</div>
-			</>
-		)
+		return <>
+                {/* {JSON.stringify(currentUser)} */}
+                {currentUser && currentUser.email}
+            <div className="row valign-wrapper ">					
+                <form className="col s10 pull-s1 m6 pull-m3 xl4 pull-xl4 l4 pull-l4  center-align z-depth-5 lighten-2 myForm" onSubmit={handleSubmit}>
+                    <h2 className="white-text">Sign in</h2>
+                    {error && <div className="customError">{error}</div>}
+                    <div className="row">
+                        <div className="input-field col s10 push-s1 m10 push-m1">
+                            <input autoComplete="email" type="email" name="" className="validate white-text" id="email" onChange={(e) => setEmail(e.target.value)}/>
+                            <label htmlFor="email">
+                                Email
+                            </label>
+                        </div>
+                    </div>
+                    <div className="row ">
+                        <div className="input-field col s10 push-s1 m10 push-m1">
+                            <input autoComplete="current-password" type="password" name="" className="validate white-text" id="password" onChange={(e) => setPassword(e.target.value)}/>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                        </div>
+                    </div>					
+                    <button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign in
+                        <i className="material-icons right">send</i>
+                    </button>
+                    <div className="section">
+                    <div className="divider"></div>
+                    </div>
+                    <div className="row">
+                        <a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue googleIcon outline"><Googleicon/></a>
+                    </div>
+                    <Link href="/signup" className="white-text">
+                        <b>No account? Click here!</b>
+                    </Link>
+                </form>
+            </div>
+        </>;
 	
 }
 

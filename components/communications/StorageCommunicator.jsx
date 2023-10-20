@@ -267,7 +267,7 @@ export default function StorageCommunicator() {
 	}
 	
 	return (
-		<div>
+        <div>
 			{/* //! vertical navigation area! */}
 			<div id="vertical-nav">
 				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
@@ -426,24 +426,24 @@ export default function StorageCommunicator() {
 					<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
 					<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 				</div></li>
-				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/dashboard"><i className="material-icons">home</i>Home</Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/settings"><i className="material-icons">manage_accounts</i>Account settings</Link></li>
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Submenu</a></li>
 				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons material-symbols-outlined">chevron_left</i>Close menu</a></li>
-				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View gallery</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/posts"><i className="material-icons">grid_on</i>View gallery</Link></li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/receipts/home">
-						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
-					</Link>
+                        <i className="material-icons">receipt_long</i>Receipts
+                    </Link>
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
-					</Link> 
+                        <i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather
+                    </Link> 
 				</li>
 			</ul>		
 		</div>
-	)
+    );
 }
