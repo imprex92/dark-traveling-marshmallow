@@ -4,9 +4,10 @@ import Image from 'next/image'
 import Login from '../components/login'
 import {projectAuth} from '../firebase/config'
 import { useAuth } from '../contexts/AuthContext' 
+import imageAsset from 'public/assets/simon-migaj.jpg'
+import styles from 'styles/useGateway.module.css'
 
-
-function login({userAuth}) {
+function login() {
 	const {currentUser} = useAuth()
 	const router = useRouter()
 	useEffect(() => {
@@ -14,25 +15,22 @@ function login({userAuth}) {
 			router.push('/user/dashboard') 
 		}
 	}, [currentUser])
+
 	return (
 		<>
-			<img
+			<Image
+			priority={true}
 			loading='eager'
-			className="login-img"
-			src="/assets/simon-migaj.jpg"
+			className={styles.backgroundImage}
+			src={imageAsset}
 			alt="Picture of the author"
 			layout="fill"
-			objectfit="cover"
-			objectposition="center bottom"
+			objectFit="cover"
 			quality={75}		
 			/>
 			{!currentUser && <Login/>}
 		</>
 	)
 }
-// login.getInitialProps = async props => {
-// 	console.info('##### Congratulations! You are authorized! ######', props);
-// 	return {};
-// };
 
 export default login

@@ -12,6 +12,9 @@
 	grid-template-columns: 50px 1fr
 	background: variables.$base-gradiant
 	.wrapper
+		display: flex
+		flex-direction: column
+		gap: 3rem
 		grid-area: wrap
 		margin: 0 1.5rem
 		.greetingSection
@@ -87,3 +90,18 @@
 .postCarouselSection:hover .noPostContainer
 	color: #d9d9d9
 	filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4))
+
+.geoLocator
+	display: flex
+	justify-content: center
+	& > .geoLocationSection
+		margin-top: 2.5%
+		margin-left: 1em !important
+		& > span
+			cursor: pointer
+			& > p
+				color: #fff
+			& > p > :not(i)
+				color: #fff
+			& > p > i
+				color: red

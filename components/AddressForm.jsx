@@ -60,38 +60,38 @@ const AddressForm = props => {
 
   return (
 	<div className={`row`}>
-		<h6 className={styles.addressForm_header}>My home address</h6>
+		<h6 className={`s12 ${styles.addressForm_header}`}>My home address</h6>
 		<form className={`col s12 ${styles.addressForm}`}>
 			<div className={`row ${styles.addressForm_row}`}>
 				<div className="input-field col s12">
 					<i className="material-icons prefix">apartment</i>
-					<input defaultValue={addressLineOne} autoCapitalize='sentences' autoComplete='address-line1' ref={refs.address_1} required={true} type="text" id="address_line_1" className="validate" />
+					<input placeholder=' ' defaultValue={addressLineOne} autoCapitalize='sentences' autoComplete='address-line1' ref={refs.address_1} required={true} type="text" id="address_line_1" className="validate" />
 					<label className={addressLineOne ? 'active' : ''} htmlFor="address_line_1">Address</label>
 				</div>
 			</div>
 			<div className={`row ${styles.addressForm_row}`}>
 				<div className="input-field col s12">
 					<i className="material-icons prefix">abc</i>
-					<input defaultValue={addressLineTwo} autoCapitalize='sentences' autoComplete='address-line2' ref={refs.address_2} required={false} type="text" id="address_line_2" className="validate" />
+					<input placeholder=' ' defaultValue={addressLineTwo} autoCapitalize='sentences' autoComplete='address-line2' ref={refs.address_2} required={false} type="text" id="address_line_2" className="validate" />
 					<label className={addressLineTwo ? 'active' : ''} htmlFor="address_line_2">Address 2</label>
 				</div>
 			</div>
 			<div className={`row ${styles.addressForm_row}`}>
 				<div className="input-field col s12 m6">
 					<i className="material-icons prefix">location_city</i>
-					<input defaultValue={cityName} autoCapitalize='sentences' autoComplete='address-level2' ref={refs.city} required={true} type="text" id="city" className="validate" />
+					<input placeholder=' ' defaultValue={cityName} autoCapitalize='sentences' autoComplete='address-level2' ref={refs.city} required={true} type="text" id="city" className="validate" />
 					<label className={cityName ? 'active' : ''} htmlFor="city">City</label>
 				</div>
 				<div className="input-field col s12 m6">
 					<i className="material-icons prefix">123</i>
-					<input defaultValue={zipCode} autoComplete='postal-code' ref={refs.zip} required={true} type="text" id="zipCode" className="validate" />
+					<input placeholder=' ' defaultValue={zipCode} autoComplete='postal-code' ref={refs.zip} required={true} type="text" id="zipCode" className="validate" />
 					<label className={zipCode ? 'active' : ''} htmlFor="zipCode">Zip code</label>
 				</div>
 			</div>
 			<div className={`row ${styles.addressForm_row}`}>
 				<div className="input-field col s12">
 					<i className="material-icons prefix">public</i>
-					<input defaultValue={country} autoCapitalize='sentences' autoComplete='country' ref={refs.country} required={true} type="text" id="country" className="validate" />
+					<input placeholder=' ' defaultValue={country} autoCapitalize='sentences' autoComplete='country' ref={refs.country} required={true} type="text" id="country" className="validate" />
 					<label className={country ? 'active' : ''} htmlFor="country">Country</label>
 				</div>
 			</div>

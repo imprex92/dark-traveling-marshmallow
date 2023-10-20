@@ -1,5 +1,7 @@
 import { projectFirestore, projectFirebase } from '../../firebase/config'
 
+const baseQuery = projectFirestore.collection('testUserCollection')
+
 function fetchDbUserData(userID){
 	return new Promise((resolve, reject) => {
 		projectFirestore.collection('testUserCollection').doc(userID).get()
@@ -63,21 +65,6 @@ function fetchUserReceipts(userID){
 				})
 			}
 			resolve(data)
-		})
-	})
-}
-
-function fetchOneDocument({userID, docID}){
-	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
-	return new Promise((resolve, reject) => {
-		userDbRef.collection('blogPosts').doc(docID).get()
-		.then(doc => {
-			if(doc.exists){
-				resolve({
-					id: doc.id,
-					...doc.data()
-				})
-			} else resolve({})
 		})
 	})
 }
@@ -151,33 +138,36 @@ function handleSaveRecipt ({ userID, dataToSave }){
 	})
 }
 
-function fetchUserWeatherData(userID){
+function fetchUserWeatherChips(userID){
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
 	let data = []
 	return new Promise((resolve, reject) => {
-		userDbRef.collection('weatherData').get()
+		userDbRef.collection('weatherData').doc('WeatherChips').get()
 		.then(docSet => {
-			if(docSet !== null){
-				docSet.forEach(doc => {
-					data.push({
-						id: doc.id,
-						...doc.data()
-					})
+			if(!docSet.exists){ resolve([{id: 'WeatherChips', tags: []}])}
+			else if(docSet.exists && docSet !== null){
+				data.push({
+					id: docSet.id,
+					...docSet.data()
 				})
 			}
 			resolve(data)
 		})
 	})
 }
+//TODO handle add and remove chips from firestore
+const addWeatherChip = () => {}
+const removeWeatherChip = () => {}
 
 export {
 	fetchDbUserData, 
 	fetchUserblog,
 	fetchUserHotels,
 	fetchDocumentByFieldName,
-	fetchOneDocument,
 	fetchUserReceipts,
 	handleSaveNewPost, 
 	handleSaveRecipt,
-	fetchUserWeatherData
+	fetchUserWeatherChips,
+	addWeatherChip,
+	removeWeatherChip,
 }

@@ -1532,11 +1532,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@materializecss/materialize@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@materializecss/materialize/-/materialize-1.1.0.tgz"
-  integrity sha512-W2MrDC8mzpMWyP2OpS0RWTWGcLiRRBz7kn2E9TsbardPyVNFdoNvXq5sLy3NcEfAlACc1+L7Q95+pBuUX44dRg==
-
 "@next/env@12.1.6":
   version "12.1.6"
   resolved "https://registry.npmjs.org/@next/env/-/env-12.1.6.tgz"
@@ -1882,10 +1877,10 @@
     "@types/linkify-it" "*"
     "@types/mdurl" "*"
 
-"@types/materialize-css@^1.0.8":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@types/materialize-css/-/materialize-css-1.0.11.tgz"
-  integrity sha512-V7/jSwuq6QrWAjzA2dkZhlqzrrcxcjB+RDfwhw8CosNYZgb+FaAJmmB6t7CT7SRFNRRSxG839e6iK32Vq6sZrQ==
+"@types/materialize-css@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@types/materialize-css/-/materialize-css-1.0.12.tgz#b4720320f057d1fd6486751c4e61edf12377e9d6"
+  integrity sha512-M1J9R69SS3NoLC5c8wnbz0a5P4msNB/wLR4vDqggjTb+U0MY668HHmImnqHGl1ExFHGR4UjFw69Kqe1+9vlD2g==
   dependencies:
     "@types/jquery" "*"
     cash-dom "*"

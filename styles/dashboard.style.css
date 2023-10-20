@@ -168,24 +168,4 @@ label {
   color: #fff !important;
 }
 
-.autocomplete-suggestions-wrapper {
-  background-color: #fff;
-  position: absolute;
-  z-index: 9;
-  left: 14%;
-  min-width: 205px;
-  top: 31px;
-}
-.autocomplete-suggestions-wrapper > li {
-  padding: 4px 1rem;
-  font-size: 14px;
-}
-.autocomplete-suggestions-wrapper > li:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-.autocomplete-suggestions-wrapper > li:hover {
-  background-color: rgba(0, 0, 0, 0.14);
-  cursor: pointer;
-}
-
 /*# sourceMappingURL=dashboard.style.css.map */

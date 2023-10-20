@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '../../contexts/AuthContext'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 
-//TODO make sure siddenav closes after pagechange (instance.close())
 
 export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const router = useRouter()
@@ -20,12 +16,12 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	
 	useEffect(() => {
 		setCountriesVisited(dbUserData.countriesVisited)
-		
-		const sidenav = document.querySelectorAll(".sidenav");
-		M.Sidenav.init(sidenav, {
-			onOpenEnd: (el) => { el.classList.toggle('nav-open') },
-			onCloseEnd: (el) => { el.classList.toggle('nav-open') }
-		});
+			var sidenav = document.querySelectorAll(".sidenav");
+			var instances = M.Sidenav.init(sidenav, {
+				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+				onCloseEnd: (el) => { el.classList.toggle('nav-open') },
+			});
+
 		setLoading(false)
 
 	}, [dbUserData])
@@ -33,7 +29,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	async function handleLogout() {
 		setError('')
 		try{
-			const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+			var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 			instance.close()
 			await logout()
 		}
@@ -44,7 +40,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		}
 	}
 	function handleNewPost(){
-		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 		router.push('/user/newpost')
 	}
@@ -61,7 +57,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 		setCurrentFilter(countryToFilter)
 	}
 	function closeSideNav(){
-		const instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
+		var instance = M.Sidenav.getInstance(document.querySelector(".sidenav"))
 		instance.close()
 	}
 

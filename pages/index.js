@@ -1,9 +1,8 @@
+
 import Image from 'next/image';
 import styles from 'styles/startpage.module.css'
 import Link from 'next/link';
 import imageAsset from 'public/assets/overview_tokyo_orginal.webp'
-
-//TODO redo startpage
 
 const Home = () => {
   const headerText = 'Dark Marshmallow'
@@ -32,4 +31,5 @@ const Home = () => {
     </div>
   );
 }
+
 export default Home;
