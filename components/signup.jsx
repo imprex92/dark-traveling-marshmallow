@@ -49,53 +49,51 @@ function signup() {
 		})
 	}
 	
-	return (
-		<>
-			<div className={`row valign-wrapper ${styles.formWrapper}`}>				
-				<form className={`col xl4 l4 m8 offset-xl4 offset-l4 offset-m2 s8 offset-s1 center-align z-depth-5 ${styles.myForm}`} 
-				onSubmit={handleSubmit}>
-					<h2 className="white-text">Sign up</h2>
-					{error && <div className={styles.customError} >{error}</div>}
-					<div className="row">
-						<div className="input-field col offset-s2 s10">
-							<input autoComplete="email" type="email" name="" className="validate white-text" placeholder=' ' id="email" onChange={(e) => setEmail(e.target.value)}/>
-							<label htmlFor="email">
-								Email
-							</label>
-						</div>
-					</div>
-					<div className="row ">
-						<div className="input-field col offset-s2 s10">
-							<input autoComplete="new-password" type="password" name="" className="validate white-text" placeholder=' ' id="password" onChange={(e) => setPassword(e.target.value)}/>
-							<label htmlFor="password">
-								Password
-							</label>
-						</div>
-					</div>
-					<div className="row">
-						<div className="input-field col offset-s2 s10">
-							<input autoComplete="new-password" type="password" name="" className="validate white-text" placeholder=' ' id="verifyPassword" onChange={(e) => setVerifyPassword(e.target.value)}/>
-							<label htmlFor="verifyPassword">
-								Verify password
-							</label>
-						</div>
-					</div>				
-					<button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign Up
-						<i className="material-icons right">send</i>
-					</button>
-					<div className="section">
-					<div className="divider"></div>
-					</div>
-					<div className={styles.googleRow}>
-						<a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue outline"><Googleicon/></a>
-					</div>
-					<Link href="/login">
-						<a className="white-text"><b>Have an account? Click here!</b></a>
-					</Link>
-				</form>
-			</div>
-		</>
-	)
+	return <>
+        <div className={`row valign-wrapper ${styles.formWrapper}`}>				
+            <form className={`col xl4 l4 m8 offset-xl4 offset-l4 offset-m2 s8 offset-s1 center-align z-depth-5 ${styles.myForm}`} 
+            onSubmit={handleSubmit}>
+                <h2 className="white-text">Sign up</h2>
+                {error && <div className={styles.customError} >{error}</div>}
+                <div className="row">
+                    <div className="input-field col offset-s2 s10">
+                        <input autoComplete="email" type="email" name="" className="validate white-text" placeholder=' ' id="email" onChange={(e) => setEmail(e.target.value)}/>
+                        <label htmlFor="email">
+                            Email
+                        </label>
+                    </div>
+                </div>
+                <div className="row ">
+                    <div className="input-field col offset-s2 s10">
+                        <input autoComplete="new-password" type="password" name="" className="validate white-text" placeholder=' ' id="password" onChange={(e) => setPassword(e.target.value)}/>
+                        <label htmlFor="password">
+                            Password
+                        </label>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-field col offset-s2 s10">
+                        <input autoComplete="new-password" type="password" name="" className="validate white-text" placeholder=' ' id="verifyPassword" onChange={(e) => setVerifyPassword(e.target.value)}/>
+                        <label htmlFor="verifyPassword">
+                            Verify password
+                        </label>
+                    </div>
+                </div>				
+                <button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>Sign Up
+                    <i className="material-icons right">send</i>
+                </button>
+                <div className="section">
+                <div className="divider"></div>
+                </div>
+                <div className={styles.googleRow}>
+                    <a onClick={accessWithGoogle} href='#' className="btn-floating btn waves-effect waves-light blue outline"><Googleicon/></a>
+                </div>
+                <Link href="/login" className="white-text">
+                    <b>Have an account? Click here!</b>
+                </Link>
+            </form>
+        </div>
+    </>;
 }
 
 export default signup
