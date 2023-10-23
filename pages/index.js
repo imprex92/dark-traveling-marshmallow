@@ -1,5 +1,5 @@
 
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import styles from 'styles/startpage.module.css'
 import Link from 'next/link';
 import imageAsset from 'public/assets/overview_tokyo_orginal.webp'

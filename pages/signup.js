@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Signup from '../components/signup'
 import {projectAuth} from '../firebase/config'
 import {useRouter} from 'next/router'

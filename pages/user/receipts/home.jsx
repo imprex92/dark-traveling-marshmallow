@@ -5,7 +5,7 @@ import ProgressBar from 'components/ProgressBar'
 import countries from 'components/utility/countries.json'
 import { useAuth } from 'contexts/AuthContext'
 import Deleteicon from 'public/assets/delete-forever.svg'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { fetchUserReceipts, handleSaveRecipt } from 'components/utility/subscriptions'
 import { projectFirestore } from 'firebase/config'
 import OutputGallery from 'components/gallery/OutputGallery'
