@@ -124,7 +124,7 @@ async function updateAddress(addressData) {
 
 async function resetPassword(email) {
 	try {
-		await auth.sendPasswordResetEmail(email);
+		await projectAuth.sendPasswordResetEmail(email);
 		return { code: 200, message: 'Email sent' };
 	} catch (error) {
 		return { code: error.code, message: error.message };
