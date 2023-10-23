@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import DateFormatter from 'components/utility/DateFormatter'
 import Gallerypopup from 'components/popups/Gallerypopup'
 

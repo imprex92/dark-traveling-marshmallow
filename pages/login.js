@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { useRouter } from 'next/router'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Login from '../components/login'
 import {projectAuth} from '../firebase/config'
 import { useAuth } from '../contexts/AuthContext' 
@@ -16,21 +16,21 @@ function login() {
 		}
 	}, [currentUser])
 
-	return (
-		<>
-			<Image
-			priority={true}
-			loading='eager'
-			className={styles.backgroundImage}
-			src={imageAsset}
-			alt="Picture of the author"
-			layout="fill"
-			objectFit="cover"
-			quality={75}		
-			/>
-			{!currentUser && <Login/>}
-		</>
-	)
+	return <>
+        <Image
+            priority={true}
+            loading='eager'
+            className={styles.backgroundImage}
+            src={imageAsset}
+            alt="Picture of the author"
+            quality={75}
+            fill
+            sizes="100vw"
+            style={{
+                objectFit: "cover"
+            }} />
+        {!currentUser && <Login/>}
+    </>;
 }
 
 export default login

@@ -1,5 +1,5 @@
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import styles from 'styles/startpage.module.css'
 import Link from 'next/link';
 import imageAsset from 'public/assets/overview_tokyo_orginal.webp'
@@ -11,7 +11,15 @@ const Home = () => {
 
   return (
       <div className={styles.root}>
-          <Image layout='fill' objectFit='cover' src={imageAsset} priority={true} alt='Overlook Tokyo'/>
+          <Image
+              src={imageAsset}
+              priority={true}
+              alt='Overlook Tokyo'
+              fill
+              sizes="100vw"
+              style={{
+                  objectFit: "cover"
+              }} />
           <div className={styles.container}>
               <h5 className={styles.miniHeader}>{smallHeader}</h5>
               <div>
