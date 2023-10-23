@@ -512,6 +512,10 @@
   color: var(--md-sys-color-scrim);
 }
 
+.input-field .input-error {
+  border-bottom-color: var(--md-sys-color-error);
+}
+
 .display-large {
   font-family: var(--md-sys-typescale-display-large-font-family-name);
   font-style: var(--md-sys-typescale-display-large-font-family-style);
@@ -5655,7 +5659,7 @@ small {
   background-color: var(--primaryBtnColorHover);
 }
 .btn:focus, .btn-small:focus, .btn-large:focus {
-  background-color: var(--primary-color-raised-focus-solid);
+  background-color: var(--primaryBtnColorHover);
 }
 
 .btn-floating {

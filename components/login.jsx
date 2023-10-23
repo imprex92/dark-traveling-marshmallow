@@ -7,6 +7,7 @@ import Googleicon from '../public/assets/icons8-google.svg'
 import { verifyEmail } from "../components/utility/verifyEmail";
 import useMessageCenter from 'store/messageTransmitter'
 import styles from 'styles/useGateway.module.css'
+import { resetPassword } from './utility/authOperations'
 
 //TODO gör Autocompleat för alla inputfält 
 
@@ -61,6 +62,22 @@ function login() {
 			setError(err.message ?? 'something went wrong')
 		})
 	}
+
+	const sendReset = async () => {
+		document.getElementById('email').classList.remove('input-error')
+		if (email && verifyEmail(email)) {
+			const status = await resetPassword(email);
+			if (status.code === 200) {
+				M.toast({ text: 'Reset email sent!' });
+			} else {
+				M.toast({ text: `Something went wrong: ${status.message}` });
+			}
+		}
+		else{
+			document.getElementById('email').classList.add('input-error')
+			M.toast({ text: 'Invalid Email' })
+		}
+	};
 	
 	return <>
         <div className={`row valign-wrapper ${styles.formWrapper}`}>					
@@ -83,7 +100,10 @@ function login() {
                             Password
                         </label>
                     </div>
-                </div>					
+                </div>		
+				<div className='row'>
+					<span className={`${styles.forgotPassword} col offset-s2 s10`} onClick={sendReset}>Forgot password</span>
+				</div>			
                 <button className="btn waves-effect waves-light outline" type="submit" name="action" disabled={isLoading}>
                     Sign in
                     <i className="material-icons right">send</i>

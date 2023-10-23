@@ -47,4 +47,15 @@
   }
 }
 
+.forgotPassword {
+  text-align: left;
+  margin-top: 0.5rem;
+  color: #fff;
+  margin-left: 0.5rem;
+}
+.forgotPassword:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /*# sourceMappingURL=useGateway.module.css.map */
