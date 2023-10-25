@@ -93,7 +93,7 @@ const ResetPortal = () => {
         </div>
       </section>
       <Link className={styles.goBack} href="/login" replace>
-        <span class="material-icons">
+        <span className="material-icons">
           arrow_back
         </span>
         <span>Back to login</span>
