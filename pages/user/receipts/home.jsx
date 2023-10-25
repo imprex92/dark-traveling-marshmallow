@@ -5,7 +5,7 @@ import ProgressBar from 'components/ProgressBar'
 import countries from 'components/utility/countries.json'
 import { useAuth } from 'contexts/AuthContext'
 import Deleteicon from 'public/assets/delete-forever.svg'
-import Image from 'next/image'
+import Image from "next/image"
 import { fetchUserReceipts, handleSaveRecipt } from 'components/utility/subscriptions'
 import { projectFirestore } from 'firebase/config'
 import OutputGallery from 'components/gallery/OutputGallery'
@@ -127,7 +127,7 @@ const receiptHome = () => {
   }
 
   return (
-	<div className='recipt-container'>
+    <div className='recipt-container'>
     <SideNavLight />
     <div className='recipt-wrapper container'>
       <ul className="collapsible">
@@ -195,7 +195,16 @@ const receiptHome = () => {
                     </button>
                   </div>
                 </div>
-                {imgPreview ? <Image src={imgPreview} style={{marginTop: '1rem'}} quality={50} width={150} height={150}/> : null}
+                {imgPreview ? <Image
+                  src={imgPreview}
+                  quality={50}
+                  width={150}
+                  height={150}
+                  style={{
+                    marginTop: '1rem',
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} /> : null}
                 {isUploading ? <ProgressBar isUploading={setisUploading} fireError={setHasError} setUploadedURL={setUploadedURL} initiator='RECIPE_UPLOAD' reciptFile={userDefinedCameraFile || userDefinedFile} /> : null}
               </form>
             </div>
@@ -341,7 +350,7 @@ const receiptHome = () => {
       
     `}</style>
   </div>
-  )
+  );
 }
 
 export default receiptHome

@@ -512,6 +512,10 @@
   color: var(--md-sys-color-scrim);
 }
 
+.input-field .input-error {
+  border-bottom-color: var(--md-sys-color-error);
+}
+
 .display-large {
   font-family: var(--md-sys-typescale-display-large-font-family-name);
   font-style: var(--md-sys-typescale-display-large-font-family-style);
@@ -5418,6 +5422,15 @@ small {
 .toast.rounded {
   border-radius: 24px;
 }
+.toast.warn {
+  background-color: var(--md-ref-palette-error90);
+}
+.toast.error {
+  background-color: var(--md-sys-color-error);
+}
+.toast.info {
+  background-color: var(--md-sys-color-surface-tint-dark);
+}
 @media only screen and (max-width : 600.99px) {
   .toast {
     width: 100%;
@@ -5655,7 +5668,7 @@ small {
   background-color: var(--primaryBtnColorHover);
 }
 .btn:focus, .btn-small:focus, .btn-large:focus {
-  background-color: var(--primary-color-raised-focus-solid);
+  background-color: var(--primaryBtnColorHover);
 }
 
 .btn-floating {

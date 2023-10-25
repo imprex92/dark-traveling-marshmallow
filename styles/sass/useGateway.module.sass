@@ -1,5 +1,7 @@
+@use 'variables'
+
 .backgroundImage
-	z-index: -1
+	z-index: 0
 	object-position: center bottom
 
 .formWrapper
@@ -17,6 +19,7 @@
 	color: #fff
 	border-radius: 10px
 	padding: 1em
+	margin: 1rem
 	font-weight: 600
 
 .myForm
@@ -34,3 +37,86 @@
 	@media (min-width: 2100px)
 		max-width: 716px
 		width: 100%
+
+.forgotPassword
+	font-size: 14px
+	text-align: left
+	margin-top: 0.5rem
+	color: #fff
+	margin-left: 0.5rem
+	width: fit-content
+	&:hover
+		cursor: pointer
+		text-decoration: underline
+
+.container
+	display: grid
+	place-items: center
+	& > .myForm
+		position: relative
+		margin: 1rem
+		padding: 2rem
+		max-width: 650px
+		max-height: 550px
+		height: 100%
+		width: 100%
+		color: #fff
+		@media ( max-width: variables.$breakpoint-tablet )
+			max-width: calc(100vw - 2rem)
+		& .goBack
+			display: flex
+			align-items: center
+			position: absolute
+			top: 1rem
+			color: #fff
+			cursor: pointer
+			& > span:first-child
+				font-size: 18px
+			& > span:last-child
+				text-decoration: underline
+				margin-left: 0.25rem
+		& > section
+			display: grid
+			height: 100%
+			grid-template-rows: 1fr 1fr 1fr
+			@media ( max-width: variables.$breakpoint-phone-XXL )
+				grid-template-rows: 1fr 1.5fr 1.2fr
+			@media ( max-width: variables.$breakpoint-phone-L )
+				grid-template-rows: 0.5fr 0.5fr 0.5fr
+			@media ( max-width: variables.$breakpoint-phone-S )
+				grid-template-rows: 0.4fr 0.4fr 0.5fr
+		& .texts
+			display: block
+			& > p
+				font-size: 18px
+				text-align: center
+				@media ( max-width: variables.$breakpoint-phone-XXL )
+					font-size: 16px
+		& .input
+			width: 80%
+			margin: auto
+			@media ( max-width: variables.$breakpoint-phone-L )
+				width: calc(100% - 1rem)
+	& .header
+		text-align: center
+		font-size: 49px
+		@media ( max-width: variables.$breakpoint-phone-XXL )
+			font-size: 32px
+	& .button
+		position: relative
+		display: flex
+		justify-content: center
+		align-items: center
+		& > .resetMessage
+			position: absolute
+			bottom: 0rem
+			padding: 1rem 1.5rem
+			background-color: rgba(0, 0, 0, 0.35)
+			border-radius: 10px
+			@media ( max-width: variables.$breakpoint-phone-L )
+				white-space: pre
+			@media ( max-width: variables.$breakpoint-phone-S )
+				white-space: pre-line
+				bottom: -2rem
+		& > a
+			padding: 0 2rem

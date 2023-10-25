@@ -1,5 +1,5 @@
 .backgroundImage {
-  z-index: -1;
+  z-index: 0;
   object-position: center bottom;
 }
 
@@ -22,6 +22,7 @@
   color: #fff;
   border-radius: 10px;
   padding: 1em;
+  margin: 1rem;
   font-weight: 600;
 }
 
@@ -45,6 +46,131 @@
     max-width: 716px;
     width: 100%;
   }
+}
+
+.forgotPassword {
+  font-size: 14px;
+  text-align: left;
+  margin-top: 0.5rem;
+  color: #fff;
+  margin-left: 0.5rem;
+  width: fit-content;
+}
+.forgotPassword:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+}
+.container > .myForm {
+  position: relative;
+  margin: 1rem;
+  padding: 2rem;
+  max-width: 650px;
+  max-height: 550px;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .container > .myForm {
+    max-width: calc(100vw - 2rem);
+  }
+}
+.container > .myForm .goBack {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+.container > .myForm .goBack > span:first-child {
+  font-size: 18px;
+}
+.container > .myForm .goBack > span:last-child {
+  text-decoration: underline;
+  margin-left: 0.25rem;
+}
+.container > .myForm > section {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+@media (max-width: 640px) {
+  .container > .myForm > section {
+    grid-template-rows: 1fr 1.5fr 1.2fr;
+  }
+}
+@media (max-width: 425px) {
+  .container > .myForm > section {
+    grid-template-rows: 0.5fr 0.5fr 0.5fr;
+  }
+}
+@media (max-width: 325px) {
+  .container > .myForm > section {
+    grid-template-rows: 0.4fr 0.4fr 0.5fr;
+  }
+}
+.container > .myForm .texts {
+  display: block;
+}
+.container > .myForm .texts > p {
+  font-size: 18px;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .container > .myForm .texts > p {
+    font-size: 16px;
+  }
+}
+.container > .myForm .input {
+  width: 80%;
+  margin: auto;
+}
+@media (max-width: 425px) {
+  .container > .myForm .input {
+    width: calc(100% - 1rem);
+  }
+}
+.container .header {
+  text-align: center;
+  font-size: 49px;
+}
+@media (max-width: 640px) {
+  .container .header {
+    font-size: 32px;
+  }
+}
+.container .button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .button > .resetMessage {
+  position: absolute;
+  bottom: 0rem;
+  padding: 1rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+}
+@media (max-width: 425px) {
+  .container .button > .resetMessage {
+    white-space: pre;
+  }
+}
+@media (max-width: 325px) {
+  .container .button > .resetMessage {
+    white-space: pre-line;
+    bottom: -2rem;
+  }
+}
+.container .button > a {
+  padding: 0 2rem;
 }
 
 /*# sourceMappingURL=useGateway.module.css.map */

@@ -122,6 +122,39 @@ async function updateAddress(addressData) {
 	}
 }
 
+async function sendResetPasswordEmail(email) {
+	const actionSettings = {
+		handleCodeInApp: false,
+		url: process.env.NEXT_PUBLIC_BASE_URL + '/login'
+	}
+	try {
+		await projectAuth.sendPasswordResetEmail(email, actionSettings);
+		return { code: 202, message: 'Email sent' };
+	} catch (error) {
+		return { code: error.code, message: error.message };
+	}
+}
+
+async function handleResetPassword(actionCode){
+	try {
+		const email = await projectAuth.verifyPasswordResetCode(actionCode)
+		
+		return {code: 202, email: email, message: 'Password has been reset, Redirecting...', redirect: true}
+	} catch (error) {
+		return {code: error.code, message: error.message, redirect: false}
+	}
+} 
+//? Call confirmResetPassword if verification above is OK and user entered new password
+async function confirmResetPassword(actionCode, newPassword){
+	try {
+		await projectAuth.confirmPasswordReset(actionCode, newPassword)
+		return {success: true, code: 200, message: 'Password has been reset. \n Redirecting to login...'}
+	} catch (error) {
+		return {success: false, code: error.code, message: error.message}
+	}
+}
+//TODO Functions for recover email (https://firebase.google.com/docs/auth/custom-email-handler#web-namespaced-api_1)
+
 export {
 	accountRemoval,
 	reAuthenticate,
@@ -130,4 +163,7 @@ export {
 	updatePassword,
 	updateAccountData,
 	updateAddress,
+	sendResetPasswordEmail,
+	handleResetPassword,
+	confirmResetPassword,
 }

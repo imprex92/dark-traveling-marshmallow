@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import Image from 'next/image'
+import Image from "next/image"
 import Signup from '../components/signup'
 import {projectAuth} from '../firebase/config'
 import {useRouter} from 'next/router'
@@ -18,21 +18,22 @@ function signup() {
 		}
 	}, [])
 
-	return (
-		<>
-			<Image
-			priority={true}
-			loading='eager'
-			className={styles.backgroundImage}
-			src={imageAsset}
-			alt="Picture of the author"
-			layout="fill"
-			objectFit="cover"
-			quality={75}		
-			/>
-			{!currentUser && <Signup/>}
-		</>
-	)
+	return <>
+        <Image
+            priority={true}
+            loading='eager'
+            className={styles.backgroundImage}
+            src={imageAsset}
+            alt="Picture of the author"
+            quality={75}
+            fill
+            placeholder='blur'
+            sizes="100vw"
+            style={{
+                objectFit: "cover"
+            }} />
+        {!currentUser && <Signup/>}
+    </>;
 }
 
 export default signup
