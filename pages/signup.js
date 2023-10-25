@@ -27,6 +27,7 @@ function signup() {
             alt="Picture of the author"
             quality={75}
             fill
+            placeholder='blur'
             sizes="100vw"
             style={{
                 objectFit: "cover"

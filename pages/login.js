@@ -22,6 +22,7 @@ function login() {
             loading='eager'
             className={styles.backgroundImage}
             src={imageAsset}
+			placeholder='blur'
             alt="Picture of the author"
             quality={75}
             fill
