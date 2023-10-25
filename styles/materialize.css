@@ -5422,6 +5422,15 @@ small {
 .toast.rounded {
   border-radius: 24px;
 }
+.toast.warn {
+  background-color: var(--md-ref-palette-error90);
+}
+.toast.error {
+  background-color: var(--md-sys-color-error);
+}
+.toast.info {
+  background-color: var(--md-sys-color-surface-tint-dark);
+}
 @media only screen and (max-width : 600.99px) {
   .toast {
     width: 100%;
