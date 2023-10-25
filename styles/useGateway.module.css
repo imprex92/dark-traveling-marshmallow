@@ -97,6 +97,7 @@
 }
 .container > .myForm > section {
   display: grid;
+  height: 100%;
   grid-template-rows: 1fr 1fr 1fr;
 }
 @media (max-width: 640px) {
@@ -106,7 +107,12 @@
 }
 @media (max-width: 425px) {
   .container > .myForm > section {
-    grid-template-rows: 1fr 1fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 0.5fr;
+  }
+}
+@media (max-width: 325px) {
+  .container > .myForm > section {
+    grid-template-rows: 0.4fr 0.4fr 0.5fr;
   }
 }
 .container > .myForm .texts {
@@ -151,6 +157,17 @@
   padding: 1rem 1.5rem;
   background-color: rgba(0, 0, 0, 0.35);
   border-radius: 10px;
+}
+@media (max-width: 425px) {
+  .container .button > .resetMessage {
+    white-space: pre;
+  }
+}
+@media (max-width: 325px) {
+  .container .button > .resetMessage {
+    white-space: pre-line;
+    bottom: -2rem;
+  }
 }
 .container .button > a {
   padding: 0 2rem;

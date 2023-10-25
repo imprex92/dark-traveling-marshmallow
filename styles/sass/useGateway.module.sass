@@ -77,11 +77,14 @@
 				margin-left: 0.25rem
 		& > section
 			display: grid
+			height: 100%
 			grid-template-rows: 1fr 1fr 1fr
 			@media ( max-width: variables.$breakpoint-phone-XXL )
 				grid-template-rows: 1fr 1.5fr 1.2fr
 			@media ( max-width: variables.$breakpoint-phone-L )
-				grid-template-rows: 1fr 1fr 0.5fr
+				grid-template-rows: 0.5fr 0.5fr 0.5fr
+			@media ( max-width: variables.$breakpoint-phone-S )
+				grid-template-rows: 0.4fr 0.4fr 0.5fr
 		& .texts
 			display: block
 			& > p
@@ -110,5 +113,10 @@
 			padding: 1rem 1.5rem
 			background-color: rgba(0, 0, 0, 0.35)
 			border-radius: 10px
+			@media ( max-width: variables.$breakpoint-phone-L )
+				white-space: pre
+			@media ( max-width: variables.$breakpoint-phone-S )
+				white-space: pre-line
+				bottom: -2rem
 		& > a
 			padding: 0 2rem
