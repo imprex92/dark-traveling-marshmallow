@@ -1,7 +1,7 @@
 import { projectAuth, projectFirestore, projectStorage } from "firebase/config";
 
 // File handles operations regarding user accounts
-const user = projectAuth.currentUser;
+const user = projectAuth?.currentUser || '';
 const refToAccountDoc = user && projectFirestore
 	.collection('testUserCollection')
 	.doc(user.uid);
@@ -153,12 +153,21 @@ async function confirmResetPassword(actionCode, newPassword){
 		return {success: false, code: error.code, message: error.message}
 	}
 }
-//TODO Functions for recover email (https://firebase.google.com/docs/auth/custom-email-handler#web-namespaced-api_1)
+
+async function verifyEmailFromEmail(actionCode) {
+	try {
+		await projectAuth.applyActionCode(actionCode)
+		return {success: true, code: 200, message: 'Account has been verified. \n Redirecting to homepage...'}
+	} catch (error) {
+		return {success: false, code: error.code, message: error.message}
+	}
+}
 
 export {
 	accountRemoval,
 	reAuthenticate,
 	verifyUserEmail,
+	verifyEmailFromEmail,
 	updateEmail,
 	updatePassword,
 	updateAccountData,
