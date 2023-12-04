@@ -1,4 +1,4 @@
-import { confirmResetPassword, handleResetPassword } from 'components/utility/authOperations'
+import { confirmResetPassword, handleResetPassword, verifyEmailFromEmail } from 'components/utility/authOperations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useRef } from 'react'
@@ -29,9 +29,9 @@ const ResetPortal = () => {
       break;
     case 'verifyEmail':
       header = 'Verify your email';
-      text = `Some text`;
+      text = `Press verify to verify your account.`;
       placeholder = 'Enter Some text';
-      icon = 'alternate_email'
+      icon = 'verified'
       button = 'Verify'
       break;
     default:
@@ -40,7 +40,7 @@ const ResetPortal = () => {
 
   const handleReset = async () => {
     setResultOfReset(null)
-    if(input.current.value.trim()){
+    if(mode === 'resetPassword' && input.current.value.trim()){
       input.current.classList.remove('input-error')
       try {
         const codeVerification = await handleResetPassword(oobCode)
@@ -50,6 +50,28 @@ const ResetPortal = () => {
           setResultOfReset(resetResult.message)
           setTimeout(() => {
             router.replace(`/${lastPartOfUrl}?email=${codeVerification?.email}`)
+          }, 1000);
+        } else {
+          if (codeVerification.code === 'auth/expired-action-code') {
+            setResultOfReset({success: false, code: codeVerification.code, message: 'Reset code invalid or expired. \nPlease try to reset the password again.'})
+          } else {
+            setResultOfReset(codeVerification)
+          }
+        }
+      } catch (error) {
+        setResultOfReset({success: false, message: error.message, code: error.code})
+        console.error(error);
+      }
+    }
+    else if(mode === 'verifyEmail'){
+      try {
+        const codeVerification = await handleResetPassword(oobCode)
+
+        if (codeVerification.code === 202) {
+          const resetResult = await verifyEmailFromEmail(oobCode)
+          setResultOfReset(resetResult.message)
+          setTimeout(() => {
+            router.replace(`/${lastPartOfUrl}`)
           }, 1000);
         } else {
           if (codeVerification.code === 'auth/expired-action-code') {
