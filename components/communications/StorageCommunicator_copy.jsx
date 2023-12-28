@@ -13,8 +13,9 @@ import ProgressBar from '../ProgressBar'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
+import styles from 'styles/newPost.module.css'
 
-import SideNav from 'components/nav/sidenav'
+import SideNav from 'components/nav/Sidenav'
 import AddPostForm from 'components/AddPostForm'
 
 require('dotenv').config()
@@ -265,11 +266,11 @@ export default function StorageCommunicator_copy() {
 	
 	return (
         <>
-			<div id="new-post-form" className={'main'}>
-				<div className={'navigation'}>
+			<div id={styles.newPostForm} className={styles.main}>
+				<div className={styles.navigation}>
 					<SideNav dbUserData={currentUser}/>
 				</div>
-				<div className={'content'}>
+				<div className={styles.content}>
 					<AddPostForm dbUserData={currentUser} />
 				</div>
 			</div>

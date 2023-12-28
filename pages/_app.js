@@ -9,7 +9,6 @@ import 'styles/dashboard.style.css'
 import 'styles/slides-component.style.scss'
 import 'styles/sideNav.style.css'
 import 'styles/weather.style.css'
-import 'styles/newPost.style.css'
 import useSiteSettings from 'store/siteSettings';
 import {useRouter} from 'next/router';
 import { useOnlineStatus } from 'components/hooks/useOnlineStatus'

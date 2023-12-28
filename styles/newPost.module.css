@@ -1,0 +1,90 @@
+.newpostImg {
+  position: absolute;
+  min-height: 100vh;
+}
+
+#newPostForm {
+  min-height: 100vh;
+}
+#newPostForm.main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas: "nav wrap";
+  z-index: 2;
+}
+#newPostForm.main > .content {
+  max-width: 1500px;
+  place-self: center;
+  position: relative;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  max-height: 75%;
+  min-height: 600px;
+  border-radius: var(--defaultBoxBorderRadius);
+  margin: auto;
+  box-shadow: var(--primaryBoxShadow);
+  overflow-y: auto;
+}
+
+.stepTabs > .navList {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 2rem;
+}
+
+.tab, .tab_active {
+  position: relative;
+  left: -15px;
+  background-color: azure;
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  margin: 0 -15px 0 0;
+  min-width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  clip-path: polygon(75% 0%, 95% 50%, 75% 100%, 0% 100%, 20% 50%, 0% 0%);
+}
+.tab_active {
+  color: var(--primaryBtnTextColor);
+  background-color: var(--primaryBtnColor);
+  border-color: #144677;
+}
+.tab_active > .label {
+  color: var(--primaryBtnTextColor);
+}
+.tab:first-of-type, .tab_active:first-of-type {
+  clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
+  padding-left: 1.5rem;
+}
+.tab:last-of-type, .tab_active:last-of-type {
+  clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 20% 50%);
+  padding-left: 3rem;
+  padding-right: 1.5rem;
+}
+.tab:hover, .tab_active:hover {
+  color: var(--primaryBtnTextColorHover);
+  cursor: pointer;
+  background-color: var(--primaryBtnColorHover);
+}
+.tab:hover > .label, .tab_active:hover > .label {
+  color: var(--primaryBtnTextColorHover);
+}
+
+.tabContent {
+  border-radius: 0 0 4px 4px;
+  display: block;
+}
+.tabContent .tabPanel {
+  display: none;
+  padding: 10px;
+  text-align: left;
+}
+.tabContent .tabPanel_active {
+  display: block;
+}
+
+/*# sourceMappingURL=newPost.module.css.map */
