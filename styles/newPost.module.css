@@ -14,12 +14,14 @@
   z-index: 2;
 }
 #newPostForm.main > .content {
-  max-width: 1500px;
+  max-width: 75%;
+  width: 100%;
   place-self: center;
   position: relative;
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
   max-height: 75%;
+  height: 100%;
   min-height: 600px;
   border-radius: var(--defaultBoxBorderRadius);
   margin: auto;
@@ -32,6 +34,7 @@
   display: flex;
   flex-direction: row;
   margin: 1rem 2rem;
+  justify-content: center;
 }
 
 .tab, .tab_active {
@@ -85,6 +88,47 @@
 }
 .tabContent .tabPanel_active {
   display: block;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 2rem;
+}
+.fieldGroup > * {
+  flex-basis: 50%;
+}
+.fieldGroup > .selectRow {
+  display: flex;
+  align-items: baseline;
+}
+.fieldGroup .selectField {
+  flex-basis: 100%;
+}
+.fieldGroup .selectField svg {
+  fill: #fff;
+}
+.fieldGroup .selectField > ul {
+  max-height: 300px;
+  overflow: scroll;
+  border-radius: 0 0 4px 4px;
+}
+.fieldGroup .selectField > ul > li:first-child {
+  display: none;
+}
+.fieldGroup .selectField > ul > li[class=optgroup] {
+  background-color: var(--primaryBtnColor);
+  color: var(--primaryBtnTextColor);
+  cursor: none;
+}
+.fieldGroup .selectField > ul > li[class=optgroup]:hover {
+  background-color: var(--primaryBtnColor);
+}
+
+.fieldset:disabled * {
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 /*# sourceMappingURL=newPost.module.css.map */

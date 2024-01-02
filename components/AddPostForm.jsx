@@ -1,25 +1,40 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import styles from 'styles/newPost.module.css'
 import countriesByContinent from './utility/countries_new'
+import PlacesAutocomplete from './utility/GooglePlacesAutocomplete'
 
 const AddPostForm = props => {
   const [activeTab, setActiveTab] = useState('start')
   const [countries, setCountries] = useState(countriesByContinent)
+  const [countryCode, setCountryCode] = useState(null)
+  const placesInputValue = useRef('')
+  const postCountry = useRef(null)
+  const selectRef = useRef(null)
+	const [datePicker, setDatePicker] = useState(new Date())
+	const [postLocation, setPostLocation] = useState([])
 
   useEffect(() => {
     const selectEl = document.getElementById('countrySelect')
-    M.FormSelect.init(selectEl)
+    M.FormSelect.init(selectEl, {classes: styles.selectField})
+    selectRef.current = M.FormSelect.getInstance(selectEl);
   }, [])
-  
+
   const handleTabClick = (tab, e) => {
     e.preventDefault()
     setActiveTab(tab)
+  }
+  const handleCountryChange = () => {
+    const selectedValue = JSON.parse(selectRef.current.el.value);
+    setCountryCode(selectedValue.code)
   }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
   }
+  function dataFromChild({ coordinates, locationData, additionalData }){
+		setPostLocation({ coordinates, locationData, additionalData })
+	}
 
   return (
     <>
@@ -39,22 +54,28 @@ const AddPostForm = props => {
         </div>
       </div>
 
-      <form className={`${styles.postForm}`}>
+      <form onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
         <div className={`${styles.tabContent}`}>
           <div className={`${activeTab === 'start' ? styles.tabPanel_active : styles.tabPanel}`}>
             <h2 className="">Start of post</h2>
-            <div className="input-field">
-              <i className="material-icons prefix white-text">public</i>
-              <select id="countrySelect">
-                {Object.entries(countries).map(([continent, countriesList]) => (
-                  <optgroup key={continent} label={continent}>
-                    {countriesList.map((country) => (
-                      <option value={country} key={country}>{country}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-              <label htmlFor="countrySelect">Select Country</label>
+            <div className={styles.fieldGroup}>
+              <div className={`input-field ${styles.selectRow}`}>
+                <i className="material-icons white-text">public</i>
+                <select defaultValue="" id="countrySelect" onChange={handleCountryChange} ref={selectRef}>
+                  <option value="" disabled></option>
+                  {Object.entries(countries).map(([continent, countriesList]) => (
+                    <optgroup key={continent} label={continent}>
+                      {countriesList.map((country) => (
+                        <option value={JSON.stringify(country)} key={country.code}>{country.code} : &nbsp;&nbsp;{country.name}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+                <label htmlFor="countrySelect">Select Country</label>
+              </div>
+              <fieldset className={styles.fieldset} style={{ border: 'none' }} disabled="disabled">
+                <PlacesAutocomplete inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>
+              </fieldset>
             </div>
           </div>
           <div className={`${activeTab === 'images' ? styles.tabPanel_active : styles.tabPanel}`}>
