@@ -3,19 +3,28 @@ import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-pl
 import useOnclickOutside from "react-cool-onclickoutside";
 
 	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue}) => {
+		let script;
 		useEffect(() => {
-			const existingScript = document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`);
+			const existingScript = document.querySelector(
+			`script[src*="https://maps.googleapis.com/maps/api/js"]`
+			);
 
-			if(!existingScript){
-				const script = document.createElement('script');
+			const checkExistingScript = () => {
+			if (!existingScript) {
+				script = document.createElement('script');
 				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap`;
 				script.async = true;
 				script.defer = true;
 				document.head.appendChild(script);
 			}
-			
+			};
+
+			// Delay the check for the existing script
+			const timeoutId = setTimeout(checkExistingScript, 100);
+
 			return () => {
-				document.head.removeChild(script);
+			clearTimeout(timeoutId);
+			document.head.removeChild(script);
 			};
 		}, []);
 
@@ -32,11 +41,11 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			  };
 		  
 			  const error = () => {
-				console.log("> Unable to retrieve your location");
+				console.error("> Unable to retrieve your location");
 			  };
 		  
 			  if (!navigator.geolocation) {
-				console.log("> Geolocation is not supported by your browser");
+				console.info("> Geolocation is not supported by your browser");
 			  } else {
 				navigator.geolocation.getCurrentPosition(success, error);
 			  }
@@ -85,11 +94,11 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			getGeocode({ address: description})
 			.then((results) => getLatLng(results[0]))
 			.then(({ lat, lng }) => {
-				console.log("📍 Coordinates: ", { lat, lng });
+				console.info("📍 Coordinates: ", { lat, lng });
 				coordinates.push({ lat, lng })
 			})
 			.catch((error) => {
-				console.log("😱 Error: ", error);
+				console.error("😱 Error: ", error);
 				toSend.push(error)
 			});
 			
@@ -106,7 +115,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			locationData.push(details)
 			})
 			.catch((error) => {
-			console.log("Error: ", error);
+			console.error("Error: ", error);
 			});
 			dataFromChild({coordinates, locationData, additionalData})
 		};
@@ -136,10 +145,10 @@ import useOnclickOutside from "react-cool-onclickoutside";
 					onChange={handleInput}
 					disabled={!ready}
 					type="text"
+					placeholder=" "
 				/>
 				<label htmlFor="post_location">Address</label>
-				<i onClick={getMyPosition} className="material-icons prefix">person_pin_circle</i>
-				{/* We can use the "status" to decide whether we should display the dropdown or not */}
+				<i onClick={getMyPosition} className="material-icons suffix">person_pin_circle</i>
 				{status === "OK" && 
 					<ul className="autocomplete-suggestions-wrapper">
 						{renderSuggestions()}
