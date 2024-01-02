@@ -136,15 +136,6 @@
   cursor: pointer;
 }
 
-.newpost-img {
-  object-fit: cover;
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-  height: calc(100% + 110px);
-  z-index: -1;
-}
-
 .tab-content {
   margin-top: 1em;
   padding-bottom: 1em !important;
