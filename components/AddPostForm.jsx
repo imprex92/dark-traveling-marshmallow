@@ -11,13 +11,24 @@ const AddPostForm = props => {
   const placesInputValue = useRef('')
   const postCountry = useRef(null)
   const selectRef = useRef(null)
+
 	const [datePicker, setDatePicker] = useState(new Date())
 	const [postLocation, setPostLocation] = useState([])
 
   useEffect(() => {
     const selectEl = document.getElementById('countrySelect')
+    const dateEl = document.getElementById('datepicker')
     M.FormSelect.init(selectEl, {classes: styles.selectField})
     selectRef.current = M.FormSelect.getInstance(selectEl);
+    M.Datepicker.init(dateEl, {
+      autoClose: true,
+      format: 'mmmm d, yyyy',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      firstDay: 1,
+      maxDate: new Date(),
+      onSelect: (date) => {setDatePicker(date)},
+    })
   }, [])
 
   const handleTabClick = (tab, e) => {
@@ -73,9 +84,16 @@ const AddPostForm = props => {
                 </select>
                 <label htmlFor="countrySelect">Select Country</label>
               </div>
-              <fieldset className={styles.fieldset} style={{ border: 'none' }} disabled="disabled">
+              <fieldset className={styles.fieldset} style={{ border: 'none' }} disabled={!countryCode}>
                 <PlacesAutocomplete inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>
               </fieldset>
+            </div>
+            <div className={styles.fieldGroup}>
+              <div className="input-field col s11 l6 datepicker-section">
+                <i className="material-icons prefix white-text">event</i>
+                <input id="datepicker" type="text" className="datepicker"/>
+                <label htmlFor="datepicker">Select date</label>
+              </div>
             </div>
           </div>
           <div className={`${activeTab === 'images' ? styles.tabPanel_active : styles.tabPanel}`}>

@@ -1,6 +1,7 @@
 .newpostImg{
 	position: absolute;
-	min-height: 100vh;
+	height: 100vh;
+	width: 100%;
 }
 #newPostForm {
 	min-height: 100vh;
@@ -13,8 +14,8 @@
 		z-index: 2;
 
 		&>.content {
-			max-width: 75%;
-			width: 100%;
+			width: 75%;
+			max-width: 1300px;
 			place-self: center;
 
 
@@ -109,11 +110,22 @@
 	& > .selectRow{
 		display: flex;
 		align-items: baseline;
+		& > i{
+			position: absolute;
+			top: 1.3rem;
+			left: 1rem;
+		}
 	}
 	& .selectField{
 		flex-basis: 100%;
 		& svg{
 			fill: #fff;
+		}
+		& > input{
+			padding-left: 3.5rem;
+		}
+		& > label{
+			padding-left: 3.5rem;
 		}
 		& > ul{
 			max-height: 300px;
