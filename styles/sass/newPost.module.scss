@@ -1,3 +1,5 @@
+@use 'variables';
+
 .newpostImg{
 	position: absolute;
 	height: 100vh;
@@ -104,6 +106,8 @@
 	flex-direction: row;
 	width: 100%;
 	gap: 2rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 	& > *{
 		flex-basis: 50%;
 	}
@@ -144,6 +148,9 @@
 			}
 		}
 	}
+}
+.fieldRow{
+	margin-bottom: 2rem;
 }
 .fieldset:disabled *{
 	pointer-events: none;

@@ -96,6 +96,8 @@
   flex-direction: row;
   width: 100%;
   gap: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 .fieldGroup > * {
   flex-basis: 50%;
@@ -136,6 +138,10 @@
 }
 .fieldGroup .selectField > ul > li[class=optgroup]:hover {
   background-color: var(--primaryBtnColor);
+}
+
+.fieldRow {
+  margin-bottom: 2rem;
 }
 
 .fieldset:disabled * {
