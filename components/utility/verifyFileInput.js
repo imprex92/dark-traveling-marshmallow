@@ -19,8 +19,9 @@ export const validateFiles = (files, allowedTypes, imgUnitMaxSize, vidUnitMaxSiz
 		if(totalSize <= totalMaxSize){
 			continue;
 		} else {
-			rejectedFiles = [];
+			rejectedFiles.length = 0;
 			message.message = `Total size of files exceeds the limit (${(totalMaxSize / 1048576).toFixed(0)}MB). One or more files were not added.`;
+			message.status = 413;
 			break;
 		}
 	}
@@ -42,6 +43,7 @@ validateFiles.defaultProps = {
 	imgUnitMaxSize: 10485760,
 	vidUnitMaxSize: 314572800,
   };
+
 validateFiles.propTypes = {
 	files: PropTypes.array.isRequired,
 	allowedTypes: PropTypes.arrayOf(PropTypes.string),
