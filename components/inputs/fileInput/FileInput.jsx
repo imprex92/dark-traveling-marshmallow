@@ -1,13 +1,12 @@
 import React, { useState, useRef } from 'react'
-import styles from 'styles/fileInput.module.scss'
+import styles from 'styles/fileInput.module.css'
 import PropTypes from 'prop-types'
 import { validateFiles } from 'components/utility/verifyFileInput'
 
 const FileInput = props => {
 const [isDragging, setIsDragging] = useState(false)
 const [files, setFiles] = useState(null)
-
-const hasValidatedMessage = useRef(false)
+const [validationObject, setValidationObject] = useState(null)
 
 const handleDrop = (e) => {
 	e.preventDefault();
@@ -26,45 +25,50 @@ const handleChange = (e) => {
 
 const validation = () => {
 	const validated = validateFiles(files);
+	setValidationObject(null)
 
 	if(validated.message.status === 200){
 		console.log(validated.acceptedFiles);
 	} else {
 		console.log(validated.message.message);
 	}
+	setValidationMessage(validated.message);
 }
 
   return (
-	<div 
-	className={`${styles.fileInput} ${isDragging ? styles.dragging : ''}`}
-	onDragOver={(e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setIsDragging(true);
-	}}
-	onDragLeave={(e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setIsDragging(false);
-	}}
-	onDrop={(e) => {handleDrop(e)}}
-	>
-		<input 
-		className={styles.fileInput}
-		multiple 
-		capture 
-		hidden
-		type='file' 
-		accept='image/*, video/*' 
-		onChange={handleChange(e)}
-		/>
-		<span className={`material-symbols-outlined ${styles.inputImg}`}>
-			photo_library
-		</span>
-		<label>
-			<span className={styles.inputText}>{ isDragging ? 'Drop the files here.' : 'Click or drop files here.' }</span>
-		</label>
-	</div>
+	<>
+		{validationObject ? <span className={`${styles.inputValidateMsg} ${validationObject.status === 200 ? styles._valid : styles._invalid}`}>{validationObject.message}</span> : null}
+		<div 
+		className={`${styles.root} ${isDragging ? styles.dragging : ''}`}
+		onDragOver={(e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			setIsDragging(true);
+		}}
+		onDragLeave={(e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			setIsDragging(false);
+		}}
+		onDrop={(e) => {handleDrop(e)}}
+		>
+			<input 
+			className={styles.fileInput}
+			multiple 
+			capture 
+			hidden
+			type='file' 
+			accept='image/*, video/*' 
+			onChange={(e) => handleChange(e)}
+			/>
+			<span className={`material-symbols-outlined ${styles.inputImg}`}>
+				photo_library
+			</span>
+			<label>
+				<span className={styles.inputText}>{ isDragging ? 'Drop the files here.' : 'Click or drop files here.' }</span>
+			</label>
+		</div>
+	</>
   )
 }
 

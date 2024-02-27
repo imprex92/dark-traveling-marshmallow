@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from 'styles/newPost.module.css'
 import countriesByContinent from './utility/countries_new'
 import PlacesAutocomplete from './utility/GooglePlacesAutocomplete'
+import FileInput from './inputs/fileInput/FileInput'
 
 const AddPostForm = props => {
   const [activeTab, setActiveTab] = useState('content')
@@ -123,6 +124,7 @@ const AddPostForm = props => {
           </div>
           <div className={`${activeTab === 'images' ? styles.tabPanel_active : styles.tabPanel}`}>
             <h2>Add pictures here</h2>
+            <FileInput />
           </div>
           <div className={`${activeTab === 'submit' ? styles.tabPanel_active : styles.tabPanel}`}>
             <h2>submit if all OK</h2>
