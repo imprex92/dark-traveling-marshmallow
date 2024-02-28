@@ -53,6 +53,8 @@ const validation = () => {
 		onDrop={(e) => {handleDrop(e)}}
 		>
 			<input 
+			name='upload__input'
+			id='upload__input'
 			className={styles.fileInput}
 			multiple 
 			capture 
@@ -61,12 +63,17 @@ const validation = () => {
 			accept='image/*, video/*' 
 			onChange={(e) => handleChange(e)}
 			/>
-			<span className={`material-symbols-outlined ${styles.inputImg}`}>
-				photo_library
-			</span>
-			<label>
-				<span className={styles.inputText}>{ isDragging ? 'Drop the files here.' : 'Click or drop files here.' }</span>
+			<label htmlFor='upload__input'>
+				<span className={`material-symbols-outlined text-white ${styles.inputImg}`}>
+					photo_library
+				</span>
+				<span className={styles.inputText}>
+					{ isDragging ? 'Drop the files here.' : 'Click or drop files here.' }
+				</span>
 			</label>
+		</div>
+		<div className={styles.filePreviews}>
+
 		</div>
 	</>
   )
