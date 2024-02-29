@@ -58,7 +58,7 @@ const AddPostForm = props => {
           <span className={`material-symbols-outlined ${styles.label}`}>line_start_circle</span>Content
         </div>
         <div onClick={(e) => {handleTabClick('images', e)}}  className={`${activeTab === 'images' ? styles.tab_active : styles.tab}`}>
-          <span className={`material-symbols-outlined ${styles.label}`}>attach_file_add</span>Image
+          <span className={`material-symbols-outlined ${styles.label}`}>attach_file_add</span>Images
         </div>
         <div onClick={(e) => {handleTabClick('submit', e)}} className={`${activeTab === 'submit' ? styles.tab_active : styles.tab}`}>
           <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>Submit
@@ -66,9 +66,9 @@ const AddPostForm = props => {
       </div>
 
       <form onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
-        <div className={`${styles.tabContent}`}>
-          <div className={`${activeTab === 'content' ? styles.tabPanel_active : styles.tabPanel}`}>
-            <h2 className="">Start of post</h2>
+        <div className={`${styles.tabWrapper}`}>
+          <div className={`${styles.tabContent} ${activeTab === 'content' ? styles.tabPanel_active : styles.tabPanel}`}>
+            <h5 className={styles.contentDescription}>Start of post</h5>
             <div className={styles.fieldGroup}>
               <div className={`input-field ${styles.selectRow}`}>
                 <i className="material-icons white-text">public</i>
@@ -118,16 +118,16 @@ const AddPostForm = props => {
               <div className="input-field col s12">
                 <i class="material-icons prefix white-text">mode_edit</i>
                 <textarea id="postContent" className="materialize-textarea" placeholder=" "></textarea>
-                <label for="postContent">Write something for your  post...</label>
+                <label htmlFor="postContent">Write something for your  post...</label>
               </div>
             </div>
           </div>
-          <div className={`${activeTab === 'images' ? styles.tabPanel_active : styles.tabPanel}`}>
-            <h2>Add pictures here</h2>
+          <div className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
+            <h5 className={styles.contentDescription}>Add one or more pictures to make your post look better.</h5>
             <FileInput />
           </div>
-          <div className={`${activeTab === 'submit' ? styles.tabPanel_active : styles.tabPanel}`}>
-            <h2>submit if all OK</h2>
+          <div className={`${styles.tabContent} ${activeTab === 'submit' ? styles.tabPanel_active : styles.tabPanel}`}>
+            <h5 className={styles.contentDescription}>submit if all OK</h5>
           </div>
         </div>
       </form>
