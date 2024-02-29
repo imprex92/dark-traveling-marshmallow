@@ -35,6 +35,7 @@
   max-height: 860px;
   height: 100% !important;
   overflow: visible !important;
+  margin: 0 auto;
 }
 @media (max-width: 768px) {
   .dashboardMain .wrapper .postSlides_empty {
@@ -92,6 +93,7 @@
   justify-items: center;
   color: #c6c6c6;
   row-gap: 2rem;
+  padding: 2rem;
 }
 .dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer > .sentence {
   text-align: center;

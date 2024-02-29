@@ -1,7 +1,13 @@
 .root {
+  grid-area: fileInput;
   border: 2px dotted lightblue;
   padding: 20px;
   margin: 20px;
+  display: flex;
+}
+
+.filePreviews {
+  grid-area: filePreviews;
 }
 
 /*# sourceMappingURL=fileInput.module.css.map */

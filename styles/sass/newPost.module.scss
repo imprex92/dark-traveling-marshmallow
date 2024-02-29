@@ -1,5 +1,7 @@
 @use 'variables';
 
+$navTabListHeight: 53px;
+
 .newpostImg{
 	position: absolute;
 	height: 100vh;
@@ -19,8 +21,6 @@
 			width: 75%;
 			max-width: 1300px;
 			place-self: center;
-
-
 			position: relative;
 			padding: 2rem;
 			background-color: rgba(0, 0, 0, 0.5);
@@ -35,13 +35,18 @@
 	}
 }
 
+.postForm{
+	height: calc(100% - $navTabListHeight - 2rem);
+}
 .stepTabs{
+	height: 100%;
 	& > .navList{
 		list-style: none;
 		display: flex;
 		flex-direction: row;
 		margin: 1rem 2rem;
 		justify-content: center;
+		height: $navTabListHeight;
 	}
 }
 .tab{
@@ -87,8 +92,12 @@
 }
 
 .tabContent{
+	position: relative;
+}
+.tabWrapper{
 	border-radius: 0 0 4px 4px;
 	display: block;
+	height: 100%;
 
 	.tabPanel{
 		display: none;
@@ -96,8 +105,17 @@
 		text-align: left;
 
 		&_active{
-			display: block;
+			display: flex;
+			flex-direction: column;
 		}
+	}
+	.imageTab_active{
+		display: grid;
+		height: 100%;
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'title'
+							'fileInput'
+							'filePreviews';
 	}
 }
 
@@ -155,4 +173,11 @@
 .fieldset:disabled *{
 	pointer-events: none;
 	cursor: not-allowed;
+}
+
+.contentDescription{
+	grid-area: title;
+	font-family: var(--primaryHeaderFont);
+	color: #fff;
+	margin-left: 1rem;
 }

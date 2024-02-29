@@ -1,7 +1,9 @@
 .root{
+	grid-area: fileInput;
 	border: 2px dotted lightblue;
 	padding: 20px;
 	margin: 20px;
+	display: flex;
 }
 
 .fileInput{
@@ -21,5 +23,5 @@
 }
 
 .filePreviews{
-
+	grid-area: filePreviews;
 }
