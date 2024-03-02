@@ -109,7 +109,7 @@ const AddPostForm = props => {
             </div>
             <div className={styles.fieldGroup}>
               <div className="input-field col s6">
-                <i class="material-icons prefix white-text">title</i>
+                <i className="material-icons prefix white-text">title</i>
                 <input id="postTitle" type="email" class="validate" placeholder=" " />
                 <label htmlFor="postTitle">Title</label>
               </div>
@@ -122,7 +122,7 @@ const AddPostForm = props => {
               </div>
             </div>
           </div>
-          <div className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
+          <div id='imgSectionTab' className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
             <h5 className={styles.contentDescription}>Add one or more pictures to make your post look better.</h5>
             <FileInput />
           </div>
