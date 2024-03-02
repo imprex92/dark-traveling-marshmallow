@@ -1,9 +1,40 @@
 .root {
   grid-area: fileInput;
-  border: 2px dotted lightblue;
+  border: 4px solid rgba(255, 255, 255, 0.21);
   padding: 20px;
   margin: 20px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--defaultBoxBorderRadius);
+}
+.root:hover {
+  border: 4px solid rgba(255, 255, 255, 0.43);
+  cursor: pointer;
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
+}
+.root:hover .inputImg {
+  color: #d9d9d9;
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
+}
+
+.inputLabel {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputImg {
+  font-size: 85px;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #c6c6c6;
+}
+
+.inputText {
+  font-size: 15px;
+}
+.inputText:hover {
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
 }
 
 .filePreviews {
