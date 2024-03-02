@@ -1,12 +1,22 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import styles from 'styles/fileInput.module.css'
 import PropTypes from 'prop-types'
 import { validateFiles } from 'components/utility/verifyFileInput'
 
 const FileInput = props => {
 const [isDragging, setIsDragging] = useState(false)
-const [files, setFiles] = useState(null)
+const [files, setFiles] = useState([])
 const [validationObject, setValidationObject] = useState(null)
+
+useLayoutEffect (() => {
+	if (files && files.length > 0){
+		document.getElementById('imgSectionTab').classList.add('hasPreview')
+		console.log('files', files);
+	}
+	else{
+		document.getElementById('imgSectionTab').classList.remove('hasPreview')
+	}
+}, [files])
 
 const handleDrop = (e) => {
 	e.preventDefault();
@@ -23,6 +33,7 @@ const handleChange = (e) => {
 	validation()
 }
 
+
 const validation = () => {
 	const validated = validateFiles(files);
 	setValidationObject(null)
@@ -32,7 +43,7 @@ const validation = () => {
 	} else {
 		console.log(validated.message.message);
 	}
-	setValidationMessage(validated.message);
+	setValidationObject(validated.message);
 }
 
   return (
@@ -63,17 +74,31 @@ const validation = () => {
 			accept='image/*, video/*' 
 			onChange={(e) => handleChange(e)}
 			/>
-			<label htmlFor='upload__input'>
+			<label className={styles.inputLabel} htmlFor='upload__input'>
 				<span className={`material-symbols-outlined text-white ${styles.inputImg}`}>
 					photo_library
 				</span>
 				<span className={styles.inputText}>
-					{ isDragging ? 'Drop the files here.' : 'Click or drop files here.' }
+					{ isDragging ? 'Drop the files here.' : 'Drag and drop files here or click here' }
 				</span>
 			</label>
 		</div>
 		<div className={styles.filePreviews}>
-
+			{files && files.map((file, index) => (
+				<div key={index} className={styles.previewItem}>
+					<span className={styles.fileName}>{file.name || '?'}</span>
+					<button onClick={() => {
+						setFiles((prevFiles) => 
+							prevFiles.filter(((_, i) => i !== index))
+						)
+					}}
+					>
+						<span className="material-symbols-outlined text-white">
+							delete
+						</span>
+					</button>
+				</div>
+			))}
 		</div>
 	</>
   )
