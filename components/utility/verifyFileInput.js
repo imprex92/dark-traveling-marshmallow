@@ -3,21 +3,26 @@ import PropTypes from 'prop-types';
 export const validateFiles = (files, allowedTypes, imgUnitMaxSize, vidUnitMaxSize, totalMaxSize) => {
 	const acceptedFiles = [];
 	const rejectedFiles = [];
+	allowedTypes = allowedTypes || validateFiles.defaultProps.allowedTypes;
+	vidUnitMaxSize = vidUnitMaxSize || validateFiles.defaultProps.vidUnitMaxSize
 	let totalSize = 0;
 	let message = {message: '', status: null};
-
+console.log('validation start', files);
 	for (const file of files) {
 		totalSize += file.size;
+		console.log('evening', totalSize);
 		if(allowedTypes.includes(file.type)){
 			const unitMaxSize = file.type.includes('image') ? imgUnitMaxSize : vidUnitMaxSize;
 			if(file.size <= unitMaxSize){
 				acceptedFiles.push(file);
+				console.log('accepted', file.size, unitMaxSize);
 			} else {
 				rejectedFiles.push(file);
+				console.log('reject', file.size, unitMaxSize);
 			}
 		}
 		if(totalSize <= totalMaxSize){
-			continue;
+			acceptedFiles.push(file)
 		} else {
 			rejectedFiles.length = 0;
 			message.message = `Total size of files exceeds the limit (${(totalMaxSize / 1048576).toFixed(0)}MB). One or more files were not added.`;
@@ -33,6 +38,7 @@ export const validateFiles = (files, allowedTypes, imgUnitMaxSize, vidUnitMaxSiz
 	else{
 		message.message = 'All files were accepted.';
 		message.status = 200;
+console.log('200');
 	}
 	return {acceptedFiles, rejectedFiles, message, totalSize};
 }
@@ -42,7 +48,7 @@ validateFiles.defaultProps = {
 	totalMaxSize: 314572800,
 	imgUnitMaxSize: 10485760,
 	vidUnitMaxSize: 314572800,
-  };
+};
 
 validateFiles.propTypes = {
 	files: PropTypes.array.isRequired,
@@ -50,4 +56,4 @@ validateFiles.propTypes = {
 	totalMaxSize: PropTypes.number.isRequired,
 	vidUnitMaxSize: PropTypes.number.isRequired,
 	imgUnitMaxSize: PropTypes.number.isRequired,
-  };
+};
