@@ -110,13 +110,13 @@ const AddPostForm = props => {
             <div className={styles.fieldGroup}>
               <div className="input-field col s6">
                 <i className="material-icons prefix white-text">title</i>
-                <input id="postTitle" type="email" class="validate" placeholder=" " />
+                <input id="postTitle" type="email" className="validate" placeholder=" " />
                 <label htmlFor="postTitle">Title</label>
               </div>
             </div>
             <div className={styles.fieldRow}>
               <div className="input-field col s12">
-                <i class="material-icons prefix white-text">mode_edit</i>
+                <i className="material-icons prefix white-text">mode_edit</i>
                 <textarea id="postContent" className="materialize-textarea" placeholder=" "></textarea>
                 <label htmlFor="postContent">Write something for your  post...</label>
               </div>
@@ -132,6 +132,11 @@ const AddPostForm = props => {
         </div>
       </form>
     </div>
+    <style>{`
+        #imgSectionTab.hasPreview{
+          grid-template-rows: 55px 1fr auto;
+        }
+      `}</style>
     </>
   )
 }
