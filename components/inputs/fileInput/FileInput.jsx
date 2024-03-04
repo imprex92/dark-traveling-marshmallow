@@ -2,6 +2,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react'
 import styles from 'styles/fileInput.module.css'
 import PropTypes from 'prop-types'
 import { validateFiles } from 'components/utility/verifyFileInput'
+import Image from 'next/image'
 
 const FileInput = props => {
 const [isDragging, setIsDragging] = useState(false)
@@ -37,18 +38,18 @@ const handleChange = (e) => {
 const validation = () => {
 	const validated = validateFiles(files);
 	setValidationObject(null)
-
+console.log(validated);
 	if(validated.message.status === 200){
 		console.log(validated.acceptedFiles);
 	} else {
 		console.log(validated.message.message);
 	}
+	M.toast({text: validated.message.message, displayLength: 2500})
 	setValidationObject(validated.message);
 }
 
   return (
 	<>
-		{validationObject ? <span className={`${styles.inputValidateMsg} ${validationObject.status === 200 ? styles._valid : styles._invalid}`}>{validationObject.message}</span> : null}
 		<div 
 		className={`${styles.root} ${isDragging ? styles.dragging : ''}`}
 		onDragOver={(e) => {
@@ -85,15 +86,28 @@ const validation = () => {
 		</div>
 		<div className={styles.filePreviews}>
 			{files && files.map((file, index) => (
-				<div key={index} className={styles.previewItem}>
-					<span className={styles.fileName}>{file.name || '?'}</span>
-					<button onClick={() => {
+				<div key={index} className={`${file.type.startsWith('image/') ? styles.previewItem_img : file.type.startsWith('video/') ? styles.previewItem_vid : styles.previewItem}`}>
+					{file.type.startsWith('image/') ? (
+						<div className={styles.imgThumbnail}>
+							<Image alt='Post image' width={150} height={175} src={URL.createObjectURL(file)} />
+						</div>
+					) : file.type.startsWith('video/') ? (
+						<div className={styles.vidThumbnail}>
+							<video controls muted width={300} height={175}>
+								<source src={URL.createObjectURL(file)} type={`${file.type === 'video/quicktime' ? 'video/mp4' : file.type}`} />
+								No support
+							</video>
+						</div>
+					) : (
+						<span className={styles.unknownType}>{file.name || '?'}</span>
+					)}
+					<button className={`${styles.removeBtn} btn waves-effect waves-light`} onClick={() => {
 						setFiles((prevFiles) => 
 							prevFiles.filter(((_, i) => i !== index))
 						)
 					}}
 					>
-						<span className="material-symbols-outlined text-white">
+						<span className={`material-symbols-outlined text-white`}>
 							delete
 						</span>
 					</button>
