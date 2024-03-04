@@ -30,12 +30,20 @@
   overflow-y: auto;
 }
 
+.postForm {
+  height: calc(100% - 53px - 2rem);
+}
+
+.stepTabs {
+  height: 100%;
+}
 .stepTabs > .navList {
   list-style: none;
   display: flex;
   flex-direction: row;
   margin: 1rem 2rem;
   justify-content: center;
+  height: 53px;
 }
 
 .tab, .tab_active {
@@ -79,16 +87,28 @@
 }
 
 .tabContent {
+  position: relative;
+}
+
+.tabWrapper {
   border-radius: 0 0 4px 4px;
   display: block;
+  height: 100%;
 }
-.tabContent .tabPanel {
+.tabWrapper .tabPanel {
   display: none;
   padding: 10px;
   text-align: left;
 }
-.tabContent .tabPanel_active {
-  display: block;
+.tabWrapper .tabPanel_active {
+  display: flex;
+  flex-direction: column;
+}
+.tabWrapper .imageTab_active {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 0.6fr auto;
+  grid-template-areas: "title" "fileInput" "filePreviews";
 }
 
 .fieldGroup {
@@ -147,6 +167,13 @@
 .fieldset:disabled * {
   pointer-events: none;
   cursor: not-allowed;
+}
+
+.contentDescription {
+  grid-area: title;
+  font-family: var(--primaryHeaderFont);
+  color: #fff;
+  margin-inline: 1.5rem;
 }
 
 /*# sourceMappingURL=newPost.module.css.map */
