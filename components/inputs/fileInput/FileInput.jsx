@@ -1,10 +1,9 @@
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import styles from 'styles/fileInput.module.css'
-import PropTypes from 'prop-types'
 import { validateFiles } from 'components/utility/verifyFileInput'
 import Image from 'next/image'
 
-const FileInput = props => {
+const FileInput = (props) => {
 const [isDragging, setIsDragging] = useState(false)
 const [files, setFiles] = useState([])
 const [validationObject, setValidationObject] = useState(null)
@@ -12,11 +11,11 @@ const [validationObject, setValidationObject] = useState(null)
 useLayoutEffect (() => {
 	if (files && files.length > 0){
 		document.getElementById('imgSectionTab').classList.add('hasPreview')
-		console.log('files', files);
 	}
 	else{
 		document.getElementById('imgSectionTab').classList.remove('hasPreview')
 	}
+	validation(files)
 }, [files])
 
 const handleDrop = (e) => {
@@ -26,26 +25,18 @@ const handleDrop = (e) => {
 	const draggedFiles = e.dataTransfer.files;
 	setFiles((prevFiles) => [...prevFiles, ...draggedFiles]);
 	setIsDragging(false);
-	validation()
 }
 const handleChange = (e) => {
 	const selectedFiles = e.target.files;
 	setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
-	validation()
 }
 
 
 const validation = () => {
-	const validated = validateFiles(files);
 	setValidationObject(null)
-console.log(validated);
-	if(validated.message.status === 200){
-		console.log(validated.acceptedFiles);
-	} else {
-		console.log(validated.message.message);
-	}
+	const validated = validateFiles(files);
 	M.toast({text: validated.message.message, displayLength: 2500})
-	setValidationObject(validated.message);
+	setValidationObject(validated);
 }
 
   return (
@@ -85,7 +76,8 @@ console.log(validated);
 			</label>
 		</div>
 		<div className={styles.filePreviews}>
-			{files && files.map((file, index) => (
+			{validationObject && validationObject.acceptedFiles.length > 0 && 
+			validationObject.acceptedFiles.map((file, index) => (
 				<div key={index} className={`${file.type.startsWith('image/') ? styles.previewItem_img : file.type.startsWith('video/') ? styles.previewItem_vid : styles.previewItem}`}>
 					{file.type.startsWith('image/') ? (
 						<div className={styles.imgThumbnail}>
