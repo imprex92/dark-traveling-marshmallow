@@ -37,8 +37,42 @@
   filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
 }
 
+.inputValidateMsg {
+  color: #fff;
+}
+
 .filePreviews {
   grid-area: filePreviews;
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: 1.5rem;
+  gap: 1rem;
+}
+
+.previewItem, .previewItem_vid, .previewItem_img {
+  position: relative;
+  display: flex;
+  height: 175px;
+}
+.previewItem_img {
+  width: 150px;
+}
+.previewItem_vid {
+  width: 300px;
+}
+
+.removeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 40px;
+}
+
+.imgThumbnail img {
+  object-fit: contain;
 }
 
 /*# sourceMappingURL=fileInput.module.css.map */

@@ -42,9 +42,50 @@
 }
 
 .inputValidateMsg{
-	
+	color: #fff;
 }
 
 .filePreviews{
 	grid-area: filePreviews;
+	display: flex;
+	flex-wrap: wrap;
+	padding-inline: 1.5rem;
+	gap: 1rem;
+}
+
+.previewItem{
+	position: relative;
+	display: flex;
+	height: 175px;
+
+	&_img{
+		@extend .previewItem;
+		width: 150px;
+	}
+	&_vid{
+		@extend .previewItem;
+		width: 300px;
+	}
+}
+
+.removeBtn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0.25rem;
+	right: 0.25rem;
+	width: 40px;
+}
+
+.imgThumbnail img{
+	object-fit: contain;
+}
+
+.vidThumbnail{
+
+}
+
+.unknownType{
+
 }

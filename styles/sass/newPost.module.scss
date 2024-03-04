@@ -117,9 +117,6 @@ $navTabListHeight: 53px;
 							'fileInput'
 							'filePreviews';
 	}
-	.imageTab_active[class="hasPreview"] {
-		grid-template-rows: 55px 0.5fr auto;
-	}
 }
 
 .fieldGroup{
@@ -182,5 +179,5 @@ $navTabListHeight: 53px;
 	grid-area: title;
 	font-family: var(--primaryHeaderFont);
 	color: #fff;
-	margin-left: 1rem;
+	margin-inline: 1.5rem;
 }

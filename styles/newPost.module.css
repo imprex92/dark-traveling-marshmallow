@@ -110,9 +110,6 @@
   grid-template-rows: auto 0.6fr auto;
   grid-template-areas: "title" "fileInput" "filePreviews";
 }
-.tabWrapper .imageTab_active[class=hasPreview] {
-  grid-template-rows: 55px 0.5fr auto;
-}
 
 .fieldGroup {
   display: flex;
@@ -176,7 +173,7 @@
   grid-area: title;
   font-family: var(--primaryHeaderFont);
   color: #fff;
-  margin-left: 1rem;
+  margin-inline: 1.5rem;
 }
 
 /*# sourceMappingURL=newPost.module.css.map */
