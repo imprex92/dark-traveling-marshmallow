@@ -3,7 +3,7 @@ import styles from 'styles/fileInput.module.css'
 import { validateFiles } from 'components/utility/verifyFileInput'
 import Image from 'next/image'
 
-const FileInput = (props) => {
+const FileInput = ({returnFiles}) => {
 const [isDragging, setIsDragging] = useState(false)
 const [files, setFiles] = useState([])
 const [validationObject, setValidationObject] = useState(null)
@@ -15,7 +15,7 @@ useLayoutEffect (() => {
 	else{
 		document.getElementById('imgSectionTab').classList.remove('hasPreview')
 	}
-	validation(files)
+	files.length > 0 && validation(files)
 }, [files])
 
 const handleDrop = (e) => {
@@ -31,12 +31,15 @@ const handleChange = (e) => {
 	setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
 }
 
-
 const validation = () => {
 	setValidationObject(null)
 	const validated = validateFiles(files);
 	M.toast({text: validated.message.message, displayLength: 2500})
 	setValidationObject(validated);
+}
+
+const goToOverview = () => {
+	returnFiles(files)
 }
 
   return (
@@ -106,6 +109,10 @@ const validation = () => {
 				</div>
 			))}
 		</div>
+		<button 
+		className={`${styles.moveOnBtn} btn waves-effect waves-light`}
+		onClick={goToOverview}
+		disabled={!files || files.length === 0}>Overview</button>
 	</>
   )
 }
