@@ -78,6 +78,10 @@
 	width: 40px;
 }
 
+.moveOnBtn{
+	grid-area: buttons;
+}
+
 .imgThumbnail img{
 	object-fit: contain;
 }

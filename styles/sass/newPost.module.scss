@@ -93,6 +93,7 @@ $navTabListHeight: 53px;
 
 .tabContent{
 	position: relative;
+	height: 100%;
 }
 .tabWrapper{
 	border-radius: 0 0 4px 4px;
@@ -112,10 +113,11 @@ $navTabListHeight: 53px;
 	.imageTab_active{
 		display: grid;
 		height: 100%;
-		grid-template-rows: auto 0.6fr auto;
+		grid-template-rows: auto 0.6fr auto 40px;
 		grid-template-areas: 'title'
 							'fileInput'
-							'filePreviews';
+							'filePreviews'
+							'buttons';
 	}
 }
 
@@ -167,6 +169,10 @@ $navTabListHeight: 53px;
 		}
 	}
 }
+input.dateInput, input.titleInput{
+	width: calc(100% - 1rem) !important;
+}
+
 .fieldRow{
 	margin-bottom: 2rem;
 }
@@ -180,4 +186,14 @@ $navTabListHeight: 53px;
 	font-family: var(--primaryHeaderFont);
 	color: #fff;
 	margin-inline: 1.5rem;
+}
+
+.buttons{
+	display: flex;
+	align-items: flex-end;
+	column-gap: 2rem;
+	height: 100%;
+	& .resetForm, .moveOnBtn {
+		flex: 1 1 50%;
+	}
 }
