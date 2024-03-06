@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react'
 import usePlacesAutocomplete, {	getGeocode,	getLatLng, getDetails } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import styles from 'styles/googlePlacesAutocomplete.module.css'
 
-	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue}) => {
+	const PlacesAutocomplete = ({dataFromChild, countryCode, inputValue, isDisabled = false}) => {
 		let script;
+
 		useEffect(() => {
 			const existingScript = document.querySelector(
 			`script[src*="https://maps.googleapis.com/maps/api/js"]`
@@ -12,7 +14,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			const checkExistingScript = () => {
 			if (!existingScript) {
 				script = document.createElement('script');
-				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap`;
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap&loading=async`;
 				script.async = true;
 				script.defer = true;
 				document.head.appendChild(script);
@@ -20,13 +22,13 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			};
 
 			// Delay the check for the existing script
-			const timeoutId = setTimeout(checkExistingScript, 100);
+			const timeoutId = setTimeout(checkExistingScript, 500);
 
 			return () => {
-			clearTimeout(timeoutId);
-			document.head.removeChild(script);
+				clearTimeout(timeoutId);
+				document.head.removeChild(script);
 			};
-		}, []);
+		}, [countryCode]);
 
 		const getMyPosition = (() => {
 			const success = (pos) => {
@@ -35,7 +37,6 @@ import useOnclickOutside from "react-cool-onclickoutside";
 				getGeocode({
 				  location: new google.maps.LatLng(latitude, longitude),
 				}).then((results) => {
-					// console.log(results);
 				  setValue(results[0].formatted_address);
 				});
 			  };
@@ -59,12 +60,9 @@ import useOnclickOutside from "react-cool-onclickoutside";
 		  clearSuggestions,
 		} = usePlacesAutocomplete({
 		  requestOptions: {
-			/* Define search scope here */
-			
 			componentRestrictions: {
 				country: countryCode
 			}
-			
 		},
 			callbackName: "initMap",
 		  	debounce: 300,
@@ -119,38 +117,37 @@ import useOnclickOutside from "react-cool-onclickoutside";
 			});
 			dataFromChild({coordinates, locationData, additionalData})
 		};
-		
-		
-	  
+
 		const renderSuggestions = () =>
 		  data.map((suggestion) => {
 			const {
 			  place_id,
 			  structured_formatting: { main_text, secondary_text, terms },
 			} = suggestion;
-			// console.log(suggestion);
+
 			return (
-			  <li key={place_id} onClick={handleSelect(suggestion)}>
+			  <li key={place_id} onClick={handleSelect(suggestion)} className={styles.suggestionItem}>
 				<strong>{main_text}</strong> <small>{secondary_text}</small>	
 			  </li>
 			);
 		  });
 	  
 		return (
-			<div className="input-field s11 col l5 places-autocomplete" ref={ref}>
+			<div className={`input-field s11 col l5 places-autocomplete ${styles.placesAutocomplete}`} ref={ref}>
 				<i className="material-icons prefix white-text">location_city</i>
 				<input
+					className={styles.locationInput}
 					id="post_location"
 					value={value}
 					onChange={handleInput}
-					disabled={!ready}
+					disabled={!ready || isDisabled}
 					type="text"
 					placeholder=" "
 				/>
-				<label htmlFor="post_location">Address</label>
-				<i onClick={getMyPosition} className="material-icons suffix">person_pin_circle</i>
+				<label className={isDisabled ? styles.label_disabled : ''} htmlFor="post_location">Address</label>
+				<i onClick={getMyPosition} className={`material-icons suffix ${isDisabled ? styles.pinIcon_disabled : styles.pinIcon}`}>person_pin_circle</i>
 				{status === "OK" && 
-					<ul className="autocomplete-suggestions-wrapper">
+					<ul className={styles.autocompleteSuggestionsWrapper}>
 						{renderSuggestions()}
 					</ul>
 				}
