@@ -9,14 +9,21 @@ const AddPostForm = props => {
   const [activeTab, setActiveTab] = useState('content')
   const [countries, setCountries] = useState(countriesByContinent)
   const [countryCode, setCountryCode] = useState(null)
-  const placesInputValue = useRef('')
-  const postCountry = useRef(null)
-  const selectRef = useRef(null)
-  const postMood = useRef(null)
-  const postWeather = useRef(null)
-
+  const [mood, setMood] = useState(null)
+  const [weather, setWeather] = useState(null)
+  const [postContent, setPostContent] = useState('')
+  const [files, setFiles] = useState(null)
 	const [datePicker, setDatePicker] = useState(new Date())
 	const [postLocation, setPostLocation] = useState([])
+
+  const formRef = useRef(null)
+  const placesInputValue = useRef('')
+  const selectRef = useRef(null)
+  const childRef = useRef(null);
+
+  const inputs = {countryCode, mood, weather, postContent}
+
+  const isButtonDisabled = !useInputValidation(inputs);
 
   useEffect(() => {
     const selectEl = document.getElementById('countrySelect')
@@ -35,7 +42,7 @@ const AddPostForm = props => {
   }, [])
 
   const handleTabClick = (tab, e) => {
-    e.preventDefault()
+    e && e.preventDefault()
     setActiveTab(tab)
   }
   const handleCountryChange = () => {
@@ -49,6 +56,16 @@ const AddPostForm = props => {
   function dataFromChild({ coordinates, locationData, additionalData }){
 		setPostLocation({ coordinates, locationData, additionalData })
 	}
+  const clearForm = () => {
+    formRef.current.reset();
+    document.getElementById('post_location').value = ' ';
+    setMood(null)
+    setWeather(null)
+    setPostContent('')
+    setDatePicker(new Date())
+    setPostLocation([])
+    setCountryCode(null)
+  }
 
   return (
     <>
@@ -65,7 +82,7 @@ const AddPostForm = props => {
         </div>
       </div>
 
-      <form onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
+      <form ref={formRef} onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
         <div className={`${styles.tabWrapper}`}>
           <div className={`${styles.tabContent} ${activeTab === 'content' ? styles.tabPanel_active : styles.tabPanel}`}>
             <h5 className={styles.contentDescription}>Start of post</h5>
@@ -85,46 +102,50 @@ const AddPostForm = props => {
                 <label htmlFor="countrySelect">Select Country</label>
               </div>
               <fieldset className={styles.fieldset} style={{ border: 'none' }} disabled={!countryCode}>
-                <PlacesAutocomplete inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>
+                <PlacesAutocomplete childRef={childRef} isDisabled={!countryCode ? true : false} inputValue={e => placesInputValue.current = e} countryCode={countryCode} dataFromChild={dataFromChild}/>
               </fieldset>
             </div>
             <div className={styles.fieldGroup}>
               <div className="input-field col s11 l6 datepicker-section">
                 <i className="material-icons prefix white-text">event</i>
-                <input id="datepicker" type="text" className="datepicker"/>
+                <input id="datepicker" type="text" className={`datepicker ${styles.dateInput}`}/>
                 <label htmlFor="datepicker">Select journey date</label>
               </div>
             </div>
             <div className={styles.fieldGroup}>
               <div className="input-field col s11 l6">
                 <i className="material-icons prefix white-text">mood</i>
-                <input ref={postMood} type="text" id="postMood" className="validate" placeholder=' ' />
+                <input onChange={(e) => setMood(e.target.value)} type="text" id="postMood" className="validate" placeholder=' ' />
                 <label htmlFor="postMood">How do you feel right now?</label>
               </div>
               <div className="input-field col s11 l6">
                 <i className="material-icons prefix white-text">nights_stay</i>
-                <input ref={postWeather} type="text" id="postWeather" className="validate" placeholder=' ' />
+                <input onChange={(e) => setWeather(e.target.value)} type="text" id="postWeather" className="validate" placeholder=' ' />
                 <label htmlFor="postWeather">How's the weather today?</label>
               </div>
             </div>
             <div className={styles.fieldGroup}>
               <div className="input-field col s6">
                 <i className="material-icons prefix white-text">title</i>
-                <input id="postTitle" type="email" className="validate" placeholder=" " />
+                <input id="postTitle" type="text" className={`validate ${styles.titleInput}`} placeholder=" " />
                 <label htmlFor="postTitle">Title</label>
               </div>
             </div>
             <div className={styles.fieldRow}>
               <div className="input-field col s12">
                 <i className="material-icons prefix white-text">mode_edit</i>
-                <textarea id="postContent" className="materialize-textarea" placeholder=" "></textarea>
+                <textarea onChange={(e) => setPostContent(e.target.value)} id="postContent" className="materialize-textarea" placeholder=" "></textarea>
                 <label htmlFor="postContent">Write something for your  post...</label>
               </div>
+            </div>
+            <div className={`${styles.buttons}`}>
+              <button className={`${styles.resetForm} btn waves-effect waves-light`} onClick={clearForm}>Clear</button>
+              <button disabled={isButtonDisabled} className={`${styles.moveOnBtn} btn waves-effect waves-light`} onClick={() => handleTabClick('images')}>Add images</button>
             </div>
           </div>
           <div id='imgSectionTab' className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
             <h5 className={styles.contentDescription}>Add one or more pictures to make your post look better.</h5>
-            <FileInput />
+            <FileInput returnFiles={(f) => {setFiles(f), handleTabClick('submit')}} />
           </div>
           <div className={`${styles.tabContent} ${activeTab === 'submit' ? styles.tabPanel_active : styles.tabPanel}`}>
             <h5 className={styles.contentDescription}>submit if all OK</h5>
@@ -139,6 +160,17 @@ const AddPostForm = props => {
       `}</style>
     </>
   )
+}
+
+const useInputValidation = (inputs) => {
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const allInputsFilled = Object.values(inputs).every(input => input !== null && input.trim() !== '')
+    setIsValid(allInputsFilled)
+  }, [inputs])
+  
+  return isValid
 }
 
 AddPostForm.propTypes = {}
