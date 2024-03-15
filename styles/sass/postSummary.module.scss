@@ -1,0 +1,36 @@
+.root {
+	grid-area: slider;
+}
+
+.textRoot {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.title {
+	text-align: center;
+	overflow-wrap: break-word;
+}
+
+.divider {
+	margin: 2rem auto;
+	margin-top: 100%;
+	width: 100%;
+}
+
+.authorDateContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.link {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.description {
+	margin-top: 2rem;
+	overflow-wrap: break-word;
+}
