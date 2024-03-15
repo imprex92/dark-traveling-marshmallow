@@ -15,6 +15,7 @@ const TextContent = ({ formData }) => {
 		<div className={styles.textRoot}>
 			<h3 className={styles.title}>{postTitle}</h3>
 			<div className={styles.location}>
+				<span class="material-symbols-outlined white-text">location_on</span>
 				{ 
 					locationData[0]?.adr_address ? 
 					<a 
@@ -39,6 +40,7 @@ const TextContent = ({ formData }) => {
 						<span>{additionalData[0]?.description}</span>
 					</a>
 				}
+				<span className={styles.weather}><span class="material-symbols-outlined white-text">routine</span>{weather}</span>
 			</div>
 			<div className={styles.description}>
 				<p>{postContent}</p>
