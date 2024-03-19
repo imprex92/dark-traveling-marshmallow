@@ -18,18 +18,16 @@ const server = next({
 
 const nextjsHandle = server.getRequestHandler();
 exports.nextServer = https.onRequest((req, res) => {
+  console.log('Requested URL:', req.url);
   return server.prepare().then(() => nextjsHandle(req, res));
 });
 
 
 exports.weather = require('./functions/weather')
 
-exports.app = functions.region('europe-west1').runWith('128MB').https.onRequest((app) => {
-  app.get('/user/posts/singlepost/:slug', (req, res) => {
-    console.log('hello');
-    const actualPage = '/user/posts/singlepost'
-    const query = { slug: req.params.slug }
-    app.render(req, res, actualPage, query)
-  })
-
+exports.app = functions.region('europe-west1').runWith('128MB').https.onRequest((req, res) => {
+  console.log('hello');
+  const actualPage = '/user/posts/singlepost';
+  const query = { slug: req.params.slug };
+  app.render(req, res, actualPage, query);
 });

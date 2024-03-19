@@ -21,6 +21,11 @@ a {
   height: 100vh;
 }
 
+#__next {
+  position: relative;
+  background: var(--primaryBackground);
+}
+
 #__next, #__next > div {
   min-height: 100vh;
 }
@@ -55,6 +60,18 @@ a {
 
 .Typewriter {
   min-height: 110px;
+  /* Chrome, Safari, Edge, Opera */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  /* Firefox */
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /*# sourceMappingURL=global.style.css.map */

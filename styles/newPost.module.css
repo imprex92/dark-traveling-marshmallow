@@ -1,0 +1,194 @@
+.newpostImg {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+}
+
+#newPostForm {
+  min-height: 100vh;
+}
+#newPostForm.main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas: "nav wrap";
+  z-index: 2;
+}
+#newPostForm.main > .content {
+  width: 75%;
+  max-width: 1300px;
+  place-self: center;
+  position: relative;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  max-height: 75%;
+  height: 100%;
+  min-height: 600px;
+  border-radius: var(--defaultBoxBorderRadius);
+  margin: auto;
+  box-shadow: var(--primaryBoxShadow);
+  overflow-y: auto;
+}
+
+.postForm {
+  height: calc(100% - 53px - 2rem);
+}
+
+.stepTabs {
+  height: 100%;
+}
+.stepTabs > .navList {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 2rem;
+  justify-content: center;
+  height: 53px;
+}
+
+.tab, .tab_active {
+  position: relative;
+  left: -15px;
+  background-color: azure;
+  border-radius: 6px;
+  padding: 1rem 2rem;
+  margin: 0 -15px 0 0;
+  min-width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  clip-path: polygon(75% 0%, 95% 50%, 75% 100%, 0% 100%, 20% 50%, 0% 0%);
+}
+.tab_active {
+  color: var(--primaryBtnTextColor);
+  background-color: var(--primaryBtnColor);
+  border-color: #144677;
+}
+.tab_active > .label {
+  color: var(--primaryBtnTextColor);
+}
+.tab:first-of-type, .tab_active:first-of-type {
+  clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
+  padding-left: 1.5rem;
+}
+.tab:last-of-type, .tab_active:last-of-type {
+  clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 20% 50%);
+  padding-left: 3rem;
+  padding-right: 1.5rem;
+}
+.tab:hover, .tab_active:hover {
+  color: var(--primaryBtnTextColorHover);
+  cursor: pointer;
+  background-color: var(--primaryBtnColorHover);
+}
+.tab:hover > .label, .tab_active:hover > .label {
+  color: var(--primaryBtnTextColorHover);
+}
+
+.tabContent {
+  position: relative;
+  height: 100%;
+}
+
+.tabWrapper {
+  border-radius: 0 0 4px 4px;
+  display: block;
+  height: 100%;
+}
+.tabWrapper .tabPanel {
+  display: none;
+  padding: 10px;
+  text-align: left;
+}
+.tabWrapper .tabPanel_active {
+  display: flex;
+  flex-direction: column;
+}
+.tabWrapper .imageTab_active {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 0.6fr auto 40px;
+  grid-template-areas: "title" "fileInput" "filePreviews" "buttons";
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.fieldGroup > * {
+  flex-basis: 50%;
+}
+.fieldGroup > .selectRow {
+  display: flex;
+  align-items: baseline;
+}
+.fieldGroup > .selectRow > i {
+  position: absolute;
+  top: 1.3rem;
+  left: 1rem;
+}
+.fieldGroup .selectField {
+  flex-basis: 100%;
+}
+.fieldGroup .selectField svg {
+  fill: #fff;
+}
+.fieldGroup .selectField > input {
+  padding-left: 3.5rem;
+}
+.fieldGroup .selectField > label {
+  padding-left: 3.5rem;
+}
+.fieldGroup .selectField > ul {
+  max-height: 300px;
+  overflow: scroll;
+  border-radius: 0 0 4px 4px;
+}
+.fieldGroup .selectField > ul > li:first-child {
+  display: none;
+}
+.fieldGroup .selectField > ul > li[class=optgroup] {
+  background-color: var(--primaryBtnColor);
+  color: var(--primaryBtnTextColor);
+  cursor: none;
+}
+.fieldGroup .selectField > ul > li[class=optgroup]:hover {
+  background-color: var(--primaryBtnColor);
+}
+
+input.dateInput, input.titleInput {
+  width: calc(100% - 1rem) !important;
+}
+
+.fieldRow {
+  margin-bottom: 2rem;
+}
+
+.fieldset:disabled * {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.contentDescription {
+  grid-area: title;
+  font-family: var(--primaryHeaderFont);
+  color: #fff;
+  margin-inline: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  column-gap: 2rem;
+  height: 100%;
+}
+.buttons .resetForm, .buttons .moveOnBtn {
+  flex: 1 1 50%;
+}
+
+/*# sourceMappingURL=newPost.module.css.map */

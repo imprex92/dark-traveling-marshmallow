@@ -1,0 +1,199 @@
+@use 'variables';
+
+$navTabListHeight: 53px;
+
+.newpostImg{
+	position: absolute;
+	height: 100vh;
+	width: 100%;
+}
+#newPostForm {
+	min-height: 100vh;
+
+	&.main {
+		position: relative;
+		display: grid;
+		grid-template-columns: 50px 1fr;
+		grid-template-areas: "nav wrap";
+		z-index: 2;
+
+		&>.content {
+			width: 75%;
+			max-width: 1300px;
+			place-self: center;
+			position: relative;
+			padding: 2rem;
+			background-color: rgba(0, 0, 0, 0.5);
+			max-height: 75%;
+			height: 100%;
+			min-height: 600px;
+			border-radius: var(--defaultBoxBorderRadius);
+			margin: auto;
+			box-shadow: var(--primaryBoxShadow);
+			overflow-y: auto;
+		}
+	}
+}
+
+.postForm{
+	height: calc(100% - $navTabListHeight - 2rem);
+}
+.stepTabs{
+	height: 100%;
+	& > .navList{
+		list-style: none;
+		display: flex;
+		flex-direction: row;
+		margin: 1rem 2rem;
+		justify-content: center;
+		height: $navTabListHeight;
+	}
+}
+.tab{
+	position: relative;
+	left: -15px;
+	background-color: azure;
+	border-radius: 6px;
+	padding: 1rem 2rem;
+	margin: 0 -15px 0 0;
+	min-width: 140px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.2rem;
+	clip-path: polygon(75% 0%, 95% 50%, 75% 100%, 0% 100%, 20% 50%, 0% 0%);
+
+	&_active{
+		@extend .tab;
+		color: var(--primaryBtnTextColor);
+		& > .label{
+			color: var(--primaryBtnTextColor);
+		}
+		background-color: var(--primaryBtnColor);
+		border-color: #144677;
+	}
+	&:first-of-type{
+		clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
+		padding-left: 1.5rem;
+	}
+	&:last-of-type{
+		clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 20% 50%);
+		padding-left: 3rem;
+		padding-right: 1.5rem;
+	}
+	&:hover{
+		color: var(--primaryBtnTextColorHover);
+		cursor: pointer;
+		& > .label{
+			color: var(--primaryBtnTextColorHover);
+		}
+		background-color: var(--primaryBtnColorHover);
+	}
+}
+
+.tabContent{
+	position: relative;
+	height: 100%;
+}
+.tabWrapper{
+	border-radius: 0 0 4px 4px;
+	display: block;
+	height: 100%;
+
+	.tabPanel{
+		display: none;
+		padding: 10px;
+		text-align: left;
+
+		&_active{
+			display: flex;
+			flex-direction: column;
+		}
+	}
+	.imageTab_active{
+		display: grid;
+		height: 100%;
+		grid-template-rows: auto 0.6fr auto 40px;
+		grid-template-areas: 'title'
+							'fileInput'
+							'filePreviews'
+							'buttons';
+	}
+}
+
+.fieldGroup{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	gap: 2rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	& > *{
+		flex-basis: 50%;
+	}
+	& > .selectRow{
+		display: flex;
+		align-items: baseline;
+		& > i{
+			position: absolute;
+			top: 1.3rem;
+			left: 1rem;
+		}
+	}
+	& .selectField{
+		flex-basis: 100%;
+		& svg{
+			fill: #fff;
+		}
+		& > input{
+			padding-left: 3.5rem;
+		}
+		& > label{
+			padding-left: 3.5rem;
+		}
+		& > ul{
+			max-height: 300px;
+			overflow: scroll;
+			border-radius: 0 0 4px 4px;
+			& > li:first-child {
+				display: none;
+			}
+			& > li[class="optgroup"]{
+				background-color: var(--primaryBtnColor);
+				color: var(--primaryBtnTextColor);
+				cursor: none;
+				&:hover{
+					background-color: var(--primaryBtnColor);
+				}
+			}
+		}
+	}
+}
+input.dateInput, input.titleInput{
+	width: calc(100% - 1rem) !important;
+}
+
+.fieldRow{
+	margin-bottom: 2rem;
+}
+.fieldset:disabled *{
+	pointer-events: none;
+	cursor: not-allowed;
+}
+
+.contentDescription{
+	grid-area: title;
+	font-family: var(--primaryHeaderFont);
+	color: #fff;
+	margin-inline: 1.5rem;
+}
+
+.buttons{
+	display: flex;
+	align-items: flex-end;
+	column-gap: 2rem;
+	height: 100%;
+	& .resetForm, .moveOnBtn {
+		flex: 1 1 50%;
+	}
+}

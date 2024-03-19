@@ -13,9 +13,6 @@ import ProgressBar from '../ProgressBar'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
 import useSiteSettings from 'store/siteSettings';
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
-if(typeof window !== 'undefined'){
-	M = require( '@materializecss/materialize/dist/js/materialize.min.js')
-}
 require('dotenv').config()
 
 //? Temporary fix for country-list not finding some selected countries
@@ -66,36 +63,32 @@ export default function StorageCommunicator() {
 	//* onUpload finish
 	const [uploadedURL, setUploadedURL] = useState(null)
 
-	useEffect(() => {
+	const sidenav = document.querySelectorAll(".sidenav");
+	const tabs = document.querySelectorAll(".tabs");
+	const datepicker = document.querySelectorAll(".datepicker")
+	const autocomplete = document.querySelectorAll('.autocomplete');
 
-		const sidenav = document.querySelectorAll(".sidenav");
-		const tabs = document.querySelectorAll(".tabs");
-		const datepicker = document.querySelectorAll(".datepicker")
-		const autocomplete = document.querySelectorAll('.autocomplete');
-		if(!init){
-			const instances = M.Autocomplete.init(autocomplete, {
-				data: countries,
-				minLength: 1,
-				onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
-			});
-			M.Datepicker.init(datepicker, {
-				autoClose: true,
-				format: 'mmmm d, yyyy',
-				defaultDate: new Date(),
-				setDefaultDate: true,
-				firstDay: 1,
-				maxDate: new Date(),
-				onSelect: (date) => {setDatePicker(date)},			
-			})
-			M.Tabs.init(tabs, {
-				swipeable: true,
-			});
-			M.Sidenav.init(sidenav, {
-				onOpenEnd: (el) => { el.classList.toggle('nav-open') },
-				onCloseEnd: (el) => { el.classList.toggle('nav-open') }
-			});
-			setInit(true)
-			}
+	M.Tabs.init(tabs, {});
+	M.Autocomplete.init(autocomplete, {
+		data: countries,
+		minLength: 1,
+		onAutocomplete: (selected) => {getCountryCode(selected); countryIfOffline.current = selected}
+	});
+	M.Datepicker.init(datepicker, {
+		autoClose: true,
+		format: 'mmmm d, yyyy',
+		defaultDate: new Date(),
+		setDefaultDate: true,
+		firstDay: 1,
+		maxDate: new Date(),
+		onSelect: (date) => {setDatePicker(date)},			
+	})
+	M.Sidenav.init(sidenav, {
+		onOpenEnd: (el) => { el.classList.toggle('nav-open') },
+		onCloseEnd: (el) => { el.classList.toggle('nav-open') }
+	});
+
+	useEffect(() => {
 		}, [uploadedURL]) //! formCountry?
 		
 	async function handleLogout() {
@@ -267,7 +260,7 @@ export default function StorageCommunicator() {
 	}
 	
 	return (
-		<div>
+        <div>
 			{/* //! vertical navigation area! */}
 			<div id="vertical-nav">
 				<a href="#" data-target="slide-out" className="sidenav-trigger vertical-menu-btn">
@@ -291,8 +284,8 @@ export default function StorageCommunicator() {
 			*/} 
 
 			
-		<div className="add-form-post-section">
-			<div className="container row">
+		<div className="add-form-post-section row">
+			<div className="container col s12">
       			<div id="tab1" className="valign-wrapper">
         			<div className="col s12 tab-content">
 						<h5 className="center-align white-text">Step 1</h5>			
@@ -426,24 +419,24 @@ export default function StorageCommunicator() {
 					<a href="#name"><span className="white-text name">{(currentUser && currentUser.displayName) ? currentUser.displayName : 'No Name'}</span></a>
 					<a href="#email"><span className="white-text email">{currentUser && currentUser.email}</span></a>
 				</div></li>
-				<li onClick={closeSideNav}><Link href="/user/dashboard"><a href="#"><i className="material-icons">home</i>Home</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/dashboard"><i className="material-icons">home</i>Home</Link></li>
 				<li><a href="#!" onClick={handleLogout}><i className="material-icons">power_settings_new</i>Log out</a></li>
-				<li onClick={closeSideNav}><Link href="/user/settings"><a href="#!"><i className="material-icons">manage_accounts</i>Account settings</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/settings"><i className="material-icons">manage_accounts</i>Account settings</Link></li>
 				<li><div className="divider"></div></li>
 				<li><a className="subheader">Submenu</a></li>
 				<li><a className="sidenav-close waves-effect" href="#!"><i className="material-icons material-symbols-outlined">chevron_left</i>Close menu</a></li>
-				<li onClick={closeSideNav}><Link href="/user/posts"><a href="/user/posts"><i className="material-icons">grid_on</i>View gallery</a></Link></li>
+				<li onClick={closeSideNav}><Link href="/user/posts"><i className="material-icons">grid_on</i>View gallery</Link></li>
 				<li onClick={closeSideNav}>
 					<Link href="/user/receipts/home">
-						<a href="#" ><i className="material-icons">receipt_long</i>Receipts</a>
-					</Link>
+                        <i className="material-icons">receipt_long</i>Receipts
+                    </Link>
 				</li>
 				<li onClick={closeSideNav}>
 					<Link href="/weather">
-						<a href="#" ><i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather</a>
-					</Link> 
+                        <i className="material-icons material-symbols-outlined">partly_cloudy_day</i>Weather
+                    </Link> 
 				</li>
 			</ul>		
 		</div>
-	)
+    );
 }

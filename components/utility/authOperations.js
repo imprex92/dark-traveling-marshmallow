@@ -1,7 +1,7 @@
 import { projectAuth, projectFirestore, projectStorage } from "firebase/config";
 
 // File handles operations regarding user accounts
-const user = projectAuth.currentUser;
+const user = projectAuth?.currentUser || '';
 const refToAccountDoc = user && projectFirestore
 	.collection('testUserCollection')
 	.doc(user.uid);
@@ -122,12 +122,57 @@ async function updateAddress(addressData) {
 	}
 }
 
+async function sendResetPasswordEmail(email) {
+	const actionSettings = {
+		handleCodeInApp: false,
+		url: process.env.NEXT_PUBLIC_BASE_URL + '/login'
+	}
+	try {
+		await projectAuth.sendPasswordResetEmail(email, actionSettings);
+		return { code: 202, message: 'Email sent' };
+	} catch (error) {
+		return { code: error.code, message: error.message };
+	}
+}
+
+async function handleResetPassword(actionCode){
+	try {
+		const email = await projectAuth.verifyPasswordResetCode(actionCode)
+		
+		return {code: 202, email: email, message: 'Password has been reset, Redirecting...', redirect: true}
+	} catch (error) {
+		return {code: error.code, message: error.message, redirect: false}
+	}
+} 
+//? Call confirmResetPassword if verification above is OK and user entered new password
+async function confirmResetPassword(actionCode, newPassword){
+	try {
+		await projectAuth.confirmPasswordReset(actionCode, newPassword)
+		return {success: true, code: 200, message: 'Password has been reset. \n Redirecting to login...'}
+	} catch (error) {
+		return {success: false, code: error.code, message: error.message}
+	}
+}
+
+async function verifyEmailFromEmail(actionCode) {
+	try {
+		await projectAuth.applyActionCode(actionCode)
+		return {success: true, code: 200, message: 'Account has been verified. \n Redirecting to homepage...'}
+	} catch (error) {
+		return {success: false, code: error.code, message: error.message}
+	}
+}
+
 export {
 	accountRemoval,
 	reAuthenticate,
 	verifyUserEmail,
+	verifyEmailFromEmail,
 	updateEmail,
 	updatePassword,
 	updateAccountData,
 	updateAddress,
+	sendResetPasswordEmail,
+	handleResetPassword,
+	confirmResetPassword,
 }

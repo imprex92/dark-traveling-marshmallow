@@ -69,8 +69,4 @@ const index = ({userAuth}) => {
 	)
 }
 
-index.getInitialProps = async props => {
-	// console.info('##### Congratulations! You are authorized! ######', props);
-	return {};
-};
 export default withPrivateRoute(index)

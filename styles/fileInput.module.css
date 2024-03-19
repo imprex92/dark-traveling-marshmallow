@@ -1,0 +1,82 @@
+.root {
+  grid-area: fileInput;
+  border: 4px solid rgba(255, 255, 255, 0.21);
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--defaultBoxBorderRadius);
+}
+.root:hover {
+  border: 4px solid rgba(255, 255, 255, 0.43);
+  cursor: pointer;
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
+}
+.root:hover .inputImg {
+  color: #d9d9d9;
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
+}
+
+.inputLabel {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputImg {
+  font-size: 85px;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #c6c6c6;
+}
+
+.inputText {
+  font-size: 15px;
+}
+.inputText:hover {
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
+}
+
+.inputValidateMsg {
+  color: #fff;
+}
+
+.filePreviews {
+  grid-area: filePreviews;
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: 1.5rem;
+  gap: 1rem;
+}
+
+.previewItem, .previewItem_vid, .previewItem_img {
+  position: relative;
+  display: flex;
+  height: 175px;
+}
+.previewItem_img {
+  width: 150px;
+}
+.previewItem_vid {
+  width: 300px;
+}
+
+.removeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 40px;
+}
+
+.moveOnBtn {
+  grid-area: buttons;
+}
+
+.imgThumbnail img {
+  object-fit: contain;
+}
+
+/*# sourceMappingURL=fileInput.module.css.map */

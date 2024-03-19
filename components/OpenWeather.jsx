@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
-if (typeof window !== 'undefined') {
-  M = require('@materializecss/materialize/dist/js/materialize.min.js')
-}
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
-import { fetchUserWeatherData } from './utility/subscriptions'
+import { fetchUserWeatherChips } from './utility/subscriptions'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
@@ -19,36 +16,26 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const ext = useBearStore(state => state.exterminatePopulation)
 
   async function fetchTags() {
-      const data = await fetchUserWeatherData(currentUser.uid)
+      await fetchUserWeatherChips(currentUser.uid)
       .then(data => { initializeChips(data[0].tags) })
       .catch(err => { console.error('Error while loading tags', err); M.toast({text: `Error loading tags, ${err}`}) })
   }
 
+  
   function initializeChips(chipsData){
     let chips = document.querySelectorAll(".chips")
       M.Chips.init(chips, {
-        data: [
-          {
-              "tag": "Gothenburg"
-          },
-          {
-              "tag": "Paris"
-          },
-          {
-              "tag": "Tokyo"
-          },
-          {
-              "tag": "Uddevalla"
-          }
-      ],
-      placeholder: 'Enter city to save',
-      limit: 7,
-      secondaryPlaceholder: '+City',
-      onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
+        data: chipsData,
+        placeholder: 'Enter city to save shortcuts',
+        limit: 7,
+        secondaryPlaceholder: '+City',
+        onChipSelect: (data, i) => { fetchWeather(i.firstChild.textContent.toString()) },
+        onChipAdd: (data, i) => {},
+        onChipDelete: (data, i) => {}
     })
   }
   useEffect(() => {
-    //fetchTags()
+    fetchTags()
   }, [])
 
   useEffect(() => {
@@ -58,35 +45,10 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
       hover: true,
       closeOnClick: false
     })
-      let chips = document.querySelectorAll(".chips")
-      M.Chips.init(chips, {
-        data: [
-          {
-              "tag": "Gothenburg"
-          },
-          {
-              "tag": "Paris"
-          },
-          {
-              "tag": "Tokyo"
-          },
-          {
-              "tag": "Uddevalla"
-          }
-      ],
-      placeholder: 'Enter city to save',
-      limit: 7,
-      secondaryPlaceholder: '+City',
-      onChipSelect: (data, i) => { chipSelected(i.firstChild.textContent.toString()) }
-    })
     
     return () => {
     }
   }, [fetchedData])
-  
-  const chipSelected = (data) => {
-    fetchWeather(data)
-  }
 
   const handleSearch = (e) => {
     e.key === 'Enter' && e.preventDefault()
@@ -116,11 +78,11 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
               </div></a></li>
             </ul>
             <div className="row valign-wrapper">
-              <form className="col s11 pull-s1 m12 searchbar-section">
+              <form className="col s11 offset-s1 m12 searchbar-section">
                 <div className="row">
-                  <div className="input-field col s11 m8 push-m2 searchBox">
+                  <div className="input-field col s11 m8 offset-m2 searchBox">
                     <i className="material-icons suffix" onClick={() => handleSearch(searchBox.current.value)}>search</i>
-                    <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" />
+                    <input type="search" className={`white-text validate ${apiError ? 'invalid' : 'valid'}`} onKeyDownCapture={(e) => e.key === "Enter" && handleSearch(e)} ref={searchBox} name="" id="search-field" placeholder=' ' />
                     <label className="white-text" htmlFor="search-field">Search location</label>
                     <span className='helper-text' data-error="Something went wrong. Did you spell correctly?"></span>
                   </div>
@@ -188,7 +150,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
         </div>
         <div className='container-2'>
           <div className="additional-wrapper z-depth-4">
-            <div className="chips chips-initial"></div>
+            <div className="chips chips-placeholder"></div>
           </div>
           <div className="additional-wrapper z-depth-4 mobile-only">
             <div className="additional-info info-boxes">
