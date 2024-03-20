@@ -162,7 +162,7 @@ const AddPostForm = props => {
             <div className={`${styles.tabContent} ${activeTab === 'submit' ? `${styles.tabPanel_active} ${styles.submitTab_active}` : styles.tabPanel}`}>
               <h5 className={styles.contentDescription}>submit if all OK</h5>
               <Suspense fallback={<CircularLoader size='big' color="#fff" />}>
-                <PostSummary formData={formData} />
+                <PostSummary formData={{ ...formData, placesInputValue: placesInputValue.current }} />
               </Suspense>
             </div>
           </div>

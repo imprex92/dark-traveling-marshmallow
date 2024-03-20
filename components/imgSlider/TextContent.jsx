@@ -7,9 +7,11 @@ import { useAuth } from 'contexts/AuthContext'
 const TextContent = ({ formData }) => {
 
 	const { currentUser } = useAuth();
-	const { mood, postContent, postTitle, weather, datePicker, postLocation, countryCode } = formData
+	const { mood, postContent, postTitle, weather, datePicker, postLocation, countryCode, placesInputValue } = formData
 	const { additionalData, coordinates, locationData } = postLocation
-	const plusCode = locationData[0]?.plus_code?.compound_code || locationData[0]?.plus_code?.global_code || null;
+	const haveLocationData = postLocation.length > 0;
+	const plusCode = locationData && locationData[0] && 
+		(locationData[0].plus_code?.compound_code || locationData[0].plus_code?.global_code) || null;
 
 	return (
 		<div className={styles.textRoot}>
@@ -17,7 +19,7 @@ const TextContent = ({ formData }) => {
 			<div className={styles.location}>
 				<span class="material-symbols-outlined white-text">location_on</span>
 				{ 
-					locationData[0]?.adr_address ? 
+					locationData && locationData[0]?.adr_address ? 
 					<a 
 					className={styles.link}
 					dangerouslySetInnerHTML={{ __html: locationData[0].adr_address}} 
@@ -27,17 +29,17 @@ const TextContent = ({ formData }) => {
 						`https://maps.google.com/?` + 
 							(plusCode 
 								? `plus_code=${encodeURIComponent(plusCode)}`
-								: `q=${encodeURIComponent(additionalData[0]?.description)}`
+								: `q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description) : placesInputValue}`
 							)
 						}
 					></a>
 					: 
 					<a
-					href={`https://maps.google.com/?q=${encodeURIComponent(additionalData[0]?.description)}`} 
+					href={`https://maps.google.com/?q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description) : placesInputValue}`} 
 					target='_blank'
 					rel='noopener noreferrer'
 					>
-						<span>{additionalData[0]?.description}</span>
+						<span>{additionalData ? additionalData[0]?.description : placesInputValue}</span>
 					</a>
 				}
 				<span className={styles.weather}><span class="material-symbols-outlined white-text">routine</span>{weather}</span>
