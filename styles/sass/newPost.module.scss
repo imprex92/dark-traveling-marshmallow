@@ -79,6 +79,12 @@ $navTabListHeight: 53px;
 		border-color: #144677;
 	}
 
+	&_disabled {
+		pointer-events: none;
+		opacity: .4;
+		cursor: default;
+	}
+
 	&:first-of-type {
 		clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
 		padding-left: 1.5rem;

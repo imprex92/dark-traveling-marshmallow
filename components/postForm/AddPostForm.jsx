@@ -84,10 +84,21 @@ const AddPostForm = props => {
           <div onClick={(e) => {handleTabClick('content', e)}} className={`${activeTab === 'content' ? styles.tab_active : styles.tab}`}>
             <span className={`material-symbols-outlined ${styles.label}`}>line_start_circle</span>Content
           </div>
-          <div onClick={(e) => {handleTabClick('images', e)}}  className={`${activeTab === 'images' ? styles.tab_active : styles.tab}`}>
+          <div 
+            onClick={(e) => {
+              if(!isButtonDisabled){
+                handleTabClick('images', e)
+              }
+            }}  
+            className={`${activeTab === 'images' ? styles.tab_active : styles.tab} ${isButtonDisabled ? styles.tab_disabled : ''}`}>
             <span className={`material-symbols-outlined ${styles.label}`}>attach_file_add</span>Images
           </div>
-          <div onClick={(e) => {handleTabClick('submit', e)}} className={`${activeTab === 'submit' ? styles.tab_active : styles.tab}`}>
+          <div 
+            onClick={(e) => {
+              if(!isButtonDisabled && files){
+                handleTabClick('submit', e)}} 
+              }
+            className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files && isButtonDisabled ? styles.tab_disabled : ''}`}>
             <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>Submit
           </div>
         </div>
