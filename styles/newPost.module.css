@@ -1,6 +1,6 @@
 .newpostImg {
   position: absolute;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .stepTabs {
-  height: 100%;
+  height: calc(100% - 1rem);
 }
 .stepTabs > .navList {
   list-style: none;
@@ -48,7 +48,7 @@
 
 .tab, .tab_active {
   position: relative;
-  left: -15px;
+  left: 0;
   background-color: azure;
   border-radius: 6px;
   padding: 1rem 2rem;
@@ -67,6 +67,11 @@
 }
 .tab_active > .label {
   color: var(--primaryBtnTextColor);
+}
+.tab_disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: default;
 }
 .tab:first-of-type, .tab_active:first-of-type {
   clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
@@ -104,12 +109,19 @@
 .tabWrapper .tabPanel_active {
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 .tabWrapper .imageTab_active {
   display: grid;
   height: 100%;
   grid-template-rows: auto 0.6fr auto 40px;
   grid-template-areas: "title" "fileInput" "filePreviews" "buttons";
+}
+.tabWrapper .submitTab_active {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "title" "slider";
 }
 
 .fieldGroup {
@@ -161,7 +173,8 @@
   background-color: var(--primaryBtnColor);
 }
 
-input.dateInput, input.titleInput {
+input.dateInput,
+input.titleInput {
   width: calc(100% - 1rem) !important;
 }
 
@@ -187,7 +200,8 @@ input.dateInput, input.titleInput {
   column-gap: 2rem;
   height: 100%;
 }
-.buttons .resetForm, .buttons .moveOnBtn {
+.buttons .resetForm,
+.buttons .moveOnBtn {
   flex: 1 1 50%;
 }
 

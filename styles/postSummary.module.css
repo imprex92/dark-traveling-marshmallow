@@ -1,0 +1,53 @@
+.root {
+  grid-area: slider;
+}
+
+.textRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  text-align: center;
+  overflow-wrap: break-word;
+  margin-top: 0;
+}
+
+.divider {
+  margin: 2rem auto;
+  margin-top: 100%;
+  width: 100%;
+}
+
+.authorDateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.link {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.description {
+  margin-top: 0.5rem;
+  overflow-wrap: break-word;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.location {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+.location > .weather {
+  margin-left: auto;
+}
+.location > .weather > span {
+  margin-right: 0.5rem;
+}
+
+/*# sourceMappingURL=postSummary.module.css.map */

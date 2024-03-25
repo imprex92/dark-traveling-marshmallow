@@ -26,7 +26,7 @@ import styles from 'styles/googlePlacesAutocomplete.module.css'
 
 			return () => {
 				clearTimeout(timeoutId);
-				document.head.removeChild(script);
+				script instanceof Node && document.head.removeChild(script);
 			};
 		}, [countryCode]);
 
@@ -53,19 +53,19 @@ import styles from 'styles/googlePlacesAutocomplete.module.css'
 			})
 
 		const {
-		  ready,
-		  value,
-		  suggestions: { status, data, structured_formatting },
-		  setValue,
-		  clearSuggestions,
+			ready,
+			value,
+			suggestions: { status, data, structured_formatting },
+			setValue,
+			clearSuggestions,
 		} = usePlacesAutocomplete({
-		  requestOptions: {
+		  	requestOptions: {
 			componentRestrictions: {
 				country: countryCode
 			}
 		},
 			callbackName: "initMap",
-		  	debounce: 300,
+			debounce: 300,
 			cache: 24 * 60 * 60,
 		});
 		
