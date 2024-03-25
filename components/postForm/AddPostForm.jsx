@@ -103,7 +103,7 @@ const AddPostForm = props => {
           </div>
         </div>
 
-        <form ref={formRef} onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
+        <form ref={formRef} id='postForm' onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
           <div className={`${styles.tabWrapper}`}>
             <div className={`${styles.tabContent} ${activeTab === 'content' ? styles.tabPanel_active : styles.tabPanel}`}>
               <h5 className={styles.contentDescription}>Start of post</h5>
@@ -175,6 +175,15 @@ const AddPostForm = props => {
               <Suspense fallback={<CircularLoader size='big' color="#fff" />}>
                 <PostSummary formData={{ ...formData, placesInputValue: placesInputValue.current }} />
               </Suspense>
+              <div className={styles.buttons}>
+                <button 
+                  disabled={isButtonDisabled || !files}
+                  form='postForm'
+                  className={`${styles.moveOnBtn} btn waves-effect waves-light`} 
+                  type="submit">
+                    Submit
+                </button>
+              </div>
             </div>
           </div>
         </form>
