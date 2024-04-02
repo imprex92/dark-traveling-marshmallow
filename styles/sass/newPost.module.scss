@@ -240,4 +240,10 @@ input.titleInput {
 	.moveOnBtn {
 		flex: 1 1 50%;
 	}
+
+	& .submitBtn,
+	.overViewBtn {
+		flex: 0 1 50%;
+		margin-inline: auto;
+	}
 }
