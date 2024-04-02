@@ -7,42 +7,48 @@ import { useAuth } from 'contexts/AuthContext'
 const TextContent = ({ formData }) => {
 
 	const { currentUser } = useAuth();
-	const { mood, postContent, postTitle, weather, datePicker, postLocation, countryCode, placesInputValue } = formData
-	const { additionalData, coordinates, locationData } = postLocation
-	const haveLocationData = postLocation.length > 0;
+	const { mood, postContent, postTitle, weather, datePicker, postLocation, placesInputValue } = formData
+	const { additionalData, locationData } = postLocation
+	const haveLocationData = postLocation;
+
 	const plusCode = locationData && locationData[0] && 
 		(locationData[0].plus_code?.compound_code || locationData[0].plus_code?.global_code) || null;
 
 	return (
 		<div className={styles.textRoot}>
 			<h3 className={styles.title}>{postTitle}</h3>
-			<div className={styles.location}>
-				<span class="material-symbols-outlined white-text">location_on</span>
-				{ 
-					locationData && locationData[0]?.adr_address ? 
-					<a 
-					className={styles.link}
-					dangerouslySetInnerHTML={{ __html: locationData[0].adr_address}} 
-					target='_blank' 
-					rel="noopener noreferrer" 
-					href={
-						`https://maps.google.com/?` + 
-							(plusCode 
-								? `plus_code=${encodeURIComponent(plusCode)}`
-								: `q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description) : placesInputValue}`
-							)
-						}
-					></a>
-					: 
-					<a
-					href={`https://maps.google.com/?q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description) : placesInputValue}`} 
-					target='_blank'
-					rel='noopener noreferrer'
-					>
-						<span>{additionalData ? additionalData[0]?.description : placesInputValue}</span>
-					</a>
-				}
-				<span className={styles.weather}><span class="material-symbols-outlined white-text">routine</span>{weather}</span>
+			<div className={styles.infoBox}>
+				<div className={styles.location}>
+					<span className="material-symbols-outlined white-text">location_on</span>
+					{ 
+						locationData && locationData[0]?.adr_address ? 
+						<a 
+						className={styles.link}
+						dangerouslySetInnerHTML={{ __html: locationData[0].adr_address}} 
+						target='_blank' 
+						rel="noopener noreferrer" 
+						href={
+							`https://maps.google.com/?` + 
+								(plusCode 
+									? `q=${encodeURIComponent(plusCode.replace(/,/g, ''))}`
+									: `q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`
+								)
+							}
+						></a>
+						: 
+						<a
+						href={`https://maps.google.com/?q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`} 
+						target='_blank'
+						rel='noopener noreferrer'
+						>
+							<span>{additionalData ? additionalData[0]?.description : placesInputValue}</span>
+						</a>
+					}
+				</div>
+				<div className={styles.weatherMood}>
+					<span className={styles.weather}><span class="material-symbols-outlined white-text">routine</span>{weather}</span>
+					<span className={styles.mood}><span class="material-symbols-outlined white-text">mood</span>{mood}</span>
+				</div>
 			</div>
 			<div className={styles.description}>
 				<p>{postContent}</p>
@@ -65,7 +71,6 @@ TextContent.propTypes = {
 		postContent: PropTypes.string.isRequired,
 		postTitle: PropTypes.string.isRequired,
 		weather: PropTypes.string,
-		datePicker: PropTypes.string.isRequired,
 		postLocation: PropTypes.shape({
 			coordinates: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -85,9 +90,9 @@ TextContent.propTypes = {
 				adr_address: PropTypes.string.isRequired,
 				name: PropTypes.string.isRequired,
 				plus_code: PropTypes.shape({
-				compound_code: PropTypes.string.isRequired,
-				global_code: PropTypes.string.isRequired
-				}).isRequired,
+				compound_code: PropTypes.string,
+				global_code: PropTypes.string
+				}),
 				vicinity: PropTypes.string.isRequired,
 				html_attributions: PropTypes.arrayOf(PropTypes.string).isRequired
 			})
