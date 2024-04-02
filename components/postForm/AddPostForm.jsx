@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useRef, lazy, Suspense} from 'react'
-import PropTypes from 'prop-types'
 import styles from 'styles/newPost.module.css'
 import countriesByContinent from '../utility/countries_new'
 import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
+import { handleSaveNewPost } from 'components/utility/subscriptions'
 
 const FileInput = lazy(() => import('../inputs/fileInput/FileInput'));
 const PostSummary = lazy(() => import('./PostSummary'));
 
-const AddPostForm = props => {
+const AddPostForm = ({ dbUserData }) => {
   const [activeTab, setActiveTab] = useState('content')
   const [countries, setCountries] = useState(countriesByContinent)
   const [countryCode, setCountryCode] = useState(null)
@@ -24,7 +24,6 @@ const AddPostForm = props => {
   const placesInputValue = useRef('')
   const selectRef = useRef(null)
   const childRef = useRef(null);
-  //const formData = useRef({})
 
   const inputs = {countryCode, mood, weather, postContent}
 
@@ -61,6 +60,7 @@ const AddPostForm = props => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
+    handleSaveNewPost()
   }
   function dataFromChild({ coordinates, locationData, additionalData }){
 		setPostLocation({ coordinates, locationData, additionalData })
@@ -98,7 +98,7 @@ const AddPostForm = props => {
               if(!isButtonDisabled && files){
                 handleTabClick('submit', e)}} 
               }
-            className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files && isButtonDisabled ? styles.tab_disabled : ''}`}>
+            className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files || isButtonDisabled ? styles.tab_disabled : ''}`}>
             <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>Submit
           </div>
         </div>
@@ -179,7 +179,7 @@ const AddPostForm = props => {
                 <button 
                   disabled={isButtonDisabled || !files}
                   form='postForm'
-                  className={`${styles.moveOnBtn} btn waves-effect waves-light`} 
+                  className={`${styles.submitBtn} btn waves-effect waves-light`} 
                   type="submit">
                     Submit
                 </button>
