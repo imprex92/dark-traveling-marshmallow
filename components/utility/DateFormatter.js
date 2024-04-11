@@ -66,3 +66,13 @@ ISODateFormatter.propTypes = {
 	  	PropTypes.string,
 	]).isRequired,
 };
+
+export function dateMMDDYY(timestamp){
+	const postDate = new Date(timestamp);
+	const month = String(postDate.getMonth() + 1).padStart(2, '0');
+	const day = String(postDate.getDate()).padStart(2, '0');
+	const year = String(postDate.getFullYear()).slice(-2);
+	const formattedDate = `${month}${day}${year}`;
+
+	return formattedDate
+}
