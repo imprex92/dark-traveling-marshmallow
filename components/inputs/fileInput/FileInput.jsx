@@ -111,6 +111,7 @@ const FileInput = ({returnFiles}) => {
 			</div>
 			<div className={styles.moveOnBtn}>
 				<button 
+				type='button'
 				className={`${styles.overViewBtn} btn waves-effect waves-light`}
 				onClick={goToOverview}
 				disabled={!files || files.length === 0}>
