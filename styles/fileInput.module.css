@@ -47,6 +47,7 @@
   flex-wrap: wrap;
   padding-inline: 1.5rem;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .previewItem, .previewItem_vid, .previewItem_img {

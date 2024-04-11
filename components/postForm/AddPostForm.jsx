@@ -7,11 +7,13 @@ import { handleSaveNewPost } from 'components/utility/subscriptions'
 import { createSlug, getAddressComponents, getComponentValue, getGeoPointAndWeather } from 'components/utility/preparePostObject'
 import useSiteSettings from 'store/siteSettings';
 import { projectTimestampNow } from 'firebase/config'
+import { useRouter } from 'next/router';
 
 const FileInput = lazy(() => import('../inputs/fileInput/FileInput'));
 const PostSummary = lazy(() => import('./PostSummary'));
 
 const AddPostForm = ({ dbUserData }) => {
+  const router = useRouter()
   const { latestWeather } = useSiteSettings(state => state.data) ?? { latestWeather: {} } 
   const [activeTab, setActiveTab] = useState('content')
   const [countries, setCountries] = useState(countriesByContinent)
@@ -127,7 +129,10 @@ const AddPostForm = ({ dbUserData }) => {
 
     handleSaveNewPost({userID: dbUserData.uid, dataToSave: formData, media: files})
     .then((message) => {
-      M.toast({text: message, completeCallback: function(){window.history.replaceState(null, '', '/user/posts')}})
+      M.toast({text: message, completeCallback: function(){
+        window.history.replaceState(null, '', '/user/posts')
+        router.replace('/user/posts');
+      }})
     })
     .catch((err) => {
       console.log(err.message);
