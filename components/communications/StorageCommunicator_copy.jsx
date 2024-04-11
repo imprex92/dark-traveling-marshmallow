@@ -16,7 +16,7 @@ import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 import styles from 'styles/newPost.module.css'
 
 import SideNav from 'components/nav/Sidenav'
-import AddPostForm from 'components/AddPostForm'
+import AddPostForm from 'components/postForm/AddPostForm'
 
 require('dotenv').config()
 

@@ -1,0 +1,69 @@
+.root {
+  grid-area: slider;
+}
+
+.textRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  text-align: center;
+  overflow-wrap: break-word;
+  margin-top: 0;
+}
+
+.divider {
+  margin: 2rem auto;
+  margin-top: auto;
+  width: 100%;
+}
+
+.authorDateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-inline: 0.5rem;
+}
+
+.link {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.description {
+  margin-top: 1rem;
+  padding-inline: 0.5rem;
+  overflow-wrap: break-word;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.infoBox {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  border-inline: 1px solid rgba(255, 255, 255, 0.5);
+  padding-inline: 0.5rem;
+}
+.infoBox > .location {
+  display: flex;
+  align-items: flex-end;
+}
+.infoBox > .weatherMood {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.infoBox > .weatherMood > .weather,
+.infoBox > .weatherMood .mood {
+  display: flex;
+  align-items: center;
+}
+.infoBox > .weatherMood > .weather > span,
+.infoBox > .weatherMood .mood > span {
+  margin-right: 0.5rem;
+}
+
+/*# sourceMappingURL=postSummary.module.css.map */
