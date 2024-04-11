@@ -7,14 +7,14 @@ import { useAuth } from 'contexts/AuthContext'
 const TextContent = ({ formData }) => {
 
 	const { currentUser } = useAuth();
-	const { mood, postContent, postTitle, weather, datePicker, postLocation, placesInputValue } = formData
+	const { postMood, postContent, postTitle, postWeather, pickedDateForPost, postLocation, placesInputValue } = formData
 	const { additionalData, locationData } = postLocation
 	const haveLocationData = postLocation;
 
 	const plusCode = locationData && locationData[0] && 
 		(locationData[0].plus_code?.compound_code || locationData[0].plus_code?.global_code) || null;
 
-	return (
+		return (
 		<div className={styles.textRoot}>
 			<h3 className={styles.title}>{postTitle}</h3>
 			<div className={styles.infoBox}>
@@ -46,8 +46,8 @@ const TextContent = ({ formData }) => {
 					}
 				</div>
 				<div className={styles.weatherMood}>
-					<span className={styles.weather}><span class="material-symbols-outlined white-text">routine</span>{weather}</span>
-					<span className={styles.mood}><span class="material-symbols-outlined white-text">mood</span>{mood}</span>
+					<span className={styles.weather}><span className="material-symbols-outlined white-text">routine</span>{postWeather}</span>
+					<span className={styles.mood}><span className="material-symbols-outlined white-text">mood</span>{postMood}</span>
 				</div>
 			</div>
 			<div className={styles.description}>
@@ -58,7 +58,7 @@ const TextContent = ({ formData }) => {
 				<small>
 					Posted by <a className={styles.link} href="#">{currentUser.displayName}</a>
 					<br />
-					<ISODateFormatter timestamp={datePicker} timeFromNow={false} />
+					<ISODateFormatter timestamp={pickedDateForPost} timeFromNow={false} />
 				</small>
 			</div>
 		</div>
