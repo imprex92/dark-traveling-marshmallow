@@ -204,5 +204,10 @@ input.titleInput {
 .buttons .moveOnBtn {
   flex: 1 1 50%;
 }
+.buttons .submitBtn,
+.buttons .overViewBtn {
+  flex: 0 1 50%;
+  margin-inline: auto;
+}
 
 /*# sourceMappingURL=newPost.module.css.map */

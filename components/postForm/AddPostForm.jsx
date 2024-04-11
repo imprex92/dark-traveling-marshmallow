@@ -1,17 +1,22 @@
 import React, {useState, useEffect, useRef, lazy, Suspense} from 'react'
-import PropTypes from 'prop-types'
 import styles from 'styles/newPost.module.css'
 import countriesByContinent from '../utility/countries_new'
 import PlacesAutocomplete from '../utility/GooglePlacesAutocomplete'
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
+import { handleSaveNewPost } from 'components/utility/subscriptions'
+import { createSlug, getAddressComponents, getComponentValue, getGeoPointAndWeather } from 'components/utility/preparePostObject'
+import useSiteSettings from 'store/siteSettings';
+import { projectTimestampNow } from 'firebase/config'
 
 const FileInput = lazy(() => import('../inputs/fileInput/FileInput'));
 const PostSummary = lazy(() => import('./PostSummary'));
 
-const AddPostForm = props => {
+const AddPostForm = ({ dbUserData }) => {
+  const { latestWeather } = useSiteSettings(state => state.data) ?? { latestWeather: {} } 
   const [activeTab, setActiveTab] = useState('content')
   const [countries, setCountries] = useState(countriesByContinent)
   const [countryCode, setCountryCode] = useState(null)
+  const [countryName, setCountryName] = useState(null)
   const [mood, setMood] = useState(null)
   const [weather, setWeather] = useState(null)
   const [postContent, setPostContent] = useState('')
@@ -24,15 +29,28 @@ const AddPostForm = props => {
   const placesInputValue = useRef('')
   const selectRef = useRef(null)
   const childRef = useRef(null);
-  //const formData = useRef({})
+  let postLocationData;
+  let postWeatherData;
 
   const inputs = {countryCode, mood, weather, postContent}
 
   const isButtonDisabled = !useInputValidation(inputs);
 
   const formData = {
-    mood, weather, postLocation, datePicker, countryCode, files, postContent, postTitle
-  }
+    user_uid: dbUserData.uid,
+    createdByUser: dbUserData.displayName,
+    postTitle: postTitle || null,
+    postContent: postContent|| null,
+    postMood: mood || null,
+    postWeather: weather,
+    postWeatherData: postWeatherData,
+    postLocationData: postLocationData,
+    countryCode,
+    timestamp: projectTimestampNow,
+    pickedDateForPost: datePicker,
+    slug: '',
+    mediaURLs: [],
+  };
 
   useEffect(() => {
     const selectEl = document.getElementById('countrySelect')
@@ -57,14 +75,70 @@ const AddPostForm = props => {
   const handleCountryChange = () => {
     const selectedValue = JSON.parse(selectRef.current.el.value);
     setCountryCode(selectedValue.code)
+    setCountryName(selectedValue.name)
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
+    
+
+    if(Object.keys(postLocation).length > 0){
+      const addressComponents = getAddressComponents(postLocation.locationData);
+      const { weatherData, geoPoint } = await getGeoPointAndWeather(postLocation.coordinates)
+
+      postLocationData = {
+        country: countryName || getComponentValue(addressComponents, 'country') || null,
+        state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation.locationData[0].vicinity,
+        city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
+        geopoint: geoPoint || postLocation.coordinates || 'Coordinates not found',
+        plusCode: postLocation.locationData[0]?.plus_code || null,
+        offlineAddress: null,
+        wasApiOffline: false
+    };
+
+    postWeatherData = {
+        weatherUser: weather || null,
+        weatherAPI: weatherData.data || latestWeather || null,
+        wasApiOffline: false
+    };
+    }
+    else{
+      postLocationData = {
+        country: countryName,
+        state: null,
+        city: null,
+        geopoint: 'Coordinates not found',
+        plusCode:  null,
+        offlineAddress: placesInputValue.current,
+        wasApiOffline: true
+      };
+
+      postWeatherData = {
+        weatherUser: weather || null,
+        weatherAPI: latestWeather || null,
+        wasApiOffline: true
+      }
+    }
+
+    const slug = createSlug(postTitle)
+    formData.slug = slug;
+    formData.postWeatherData = postWeatherData;
+    formData.postLocationData = postLocationData;
+
+    handleSaveNewPost({userID: dbUserData.uid, dataToSave: formData, media: files})
+    .then((message) => {
+      M.toast({text: message, completeCallback: function(){window.history.replaceState(null, '', '/user/posts')}})
+    })
+    .catch((err) => {
+      console.log(err.message);
+      M.toast({text: `${err.message}. Try posing it again later.`});
+    })
   }
+
   function dataFromChild({ coordinates, locationData, additionalData }){
 		setPostLocation({ coordinates, locationData, additionalData })
 	}
+
   const clearForm = () => {
     formRef.current.reset();
     document.getElementById('post_location').value = ' ';
@@ -98,12 +172,12 @@ const AddPostForm = props => {
               if(!isButtonDisabled && files){
                 handleTabClick('submit', e)}} 
               }
-            className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files && isButtonDisabled ? styles.tab_disabled : ''}`}>
+            className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files || isButtonDisabled ? styles.tab_disabled : ''}`}>
             <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>Submit
           </div>
         </div>
 
-        <form ref={formRef} onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
+        <form ref={formRef} id='postForm' onSubmit={handleFormSubmit} className={`${styles.postForm}`}>
           <div className={`${styles.tabWrapper}`}>
             <div className={`${styles.tabContent} ${activeTab === 'content' ? styles.tabPanel_active : styles.tabPanel}`}>
               <h5 className={styles.contentDescription}>Start of post</h5>
@@ -160,8 +234,8 @@ const AddPostForm = props => {
                 </div>
               </div>
               <div className={`${styles.buttons}`}>
-                <button className={`${styles.resetForm} btn waves-effect waves-light`} onClick={clearForm}>Clear</button>
-                <button disabled={isButtonDisabled} className={`${styles.moveOnBtn} btn waves-effect waves-light`} onClick={() => handleTabClick('images')}>Add images</button>
+                <button type='button' className={`${styles.resetForm} btn waves-effect waves-light`} onClick={clearForm}>Clear</button>
+                <button type='button' disabled={isButtonDisabled} className={`${styles.moveOnBtn} btn waves-effect waves-light`} onClick={(e) => handleTabClick('images', e)}>Add images</button>
               </div>
             </div>
             <div id='imgSectionTab' className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
@@ -173,8 +247,17 @@ const AddPostForm = props => {
             <div className={`${styles.tabContent} ${activeTab === 'submit' ? `${styles.tabPanel_active} ${styles.submitTab_active}` : styles.tabPanel}`}>
               <h5 className={styles.contentDescription}>submit if all OK</h5>
               <Suspense fallback={<CircularLoader size='big' color="#fff" />}>
-                <PostSummary formData={{ ...formData, placesInputValue: placesInputValue.current }} />
+                <PostSummary formData={{ ...formData, placesInputValue: placesInputValue.current, files, postLocation }} />
               </Suspense>
+              <div className={styles.buttons}>
+                <button 
+                  disabled={isButtonDisabled || !files}
+                  form='postForm'
+                  className={`${styles.submitBtn} btn waves-effect waves-light`} 
+                  type="submit">
+                    Submit
+                </button>
+              </div>
             </div>
           </div>
         </form>

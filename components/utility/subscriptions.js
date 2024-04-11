@@ -1,4 +1,5 @@
-import { projectFirestore, projectFirebase } from '../../firebase/config'
+import { projectFirestore, projectFirebase, projectStorage } from '../../firebase/config'
+import { dateMMDDYY } from './DateFormatter'
 
 const baseQuery = projectFirestore.collection('testUserCollection')
 
@@ -96,31 +97,38 @@ function fetchDocumentByFieldName({fieldName, value, userID, docID}){
 	})
 }
 
-function handleSaveNewPost({userID, dataToSave}){
-	console.log('userID: ', userID, 'Supplied data to save: ', dataToSave);
-	let country = dataToSave.postLocationData.country
-	console.log(country);
-	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
-	return new Promise((resolve, reject) => {
-		userDbRef
-		.collection('blogPosts')
-		.doc()
-		.set(dataToSave)
-		.then(docRef => {
-			userDbRef.update({
-				countriesVisited: projectFirebase.firestore.FieldValue.arrayUnion(country)
-			}).then(res => {
-				resolve({status: 200, message: 'Success! Post saved!'})
-			}).catch(err => reject({status: 500, message: `Error: ${err}`}))
+function handleSaveNewPost({userID, dataToSave, media}){
+	return new Promise(async (resolve, reject) => {
+		let country = dataToSave.postLocationData.country
+		const postDate = dateMMDDYY(dataToSave.pickedDateForPost)
+	
+		const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+		const fileUploadPromises = media.map((file) => {
+			const filePath = `userData/${userID}/${country}/${postDate}/${file.name}`.replace(/\s/g, '_')
+			const storageRef = projectStorage.ref().child(filePath)
+
+			return storageRef.put(file).then((snapshot) => {
+				return snapshot.ref.getDownloadURL()
+			})
 		})
-		.catch(err => {
-			reject({status: 500, message: `Error: ${err}`})
-		})	
+
+		try {
+			const urls = await Promise.all(fileUploadPromises)
+			dataToSave.mediaURLs = urls
+			await userDbRef.collection('blogPosts').doc().set(dataToSave)
+			await userDbRef.update({
+				countriesVisited: projectFirebase.firestore.FieldValue.arrayUnion(country)
+			})
+			
+			resolve('Post saved successfully!')
+		} catch (err) {
+			console.error('Error saving post:', err)
+			reject(err)
+		}
 	})
 }
 
 function handleSaveRecipt ({ userID, dataToSave }){
-	console.log('userID: ', userID, 'Supplied data to save: ', dataToSave);
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
 
 	return new Promise((resolve, reject) => {
@@ -128,7 +136,6 @@ function handleSaveRecipt ({ userID, dataToSave }){
 		.collection('userReceipts')
 		.add(dataToSave)
 		.then((docRef) => {
-			console.log('Ref to written document', docRef);
 			resolve({docRef})
 		})
 		.catch(err => {
