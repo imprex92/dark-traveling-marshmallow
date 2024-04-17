@@ -31,7 +31,7 @@ const TextContent = ({ formData }) => {
 							`https://maps.google.com/?` + 
 								(plusCode 
 									? `q=${encodeURIComponent(plusCode.replace(/,/g, ''))}`
-									: `q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`
+									: `q=${haveLocationData ? additionalData && encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`
 								)
 							}
 						></a>
@@ -46,8 +46,14 @@ const TextContent = ({ formData }) => {
 					}
 				</div>
 				<div className={styles.weatherMood}>
-					<span className={styles.weather}><span className="material-symbols-outlined white-text">routine</span>{postWeather}</span>
-					<span className={styles.mood}><span className="material-symbols-outlined white-text">mood</span>{postMood}</span>
+					<span className={styles.weather}>
+						<span className="material-symbols-outlined white-text">routine</span>
+						<span>{postWeather}</span>
+					</span>
+					<span className={styles.mood}>
+						<span className="material-symbols-outlined white-text">mood</span>
+						<span>{postMood}</span>
+					</span>
 				</div>
 			</div>
 			<div className={styles.description}>

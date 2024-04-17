@@ -96,7 +96,7 @@ const FileInput = ({returnFiles}) => {
 						) : (
 							<span className={styles.unknownType}>{file.name || '?'}</span>
 						)}
-						<button className={`${styles.removeBtn} btn waves-effect waves-light`} onClick={() => {
+						<button type='button' className={`${styles.removeBtn} btn waves-effect waves-light`} onClick={() => {
 							setFiles((prevFiles) => 
 								prevFiles.filter(((_, i) => i !== index))
 							)
