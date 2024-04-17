@@ -5,16 +5,14 @@ import styles from 'styles/newPost.module.css'
 
 const newpost = ({userAuth}) => {
 	return (
-		<div>
+		<div style={{overflow: "hidden"}}>
 			<img
 			className={styles.newpostImg}
 			src="/assets/iceland-5104385_1920.jpeg"
-			alt="Beautiful nature"
-			layout="fill"
-			objectfit="fit"
-			objectposition="center bottom"
+			alt=""
+			fill={true}
+			style={{objectFit: "cover"}}
 			quality={75}
-			
 			/>
 			{/* <StorageCommunicator userAuth={userAuth}/> */}
 			<StorageCommunicator_copy userAuth={userAuth} />
