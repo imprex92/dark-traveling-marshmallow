@@ -1,9 +1,14 @@
-import StorageCommunicator_copy from 'components/communications/StorageCommunicator_copy'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
-import StorageCommunicator from 'components/communications/StorageCommunicator'
+import { useAuth } from 'contexts/AuthContext'
+
 import styles from 'styles/newPost.module.css'
 
-const newpost = ({userAuth}) => {
+import SideNav from 'components/nav/Sidenav'
+import AddPostForm from 'components/postForm/AddPostForm'
+
+const newpost = () => {
+	const { currentUser } = useAuth()
+
 	return (
 		<div style={{overflow: "hidden"}}>
 			<img
@@ -15,7 +20,16 @@ const newpost = ({userAuth}) => {
 			quality={75}
 			/>
 			{/* <StorageCommunicator userAuth={userAuth}/> */}
-			<StorageCommunicator_copy userAuth={userAuth} />
+			{/*<StorageCommunicator_copy userAuth={userAuth} />*/}
+
+			<div id={styles.newPostForm} className={styles.main}>
+				<div className={styles.navigation}>
+					<SideNav dbUserData={currentUser}/>
+				</div>
+				<div className={styles.content}>
+					<AddPostForm dbUserData={currentUser} />
+				</div>
+			</div>
 		</div>
 	)
 }
