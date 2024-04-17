@@ -19,8 +19,6 @@ const newpost = () => {
 			style={{objectFit: "cover"}}
 			quality={75}
 			/>
-			{/* <StorageCommunicator userAuth={userAuth}/> */}
-			{/*<StorageCommunicator_copy userAuth={userAuth} />*/}
 
 			<div id={styles.newPostForm} className={styles.main}>
 				<div className={styles.navigation}>
