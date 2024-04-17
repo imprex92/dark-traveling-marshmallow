@@ -28,6 +28,12 @@ const newpost = () => {
 					<AddPostForm dbUserData={currentUser} />
 				</div>
 			</div>
+			<style>{`
+			.sidenav-overlay{
+				width: calc(100% - 300px);
+				margin-left: auto;
+			}
+			`}</style>
 		</div>
 	)
 }
