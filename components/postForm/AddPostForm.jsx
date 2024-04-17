@@ -26,6 +26,7 @@ const AddPostForm = ({ dbUserData }) => {
 	const [datePicker, setDatePicker] = useState(new Date())
 	const [postLocation, setPostLocation] = useState([])
   const [postTitle, setPostTitle] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const formRef = useRef(null)
   const placesInputValue = useRef('')
@@ -82,7 +83,7 @@ const AddPostForm = ({ dbUserData }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    
+    setIsSubmitting(true)
 
     if(Object.keys(postLocation).length > 0){
       const addressComponents = getAddressComponents(postLocation.locationData);
@@ -129,6 +130,7 @@ const AddPostForm = ({ dbUserData }) => {
 
     handleSaveNewPost({userID: dbUserData.uid, dataToSave: formData, media: files})
     .then((message) => {
+      setIsSubmitting(false);
       M.toast({text: message, completeCallback: function(){
         window.history.replaceState(null, '', '/user/posts')
         router.replace('/user/posts');
@@ -136,6 +138,7 @@ const AddPostForm = ({ dbUserData }) => {
     })
     .catch((err) => {
       console.log(err.message);
+      setIsSubmitting(false);
       M.toast({text: `${err.message}. Try posing it again later.`});
     })
   }
@@ -161,7 +164,8 @@ const AddPostForm = ({ dbUserData }) => {
       <div className={`${styles.stepTabs}`}>
         <div className={styles.navList}>
           <div onClick={(e) => {handleTabClick('content', e)}} className={`${activeTab === 'content' ? styles.tab_active : styles.tab}`}>
-            <span className={`material-symbols-outlined ${styles.label}`}>line_start_circle</span>Content
+            <span className={`material-symbols-outlined ${styles.label}`}>line_start_circle</span>
+            <span className={styles.tabDescription}>Content</span>
           </div>
           <div 
             onClick={(e) => {
@@ -170,7 +174,8 @@ const AddPostForm = ({ dbUserData }) => {
               }
             }}  
             className={`${activeTab === 'images' ? styles.tab_active : styles.tab} ${isButtonDisabled ? styles.tab_disabled : ''}`}>
-            <span className={`material-symbols-outlined ${styles.label}`}>attach_file_add</span>Images
+            <span className={`material-symbols-outlined ${styles.label}`}>attach_file_add</span>
+            <span className={styles.tabDescription}>Images</span>
           </div>
           <div 
             onClick={(e) => {
@@ -178,7 +183,8 @@ const AddPostForm = ({ dbUserData }) => {
                 handleTabClick('submit', e)}} 
               }
             className={`${activeTab === 'submit' ? styles.tab_active : styles.tab} ${!files || isButtonDisabled ? styles.tab_disabled : ''}`}>
-            <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>Submit
+            <span className={`material-symbols-outlined ${styles.label}`}>task_alt</span>
+            <span className={styles.tabDescription}>Submit</span>
           </div>
         </div>
 
@@ -234,7 +240,7 @@ const AddPostForm = ({ dbUserData }) => {
               <div className={styles.fieldRow}>
                 <div className="input-field col s12">
                   <i className="material-icons prefix white-text">mode_edit</i>
-                  <textarea onChange={(e) => setPostContent(e.target.value)} id="postContent" className="materialize-textarea" placeholder=" "></textarea>
+                  <textarea onChange={(e) => setPostContent(e.target.value)} id="postContent" className={`materialize-textarea ${styles.postTextarea}`} placeholder=" "></textarea>
                   <label htmlFor="postContent">Write something for your  post...</label>
                 </div>
               </div>
@@ -244,24 +250,25 @@ const AddPostForm = ({ dbUserData }) => {
               </div>
             </div>
             <div id='imgSectionTab' className={`${styles.tabContent} ${activeTab === 'images' ? `${styles.tabPanel_active} ${styles.imageTab_active}` : styles.tabPanel}`}>
-              <h5 className={styles.contentDescription}>Add one or more pictures to make your post look better.</h5>
-              <Suspense fallback={<CircularLoader size='big' color="#fff" />}>
+              <h5 className={styles.contentDescription}>Add one or more pictures.</h5>
+              <Suspense fallback={<CircularLoader loaderSize='big' loaderColor='default' />}>
                 <FileInput returnFiles={(f) => {setFiles(f), handleTabClick('submit')}} />
               </Suspense>
             </div>
             <div className={`${styles.tabContent} ${activeTab === 'submit' ? `${styles.tabPanel_active} ${styles.submitTab_active}` : styles.tabPanel}`}>
               <h5 className={styles.contentDescription}>submit if all OK</h5>
-              <Suspense fallback={<CircularLoader size='big' color="#fff" />}>
+              <Suspense fallback={<CircularLoader loaderSize='big' loaderColor='default' />}>
                 <PostSummary formData={{ ...formData, placesInputValue: placesInputValue.current, files, postLocation }} />
               </Suspense>
               <div className={styles.buttons}>
                 <button 
-                  disabled={isButtonDisabled || !files}
+                  disabled={isButtonDisabled || !files || isSubmitting}
                   form='postForm'
                   className={`${styles.submitBtn} btn waves-effect waves-light`} 
                   type="submit">
                     Submit
                 </button>
+                    { isSubmitting ? <CircularLoader loaderSize='small' loaderColor='spinner-red-only' wrapperMargins='0 1rem 0.5rem 0' /> : null}
               </div>
             </div>
           </div>
