@@ -32,6 +32,10 @@ $navTabListHeight: 53px;
 			margin: auto;
 			box-shadow: var(--primaryBoxShadow);
 			overflow-y: auto;
+
+			@media (max-width: variables.$breakpoint-tablet ) {
+				width: 90%;
+			}
 		}
 	}
 }
@@ -50,6 +54,10 @@ $navTabListHeight: 53px;
 		margin: 1rem 2rem;
 		justify-content: center;
 		height: $navTabListHeight;
+
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			margin-left: 1rem;
+		}
 	}
 }
 
@@ -66,6 +74,16 @@ $navTabListHeight: 53px;
 	align-items: center;
 	gap: 0.2rem;
 	clip-path: polygon(75% 0%, 95% 50%, 75% 100%, 0% 100%, 20% 50%, 0% 0%);
+
+	@media (max-width: variables.$breakpoint-phone-XXL ) {
+		min-width: 100px;
+	}
+
+	& .tabDescription {
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			display: none;
+		}
+	}
 
 	&_active {
 		@extend .tab;
@@ -138,6 +156,10 @@ $navTabListHeight: 53px;
 			'fileInput'
 			'filePreviews'
 			'buttons';
+
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			grid-template-rows: 70px 0.9fr 0.1fr auto;
+		}
 	}
 
 	.submitTab_active {
@@ -157,8 +179,21 @@ $navTabListHeight: 53px;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 
+	@media (max-width: variables.$breakpoint-tablet ) {
+		flex-wrap: wrap;
+		margin-top: 0;
+
+		&:first-child {
+			margin-top: 2rem;
+		}
+	}
+
 	&>* {
 		flex-basis: 50%;
+
+		@media (max-width: variables.$breakpoint-tablet ) {
+			flex-basis: 100%;
+		}
 	}
 
 	&>.selectRow {
@@ -212,10 +247,26 @@ $navTabListHeight: 53px;
 input.dateInput,
 input.titleInput {
 	width: calc(100% - 1rem) !important;
+
+	@media (max-width: variables.$breakpoint-tablet ) {
+		width: 100% !important;
+	}
+}
+
+.postTextarea {
+	overflow-y: auto;
+	resize: vertical;
+	margin-top: 2rem;
 }
 
 .fieldRow {
 	margin-bottom: 2rem;
+}
+
+.fieldset {
+	@media (max-width: variables.$breakpoint-tablet ) {
+		padding-inline: 0 !important;
+	}
 }
 
 .fieldset:disabled * {
@@ -235,15 +286,27 @@ input.titleInput {
 	align-items: flex-end;
 	column-gap: 2rem;
 	height: 100%;
+	position: sticky;
+	bottom: -1px;
+	justify-content: flex-end;
 
 	& .resetForm,
 	.moveOnBtn {
 		flex: 1 1 50%;
+		overflow: hidden;
+		display: inline-block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	& .submitBtn,
 	.overViewBtn {
 		flex: 0 1 50%;
 		margin-inline: auto;
+
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			flex: 1 1 100%;
+			margin-top: 2rem;
+		}
 	}
 }

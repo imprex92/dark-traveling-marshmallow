@@ -94,6 +94,10 @@ const Slider = ({ formData }) => {
 				position: relative;
 				width: 370px;
 				place-self: center;
+
+				@media screen and (max-width: 640px) {
+					width: 100%;
+				}
 			}
 			.slide{
 				width: 100%;
@@ -109,6 +113,7 @@ const Slider = ({ formData }) => {
 			.imgThumbnail{
 				aspect-ratio: 1 / 1;
 				object-fit: contain;
+				width: 100%;
 			}
 			.active-anim{
 				opacity: 1;
