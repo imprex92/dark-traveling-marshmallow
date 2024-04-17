@@ -29,6 +29,11 @@
   box-shadow: var(--primaryBoxShadow);
   overflow-y: auto;
 }
+@media (max-width: 768px) {
+  #newPostForm.main > .content {
+    width: 90%;
+  }
+}
 
 .postForm {
   height: calc(100% - 53px - 2rem);
@@ -45,6 +50,11 @@
   justify-content: center;
   height: 53px;
 }
+@media (max-width: 640px) {
+  .stepTabs > .navList {
+    margin-left: 1rem;
+  }
+}
 
 .tab, .tab_active {
   position: relative;
@@ -59,6 +69,16 @@
   align-items: center;
   gap: 0.2rem;
   clip-path: polygon(75% 0%, 95% 50%, 75% 100%, 0% 100%, 20% 50%, 0% 0%);
+}
+@media (max-width: 640px) {
+  .tab, .tab_active {
+    min-width: 100px;
+  }
+}
+@media (max-width: 640px) {
+  .tab .tabDescription, .tab_active .tabDescription {
+    display: none;
+  }
 }
 .tab_active {
   color: var(--primaryBtnTextColor);
@@ -117,6 +137,11 @@
   grid-template-rows: auto 0.6fr auto 40px;
   grid-template-areas: "title" "fileInput" "filePreviews" "buttons";
 }
+@media (max-width: 640px) {
+  .tabWrapper .imageTab_active {
+    grid-template-rows: 70px 0.9fr 0.1fr auto;
+  }
+}
 .tabWrapper .submitTab_active {
   display: grid;
   height: 100%;
@@ -132,8 +157,22 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+@media (max-width: 768px) {
+  .fieldGroup {
+    flex-wrap: wrap;
+    margin-top: 0;
+  }
+  .fieldGroup:first-child {
+    margin-top: 2rem;
+  }
+}
 .fieldGroup > * {
   flex-basis: 50%;
+}
+@media (max-width: 768px) {
+  .fieldGroup > * {
+    flex-basis: 100%;
+  }
 }
 .fieldGroup > .selectRow {
   display: flex;
@@ -177,9 +216,27 @@ input.dateInput,
 input.titleInput {
   width: calc(100% - 1rem) !important;
 }
+@media (max-width: 768px) {
+  input.dateInput,
+input.titleInput {
+    width: 100% !important;
+  }
+}
+
+.postTextarea {
+  overflow-y: auto;
+  resize: vertical;
+  margin-top: 2rem;
+}
 
 .fieldRow {
   margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .fieldset {
+    padding-inline: 0 !important;
+  }
 }
 
 .fieldset:disabled * {
@@ -199,15 +256,29 @@ input.titleInput {
   align-items: flex-end;
   column-gap: 2rem;
   height: 100%;
+  position: sticky;
+  bottom: -1px;
+  justify-content: flex-end;
 }
 .buttons .resetForm,
 .buttons .moveOnBtn {
   flex: 1 1 50%;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .buttons .submitBtn,
 .buttons .overViewBtn {
   flex: 0 1 50%;
   margin-inline: auto;
+}
+@media (max-width: 640px) {
+  .buttons .submitBtn,
+.buttons .overViewBtn {
+    flex: 1 1 100%;
+    margin-top: 2rem;
+  }
 }
 
 /*# sourceMappingURL=newPost.module.css.map */

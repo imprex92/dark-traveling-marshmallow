@@ -58,6 +58,17 @@
 .previewItem_img {
   width: 150px;
 }
+@media (max-width: 640px) {
+  .previewItem_img {
+    width: calc(50% - 1rem);
+    justify-content: center;
+  }
+}
+@media (max-width: 520px) {
+  .previewItem_img {
+    width: calc(100% - 1rem);
+  }
+}
 .previewItem_vid {
   width: 300px;
 }
@@ -75,10 +86,18 @@
 .moveOnBtn {
   grid-area: buttons;
   display: flex;
+  position: sticky;
+  bottom: -1px;
 }
 .moveOnBtn > .overViewBtn {
   flex: 0 1 50%;
   margin-inline: auto;
+}
+@media (max-width: 640px) {
+  .moveOnBtn > .overViewBtn {
+    flex: 1 1 100%;
+    margin-top: 2rem;
+  }
 }
 
 .imgThumbnail img {

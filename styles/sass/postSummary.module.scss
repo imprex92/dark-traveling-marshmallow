@@ -1,3 +1,5 @@
+@use 'variables';
+
 .root {
 	grid-area: slider;
 }
@@ -10,8 +12,16 @@
 
 .title {
 	text-align: center;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	margin-top: 0;
+
+	@media (max-width: variables.$breakpoint-phone-XXL) {
+		font-size: 32px;
+	}
+
+	@media (max-width: variables.$breakpoint-phone-L) {
+		font-size: 26px;
+	}
 }
 
 .divider {
@@ -57,10 +67,22 @@
 		width: 100%;
 		justify-content: space-between;
 
+		@media (max-width: variables.$breakpoint-phone-XXL) {
+			display: inline-block;
+		}
+
 		&>.weather,
 		.mood {
 			display: flex;
 			align-items: center;
+
+			@media (max-width: variables.$breakpoint-phone-XXL) {
+				display: inline-block;
+				width: calc(50% - 1rem);
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 
 			&>span {
 				margin-right: 0.5rem;

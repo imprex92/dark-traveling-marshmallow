@@ -10,8 +10,18 @@
 
 .title {
   text-align: center;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   margin-top: 0;
+}
+@media (max-width: 640px) {
+  .title {
+    font-size: 32px;
+  }
+}
+@media (max-width: 425px) {
+  .title {
+    font-size: 26px;
+  }
 }
 
 .divider {
@@ -56,10 +66,25 @@
   width: 100%;
   justify-content: space-between;
 }
+@media (max-width: 640px) {
+  .infoBox > .weatherMood {
+    display: inline-block;
+  }
+}
 .infoBox > .weatherMood > .weather,
 .infoBox > .weatherMood .mood {
   display: flex;
   align-items: center;
+}
+@media (max-width: 640px) {
+  .infoBox > .weatherMood > .weather,
+.infoBox > .weatherMood .mood {
+    display: inline-block;
+    width: calc(50% - 1rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 .infoBox > .weatherMood > .weather > span,
 .infoBox > .weatherMood .mood > span {
