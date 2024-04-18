@@ -16,7 +16,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.0.3-alpha/dist/js/materialize.min.js"/>
+          <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.0.4/dist/js/materialize.min.js"/>
         </body>
       </Html>
     )
