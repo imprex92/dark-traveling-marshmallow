@@ -1,6 +1,7 @@
-
 // Collections
 .collection {
+  padding-left: 0;
+  list-style-type: none;
   margin: $element-top-margin 0 $element-bottom-margin 0;
   border: 1px solid $collection-border-color;
   border-radius: $collection-border-radius;
@@ -31,11 +32,12 @@
         display: inline-block;
         vertical-align: middle;
       }
+
       i.circle {
         font-size: 18px;
         line-height: 42px;
-        color: #fff;
-        background-color: #999;
+        color: $collection-avatar-circle-icon-color;
+        background-color: $collection-avatar-circle-bg-color;
         text-align: center;
       }
 
@@ -66,14 +68,16 @@
       color: $collection-active-color;
 
       .secondary-content {
-        color: #fff;
+        color: $font-on-primary-color-main;
       }
     }
   }
-  a.collection-item{
+
+  a.collection-item {
     display: block;
     transition: .25s;
     color: $collection-link-color;
+
     &:not(.active) {
       &:hover {
         background-color: $collection-hover-bg-color;
@@ -87,20 +91,24 @@
       border-bottom: 1px solid $collection-border-color;
       padding: 10px 20px;
     }
+
     .collection-item {
       padding-left: 30px;
     }
+
     .collection-item.avatar {
       padding-left: 72px;
     }
   }
 
 }
+
 // Made less specific to allow easier overriding
 .secondary-content {
   float: right;
-  color: $secondary-color;
+  color: $primary-color;
 }
+
 .collapsible .collection {
   margin: 0;
   border: none;

@@ -34,3 +34,45 @@ DateFormatter.propTypes={
 	timeFromNow: PropTypes.bool,
 	timestamp: PropTypes.number.isRequired
 }
+
+export function ISODateFormatter({timestamp, timeFromNow = false}){
+	let isoTimestamp;
+	
+	if (typeof timestamp === 'object' && timestamp instanceof Date) {
+		// Convert Date object to ISO 8601 string
+		isoTimestamp = timestamp.toISOString();
+	} else if (typeof timestamp === 'string') {
+		isoTimestamp = timestamp; // It's already in ISO 8601 format
+	} else {
+		console.error('ISODateFormatter error: Invalid timestamp');
+		return <span>No date</span>;
+	}
+
+	const formattedDate = moment(isoTimestamp).format('MMMM Do YYYY');
+
+	return (
+		<span>
+		{timeFromNow
+			? `${formattedDate}, around ${moment(isoTimestamp).fromNow()}`
+			: formattedDate}
+		</span>
+	);
+}
+
+ISODateFormatter.propTypes = {
+	timeFromNow: PropTypes.bool,
+	timestamp: PropTypes.oneOfType([
+	  	PropTypes.instanceOf(Date),
+	  	PropTypes.string,
+	]).isRequired,
+};
+
+export function dateMMDDYY(timestamp){
+	const postDate = new Date(timestamp);
+	const month = String(postDate.getMonth() + 1).padStart(2, '0');
+	const day = String(postDate.getDate()).padStart(2, '0');
+	const year = String(postDate.getFullYear()).slice(-2);
+	const formattedDate = `${month}${day}${year}`;
+
+	return formattedDate
+}

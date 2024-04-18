@@ -1,0 +1,119 @@
+@use 'variables';
+
+.root {
+	grid-area: fileInput;
+	border: 4px solid rgba(255, 255, 255, 0.21);
+	padding: 20px;
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--defaultBoxBorderRadius);
+
+	&:hover {
+		border: 4px solid rgba(255, 255, 255, 0.43);
+		cursor: pointer;
+		filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4));
+
+		& .inputImg {
+			color: #d9d9d9;
+			filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4));
+		}
+	}
+}
+
+.fileInput {}
+
+.inputLabel {
+	display: flex;
+	flex-direction: column;
+}
+
+.inputImg {
+	font-size: 85px;
+	margin-bottom: 2rem;
+	text-align: center;
+	color: #c6c6c6;
+}
+
+.inputText {
+	font-size: 15px;
+
+	&:hover {
+		filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4));
+	}
+}
+
+.inputValidateMsg {
+	color: #fff;
+}
+
+.filePreviews {
+	grid-area: filePreviews;
+	display: flex;
+	flex-wrap: wrap;
+	padding-inline: 1.5rem;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.previewItem {
+	position: relative;
+	display: flex;
+	height: 175px;
+
+	&_img {
+		@extend .previewItem;
+		width: 150px;
+
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			width: calc(50% - 1rem);
+			justify-content: center;
+		}
+
+		@media (max-width: 520px) {
+			width: calc(100% - 1rem);
+		}
+
+	}
+
+	&_vid {
+		@extend .previewItem;
+		width: 300px;
+	}
+}
+
+.removeBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0.25rem;
+	right: 0.25rem;
+	width: 40px;
+}
+
+.moveOnBtn {
+	grid-area: buttons;
+	display: flex;
+	position: sticky;
+	bottom: -1px;
+
+	&>.overViewBtn {
+		flex: 0 1 50%;
+		margin-inline: auto;
+
+		@media (max-width: variables.$breakpoint-phone-XXL ) {
+			flex: 1 1 100%;
+			margin-top: 2rem;
+		}
+	}
+}
+
+.imgThumbnail img {
+	object-fit: contain;
+}
+
+.vidThumbnail {}
+
+.unknownType {}

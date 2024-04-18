@@ -124,25 +124,8 @@
   font-size: 20px;
 }
 
-.places-autocomplete > i {
-  color: red;
-  cursor: pointer;
-}
-.places-autocomplete > i.active {
-  color: red;
-}
-
 .datepicker-section > i:last-child {
   cursor: pointer;
-}
-
-.newpost-img {
-  object-fit: cover;
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-  height: calc(100% + 110px);
-  z-index: -1;
 }
 
 .tab-content {
@@ -166,26 +149,6 @@ input {
 
 label {
   color: #fff !important;
-}
-
-.autocomplete-suggestions-wrapper {
-  background-color: #fff;
-  position: absolute;
-  z-index: 9;
-  left: 14%;
-  min-width: 205px;
-  top: 31px;
-}
-.autocomplete-suggestions-wrapper > li {
-  padding: 4px 1rem;
-  font-size: 14px;
-}
-.autocomplete-suggestions-wrapper > li:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-.autocomplete-suggestions-wrapper > li:hover {
-  background-color: rgba(0, 0, 0, 0.14);
-  cursor: pointer;
 }
 
 /*# sourceMappingURL=dashboard.style.css.map */

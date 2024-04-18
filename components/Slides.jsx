@@ -69,8 +69,10 @@ const Slides = ({searchByText, countrySearchTerm, userBlogs = []}) => {
 	const ref = useTilt(active);
 
 	return (
-		
-		<Link as={`/user/posts/singlepost/${slide.slug}`} href={`/user/posts/singlepost?slug=${slide.slug}`}>
+        <Link
+            as={`/user/posts/singlepost/${slide.slug}`}
+            href={`/user/posts/singlepost?slug=${slide.slug}`}
+            legacyBehavior>
 			<div
 				ref={ref}
 				className="slide"
@@ -103,7 +105,7 @@ const Slides = ({searchByText, countrySearchTerm, userBlogs = []}) => {
 				</div>
 			</div>
 		</Link>
-	);
+    );
 	}
 
 	const useTilt = (active) => {

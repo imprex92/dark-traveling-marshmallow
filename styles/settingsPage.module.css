@@ -208,6 +208,7 @@
 }
 
 .addressForm_row {
+  gap: 1rem;
   margin-bottom: 0;
 }
 .addressForm_row:last-of-type {

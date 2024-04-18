@@ -1,38 +1,39 @@
 import React, {useEffect} from 'react'
-import Image from 'next/image'
+import Image from "next/image"
 import Signup from '../components/signup'
 import {projectAuth} from '../firebase/config'
 import {useRouter} from 'next/router'
 import { useAuth } from '../contexts/AuthContext' 
+import imageAsset from 'public/assets/simon-migaj.jpg'
+import styles from 'styles/useGateway.module.css'
 
-function signup({userAuth}) {
+function signup() {
 	const {currentUser} = useAuth()
 	const router = useRouter()
+
 	useEffect(() => {
 		router.prefetch('/user/dashboard')
 		if(currentUser){
 			router.push('/user/dashboard') 
 		}
 	}, [])
-	return (
-		<>
-			<img
-			loading='eager'
-			className="signUp-img"
-			src="/assets/simon-migaj.jpg"
-			alt="Picture of the author"
-			layout="fill"
-			objectfit="cover"
-			objectposition="center bottom"
-			quality={75}		
-			/>
-			{!currentUser && <Signup/>}
-		</>
-	)
+
+	return <>
+        <Image
+            priority={true}
+            loading='eager'
+            className={styles.backgroundImage}
+            src={imageAsset}
+            alt="Picture of the author"
+            quality={75}
+            fill
+            placeholder='blur'
+            sizes="100vw"
+            style={{
+                objectFit: "cover"
+            }} />
+        {!currentUser && <Signup/>}
+    </>;
 }
-// signup.getInitialProps = async props => {
-// 	console.info('##### Congratulations! You are authorized! ######', props);
-// 	return {};
-// };
 
 export default signup

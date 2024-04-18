@@ -22,12 +22,12 @@ const weather = () => {
 			setIsLoading(true)
 			const geoLocation = await getGeolocation()
 			const coords = geoLocation && {latitude: geoLocation.data.latitude, longitude: geoLocation.data.longitude}
-			coords && await fetchWeatherByCoords(coords).then(data => {
+			coords && (await fetchWeatherByCoords(coords).then(data => {
 				setWeatherObj(data)
 				updateInitialWeather(data)
 				setSs('userGeoLatest', data)
 				setIsLoading(false)
-			})
+			}))
 		}
 		getSs('userGeoLatest') ? (setWeatherObj(getSs('userGeoLatest')), setIsLoading(false)) : getInitialWeather()
 	

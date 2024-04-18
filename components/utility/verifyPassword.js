@@ -4,5 +4,5 @@ export function verifyPassword(password = ''){
 	return password
 	.match(
 		/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
-	)
+	);
 }

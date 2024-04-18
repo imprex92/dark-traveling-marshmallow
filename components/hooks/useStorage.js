@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { projectStorage } from '../../firebase/config';
-import {useAuth} from '../../contexts/AuthContext'
+import { useAuth } from 'contexts/AuthContext';
+import { projectStorage } from 'firebase/config';
 
 //! Saving user defined files to upload to storage
 

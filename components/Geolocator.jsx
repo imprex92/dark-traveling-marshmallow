@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { getGeolocation } from './utility/GetGeolocation'
 import useSiteSettings from 'store/siteSettings';
 import { projectTimestampNow } from 'firebase/config';
+import styles from 'styles/dashboard.module.css'
 
 const Geolocator = () => {
 	const updateLocationState = useSiteSettings(state => state.setLatestLocation)
@@ -54,8 +55,8 @@ const Geolocator = () => {
 
   return (
 	<>
-		<div className="row valign-wrapper">
-			<div className="col s12 m4 push-m4 l4 push-l4 center-align geoLocation-section">
+		<div className={styles.geoLocator}>
+			<div className={styles.geoLocationSection}>
 				<span onClick={fetchGeolocation}>
 					<p>
 						<i className="material-icons">place</i>

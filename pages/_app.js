@@ -5,11 +5,9 @@ import { AuthProvider } from 'contexts/AuthContext'
 import { DatabaseProvider } from 'contexts/DatabaseContext'
 import 'styles/global.style.css'
 import 'styles/materialize.css'
-import 'styles/signin.style.css'
 import 'styles/dashboard.style.css'
 import 'styles/slides-component.style.scss'
 import 'styles/sideNav.style.css'
-import 'styles/singlePost.style.css'
 import 'styles/weather.style.css'
 import useSiteSettings from 'store/siteSettings';
 import {useRouter} from 'next/router';

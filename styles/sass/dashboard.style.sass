@@ -103,24 +103,9 @@
 		color: lightgray
 		font-size: 20px
 
-.places-autocomplete
-	& > i
-		color: red
-		cursor: pointer
-		&.active
-			color: red
-
 .datepicker-section
 	& > i:last-child
 		cursor: pointer
-
-.newpost-img
-	object-fit: cover
-	pointer-events: none
-	position: absolute
-	width: 100%
-	height: calc(100% + 110px)
-	z-index: -1
 
 .tab-content
 	@include tab-content-style
@@ -137,20 +122,3 @@ input
 
 label
 	color: #fff !important
-
-.autocomplete-suggestions-wrapper
-	background-color: #fff
-	position: absolute
-	z-index: 9
-	left: 14%
-	min-width: 205px
-	top: 31px
-	& > li
-		padding: 4px 1rem
-		font-size: 14px
-		&:nth-child(odd)
-			background-color: #f2f2f2
-		&:hover
-			background-color: rgba(0, 0, 0, 0.14)
-			cursor: pointer
-

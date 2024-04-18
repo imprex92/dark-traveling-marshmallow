@@ -2,9 +2,8 @@
   padding: 10px 8px;
   font-size: 1rem;
   z-index: 2000;
-  background-color: transparent;
   border-radius: 2px;
-  color: #fff;
+  color: $tooltip-font-color;
   min-height: 36px;
   line-height: 120%;
   opacity: 0;
@@ -16,7 +15,7 @@
   top: 0;
   pointer-events: none;
   visibility: hidden;
-  background-color: #323232;
+  background-color: $tooltip-bg-color;
 }
 
 .backdrop {
@@ -25,8 +24,8 @@
   height: 7px;
   width: 14px;
   border-radius: 0 0 50% 50%;
-  background-color: #323232;
+  background-color: $tooltip-bg-color;
   z-index: -1;
-  transform-origin: 50% 0%;
+  transform-origin: 50% 0;
   visibility: hidden;
 }
