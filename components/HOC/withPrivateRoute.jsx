@@ -1,72 +1,52 @@
-import React, { useEffect } from 'react';
-import Router from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { projectAuth } from '../../firebase/config';
-import { getCookie } from '../utility/CookieHandler';
+import { useRouter } from 'next/router';
 
 const login = '/login?redirected=true';
 
 // Function to check user authentication
-const checkUserAuthentication = async () => {
-  const user = projectAuth.currentUser;
-  return user;
+export const checkAuthState = async () => {
+  return new Promise((resolve, reject) => {
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        resolve(user);
+      } else {
+        resolve(null);
+      }
+    });
+  });
 };
 
 const withAuthentication = (WrappedComponent) => {
-  const AuthenticatedComponent = ({ userAuth, ...props }) => {
-    // Read the NEXT_AUTH_ENABLE environment variable
-    const nextAuthEnable = process.env.NEXT_AUTH_ENABLE !== 'false';
+  const AuthenticatedComponent = (props) => {
+    const [userAuth, setUserAuth] = useState();
+    const [isLoading, setIsLoading] = useState(true)
+    const router = useRouter()
 
-    // If NEXT_AUTH_ENABLE is false, return the WrappedComponent directly with userAuth
-    if (!nextAuthEnable) {
-      return <WrappedComponent {...props} userAuth={userAuth} />;
+    useEffect(() => {
+      setIsLoading(true);
+      const fetchUserAuth = async () => {
+        try {
+          const user = await checkAuthState();
+          setUserAuth(user);
+          setIsLoading(false);
+        } catch (error) {
+          console.error('Error checking authentication:', error);
+        }
+      };
+
+      fetchUserAuth();
+    }, []);
+console.log(userAuth, props);
+    if(!isLoading && userAuth)  {
+      // If authenticated, pass the `user` prop to the component and render it
+      return <WrappedComponent {...props} isLoading={isLoading} userAuth={userAuth} ohBoy='ohboy ohboy' />;
     }
-
-    // Render the wrapped component if user is authenticated
-    if (userAuth) {
-      return <WrappedComponent {...props} userAuth={userAuth} />;
+    else if (!isLoading && !userAuth) {
+      router.replace(login);
     }
-
-    // Redirect to the login page if user is not authenticated
-    return null;
-  };
-
-  AuthenticatedComponent.getInitialProps = async (context) => {
-    // Read the NEXT_AUTH_ENABLE environment variable
-    const nextAuthEnable = process.env.NEXT_AUTH_ENABLE !== 'false';
-
-    // If NEXT_AUTH_ENABLE is false, return an empty object with userAuth
-    if (!nextAuthEnable) {
-      return { userAuth: null };
-    }
-
-    const userAuth = await checkUserAuthentication();
-
-    if (!userAuth) {
-      // User is not authenticated, redirect
-      if (context.res) {
-        context.res.writeHead(302, { Location: login });
-        context.res.end();
-      } else {
-        Router.replace(login);
-      }
-    }
-
-    // If WrappedComponent has getInitialProps, call it
-    if (WrappedComponent.getInitialProps) {
-      /*const additionalData = {
-        latestPosition: getCookie('latestLocation') || null,
-      };*/
-
-      const wrappedProps = await WrappedComponent.getInitialProps({
-        ...context,
-        auth: userAuth,
-       // additional: additionalData,
-      });
-
-      return { ...wrappedProps, userAuth };
-    }
-
-    return { userAuth };
+    // Render the WrappedComponent with userAuth once it's fetched
+    return null
   };
 
   return AuthenticatedComponent;
