@@ -4,6 +4,10 @@ const Dotenv = require('dotenv-webpack');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
+
+	serverRuntimeConfig: {},  // Will be available on both server
+	publicRuntimeConfig: {}, // Will be available on both server and client
+
 	images: {
 		domains: [
 			'firebasestorage.googleapis.com',
@@ -21,7 +25,7 @@ module.exports = {
 		}
 		if (!isServer) {
 			config.resolve.fallback.fs = false;
-		  }
+		}
 		config.plugins.push(
 			new Dotenv({
 				path: path.join(__dirname, '.env'),
@@ -38,10 +42,10 @@ module.exports = {
 			})
 		)
 		config.module.rules.push({
-		test: /\.svg$/,
-		use: ["@svgr/webpack"]
-	  	});
-  
-	  return config;
+			test: /\.svg$/,
+			use: ["@svgr/webpack"]
+		});
+
+		return config;
 	}
-  };
+};
