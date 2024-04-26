@@ -8,6 +8,10 @@ import Geolocator from 'components/Geolocator'
 import Slides from 'components/Slides'
 import styles from 'styles/dashboard.module.css'
 import { useRouter } from 'next/router'
+import { getFirestore } from 'firebase-admin/firestore';
+
+import nookies from 'nookies'
+import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
 	const loggedInUserId = userAuth?.uid
@@ -153,23 +157,48 @@ const AddFirstPost = ({ sentences, randomIndex, route }) => {
 	)
 }
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (ctx) => {
 	// idToken check + fetch blogs
-	/*
+	const cookies = nookies.get(ctx);
+		const token = await firebaseAdminVerifyToken(cookies.token)
+		
+		const { uid, email } = token
+		console.log('uid', uid);
+	
+	try {
+		const cookies = nookies.get(ctx);
+		const token = await firebaseAdminVerifyToken(cookies.token)
+		const adminFirestore = getFirestore()
+		
+		const { uid, email } = token
+
+		// Fetch data here
+
 		let userBlogs = []
-	const userDbRef = projectFirestore.collection('testUserCollection').doc(props.auth.uid)
-	await userDbRef.collection('blogPosts').get()
-	.then(docSet => {
-		if(docSet !== null){
-			docSet.forEach(doc => userBlogs.push(({...doc.data(), id: doc.id})))
-		}
-	})
-	*/
-	return {
-		props: {
-			bobo: 'dfghj',
-		},
-	};
+		const userDbRef = adminFirestore.collection('testUserCollection').doc(uid)
+		console.log('userBD', userDbRef);
+		await userDbRef.collection('blogPosts').get()
+		.then(docSet => {
+			if(docSet !== null){
+				docSet.forEach(doc => userBlogs.push(({...doc.data(), id: doc.id})))
+			}
+		})
+		console.log('blogs', userBlogs);
+		return {
+			props: {
+				userBlogs,
+				bobo: 'dfghj',
+			},
+		};
+	} catch (err) {
+		console.log(err);
+		ctx.res.writeHead(302, { Location: '/login' });
+		ctx.res.end()
+
+		return { props: {} }
+	}
+	
+	
 };
 
 export default withPrivateRoute(dashboard)

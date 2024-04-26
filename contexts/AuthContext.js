@@ -3,23 +3,50 @@ import { useRouter } from 'next/router'
 import { projectFirebase, projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
 import useMessageCenter from 'store/messageTransmitter'
 
-const AuthContext = createContext();
+import nookies  from 'nookies'
 
-export function AuthProvider({children, userAuth}) {
+const AuthContext = createContext({user: null});
+
+export function AuthProvider({children}) {
 	const router = useRouter()
 	const hasError = useMessageCenter((state) => state.setError)
-	const [currentUser, setCurrentUser] = useState()
+	const [user, setUser] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [dbUserDocument, setDbUserDocument] = useState([])
 	const [error, setError] = useState('')
 
 	useEffect(() => {
+		return projectAuth.onIdTokenChanged(async (user) => {
+			if (!user) {
+				setUser(null)
+				nookies.set(undefined, 'token', '', {path: '/'})
+			} else {
+				const token = await user.getIdToken()
+				setUser(user)
+				nookies.set(undefined, 'token', token, { path: '/'})
+			}
+		})
+	}, [])
+
+	//* force refresh the user ID token every 10min
+	useEffect(() => {
+		const handle = setInterval(async () => {
+			const user = projectAuth.currentUser
+			if(user) await user.getIdToken(true)
+		}, 10 * 60 * 1000);
+
+		return () => clearInterval(handle)
+	}, [])
+
+/*	
+	useEffect(() => {
 		const unsubscribe = projectAuth.onAuthStateChanged( user => {
-				setCurrentUser(user)
+				setUser(user)
 			setIsLoading(false)
 		})
 		return unsubscribe
 	}, [])
+*/
 	
 	function signup(email, password){
 		return new Promise((resolve, reject) => {
@@ -125,7 +152,7 @@ export function AuthProvider({children, userAuth}) {
 	}
 	
 	const value = {
-		currentUser,
+		currentUser: user,
 		dbUserDocument,
 		error,
 		signup,

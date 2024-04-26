@@ -10,22 +10,22 @@ import 'styles/slides-component.style.scss'
 import 'styles/sideNav.style.css'
 import 'styles/weather.style.css'
 import useSiteSettings from 'store/siteSettings';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import { useOnlineStatus } from 'components/hooks/useOnlineStatus'
 import OfflineComp from 'components/OfflineComp'
 const WeatherWidget = lazy(() => import('components/widgets/WeatherWidget'))
 
 
-function MyApp({Component,pageProps}) {
+function MyApp({ Component, pageProps }) {
 	const widgetProhibited = ['/login', '/signup', '/']
 	const router = useRouter()
-	const { showWeatherWidget } = useSiteSettings(state => state.data) ?? { showWeatherWidget: true } 
+	const { showWeatherWidget } = useSiteSettings(state => state.data) ?? { showWeatherWidget: true }
 	const isOnline = useOnlineStatus()
 
-  return (
-	  <>
-	  	<AuthProvider>
-			{/* <DatabaseProvider> */}
+	return (
+		<>
+			<AuthProvider>
+				{/* <DatabaseProvider> */}
 				<Head>
 					<meta charSet="utf-8" />
 					<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
@@ -39,14 +39,14 @@ function MyApp({Component,pageProps}) {
 						})(window,document,'script','dataLayer','${process.env.GTM_ID}');
 					`}
 				</Script>
-				<Script strategy="afterInteractive" id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="f5fc7d0f-f0b3-46eb-b262-434f483563e1" type="text/javascript" async/>
-				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.PROJECT_FIREBASE_MEASUREMENT_ID}`}/>
+				<Script strategy="afterInteractive" id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="f5fc7d0f-f0b3-46eb-b262-434f483563e1" type="text/javascript" async />
+				<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.PROJECT_FIREBASE_MEASUREMENT_ID}`} />
 				<Script
-				data-cookieconsent="statistics"
-				id='google-analytics'
-				strategy="afterInteractive"
-				dangerouslySetInnerHTML={{
-				__html: `
+					data-cookieconsent="statistics"
+					id='google-analytics'
+					strategy="afterInteractive"
+					dangerouslySetInnerHTML={{
+						__html: `
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
@@ -54,14 +54,14 @@ function MyApp({Component,pageProps}) {
 				page_path: window.location.pathname,
 				});
 				`,
-				}}
+					}}
 				/>
-					{ isOnline && showWeatherWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
-					{ isOnline ? <Component {...pageProps}/> : <OfflineComp />}
-			{/* </DatabaseProvider> */}
-		</AuthProvider>
-	  </>
-  );
+				{isOnline && showWeatherWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
+				{isOnline ? <Component {...pageProps} /> : <OfflineComp />}
+				{/* </DatabaseProvider> */}
+			</AuthProvider>
+		</>
+	);
 }
 
 export default MyApp;
