@@ -16,7 +16,8 @@ module.exports = {
 		token_uri: process.env.ADMIN_FIREBASE_TOKEN_URI,
 		auth_provider_x509_cert_url: process.env.ADMIN_FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
 		client_x509_cert_url: process.env.ADMIN_FIREBASE_CLIENT_X509_CERT_URL,
-		univers_domain: process.env.ADMIN_FIREBASE_UNIVERSE_DOMAIN
+		univers_domain: process.env.ADMIN_FIREBASE_UNIVERSE_DOMAIN,
+		databaseURL: process.env.PROJECT_FIREBASE_DATABASE_URL,
 	},  // Will be available on both server
 	publicRuntimeConfig: {}, // Will be available on both server and client
 
