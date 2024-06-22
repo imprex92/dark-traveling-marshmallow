@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { projectFirestore } from 'firebase/config'
 import { useAuth } from 'contexts/AuthContext'
-import Sidenav from 'components/nav/Sidenav'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from 'components/utility/subscriptions'
 import Geolocator from 'components/Geolocator'
@@ -12,6 +11,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 
 import nookies from 'nookies'
 import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
+import SideNav from 'components/nav/sidenav'
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
 	const loggedInUserId = userAuth?.uid
@@ -102,7 +102,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 
 	return (
 		<div className={styles.dashboardMain}>
-			<Sidenav dataFromChildToParent={filterCountry} dbUserData={dbUserData} />
+			<SideNav dataFromChildToParent={filterCountry} dbUserData={dbUserData} />
 			<div className={styles.wrapper}>
 				<Geolocator />
 				<div className="row valign-wrapper">
@@ -141,9 +141,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 }
 
 const AddFirstPost = ({ sentences, randomIndex, route }) => {
-	const redirect = () => {
-		route.push("/user/newpost")
-	}
+	const redirect = () => route.push("/user/newpost")
 
 	return (
 		<div onClick={redirect} className={styles.noPosts_root}>
@@ -163,36 +161,47 @@ export const getServerSideProps = async (ctx) => {
 		const token = await firebaseAdminVerifyToken(cookies.token)
 		
 		const { uid, email } = token
-		console.log('uid', uid);
 	
 	try {
 		const cookies = nookies.get(ctx);
 		const token = await firebaseAdminVerifyToken(cookies.token)
 		const adminFirestore = getFirestore()
-		
 		const { uid, email } = token
 
 		// Fetch data here
 
 		let userBlogs = []
 		const userDbRef = adminFirestore.collection('testUserCollection').doc(uid)
-		console.log('userBD', userDbRef);
+
 		await userDbRef.collection('blogPosts').get()
 		.then(docSet => {
 			if(docSet !== null){
-				docSet.forEach(doc => userBlogs.push(({...doc.data(), id: doc.id})))
+				docSet.forEach(doc => {
+					let postData = doc.data();
+					// Check and convert GeoPoint to a serializable object
+					if (postData.postLocationData && postData.postLocationData.geopoint) {
+						const geopoint = postData.postLocationData.geopoint;
+						postData.postLocationData.geopoint = {
+							latitude: geopoint.latitude,
+							longitude: geopoint.longitude,
+						};
+					}
+					// Ensure the entire postData object is serializable
+					postData = JSON.parse(JSON.stringify(postData));
+					userBlogs.push({...postData, id: doc.id});
+				});
 			}
 		})
-		console.log('blogs', userBlogs);
+
 		return {
 			props: {
 				userBlogs,
-				bobo: 'dfghj',
+				//bobo: 'dfghj', Possible to add additional props here
 			},
 		};
 	} catch (err) {
-		console.log(err);
-		ctx.res.writeHead(302, { Location: '/login' });
+		console.error(err);
+		ctx.res.writeHead(302, { Location: err.code === 'auth/id-token-expired' ? '/login#tokenExpired' : '/login' });
 		ctx.res.end()
 
 		return { props: {} }
