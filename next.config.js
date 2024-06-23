@@ -1,7 +1,4 @@
-require('dotenv').config()
-const path = require('path')
-const Dotenv = require('dotenv-webpack');
-const { StatsWriterPlugin } = require('webpack-stats-plugin');
+//const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
 
@@ -17,8 +14,8 @@ module.exports = {
 		auth_provider_x509_cert_url: process.env.ADMIN_FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
 		client_x509_cert_url: process.env.ADMIN_FIREBASE_CLIENT_X509_CERT_URL,
 		univers_domain: process.env.ADMIN_FIREBASE_UNIVERSE_DOMAIN,
-		databaseURL: process.env.PROJECT_FIREBASE_DATABASE_URL,
-	},  // Will be available on both server
+		databaseURL: process.env.NEXT_PUBLIC_PROJECT_FIREBASE_DATABASE_URL,
+	},  // Will be available on server
 	publicRuntimeConfig: {}, // Will be available on both server and client
 
 	images: {
@@ -40,19 +37,15 @@ module.exports = {
 			config.resolve.fallback.fs = false;
 		}
 		config.plugins.push(
-			new Dotenv({
-				path: path.join(__dirname, '.env'),
-				systemvars: true
-			}),
-			new StatsWriterPlugin({
-				filename: '../webpack-stats.json',
-				stats: {
-					assets: true,
-					chunks: true,
-					modules: true,
-					errorDetails: true
-				}
-			})
+			//new StatsWriterPlugin({
+			//	filename: '../webpack-stats.json',
+			//	stats: {
+			//		assets: true,
+			//		chunks: true,
+			//		modules: true,
+			//		errorDetails: true
+			//	}
+			//})
 		)
 		config.module.rules.push({
 			test: /\.svg$/,
