@@ -2,13 +2,13 @@ import React, { useState, useRef } from 'react'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import { projectFirebase, projectFirestore } from 'firebase/config'
 import styles from 'styles/settingsPage.module.css'
-import SideNav from 'components/nav/Sidenav'
 import Googleicon from 'public/assets/icons8-google.svg'
 import { accountRemoval, updateEmail, updatePassword, verifyUserEmail, updateAccountData, reAuthenticate } from 'components/utility/authOperations'
 import AddressForm from 'components/AddressForm'
 import CircularLoader from 'components/loaders/preloaders/CircularLoader'
 import { useRouter } from 'next/router'
 import { verifyEmail } from 'components/utility/verifyEmail'
+import SideNav from 'components/nav/sidenav'
 
 const settings = ({userAuth, userData}) => {
 	const { displayName, email, emailVerified, phoneNumber, photoURL = null, providerId} = userData

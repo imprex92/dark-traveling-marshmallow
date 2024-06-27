@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react'
-import withPrivateRoute from '../../../components/HOC/withPrivateRoute'
-import {projectFirestore} from '../../../firebase/config'
-import BlogList  from '../../../components/BlogList'
-import SideNav from 'components/nav/Sidenav'
-import { fetchUserblog, fetchUserHotels, fetchDbUserData } from '../../../components/utility/subscriptions'
+import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import {projectFirestore} from 'firebase/config'
+import BlogList  from 'components/BlogList'
+import { fetchUserblog, fetchUserHotels, fetchDbUserData } from 'components/utility/subscriptions'
 import styles from 'styles/blogPostsFeed.module.css'
+import SideNav from 'components/nav/sidenav'
 
 const index = ({userAuth}) => {
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userAuth.uid)

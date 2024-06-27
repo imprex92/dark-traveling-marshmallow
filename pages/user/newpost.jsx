@@ -3,8 +3,8 @@ import { useAuth } from 'contexts/AuthContext'
 
 import styles from 'styles/newPost.module.css'
 
-import SideNav from 'components/nav/Sidenav'
 import AddPostForm from 'components/postForm/AddPostForm'
+import SideNav from 'components/nav/sidenav'
 
 const newpost = () => {
 	const { currentUser } = useAuth()
