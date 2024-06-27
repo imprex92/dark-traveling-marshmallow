@@ -1,10 +1,20 @@
+import { useState, useEffect } from "react"
 import Shimmer from "./Shimmer"
 import SkeletonElement from "./SkeletonElement"
 
 
 const SkeletonWeather = ({ theme, position = null }) => {
 	const themeClass = theme || 'light'
-	const isMobile = window.innerWidth <= 640;
+	const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 640 : false);
+
+	useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 640);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
 	const MainSkeleton = () => {
 		return (

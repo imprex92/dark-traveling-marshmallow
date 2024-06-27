@@ -4,7 +4,7 @@ import OpenWeather from '../components/OpenWeather'
 import { useAuth } from '../contexts/AuthContext'
 import { fetchWeatherByCoords, fetchWeatherByQuery } from '../components/utility/WeatherHandler'
 import { getGeolocation } from '../components/utility/GetGeolocation'
-import { getSs, setSs } from '../components/utility/StoreHandler'
+import { getSs, setSs } from '../components/utility/StorageHandler'
 import SkeletonWeather from 'components/loaders/skeletons/SkeletonWeather'
 import useSiteSettings from 'store/siteSettings';
 
