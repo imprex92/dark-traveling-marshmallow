@@ -14,7 +14,7 @@ import styles from 'styles/googlePlacesAutocomplete.module.css'
 			const checkExistingScript = () => {
 			if (!existingScript) {
 				script = document.createElement('script');
-				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places&callback=initMap&loading=async`;
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places&callback=initMap&loading=async`;
 				script.async = true;
 				script.defer = true;
 				document.head.appendChild(script);
