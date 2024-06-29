@@ -87,21 +87,26 @@ const AddPostForm = ({ dbUserData }) => {
 
     if(Object.keys(postLocation).length > 0){
       const addressComponents = getAddressComponents(postLocation.locationData);
-      const { weatherData, geoPoint } = await getGeoPointAndWeather(postLocation.coordinates)
+      const { weatherData, geoPoint, error } = await getGeoPointAndWeather(postLocation.coordinates)
+      if(error){
+        console.error('Geopoint and Weather error', error)
+        M.toast({text: 'Geopoint and Weather error. Contect admin.'})
+        setIsSubmitting(false)
+      }
 
       postLocationData = {
         country: countryName || getComponentValue(addressComponents, 'country') || null,
-        state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation.locationData[0].vicinity,
-        city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation.locationData[0].name,
-        geopoint: geoPoint || postLocation.coordinates || 'Coordinates not found',
-        plusCode: postLocation.locationData[0]?.plus_code || null,
+        state: getComponentValue(addressComponents, 'administrative_area_level_1') || postLocation?.locationData[0]?.vicinity || null,
+        city: getComponentValue(addressComponents, 'postal_town') || getComponentValue(addressComponents, 'locality') || postLocation?.locationData[0]?.name || null,
+        geopoint: geoPoint || postLocation?.coordinates || 'Coordinates not found',
+        plusCode: postLocation?.locationData[0]?.plus_code || null,
         offlineAddress: null,
         wasApiOffline: false
     };
 
     postWeatherData = {
         weatherUser: weather || null,
-        weatherAPI: weatherData.data || latestWeather || null,
+        weatherAPI: weatherData?.data || latestWeather || null,
         wasApiOffline: false
     };
     }

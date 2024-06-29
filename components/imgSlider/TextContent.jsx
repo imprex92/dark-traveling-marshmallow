@@ -5,7 +5,7 @@ import { ISODateFormatter } from 'components/utility/DateFormatter'
 import { useAuth } from 'contexts/AuthContext'
 
 const TextContent = ({ formData }) => {
-
+	console.log(formData);
 	const { currentUser } = useAuth();
 	const { postMood, postContent, postTitle, postWeather, pickedDateForPost, postLocation, placesInputValue } = formData
 	const { additionalData, locationData } = postLocation
@@ -31,17 +31,17 @@ const TextContent = ({ formData }) => {
 							`https://maps.google.com/?` + 
 								(plusCode 
 									? `q=${encodeURIComponent(plusCode.replace(/,/g, ''))}`
-									: `q=${haveLocationData ? additionalData && encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`
+									: `q=${haveLocationData ? (additionalData || [])[0]?.description && encodeURIComponent((additionalData || [])[0]?.description.replace(/,/g, '')) : placesInputValue}`
 								)
 							}
 						></a>
 						: 
 						<a
-						href={`https://maps.google.com/?q=${haveLocationData ? encodeURIComponent(additionalData[0]?.description.replace(/,/g, '')) : placesInputValue}`} 
+						href={`https://maps.google.com/?q=${haveLocationData ? encodeURIComponent((additionalData || [])[0]?.description.replace(/,/g, '')) : placesInputValue}`} 
 						target='_blank'
 						rel='noopener noreferrer'
 						>
-							<span>{additionalData ? additionalData[0]?.description : placesInputValue}</span>
+							<span>{(additionalData || [])[0]?.description || placesInputValue}</span>
 						</a>
 					}
 				</div>
