@@ -16,7 +16,7 @@ const WeatherWidget = () => {
 	const [locationError, setLocationError] = useState(null)
 	const [weatherObj, setWeatherObj] = useState(null)
 	const { units } = useSiteSettings(state => state.data)
-	const isMetric = units === 'celsius' ? true : false
+	const isMetric = units === 'metric' ? true : false
 
 	useEffect(() => { fetchGeolocation() }, [])
 
