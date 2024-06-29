@@ -152,8 +152,8 @@ const Slider = ({ formData }) => {
   );
 };
 
-Slider.propTypes = {
-  files: PropTypes.array.isRequired,
-};
+//Slider.propTypes = {
+//  files: PropTypes.array.isRequired,
+//};
 
 export default Slider;

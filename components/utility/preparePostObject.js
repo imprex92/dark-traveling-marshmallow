@@ -1,7 +1,10 @@
 import firebase from 'firebase/app'
 import { fetchWeatherByCoords } from "./WeatherHandler";
+import { v4 as uuidv4 } from 'uuid';
 
 export function createSlug(title){
+	if (!title) return uuidv4();
+
 	const titleToSlug = title
 	.replace(/å/g, 'a')
 	.replace(/Å/g, 'A')
@@ -24,13 +27,18 @@ export function getComponentValue(components, type) {
 }
 // Function to create a GeoPoint object
 export async function getGeoPointAndWeather(coordinates) {
-	if (coordinates.length > 0) {
-		const { lat, lng } = coordinates[0];
-
-		const weatherData = await fetchWeatherByCoords({ latitude: lat, longitude: lng })
-		const geoPoint = new firebase.firestore.GeoPoint(lat, lng)
-		
-		return { weatherData, geoPoint };
+	try {
+		if (coordinates.length > 0) {
+			const { lat, lng } = coordinates[0];
+	
+			const weatherData = await fetchWeatherByCoords({ latitude: lat, longitude: lng })
+			const geoPoint = new firebase.firestore.GeoPoint(lat, lng)
+			
+			return { weatherData, geoPoint, error: null};
+		}
+		return { weatherData: null, geoPoint: null, error: 'No coordinates provided' };
+	} catch (error) {
+		console.error('Error fetching weather:', error)
+		return { weatherData: null, geoPoint: null, error: error };
 	}
-	return null;
 }

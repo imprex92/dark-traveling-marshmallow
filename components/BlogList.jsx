@@ -23,11 +23,15 @@ const BlogList = ({searchByText, countrySearchTerm, userBlogs}) => {
 	return (
 		<div className={styles.innerWrapper}>
 			<div className={styles.postItemsWrapper}>
-				{filteredBlogs.map((blog) => (
-					<div key={blog.id} style={{backgroundImage: `url(${blog.imgURL})`}} className={styles.itemsWrapper}>
-						<BlogItem blog={blog} />
-					</div>
-				))}
+				{filteredBlogs.map((blog) => {
+					//! change to mediaURLs when ready
+					const url = typeof blog.imgURL === 'string' ? blog.imgURL : blog.mediaURLs[0];
+					return (
+						<div key={blog.id} style={{backgroundImage: `url(${url})`}} className={styles.itemsWrapper}>
+							<BlogItem blog={blog} />
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	)
