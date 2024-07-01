@@ -54,5 +54,32 @@
     transform: rotate(720deg);
   }
 }
+.minimized {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  border-radius: 50% 3px 3px 50%;
+  overflow: hidden;
+  background-color: var(--primaryBtnColor);
+  cursor: pointer;
+}
+.minimized:hover {
+  color: #fff;
+  background-color: var(--primaryBtnColorHover);
+}
+
+.maximized {
+  position: absolute;
+  bottom: 2px;
+  left: -20px;
+  border-radius: 50% 3px 3px 50%;
+  overflow: hidden;
+  background-color: var(--primaryBtnColor);
+  cursor: pointer;
+}
+.maximized:hover {
+  color: #fff;
+  background-color: var(--primaryBtnColorHover);
+}
 
 /*# sourceMappingURL=weatherWidget.module.css.map */

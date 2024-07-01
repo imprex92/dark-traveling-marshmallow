@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { getGeolocation } from 'components/utility/GetGeolocation'
 import styles from 'styles/weatherWidget.module.css'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
@@ -9,16 +9,26 @@ import { projectTimestampNow } from 'firebase/config';
 
 const WeatherWidget = () => {
 	const updateWeatherState = useSiteSettings(state => state.setLatestWeather)
-
+	const setShowWidget = useSiteSettings(state => state.setShowWeatherWidget)
+	
+	const [isMaximized, setIsMaximized] = useState(false)
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
 	const [userLocation, setUserLocation] = useState(null)
-	const [locationError, setLocationError] = useState(null)
+	const [locationError, setLocationError] = useState({error: false, message: null})
 	const [weatherObj, setWeatherObj] = useState(null)
 	const { units } = useSiteSettings(state => state.data)
 	const isMetric = units === 'metric' ? true : false
-
+	
+	useLayoutEffect(() => {
+		const showWidget = useSiteSettings.getState().getShowWeatherWidget()
+		setIsMaximized(showWidget)
+	}, [])
 	useEffect(() => { fetchGeolocation() }, [])
+	const toggleWidget = (bool) => {
+		setShowWidget(bool)
+		setIsMaximized(bool)
+	}
 
 	async function fetchGeolocation() {
 		setLocationLoading(true)
@@ -38,37 +48,43 @@ const WeatherWidget = () => {
 						setLocationLoading(false)
 					})
 					.catch(err => {
-						setLocationError(err)
+						setLocationError({error: true, message: err.message})
 					})
 				}
 				else if(res.state === 'denied'){
 					setLocationLoading(false)
-					setLocationError('Your browser is not allowing geolocation')
+					setLocationError({error: true, message: 'Geolocation denied'})
 					await getGeolocation()
 				}
 			})
 		}
 		else{
 			setLocationLoading(false)
-			setLocationError('Browser does not support Geolocation')
+			setLocationError({error: true, message: 'Not supported'})
 		}
-		
 	}
 
   return (
-	<div className={styles.widgetWrapper}>
-		<div className={styles.widgetContainer}>
-			<div className={styles.degrees}>
-				{weatherObj ? (<><span>{isMetric ? weatherObj.main.temp.toFixed(1) : !isMetric && toImperial(weatherObj.main.temp.toFixed(1), 'degrees') ? toImperial(weatherObj.main.temp.toFixed(1), 'degrees') : '??'}
-                </span>
-                <span>
-                  {isMetric ? '°C' : '°F'}
-                </span></> ) : <span>Just a sec...</span>}
+	<>
+		{isMaximized ? (
+			<div className={`${styles.widgetWrapper} ${isMaximized ? '' : styles.minimized}`}>
+				<div className={styles.widgetContainer}>
+					<div className={styles.degrees}>
+						{weatherObj ? (<><span>{isMetric ? weatherObj.main.temp.toFixed(1) : !isMetric && toImperial(weatherObj.main.temp.toFixed(1), 'degrees') ? toImperial(weatherObj.main.temp.toFixed(1), 'degrees') : '??'}
+						</span>
+						<span>
+						{isMetric ? '°C' : '°F'}
+						</span></> ) : locationError?.error ? <span>{locationError?.message}</span> : <span>Just a sec...</span>}
+					</div>
+					{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeatherWidget />}
+					<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
+					<span onClick={() => toggleWidget(false)} className={`${styles.maximized} material-icons`}>chevron_right</span>
+				</div>
 			</div>
-			{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeatherWidget />}
-			<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
-		</div>
-	</div>
+		) : (
+			<span onClick={() => toggleWidget(true)} className={`${styles.minimized} material-icons`}>chevron_left</span>
+		)}
+	</>
   )
 }
 
