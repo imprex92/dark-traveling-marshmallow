@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
 				`,
 					}}
 				/>
-				{isOnline && showWeatherWidget && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
+				{isOnline && !widgetProhibited.includes(router.pathname) ? <WeatherWidget /> : null}
 				{isOnline ? <Component {...pageProps} /> : <OfflineComp />}
 				{/* </DatabaseProvider> */}
 			</AuthProvider>
