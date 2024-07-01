@@ -33,18 +33,19 @@ const Post = (props) => {
       console.error('Failed to load image:', err);
       setHasError({
         error: true,
-        message: 'ERROR: Post not found',
+        message: 'ERROR: Something went wrong loading image. Check your network.',
         code: err,
       });
     };
   };
 
   useEffect(() => {
+	if(currentUser){
     const logedInUserId = currentUser.uid;
     const slug = router.query.slug;
 
     // Check if the blog post is already available in the Zustand store
-	loadImage(`${requestedBlog.imgURL}`);
+	loadImage(`${requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]}`);
     if (requestedBlog && requestedBlog.slug === slug) {
 		setIsLoading(false)
       return;
@@ -63,37 +64,68 @@ const Post = (props) => {
         console.error(err);
         setHasError({ error: true, message: 'ERROR: Post not found', code: err });
       });
-
+	}
   }, [currentUser, router.query.slug, requestedBlog, imageKey]);
-	
+	console.log('requestedBlog', requestedBlog);
 
   	if(isLoading){
 		return (
-			<div className='skeleton-container full-center loadingskeleton'>
-				<SkeletonSinglePost />
+			<div className={styles.singlePostMain}>
+				<div className='skeleton-container full-center loadingskeleton'>
+					<SkeletonSinglePost />
+				</div>
 			</div>
 		)
 	}
 
 	if(hasError){
-		return (<div className={`${styles.singlepostWrapper} hasError`}><SideNavLight/>{hasError && hasError.message}</div>)
+		return (
+			<div className={styles.singlePostMain}>
+				<div className={`${styles.singlepostWrapper_error} hasError`}>
+					<div className={`${styles.navigation}`}>
+						<SideNavLight/>{hasError && hasError.message}
+					</div>
+				</div>
+			</div>
+		)
 	}
 
 	if(requestedBlog === null){
-		return (<div className={`${styles.singlepostWrapper} loading`}><SideNavLight/>Loading...</div>)
+		return (
+			<div className={styles.singlePostMain}>
+				<div className={`${styles.singlepostWrapper_loading} loading`}>
+					<div className={`${styles.navigation}`}>
+						<SideNavLight/>
+					</div>
+					Loading...
+				</div>
+			</div>
+		)
 	}
-	else if(requestedBlog.empty === true)
-	return (<div className={`${styles.singlepostWrapper} not-found`}><SideNavLight/>Not found!</div>)
+	else if(requestedBlog.empty === true){
+		return (
+			<div className={styles.singlePostMain}>
+				<div className={`${styles.singlepostWrapper_notFound} not-found`}>
+					<div className={`${styles.navigation}`}>
+						<SideNavLight/>
+					</div>
+					Not found!
+				</div>
+			</div>
+		)
+	}
 	else
 	return (
 		<>
 			<div className={`${styles.singlePostMain} is-found`}>
-				<SideNavLight/>
+				<div className={`${styles.navigation}`}>
+					<SideNavLight/>
+				</div>
 				<div className={`${styles.singlepostWrapper}`}>
 					<div className={`row ${styles.imgRow}`}>
 						<div className={`col s12 ${styles.mainImageWrapper}`}>
 							{isImageLoaded ? (<img
-							src={requestedBlog?.imgURL || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
+							src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0] || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
 							alt="Main image"
 							/>
 							) : (
@@ -139,4 +171,4 @@ const Post = (props) => {
 	)
 }
 
-export default Post
+export default withPrivateRoute(Post)
