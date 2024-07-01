@@ -156,12 +156,6 @@ const AddFirstPost = ({ sentences, randomIndex, route }) => {
 }
 
 export const getServerSideProps = async (ctx) => {
-	// idToken check + fetch blogs
-	const cookies = nookies.get(ctx);
-		const token = await firebaseAdminVerifyToken(cookies.token)
-		
-		const { uid, email } = token
-	
 	try {
 		const cookies = nookies.get(ctx);
 		const token = await firebaseAdminVerifyToken(cookies.token)
