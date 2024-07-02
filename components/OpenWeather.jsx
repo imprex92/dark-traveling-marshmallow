@@ -91,7 +91,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
             </div>
             <div className='weather-info-container'>
               <div className="location-info">
-                <img className='weather-icon' src={`${process.env.OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
+                <img className='weather-icon' src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
                 <div className='name-date'>
                   <span className='name'>{name}, {sys?.country} <Flag code={sys?.country} height="16" /></span>
                   <span className='date'>{unixConverter(dt)}</span>
