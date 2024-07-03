@@ -18,25 +18,31 @@ const weather = () => {
 	const [apiErr, setApiErr] = useState(null)
 
 	useEffect(() => {
-		const getInitialWeather = async () => {
-			setIsLoading(true)
-			const geoLocation = await getGeolocation()
-			const coords = geoLocation && {latitude: geoLocation.data.latitude, longitude: geoLocation.data.longitude}
-			coords && (await fetchWeatherByCoords(coords).then(data => {
-				setWeatherObj(data)
-				updateInitialWeather(data)
-				setSs('userGeoLatest', data)
-				setIsLoading(false)
-			}))
+		const permissionAndInitialWeather = async () => {
+			if(navigator.permissions){
+				navigator.permissions.query({ name: 'geolocation' }).then(res => {
+					if(res.state === 'denied'){
+						setWeatherObj({data: {error: 'Geolocation denied'}})
+						M.toast({text: 'Geolocation denied', classes: 'error'})
+					}else if(res.state === 'granted' || res.state === 'prompt'){
+						fetchWeather()
+					}
+					res.addEventListener('change', () => {
+						if(res.state === 'granted' || res.state === 'prompt'){
+							fetchWeather()
+						}
+					})
+				}).finally(() => setIsLoading(false))
+			}
 		}
-		getSs('userGeoLatest') ? (setWeatherObj(getSs('userGeoLatest')), setIsLoading(false)) : getInitialWeather()
+		getSs('userGeoLatest') ? (setWeatherObj(getSs('userGeoLatest')), setIsLoading(false)) : permissionAndInitialWeather()
 	
-	  return () => {
-		
-	  }
+		return () => {
+			removeEventListener('change', permissionAndInitialWeather)
+		}
 	}, [])
 	
-	async function handleFetchWeather(location){
+	const handleFetchWeather = async (location) => {
 		//setIsLoading(true)
 		setApiErr(null)
 		await fetchWeatherByQuery(location).then(res => {
@@ -46,6 +52,16 @@ const weather = () => {
 		.catch(err => {
 			setApiErr(err)
 		})
+	}
+	const fetchWeather = async () => {
+		const geoLocation = await getGeolocation()
+		const coords = geoLocation && {latitude: geoLocation.data.latitude, longitude: geoLocation.data.longitude}
+		coords && (await fetchWeatherByCoords(coords).then(data => {
+			setWeatherObj(data)
+			updateInitialWeather(data)
+			setSs('userGeoLatest', data)
+			setIsLoading(false)
+		}))
 	}
 
 	return (
