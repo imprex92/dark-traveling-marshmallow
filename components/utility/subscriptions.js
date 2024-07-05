@@ -1,5 +1,5 @@
 import { projectFirestore, projectFirebase, projectStorage } from '../../firebase/config'
-import { dateMMDDYY } from './DateFormatter'
+import { dateMMDDYY } from '../formatters/DateFormatter'
 
 const baseQuery = projectFirestore.collection('testUserCollection')
 

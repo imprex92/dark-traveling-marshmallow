@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
+import { mToKm, toImperial } from './utility/UnitConverter'
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
 import { fetchUserWeatherChips } from './utility/subscriptions'
+import { unixFormatter } from './formatters/DateFormatter'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
   const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility, error = null } = weatherObj
@@ -95,7 +96,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                 <img className='weather-icon' src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
                 <div className='name-date'>
                   <span className='name'>{name}, {sys?.country} <Flag code={sys?.country} height="16" /></span>
-                  <span className='date'>{unixConverter(dt)}</span>
+                  <span className='date'>{unixFormatter(dt)}</span>
                 </div>
               </div>
               <div className="main-temp">

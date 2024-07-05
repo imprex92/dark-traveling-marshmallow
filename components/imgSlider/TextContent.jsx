@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from 'styles/postSummary.module.css'
-import { ISODateFormatter } from 'components/utility/DateFormatter'
+import { ISODateFormatter } from 'components/formatters/DateFormatter'
 import { useAuth } from 'contexts/AuthContext'
 
 const TextContent = ({ formData }) => {
