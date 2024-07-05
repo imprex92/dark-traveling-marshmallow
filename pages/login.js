@@ -25,7 +25,7 @@ function login() {
 			placeholder='blur'
             alt="Picture of the author"
             quality={75}
-            fill
+            fill="true"
             sizes="100vw"
             style={{
                 objectFit: "cover"
