@@ -6,6 +6,8 @@ import useSiteSettings from 'store/siteSettings';
 import SkeletonWeatherWidget from 'components/loaders/skeletons/SkeletonWeatherWidget';
 import { toImperial } from 'components/utility/UnitConverter';
 import { projectTimestampNow } from 'firebase/config';
+import { getCurrentDate } from 'components/utility/getCurrentDate';
+import { isSameHour } from 'date-fns';
 
 const WeatherWidget = () => {
 	const updateWeatherState = useSiteSettings(state => state.setLatestWeather)
@@ -17,54 +19,57 @@ const WeatherWidget = () => {
 	const [userLocation, setUserLocation] = useState(null)
 	const [locationError, setLocationError] = useState({error: false, message: null})
 	const [weatherObj, setWeatherObj] = useState(null)
-	const { units, showWeatherWidget } = useSiteSettings(state => state.data)
+	const { units, showWeatherWidget, latestWeather } = useSiteSettings(state => state.data)
 	const isMetric = units === 'metric' ? true : false
 	
-	useLayoutEffect(() => {
-		const showWidget = useSiteSettings.getState().getShowWeatherWidget()
-		setIsMaximized(showWidget)
-	}, [])
-	useEffect(() => { showWeatherWidget && fetchGeolocation() }, [])
-
+	useEffect(() => {
+	  const showWidget = useSiteSettings.getState().getShowWeatherWidget();
+	  setIsMaximized(showWidget);
+	}, [useSiteSettings]);
+	
+	useEffect(() => {
+	  if (showWeatherWidget) fetchGeolocation();
+	}, [showWeatherWidget]);
+	
 	const toggleWidget = (bool) => {
-		setShowWidget(bool)
-		setIsMaximized(bool)
-	}
-
-	async function fetchGeolocation() {
-		setLocationLoading(true)
-		if(navigator.geolocation){
-			setLocationError(null)
-			navigator.permissions.query({ name: 'geolocation' }).then(async res => {
-				if(res.state === 'granted' || res.state === 'prompt'){
-					await getGeolocation()
-					.then(async position => {
-						const coords = {latitude: position.data.latitude, longitude: position.data.longitude}
-						setReversedGeolocation(position)
-						await fetchWeatherByCoords(coords).then(weather => {
-							weather.data.timestamp = projectTimestampNow;
-							updateWeatherState(weather.data)
-							setWeatherObj(weather.data)
-						})
-						setLocationLoading(false)
-					})
-					.catch(err => {
-						setLocationError({error: true, message: err.message})
-					})
+	  setShowWidget(bool);
+	  setIsMaximized(bool);
+	};
+	
+	const fetchGeolocation = async (manual = false) => {
+		setLocationLoading(true);
+		if (!navigator.geolocation) {
+			setLocationError({ error: true, message: 'Not supported' });
+			setLocationLoading(false);
+			return;
+		} else if(!manual && (latestWeather && isSameHour(new Date(latestWeather.timestamp), new Date()))) {
+			setWeatherObj(latestWeather.data);
+			setLocationLoading(false);
+		} else if (manual || (latestWeather && !isSameHour(new Date(latestWeather.timestamp), new Date()))) {
+			try {
+				const res = await navigator.permissions.query({ name: 'geolocation' });
+				if (res.state === 'denied') {
+					throw new Error('Geolocation denied');
 				}
-				else if(res.state === 'denied'){
-					setLocationLoading(false)
-					setLocationError({error: true, message: 'Geolocation denied'})
-					toggleWidget(false)
+			
+				if (res.state === 'granted' || res.state === 'prompt') {
+					console.log(latestWeather);
+					const position = await getGeolocation();
+					const coords = { latitude: position.data.latitude, longitude: position.data.longitude };
+					setReversedGeolocation(position);
+					const weather = await fetchWeatherByCoords(coords);
+					weather.data.timestamp = projectTimestampNow;
+					updateWeatherState({timestamp: new Date(), data: weather.data});
+					setWeatherObj(weather.data);
 				}
-			})
+			} catch (err) {
+				setLocationError({ error: true, message: err.message });
+				toggleWidget(false);
+			} finally {
+				setLocationLoading(false);
+			}
 		}
-		else{
-			setLocationLoading(false)
-			setLocationError({error: true, message: 'Not supported'})
-			toggleWidget(false)
-		}
-	}
+	};
 
   return (
 	<>
@@ -79,7 +84,7 @@ const WeatherWidget = () => {
 						</span></> ) : locationError?.error ? <span>{locationError?.message}</span> : <span>Just a sec...</span>}
 					</div>
 					{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeatherWidget />}
-					<span onClick={() => fetchGeolocation()} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
+					<span onClick={() => fetchGeolocation(true)} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 					<span onClick={() => toggleWidget(false)} className={`${styles.maximized} material-icons`}>chevron_right</span>
 				</div>
 			</div>
