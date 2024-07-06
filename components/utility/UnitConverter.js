@@ -1,14 +1,3 @@
-import moment from "moment";
-
-export function unixConverter (timestamp){
-	return(
-		<>
-			{
-				moment.unix(timestamp).format('dddd, DD/MMM/YYYY')
-			}
-		</>
-	)
-}
 
 export function mToKm(value){
 	return Math.round(value / 1000) ?? null

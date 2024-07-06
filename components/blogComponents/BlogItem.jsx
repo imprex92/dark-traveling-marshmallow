@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import DateFormatter from '../components/utility/DateFormatter'
+import DateFormatter from '../formatters/DateFormatter'
 import styles from 'styles/blogPostsFeed.module.css'
 
 const BlogItem = ({blog}) => {

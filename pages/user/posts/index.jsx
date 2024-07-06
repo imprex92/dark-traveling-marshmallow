@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import {projectFirestore} from 'firebase/config'
-import BlogList  from 'components/BlogList'
+import BlogList  from 'components/blogComponents/BlogList'
 import { fetchUserblog, fetchUserHotels, fetchDbUserData } from 'components/utility/subscriptions'
 import styles from 'styles/blogPostsFeed.module.css'
 import SideNav from 'components/nav/sidenav'
