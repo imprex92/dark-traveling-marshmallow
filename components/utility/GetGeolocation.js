@@ -4,6 +4,7 @@ import { getCookie, setCookie } from "../utility/CookieHandler";
 export function getGeolocation(){
 	return new Promise((resolve, reject) => {
 		if(navigator.geolocation){
+			console.log('Geolocation lookup in progress...')
 			navigator.geolocation.getCurrentPosition(position => {
 				const userLanguage = navigator.language || navigator.userLanguage;
 				const lang = userLanguage.split('-')[0]
@@ -13,7 +14,6 @@ export function getGeolocation(){
 				let fullURL = baseURL + `?latitude=${latitude}&longitude=${longitude}&localityLanguage=${lang}`
 				axios.get(fullURL)
 				.then(result => {
-					console.log("reverse OK", result);
 					setCookie('latestLocation', result.data, 7);
 					const reversedGeoData = result;
 					resolve(reversedGeoData)

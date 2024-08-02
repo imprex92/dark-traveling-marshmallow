@@ -26,14 +26,11 @@ const WeatherWidget = () => {
 	  const showWidget = useSiteSettings.getState().getShowWeatherWidget();
 	  setIsMaximized(showWidget);
 	}, [useSiteSettings]);
-	
-	useEffect(() => {
-	  if (showWeatherWidget) fetchGeolocation();
-	}, [showWeatherWidget]);
-	
+
 	const toggleWidget = (bool) => {
 	  setShowWidget(bool);
 	  setIsMaximized(bool);
+	  bool && fetchGeolocation();
 	};
 	
 	const fetchGeolocation = async (manual = false) => {
@@ -53,7 +50,6 @@ const WeatherWidget = () => {
 				}
 			
 				if (res.state === 'granted' || res.state === 'prompt') {
-					console.log(latestWeather);
 					const position = await getGeolocation();
 					const coords = { latitude: position.data.latitude, longitude: position.data.longitude };
 					setReversedGeolocation(position);
@@ -64,7 +60,6 @@ const WeatherWidget = () => {
 				}
 			} catch (err) {
 				setLocationError({ error: true, message: err.message });
-				toggleWidget(false);
 			} finally {
 				setLocationLoading(false);
 			}
@@ -77,13 +72,26 @@ const WeatherWidget = () => {
 			<div className={`${styles.widgetWrapper} ${isMaximized ? '' : styles.minimized}`}>
 				<div className={styles.widgetContainer}>
 					<div className={styles.degrees}>
-						{weatherObj ? (<><span>{isMetric ? weatherObj.main.temp.toFixed(1) : !isMetric && toImperial(weatherObj.main.temp.toFixed(1), 'degrees') ? toImperial(weatherObj.main.temp.toFixed(1), 'degrees') : '??'}
+						{weatherObj ? (
+							<>
+								<span>
+									{isMetric 
+									? 
+									weatherObj.main.temp.toFixed(1) 
+									: !isMetric && toImperial(weatherObj.main.temp.toFixed(1), 'degrees') 
+									? toImperial(weatherObj.main.temp.toFixed(1), 'degrees') 
+									: '??'
+								}
 						</span>
 						<span>
 						{isMetric ? '°C' : '°F'}
-						</span></> ) : locationError?.error ? <span>{locationError?.message}</span> : <span>Just a sec...</span>}
+						</span></> ) 
+						: locationError?.error ? <span>{locationError?.message}</span> : <span>Press refresh</span>}
 					</div>
-					{weatherObj ? <img width={90} className={styles.weatherIcon} src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> : <SkeletonWeatherWidget />}
+					{weatherObj ? 
+						<img width={90} className={styles.weatherIcon} src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weatherObj?.weather[0]?.icon}@2x.png`} alt="Weather icon" /> 
+						: <SkeletonWeatherWidget />
+					}
 					<span onClick={() => fetchGeolocation(true)} className={`${locationLoading ? styles.reload_loading : styles.reload} material-icons`}>autorenew</span>
 					<span onClick={() => toggleWidget(false)} className={`${styles.maximized} material-icons`}>chevron_right</span>
 				</div>
