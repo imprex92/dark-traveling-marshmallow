@@ -3,7 +3,7 @@ import { withRouter } from 'next/router'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import { fetchDocumentByFieldName } from 'components/utility/subscriptions'
 import SideNavLight from 'components/nav/SideNavLight'
-import DateFormatter from 'components/utility/DateFormatter'
+import DateFormatter from 'components/formatters/DateFormatter'
 import SkeletonSinglePost from 'components/loaders/skeletons/SkeletonSinglePost'
 import usePostStorage from 'store/postStorage'
 

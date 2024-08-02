@@ -15,7 +15,7 @@ const Home = () => {
               src={imageAsset}
               priority={true}
               alt='Overlook Tokyo'
-              fill
+              fill="true"
               sizes="100vw"
               style={{
                   objectFit: "cover"

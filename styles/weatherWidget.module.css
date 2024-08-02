@@ -12,6 +12,8 @@
   z-index: 2;
   width: 83px;
   height: 83px;
+  background-color: rgba(255, 255, 255, 0.0784313725);
+  border-radius: 8px;
 }
 
 .reload, .reload_loading {
@@ -37,7 +39,7 @@
 
 .degrees {
   position: absolute;
-  left: 0;
+  left: 0.5rem;
   top: 0.5rem;
   color: white;
   font-size: 11px;
@@ -53,6 +55,34 @@
   to {
     transform: rotate(720deg);
   }
+}
+.minimized {
+  z-index: 99;
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  border-radius: 50% 3px 3px 50%;
+  overflow: hidden;
+  background-color: var(--primaryBtnColor);
+  cursor: pointer;
+}
+.minimized:hover {
+  color: #fff;
+  background-color: var(--primaryBtnColorHover);
+}
+
+.maximized {
+  position: absolute;
+  bottom: 2px;
+  left: -20px;
+  border-radius: 50% 3px 3px 50%;
+  overflow: hidden;
+  background-color: var(--primaryBtnColor);
+  cursor: pointer;
+}
+.maximized:hover {
+  color: #fff;
+  background-color: var(--primaryBtnColorHover);
 }
 
 /*# sourceMappingURL=weatherWidget.module.css.map */

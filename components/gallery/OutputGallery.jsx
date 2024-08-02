@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Image from "next/image"
-import DateFormatter from 'components/utility/DateFormatter'
+import DateFormatter from 'components/formatters/DateFormatter'
 import Gallerypopup from 'components/popups/Gallerypopup'
 
 const OutputGallery = ({data}) => {

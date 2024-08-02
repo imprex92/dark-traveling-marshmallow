@@ -15,7 +15,7 @@ const newpost = () => {
 			className={styles.newpostImg}
 			src="/assets/iceland-5104385_1920.jpeg"
 			alt=""
-			fill={true}
+			fill="true"
 			style={{objectFit: "cover"}}
 			quality={75}
 			/>

@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { unixConverter, mToKm, toImperial } from './utility/UnitConverter'
+import { mToKm, toImperial } from './utility/UnitConverter'
 import Flag from 'react-world-flags'
 import useBearStore from 'store/teststore'
 import { fetchUserWeatherChips } from './utility/subscriptions'
+import { unixFormatter } from './formatters/DateFormatter'
 
 const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
-  const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility } = weatherObj
+  const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility, error = null } = weatherObj
+
   const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
   const fetchedData = useRef(null)
@@ -35,8 +37,8 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
     })
   }
   useEffect(() => {
-    fetchTags()
-  }, [])
+    currentUser && fetchTags()
+  }, [currentUser])
 
   useEffect(() => {
     let triggerEl = document.querySelectorAll('.dropdown-trigger')
@@ -91,14 +93,14 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
             </div>
             <div className='weather-info-container'>
               <div className="location-info">
-                <img className='weather-icon' src={`${process.env.OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
+                <img className='weather-icon' src={`${process.env.NEXT_PUBLIC_OPENWEATHER_ICON_URL}${weather[0]?.icon}@2x.png`} alt="Weather icon" />
                 <div className='name-date'>
                   <span className='name'>{name}, {sys?.country} <Flag code={sys?.country} height="16" /></span>
-                  <span className='date'>{unixConverter(dt)}</span>
+                  <span className='date'>{unixFormatter(dt)}</span>
                 </div>
               </div>
               <div className="main-temp">
-                <span>{isMetric ? main.temp.toFixed(1) : !isMetric && toImperial(main.temp.toFixed(1), 'degrees') ? toImperial(main.temp.toFixed(1), 'degrees') : '??'}
+                <span>{isMetric ? main?.temp?.toFixed(1) : !isMetric && toImperial(main?.temp?.toFixed(1), 'degrees') ? toImperial(main?.temp?.toFixed(1), 'degrees') : '??'}
                 </span>
                 <span>
                   {isMetric ? '°C' : '°F'}
@@ -109,13 +111,13 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                   <div>
                     <img src="/assets/icons/thermometer-down.png" />
                     <span>Min Temp</span>
-                    <span>{isMetric ? main.temp_min.toFixed(1) : !isMetric && toImperial(main.temp_min.toFixed(1), 'degrees') ? toImperial(main.temp_min.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
+                    <span>{isMetric ? main?.temp_min?.toFixed(1) : !isMetric && toImperial(main?.temp_min?.toFixed(1), 'degrees') ? toImperial(main?.temp_min?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                   <div className='vertical-line'></div>
                   <div>
                     <img src="/assets/icons/thermometer-up.png" />
                     <span>Max Temp</span>
-                    <span>{isMetric ? main.temp_max.toFixed(1) : !isMetric && toImperial(main.temp_max.toFixed(1), 'degrees') ? toImperial(main.temp_max.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
+                    <span>{isMetric ? main?.temp_max?.toFixed(1) : !isMetric && toImperial(main?.temp_max?.toFixed(1), 'degrees') ? toImperial(main?.temp_max?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                 </div>
                 <div className='info-container-1'>
@@ -128,7 +130,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                   <div>
                     <img src="/assets/icons/temperature--v2.png" />
                     <span>Feels like</span>
-                    <span>{isMetric ? main.feels_like.toFixed(1) : !isMetric && toImperial(main.feels_like.toFixed(1), 'degrees') ? toImperial(main.feels_like.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
+                    <span>{isMetric ? main?.feels_like?.toFixed(1) : !isMetric && toImperial(main?.feels_like?.toFixed(1), 'degrees') ? toImperial(main?.feels_like?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}</span>
                   </div>
                 </div>
                 <div className='info-container-2'>
@@ -141,7 +143,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                   <div>
                     <img src="/assets/icons/wind--v1.png" />
                     <span>Wind</span>
-                    <span>{isMetric && wind?.speed ? wind.speed : !isMetric && wind?.speed ? toImperial(wind.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}</span>
+                    <span>{isMetric && wind?.speed ? wind?.speed : !isMetric && wind?.speed ? toImperial(wind?.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}</span>
                   </div>
                 </div>
               </div>
@@ -158,14 +160,14 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                 <img src="/assets/icons/thermometer-down.png" />
                 <span>Min Temp</span>
                 <span>
-                  {isMetric ? main.temp_min.toFixed(1) : !isMetric && toImperial(main.temp_min.toFixed(1), 'degrees') ? toImperial(main.temp_min.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                  {isMetric ? main?.temp_min?.toFixed(1) : !isMetric && toImperial(main?.temp_min?.toFixed(1), 'degrees') ? toImperial(main?.temp_min?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
                 </span>
               </div>
               <div className='info-box'>
                 <img src="/assets/icons/thermometer-up.png" />
                 <span>Max Temp</span>
                 <span>
-                  {isMetric ? main.temp_max.toFixed(1) : !isMetric && toImperial(main.temp_max.toFixed(1), 'degrees') ? toImperial(main.temp_max.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                  {isMetric ? main?.temp_max?.toFixed(1) : !isMetric && toImperial(main?.temp_max?.toFixed(1), 'degrees') ? toImperial(main?.temp_max?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
                 </span>
               </div>
               <div className='info-box'>
@@ -179,7 +181,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                 <img src="/assets/icons/temperature--v2.png" />
                 <span>Feels like</span>
                 <span>
-                  {isMetric ? main.feels_like.toFixed(1) : !isMetric && toImperial(main.feels_like.toFixed(1), 'degrees') ? toImperial(main.feels_like.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
+                  {isMetric ? main?.feels_like?.toFixed(1) : !isMetric && toImperial(main?.feels_like?.toFixed(1), 'degrees') ? toImperial(main?.feels_like?.toFixed(1), 'degrees') : '??'} {isMetric ? '°C' : '°F'}
                 </span>
               </div>
               <div className='info-box'>
@@ -193,7 +195,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
                 <img src="/assets/icons/wind--v1.png" />
                 <span>Wind</span>
                 <span>
-                  {isMetric && wind?.speed ? wind.speed : !isMetric && wind?.speed ? toImperial(wind.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}
+                  {isMetric && wind?.speed ? wind?.speed : !isMetric && wind?.speed ? toImperial(wind?.speed, 'speed') : 'Unknown'} {isMetric ? 'm/s' : 'f/s'}
                 </span>
               </div>
             </div>

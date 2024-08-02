@@ -26,7 +26,7 @@ function signup() {
             src={imageAsset}
             alt="Picture of the author"
             quality={75}
-            fill
+            fill="true"
             placeholder='blur'
             sizes="100vw"
             style={{
