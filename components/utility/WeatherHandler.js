@@ -20,12 +20,24 @@ export function fetchWeatherByQuery (query){
         const units = localStorage.getItem('units') || 'metric'
 
         let config = {
-		method: 'get',
-		url: `${process.env.NEXT_PUBLIC_OPENWEATHER_BASE_URL}q=${query ?? 'London'}&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}&units=${units}`
-	}
+            method: 'get',
+            url: `${process.env.NEXT_PUBLIC_OPENWEATHER_BASE_URL}q=${encodeURIComponent(query)}&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}&units=${units}`
+        }
 	
-	axios(config)
-	.then((res) => resolve(res))
-	.catch(err => reject('Something went wrong. Please try again', err))
+        axios(config)
+            .then((res) => resolve(res))
+            .catch(err => reject('Something went wrong. Please try again', err))
     })
+}
+export function fetchFallbackWeather(){
+    const fallbackCity = encodeURIComponent('New York')
+    const config = {
+        method: 'get',
+        url: `${process.env.NEXT_PUBLIC_OPENWEATHER_BASE_URL}q=${fallbackCity}&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}&units=metric`
+    }
+    return new Promise((resolve, reject) => {
+        axios(config)
+            .then((res) => resolve(res))
+            .catch(err => reject('Something went wrong. Please try again', err));
+    });
 }
