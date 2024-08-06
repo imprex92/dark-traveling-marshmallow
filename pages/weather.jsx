@@ -74,7 +74,7 @@ const weather = () => {
 		} catch (error) {
 			setApiErr(error);
 			setWeatherObj({data: { error }});
-			console.error('Error fetching weather by query', error);
+			M.toast({ text: error?.message.includes('404') ? 'City does not exists. Try Again.' : error, classes: 'error' });
 		}
 	};
 
