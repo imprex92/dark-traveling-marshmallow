@@ -6,15 +6,10 @@ import AdditionalWeatherInfoDesktop from './AdditionalWeatherInfoDesktop'
 import AdditionalWeatherInfoMobile from './AdditionalWeatherInfoMobile'
 import CurrentWeatherLocationInfo from './CurrentWeatherLocationInfo'
 
-const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
-  const { dt = '', main = {}, name = '', sys = {}, weather = [], wind = {}, visibility, error = null } = weatherObj
+const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) => {
   const fallback = '--'
 
-  console.log('weatherObj', weatherObj);
-
-  const [searchText, setSearchText] = useState('')
   const [isMetric, setIsMetric] = useState(true)
-  const fetchedData = useRef(null)
   const searchBox = useRef(null)
 
   async function fetchTags() {
@@ -65,9 +60,9 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
               </form>
             </div>
             <div className='weather-info-container'>
-              <CurrentWeatherLocationInfo icon={weather[0]?.icon} name={name} country={sys?.country} error={error} date={dt} />
-              <MainTemp isMetric={isMetric} fallback={fallback} main={main} error={error} />
-              <AdditionalWeatherInfoDesktop isMetric={isMetric} fallback={fallback} main={main} visibility={visibility} wind={wind} error={error} />
+              <CurrentWeatherLocationInfo currentWeather={currentWeather} fallback={fallback} />
+              <MainTemp currentWeather={currentWeather} isMetric={isMetric} fallback={fallback} />
+              <AdditionalWeatherInfoDesktop currentWeather={currentWeather} isMetric={isMetric} fallback={fallback} />
             </div>
           </div>
         </div>
@@ -75,7 +70,7 @@ const OpenWeather = ({ fetchWeather, weatherObj, apiError, currentUser }) => {
           <div className="additional-wrapper z-depth-4">
             <div className="chips chips-placeholder"></div>
           </div>
-          <AdditionalWeatherInfoMobile isMetric={isMetric} fallback={fallback} main={main} visibility={visibility} wind={wind} error={error} />
+          <AdditionalWeatherInfoMobile currentWeather={currentWeather} isMetric={isMetric} fallback={fallback} />
           <div className="history-wrapper z-depth-4">
             <span className='white-text'>To be Search history soon...</span>
           </div>
