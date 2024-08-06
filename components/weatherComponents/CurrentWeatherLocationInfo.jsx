@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { unixFormatter } from "components/formatters/DateFormatter";
 import Flag from 'react-world-flags'
 import styles from 'styles/weatherComponents.module.css'
+import Tooltip from "components/utility/tooltip/Tooltip";
 
 const CurrentWeatherLocationInfo = ({ currentWeather, fallback }) => {
     const {error = null, weather = [], sys = {}, dt, name } = currentWeather.data
@@ -13,10 +14,13 @@ const CurrentWeatherLocationInfo = ({ currentWeather, fallback }) => {
     
     return (
         <div className="location-info">
+            
             {imgError ? (
-                <span className={`material-symbols-outlined ${styles.errorIcon} ${styles.weatherIcon}`}>
-                    warning
-                </span>
+                <Tooltip position="left" text="City not found. Please try again.">
+                    <span className={`material-symbols-outlined ${styles.errorIcon} ${styles.weatherIcon}`}>
+                        warning
+                    </span>
+                </Tooltip>
             ) : (
                 <img 
                     key={weather[0]?.icon}
