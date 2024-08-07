@@ -6,15 +6,22 @@ import SkeletonElement from "./SkeletonElement"
 const SkeletonWeather = ({ theme, position = null }) => {
 	const themeClass = theme || 'light'
 	const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 640 : false);
+	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
+		setIsMounted(true);
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 640);
         };
 
+		handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+	if (!isMounted) {
+        return null;
+    }
 
 	const MainSkeleton = () => {
 		return (
