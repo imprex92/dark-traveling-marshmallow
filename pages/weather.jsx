@@ -26,8 +26,13 @@ const weather = () => {
 					if (res.state === 'denied') {
 						setWeatherObj({ data: { error: 'Geolocation denied' } });
 						M.toast({ text: 'Geolocation denied', classes: 'error' });
-						const data = await fetchFallbackWeather();
-						setWeatherObj(data);
+						try {
+							const data = await fetchFallbackWeather();
+							setWeatherObj(data);
+						} catch (error) {
+							console.error('Error fetching fallback weather', error);
+							setWeatherObj({data: { error }});							
+						}
 					} else if (res.state === 'granted' || res.state === 'prompt') {
 						await fetchWeather();
 					}
@@ -45,7 +50,7 @@ const weather = () => {
 					M.toast({ text: 'Permissions API not supported', classes: 'error' });
 				}
 			} catch (error) {
-				setWeatherObj({ data: { error: 'Something went wrong', message: error.message } });
+				setWeatherObj({data: { error }});
 				console.error('Error in permissionAndInitialWeather', error);
 			} finally {
 				setIsLoading(false);
@@ -65,12 +70,11 @@ const weather = () => {
 		setApiErr(null);
 		try {
 			const data = await fetchWeatherByQuery(location);
-			data.error = null;
 			setWeatherObj(data);
-		} catch (err) {
-			setApiErr(err);
-			setWeatherObj({ data: { error: 'Error fetching weather by query', message: err.message } });
-			console.error('Error fetching weather by query', err);
+		} catch (error) {
+			setApiErr(error);
+			setWeatherObj({data: { error }});
+			M.toast({ text: error?.message.includes('404') ? 'City does not exists. Try Again.' : error, classes: 'error' });
 		}
 	};
 
@@ -88,16 +92,15 @@ const weather = () => {
 	
 			try {
 				const data = await fetchWeatherByCoords(coords);
-				data.error = null;
 				setWeatherObj(data);
 				updateInitialWeather(data);
 				setSs('userGeoLatest', data);
-			} catch (err) {
-				setWeatherObj({ data: { error: 'Error fetching weather by coordinates', message: err.message } });
-				console.error('Error fetching weather by coordinates', err);
+			} catch (error) {
+				setWeatherObj({data: { error }});
+				console.error('Error fetching weather by coordinates', error);
 			}
 		} catch (error) {
-			setWeatherObj({ data: { error: 'Something went wrong', message: error.message } });
+			setWeatherObj({data: { error }});
 			console.error('Error fetching weather', error);
 		} finally {
 			setIsLoading(false);
@@ -110,7 +113,7 @@ const weather = () => {
 				<div className={styles.navigation}>
 					<SideNavLight/>
 				</div>
-				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} weatherObj={weatherObj.data} apiError={apiErr} currentUser={currentUser} />}
+				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} currentWeather={weatherObj} apiError={apiErr} currentUser={currentUser} />}
 				{isLoading && (
 					<div className='skeleton-container weather-skeleton'>
 						<SkeletonWeather position={'main'} />

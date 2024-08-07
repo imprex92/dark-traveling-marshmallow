@@ -1,3 +1,43 @@
+@use 'variables';
+
 .navigation{
     grid-area: nav;
+}
+.weatherIcon{
+	width: 120px;
+}
+.weatherIcon.errorIcon{
+    width: unset;
+    font-size: 76px;
+    color: #fff;
+    margin-right: 2rem;
+    margin-top: 1rem;
+}
+.mainTemp{
+    position: relative;
+    color: #fff;
+    & .temp{
+        font-size: 8em;
+        font-weight: 300;
+    }
+    & .unit{
+        position: absolute;
+        top: 2rem;
+        font-size: 2em;
+    }
+}
+
+@media ( max-width: variables.$breakpoint-phone-XXL ){
+    .weatherIcon{
+        width: 85px;
+    }
+    .mainTemp{
+        & .temp{
+            font-size: 5rem;
+        }
+        & .unit{
+            top: 1.4rem;
+            font-size: 1.5em;
+        }
+    }
 }

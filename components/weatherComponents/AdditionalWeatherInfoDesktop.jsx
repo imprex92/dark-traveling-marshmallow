@@ -2,7 +2,8 @@ import React from "react";
 import { mToKm, toImperial } from "components/utility/UnitConverter";
 
 
-const AdditionalWeatherInfoDesktop = ({ isMetric, fallback, main, visibility, wind, error }) => {
+const AdditionalWeatherInfoDesktop = ({ currentWeather, isMetric, fallback }) => {
+    const { error = null, main = {}, visibility, wind } = currentWeather.data
 
     const formatTemperature = (temp) => {
         if (error) return `${fallback} ${isMetric ? '°C' : '°F'}`;
@@ -17,7 +18,7 @@ const AdditionalWeatherInfoDesktop = ({ isMetric, fallback, main, visibility, wi
 
     const formatWind = (wind) => {
         if (error) return `${fallback} ${isMetric ? 'm/s' : 'mph'}`;
-        return isMetric ? wind : toImperial(wind, 'speed');
+        return isMetric ? `${wind} m/s` : `${toImperial(wind, 'speed')} mph`;
     }
 
     return (

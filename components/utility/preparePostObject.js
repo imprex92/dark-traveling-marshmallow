@@ -30,11 +30,15 @@ export async function getGeoPointAndWeather(coordinates) {
 	try {
 		if (coordinates.length > 0) {
 			const { lat, lng } = coordinates[0];
-	
-			const weatherData = await fetchWeatherByCoords({ latitude: lat, longitude: lng })
-			const geoPoint = new firebase.firestore.GeoPoint(lat, lng)
+			try {
+				const weatherData = await fetchWeatherByCoords({ latitude: lat, longitude: lng })
+				const geoPoint = new firebase.firestore.GeoPoint(lat, lng)
 			
-			return { weatherData, geoPoint, error: null};
+				return { weatherData, geoPoint, error: null};
+			} catch (error) {
+				console.error('Error fetching weather:', error)
+				return { weatherData: null, geoPoint: null, error: error };
+			}
 		}
 		return { weatherData: null, geoPoint: null, error: 'No coordinates provided' };
 	} catch (error) {
