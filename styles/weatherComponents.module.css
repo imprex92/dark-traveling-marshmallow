@@ -2,4 +2,44 @@
   grid-area: nav;
 }
 
+.weatherIcon {
+  width: 120px;
+}
+
+.weatherIcon.errorIcon {
+  width: unset;
+  font-size: 76px;
+  color: #fff;
+  margin-right: 2rem;
+  margin-top: 1rem;
+}
+
+.mainTemp {
+  position: relative;
+  color: #fff;
+}
+.mainTemp .temp {
+  font-size: 8em;
+  font-weight: 300;
+}
+.mainTemp .unit {
+  position: absolute;
+  top: 2rem;
+  font-size: 2em;
+}
+
+@media (max-width: 640px) {
+  .weatherIcon {
+    width: 85px;
+  }
+
+  .mainTemp .temp {
+    font-size: 5rem;
+  }
+  .mainTemp .unit {
+    top: 1.4rem;
+    font-size: 1.5em;
+  }
+}
+
 /*# sourceMappingURL=weatherComponents.module.css.map */
