@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import styles from 'styles/weatherComponents.module.css'
 
 const UnitSelectorDropdown = ({ isMetric, setIsMetric }) => {
     useEffect(() => {
-        const triggerEl = document.querySelectorAll('.dropdown-trigger');
+        const triggerEl = document.querySelectorAll('#dropdown-trigger');
         M.Dropdown.init(triggerEl, {
           constrainWidth: false,
           hover: true,
@@ -12,7 +13,7 @@ const UnitSelectorDropdown = ({ isMetric, setIsMetric }) => {
 
     return (
         <>
-            <div className='light-settings dropdown-trigger' href='#' data-target='weather-settings-dropdown'>
+            <div id="dropdown-trigger" className={styles.lightSettings} href='#' data-target='weather-settings-dropdown'>
               <span className="material-icons">settings</span>
             </div>
             <ul id='weather-settings-dropdown' className='dropdown-content' style={{overflow: 'hidden'}}>

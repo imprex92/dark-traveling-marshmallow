@@ -3,8 +3,75 @@
 .navigation{
     grid-area: nav;
 }
+
+.weather {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-template-areas: "nav wrap";
+    background: variables.$base-gradiant;
+    padding: 0;
+  }
+
+.weatherContainersContainer {
+    grid-area: wrap;
+    margin: auto;
+    display: flex;
+    height: 100%;
+    width: calc(100% - 4rem);
+    max-width: 2048px;
+    column-gap: 2rem;
+    align-items: center;
+  }
+.mainTempContainer, .chipsHistoryContainer{
+    flex-basis: 50%;
+    //height: 75%;
+    min-height: 646px;
+}
+
+.mainTempContainer{
+    background-color: rgba(158, 158, 158, 0.17);
+    border-radius: 20px;
+    padding: 1.5rem;
+    .currentWrapper {
+        height: 100%;
+        position: relative;
+        .searchBox i {
+          cursor: pointer;
+        }
+        .weatherMainInfoContainer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+}
+.chipsHistoryContainer{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    & .chipsContainer, .historyContainer{
+        height: 307px;
+        padding: 1.5rem;
+        background-color: rgba(158, 158, 158, 0.17);
+        border-radius: 20px;
+        & .chips{
+            max-width: 700px;
+            margin: 1rem auto;
+            & > div{
+                cursor: pointer;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+
+.verticalLine{
+    border-left: 2px solid #fff;
+    margin: 0 1rem;
+}
 .weatherIcon{
 	width: 120px;
+    filter: drop-shadow(0 4px 12px rgba(158, 158, 158, 0.35));
 }
 .weatherIcon.errorIcon{
     width: unset;
@@ -26,8 +93,103 @@
         font-size: 2em;
     }
 }
+.locationInfo{
+    display: flex;
+}
+.nameDate{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    color: #fff;
+    .name{
+        font-size: 24px;
+        & img{
+            margin-left: 0.5rem;
+        }
+    }
+    .date{
+        font-size: 18px;
+        font-weight: lighter;
+    }
+}
 
+.lightSettings{
+    position: absolute;
+	color: #fff;
+	top: 1.5rem;
+	right: 0;
+	z-index: 3;
+}
+.additionalInfoMobileWrapper.mobileOnly{
+    display: none;
+}
+.additionalInfo{
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 400px;
+    color: #fff;
+    &.desktopOnly{
+        display: block;
+    }
+}
+.infoContainerTop, .infoContainerMiddle, .infoContainerBottom{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    & div:last-child,
+    & div:first-child {
+      width: 50%;
+      display: flex;
+      & span:last-child {
+        margin-left: auto;
+      }
+    }
+    img {
+      width: 23px;
+      margin-right: 1rem;
+    }
+}
+.infoContainerMiddle, .infoContainerBottom{
+    margin-bottom: 1.5rem;
+}
+.infoContainerTop{
+    margin-block: 1.5rem;
+}
+
+@media (max-width: 930px) {
+    .weatherContainersContainer{
+        flex-direction: column;
+		padding-block: 2rem;
+		row-gap: 2rem;
+        margin: 0 auto;
+    }
+
+    .mainTempContainer, .chipsHistoryContainer{
+        width: 100%;
+        max-width: 700px;
+	    min-width: 490px;
+        min-height: unset;
+    }
+    .mainTempContainer{
+        min-height: unset;
+    }
+}
 @media ( max-width: variables.$breakpoint-phone-XXL ){
+    .weatherContainersContainer{
+        width: calc(100% - 2rem);
+    }
+
+    .mainTempContainer, .chipsHistoryContainer{
+        min-width: unset;
+    }
+    .mainTempContainer{
+        flex-basis: auto;
+    }
+    .chipsContainer, .historyContainer{
+        height: auto !important;
+    }
+
+
     .weatherIcon{
         width: 85px;
     }
@@ -40,4 +202,53 @@
             font-size: 1.5em;
         }
     }
+    .nameDate {
+        .name {
+          font-size: 21px;
+        }
+        .date {
+          font-size: 15px;
+        }
+      }
+      .additionalInfo.desktopOnly {
+        display: none;
+      }
+      .additionalInfoMobileWrapper.mobileOnly {
+        display: flex;
+        padding: 0;
+        border-radius: 20px;
+        & .additionalInfo {
+            margin-top: 0;
+          max-width: unset;
+          width: 100%;
+          color: #fff;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          align-items: flex-start;
+        }
+        & .infoBox {
+            flex: 0 0 calc(33.333% - 0rem);
+            min-width: calc(33.333% - 0rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #1800ff17;
+            border-right: 1px solid #1800ff17;
+          
+            &.no-bottom-border {
+              border-bottom: none;
+            }
+          
+            &.no-right-border {
+              border-right: none;
+            }
+          
+            & > img {
+              width: 27px;
+            }
+          }
+      }
 }

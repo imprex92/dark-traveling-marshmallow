@@ -109,7 +109,7 @@ const weather = () => {
 
 	return (
 		<>
-			<div className='weather'>
+			<div className={styles.weather}>
 				<div className={styles.navigation}>
 					<SideNavLight/>
 				</div>
