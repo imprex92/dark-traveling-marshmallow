@@ -103,6 +103,9 @@
     color: #fff;
     .name{
         font-size: 24px;
+        & img{
+            margin-left: 0.5rem;
+        }
     }
     .date{
         font-size: 18px;

@@ -109,6 +109,9 @@
 .nameDate .name {
   font-size: 24px;
 }
+.nameDate .name img {
+  margin-left: 0.5rem;
+}
 .nameDate .date {
   font-size: 18px;
   font-weight: lighter;
