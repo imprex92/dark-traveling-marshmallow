@@ -8,7 +8,6 @@ import 'styles/materialize.css'
 import 'styles/dashboard.style.css'
 import 'styles/slides-component.style.scss'
 import 'styles/sideNav.style.css'
-import 'styles/weather.style.css'
 import useSiteSettings from 'store/siteSettings';
 import { useRouter } from 'next/router';
 import { useOnlineStatus } from 'components/hooks/useOnlineStatus'
@@ -17,11 +16,11 @@ const WeatherWidget = lazy(() => import('components/widgets/WeatherWidget'))
 
 
 function MyApp({ Component, pageProps }) {
-	const widgetProhibited = ['/login', '/signup', '/']
+	const widgetProhibited = ['/login', '/signup', '/', '/weather']
 	const router = useRouter()
 	const { showWeatherWidget } = useSiteSettings(state => state.data) ?? { showWeatherWidget: true }
 	const isOnline = useOnlineStatus()
-
+	
 	return (
 		<>
 			<AuthProvider>
