@@ -1,40 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { fetchUserWeatherChips } from 'components/utility/subscriptions'
-import UnitSelectorDropdown from './UnitSelectorDropdown'
+import React, { useState, useRef } from 'react'
 import MainTemp from './MainTemp'
 import AdditionalWeatherInfoDesktop from './AdditionalWeatherInfoDesktop'
 import AdditionalWeatherInfoMobile from './AdditionalWeatherInfoMobile'
 import CurrentWeatherLocationInfo from './CurrentWeatherLocationInfo'
 import styles from 'styles/weatherComponents.module.css'
+import CityChips from './CityChips'
+import SearchHistory from './SearchHistory'
+import Toolbox from './Toolbox'
 
 const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) => {
   const fallback = '--'
 
   const [isMetric, setIsMetric] = useState(true)
   const searchBox = useRef(null)
-
-  async function fetchTags() {
-    await fetchUserWeatherChips(currentUser.uid)
-      .then(data => { initializeChips(data[0].tags) })
-      .catch(err => { console.error('Error while loading tags', err); M.toast({ text: `Error loading tags, ${err}` }) })
-  }
-
-  function initializeChips(chipsData) {
-    let chips = document.querySelectorAll("#chips")
-    M.Chips.init(chips, {
-      data: chipsData,
-      placeholder: 'Enter city to save shortcuts',
-      limit: 7,
-      secondaryPlaceholder: '+City',
-      onChipSelect: (data, i) => { fetchWeather(i.firstChild.textContent.toString()) },
-      onChipAdd: (data, i) => { },
-      onChipDelete: (data, i) => { }
-    })
-  }
-
-  useEffect(() => {
-    currentUser && fetchTags()
-  }, [currentUser])
 
   const handleSearch = (e) => {
     e.key === 'Enter' && e.preventDefault()
@@ -46,7 +24,7 @@ const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) =>
       <div className={styles.weatherContainersContainer}>
         <div className={`${styles.mainTempContainer} z-depth-4`}>
           <div className={styles.currentWrapper}>
-            <UnitSelectorDropdown isMetric={isMetric} setIsMetric={setIsMetric} />
+            <Toolbox isMetric={isMetric} setIsMetric={setIsMetric} currentWeather={currentWeather} />
             <div className="row valign-wrapper">
               <form className="col s11 offset-s1 m12 searchbar-section">
                 <div className="row">
@@ -67,13 +45,9 @@ const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) =>
           </div>
         </div>
         <div className={styles.chipsHistoryContainer}>
-          <div className={`${styles.chipsContainer} z-depth-4`}>
-            <div id='chips' className={`${styles.chips}chips-placeholder`}></div>
-          </div>
+          <CityChips currentUser={currentUser} fetchWeather={fetchWeather} />
           <AdditionalWeatherInfoMobile currentWeather={currentWeather} isMetric={isMetric} fallback={fallback} />
-          <div className={`${styles.historyContainer} z-depth-4`}>
-            <span className='white-text'>To be Search history soon...</span>
-          </div>
+          <SearchHistory />
         </div>
       </div>
     </>

@@ -1,3 +1,11 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .navigation {
   grid-area: nav;
 }
@@ -117,12 +125,35 @@
   font-weight: lighter;
 }
 
-.lightSettings {
+.toolBox {
+  display: flex;
   position: absolute;
-  color: #fff;
-  top: 1.5rem;
   right: 0;
+  top: 1rem;
+  row-gap: 0.25rem;
+  flex-direction: column;
+}
+
+.bookmarkIcon {
+  cursor: pointer;
+  color: #fff;
+}
+
+.rotateIcon {
+  animation: rotate 2s linear 3;
+  color: #fff;
+  font-weight: bold;
+}
+
+.lightSettings {
+  position: relative;
+  color: #fff;
   z-index: 3;
+}
+
+.customDropdownContent {
+  width: max-content;
+  height: fit-content;
 }
 
 .additionalInfoMobileWrapper.mobileOnly {

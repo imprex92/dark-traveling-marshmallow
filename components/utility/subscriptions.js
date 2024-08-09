@@ -1,5 +1,6 @@
 import { projectFirestore, projectFirebase, projectStorage } from '../../firebase/config'
 import { dateMMDDYY } from '../formatters/DateFormatter'
+import { v4 as uuidv4 } from 'uuid';
 
 const baseQuery = projectFirestore.collection('testUserCollection')
 
@@ -162,9 +163,45 @@ function fetchUserWeatherChips(userID){
 		})
 	})
 }
-//TODO handle add and remove chips from firestore
-const addWeatherChip = () => {}
-const removeWeatherChip = () => {}
+
+const addWeatherChip = async ({userID, payload, currentChips}) => {
+	if(!userID) return {data: null, error: 'No user ID provided'}
+	if(!payload.trim()) return {data: null, error: 'Empty string'}
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+
+	try {
+		const alreadyExists = currentChips.find(chip => chip.text.toLowerCase() === payload.toLowerCase())
+		const addChip = {
+			id: uuidv4(),
+			text: payload,
+			image: null
+		}
+
+		if(alreadyExists) return {data: null, error: 'Not saved. City already exists.'}
+
+		await userDbRef.collection('weatherData').doc('WeatherChips').set({
+			tags: projectFirebase.firestore.FieldValue.arrayUnion(addChip)
+		}, {merge: true});
+
+        return {data: addChip, error: null};
+	} catch (error) {
+		return {data: null, error: error};
+	}
+}
+const removeWeatherChip = async ({userID, payload, currentChips}) => {
+	if(!userID) return {data: null, error: 'No user ID provided'}
+	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+
+	try {
+		await userDbRef.collection('weatherData').doc('WeatherChips').set({
+			tags: projectFirebase.firestore.FieldValue.arrayRemove(payload)
+		}, {merge: true});
+		
+		return {data: payload.id, error: null}
+	} catch (error) {
+		return {data: null, error: error};
+	}
+}
 
 export {
 	fetchDbUserData, 
