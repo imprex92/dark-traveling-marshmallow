@@ -16,7 +16,7 @@ const UnitSelectorDropdown = ({ isMetric, setIsMetric }) => {
             <div id="dropdown-trigger" className={styles.lightSettings} href='#' data-target='weather-settings-dropdown'>
               <span className="material-icons">settings</span>
             </div>
-            <ul id='weather-settings-dropdown' className='dropdown-content' style={{overflow: 'hidden'}}>
+            <ul id='weather-settings-dropdown' className={`${styles.customDropdownContent} dropdown-content`} style={{overflow: 'hidden', width: 'max-content', height: 'fit-content'}}>
               <li>
                 <a href="#!">
                   <div className="switch">
