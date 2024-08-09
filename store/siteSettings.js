@@ -13,6 +13,7 @@ let siteSettings = (set, get) => ({
 		latestLocation: null,
 		latestWeather: null,
 		showWeatherWidget: true,
+		weatherChips: []
 	},
 
 	// Setters
@@ -26,6 +27,7 @@ let siteSettings = (set, get) => ({
 	setPreviouslyViewedPost: (value) => set((state) => ({data : {...state.data, previouslyViewedPost : value}})),
 	setLatestLocation: (value) => set((state) => ({data : {...state.data, latestLocation : value}})),
 	setLatestWeather: (value) => set((state) => ({data : {...state.data, latestWeather : value}})),
+	setWeatherChips: (value) => set((state) => ({data : {...state.data, weatherChips : value}})),
 
 	// Getters
 	getName: () => get().data.name,
@@ -38,6 +40,7 @@ let siteSettings = (set, get) => ({
 	getPreviouslyViewedPost: () => get().data.previouslyViewedPost,
 	getLatestLocation: () => get().data.latestLocation,
 	getLatestWeather: () => get().data.latestWeather,
+	getWeatherChips: () => get().data.weatherChips,
 })
 
 siteSettings = devtools(siteSettings)
