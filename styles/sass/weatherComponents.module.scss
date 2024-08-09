@@ -204,6 +204,10 @@
     }
 }
 @media ( max-width: variables.$breakpoint-phone-XXL ){
+    .toolBox{
+        right: unset;
+        left: 0;
+    }
     .weatherContainersContainer{
         width: calc(100% - 2rem);
     }

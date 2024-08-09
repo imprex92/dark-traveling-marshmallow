@@ -22,7 +22,7 @@ const CityChips = ({ currentUser, fetchWeather }) => {
     M.Chips.init(chips, {
       data: chipsData,
       placeholder: 'Enter city to save shortcuts',
-      limit: 7,
+      limit: 12,
       secondaryPlaceholder: '+City',
       onChipSelect: (data, i) => fetchWeather(i.firstChild.textContent.toString()),
       onChipAdd: async (data, i) => {

@@ -215,6 +215,11 @@
   }
 }
 @media (max-width: 640px) {
+  .toolBox {
+    right: unset;
+    left: 0;
+  }
+
   .weatherContainersContainer {
     width: calc(100% - 2rem);
   }
