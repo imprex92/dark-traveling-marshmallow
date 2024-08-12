@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from 'styles/weatherComponents.module.css'
-import OpenWeather from 'components/weatherComponents/OpenWeather'
+import WeatherMain from 'components/weatherComponents/WeatherMain'
 import SideNavLight from 'components/nav/SideNavLight'
 import { useAuth } from 'contexts/AuthContext'
 import { fetchWeatherByCoords, fetchWeatherByQuery, fetchFallbackWeather } from 'components/utility/WeatherHandler'
@@ -113,7 +113,7 @@ const weather = () => {
 				<div className={styles.navigation}>
 					<SideNavLight/>
 				</div>
-				{(weatherObj && !isLoading) && <OpenWeather isOnline={isOnline} fetchWeather={handleFetchWeather} currentWeather={weatherObj} apiError={apiErr} currentUser={currentUser} />}
+				{(weatherObj && !isLoading) && <WeatherMain isOnline={isOnline} fetchWeather={handleFetchWeather} currentWeather={weatherObj} apiError={apiErr} currentUser={currentUser} />}
 				{isLoading && (
 					<div className='skeleton-container weather-skeleton'>
 						<SkeletonWeather position={'main'} />

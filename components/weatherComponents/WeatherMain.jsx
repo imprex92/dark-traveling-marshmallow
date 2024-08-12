@@ -8,7 +8,7 @@ import CityChips from './CityChips'
 import SearchHistory from './SearchHistory'
 import Toolbox from './Toolbox'
 
-const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) => {
+const WeatherMain = ({ fetchWeather, currentWeather, apiError, currentUser }) => {
   const fallback = '--'
 
   const [isMetric, setIsMetric] = useState(true)
@@ -54,4 +54,4 @@ const OpenWeather = ({ fetchWeather, currentWeather, apiError, currentUser }) =>
   )
 }
 
-export default OpenWeather
+export default WeatherMain
