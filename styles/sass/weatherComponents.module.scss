@@ -262,7 +262,7 @@
         cursor: pointer;
         border-radius: 5px;
         gap: 0.2rem;
-        width: 100%;
+        width: 170px;
 
         &>.removeItem {
             display: inline-block;
@@ -416,6 +416,7 @@
 
         & .item {
             width: 100%;
+            max-width: 130px;
 
             &>.text {
                 width: 100%;
