@@ -4,12 +4,13 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
 }
 
-.navigation{
+.navigation {
     grid-area: nav;
 }
 
@@ -19,7 +20,7 @@
     grid-template-areas: "nav wrap";
     background: variables.$base-gradiant;
     padding: 0;
-  }
+}
 
 .weatherContainersContainer {
     grid-area: wrap;
@@ -30,43 +31,53 @@
     max-width: 2048px;
     column-gap: 2rem;
     align-items: center;
-  }
-.mainTempContainer, .chipsHistoryContainer{
+}
+
+.mainTempContainer,
+.chipsHistoryContainer {
     flex-basis: 50%;
     //height: 75%;
     min-height: 646px;
 }
 
-.mainTempContainer{
+.mainTempContainer {
     background-color: rgba(158, 158, 158, 0.17);
     border-radius: 20px;
     padding: 1.5rem;
+
     .currentWrapper {
         height: 100%;
         position: relative;
+
         .searchBox i {
-          cursor: pointer;
+            cursor: pointer;
         }
+
         .weatherMainInfoContainer {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-      }
+    }
 }
-.chipsHistoryContainer{
+
+.chipsHistoryContainer {
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-    & .chipsContainer, .historyContainer{
+
+    & .chipsContainer,
+    .historyContainer {
         height: 307px;
         padding: 1.5rem;
         background-color: rgba(158, 158, 158, 0.17);
         border-radius: 20px;
-        & .chips{
+
+        & .chips {
             max-width: 700px;
             margin: 1rem auto;
-            & > div{
+
+            &>div {
                 cursor: pointer;
                 text-transform: capitalize;
             }
@@ -74,55 +85,67 @@
     }
 }
 
-.verticalLine{
+.verticalLine {
     border-left: 2px solid #fff;
     margin: 0 1rem;
 }
-.weatherIcon{
-	width: 120px;
+
+.weatherIcon {
+    width: 120px;
     filter: drop-shadow(0 4px 12px rgba(158, 158, 158, 0.35));
 }
-.weatherIcon.errorIcon{
+
+.weatherIcon.errorIcon {
     width: unset;
     font-size: 76px;
     color: #fff;
     margin-right: 2rem;
     margin-top: 1rem;
+    min-width: 120px;
+    min-height: 120px;
 }
-.mainTemp{
+
+.mainTemp {
     position: relative;
     color: #fff;
-    & .temp{
+
+    & .temp {
         font-size: 8em;
         font-weight: 300;
     }
-    & .unit{
+
+    & .unit {
         position: absolute;
         top: 2rem;
         font-size: 2em;
     }
 }
-.locationInfo{
+
+.locationInfo {
     display: flex;
 }
-.nameDate{
+
+.nameDate {
     display: flex;
     flex-direction: column;
     align-self: center;
     color: #fff;
-    .name{
+
+    .name {
         font-size: 24px;
-        & img{
+
+        & img {
             margin-left: 0.5rem;
         }
     }
-    .date{
+
+    .date {
         font-size: 18px;
         font-weight: lighter;
     }
 }
 
-.toolBox{
+.toolBox {
     display: flex;
     position: absolute;
     right: 0;
@@ -130,137 +153,238 @@
     row-gap: 0.25rem;
     flex-direction: column;
 }
-.bookmarkIcon{
+
+.bookmarkIcon {
     cursor: pointer;
     color: #fff;
 
 }
-.rotateIcon{
+
+.rotateIcon {
     animation: rotate 2s linear 3;
     color: #fff;
     font-weight: bold;
 }
-.lightSettings{
+
+.lightSettings {
     position: relative;
-	color: #fff;
-	z-index: 3;
+    color: #fff;
+    z-index: 3;
 }
-.customDropdownContent{
+
+.customDropdownContent {
     width: max-content;
     height: fit-content;
 }
-.additionalInfoMobileWrapper.mobileOnly{
+
+.additionalInfoMobileWrapper.mobileOnly {
     display: none;
 }
-.additionalInfo{
+
+.additionalInfo {
     margin-top: 2rem;
     width: 100%;
     max-width: 400px;
     color: #fff;
-    &.desktopOnly{
+
+    &.desktopOnly {
         display: block;
     }
 }
-.infoContainerTop, .infoContainerMiddle, .infoContainerBottom{
+
+.infoContainerTop,
+.infoContainerMiddle,
+.infoContainerBottom {
     display: flex;
     justify-content: center;
     align-content: center;
+
     & div:last-child,
     & div:first-child {
-      width: 50%;
-      display: flex;
-      & span:last-child {
-        margin-left: auto;
-      }
+        width: 50%;
+        display: flex;
+
+        & span:last-child {
+            margin-left: auto;
+        }
     }
+
     img {
-      width: 23px;
-      margin-right: 1rem;
+        width: 23px;
+        margin-right: 1rem;
     }
 }
-.infoContainerMiddle, .infoContainerBottom{
+
+.infoContainerMiddle,
+.infoContainerBottom {
     margin-bottom: 1.5rem;
 }
-.infoContainerTop{
+
+.infoContainerTop {
     margin-block: 1.5rem;
 }
 
+.historyContainer {
+    display: grid;
+    position: relative;
+
+    &>.clearHistory {
+        position: absolute;
+        color: #fff;
+        cursor: pointer;
+        text-align: center;
+        right: 1.5rem;
+        top: 1.5rem;
+        z-index: 3;
+    }
+
+    & .noHistory {
+        color: #fff;
+        text-align: center;
+        margin-top: 1rem;
+    }
+}
+
+.historyItems {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(150px, 1fr));
+    grid-auto-flow: dense;
+    gap: 1rem;
+    place-items: baseline;
+    place-content: baseline;
+
+    &>.item {
+        display: flex;
+        align-items: center;
+        color: var(--primaryWhite);
+        padding: 0.5rem 0.75rem 0.5rem 1rem;
+        background-color: var(--background-color-level-4dp);
+        cursor: pointer;
+        border-radius: 5px;
+        gap: 0.2rem;
+        width: 100%;
+
+        &>.removeItem {
+            display: inline-block;
+            font-size: 16px;
+            z-index: 4;
+        }
+
+        &>.text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+            width: 100%;
+            text-transform: capitalize
+        }
+    }
+
+    &_multi {
+        @extend .historyItems;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        overflow: hidden auto;
+        margin-right: 2rem;
+        margin-bottom: 0.5rem;
+        padding-right: 0.5rem;
+        z-index: 2;
+    }
+}
+
 @media (max-width: 930px) {
-    .weatherContainersContainer{
+    .weatherContainersContainer {
         flex-direction: column;
-		padding-block: 2rem;
-		row-gap: 2rem;
+        padding-block: 2rem;
+        row-gap: 2rem;
         margin: 0 auto;
     }
 
-    .mainTempContainer, .chipsHistoryContainer{
+    .mainTempContainer,
+    .chipsHistoryContainer {
         width: 100%;
         max-width: 700px;
-	    min-width: 490px;
+        min-width: 490px;
         min-height: unset;
     }
-    .mainTempContainer{
+
+    .mainTempContainer {
         min-height: unset;
     }
 }
-@media ( max-width: variables.$breakpoint-phone-XXL ){
-    .toolBox{
+
+@media (max-width: variables.$breakpoint-phone-XXL ) {
+    .toolBox {
         right: unset;
         left: 0;
     }
-    .weatherContainersContainer{
+
+    .weatherContainersContainer {
         width: calc(100% - 2rem);
     }
 
-    .mainTempContainer, .chipsHistoryContainer{
+    .mainTempContainer,
+    .chipsHistoryContainer {
         min-width: unset;
     }
-    .mainTempContainer{
+
+    .mainTempContainer {
         flex-basis: auto;
     }
-    .chipsContainer, .historyContainer{
+
+    .chipsContainer,
+    .historyContainer {
         height: auto !important;
     }
 
 
-    .weatherIcon{
+    .weatherIcon {
         width: 85px;
+        min-width: 85px;
+        min-height: 85px;
     }
-    .mainTemp{
-        & .temp{
+
+    .mainTemp {
+        & .temp {
             font-size: 5rem;
         }
-        & .unit{
+
+        & .unit {
             top: 1.4rem;
             font-size: 1.5em;
         }
     }
+
     .nameDate {
         .name {
-          font-size: 21px;
+            font-size: 21px;
         }
+
         .date {
-          font-size: 15px;
+            font-size: 15px;
         }
-      }
-      .additionalInfo.desktopOnly {
+    }
+
+    .additionalInfo.desktopOnly {
         display: none;
-      }
-      .additionalInfoMobileWrapper.mobileOnly {
+    }
+
+    .additionalInfoMobileWrapper.mobileOnly {
         display: flex;
         padding: 0;
         border-radius: 20px;
+
         & .additionalInfo {
             margin-top: 0;
-          max-width: unset;
-          width: 100%;
-          color: #fff;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: flex-start;
-          align-items: flex-start;
+            max-width: unset;
+            width: 100%;
+            color: #fff;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
         }
+
         & .infoBox {
             flex: 0 0 calc(33.333% - 0rem);
             min-width: calc(33.333% - 0rem);
@@ -270,18 +394,40 @@
             padding: 1rem 0;
             border-bottom: 1px solid #1800ff17;
             border-right: 1px solid #1800ff17;
-          
+
             &.no-bottom-border {
-              border-bottom: none;
+                border-bottom: none;
             }
-          
+
             &.no-right-border {
-              border-right: none;
+                border-right: none;
             }
-          
-            & > img {
-              width: 27px;
+
+            &>img {
+                width: 27px;
             }
-          }
-      }
+        }
+    }
+
+    .historyItems,
+    .historyItems_multi {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        max-height: 200px;
+
+        & .item {
+            width: 100%;
+
+            &>.text {
+                width: 100%;
+            }
+
+            &>.removeItem {
+                display: inline-block;
+            }
+        }
+    }
+
+    .historyContainer>.clearHistory {
+        right: 0.75rem;
+    }
 }
