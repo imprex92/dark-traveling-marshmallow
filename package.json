@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/core": "^7.17.10",
     "auto-zustand-selectors-hook": "^2.0.0",
-    "axios": "^1.6.0",
+    "axios": "1.7.3",
     "cors": "^2.8.5",
     "country-list": "^2.2.0",
     "date-fns": "^3.6.0",

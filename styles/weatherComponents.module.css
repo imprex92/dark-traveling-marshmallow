@@ -14,7 +14,7 @@
   display: grid;
   grid-template-columns: 50px 1fr;
   grid-template-areas: "nav wrap";
-  background: linear-gradient(135deg, hsl(258deg, 39%, 45%) 0%, hsl(262deg, 58%, 35%) 25%, hsl(251deg, 41%, 44%) 50%, hsl(196deg, 68%, 67%) 71%, hsl(241deg, 56%, 72%) 100%);
+  background: linear-gradient(135deg, hsl(258, 39%, 45%) 0%, hsl(262, 58%, 35%) 25%, hsl(251, 41%, 44%) 50%, hsl(196, 68%, 67%) 71%, hsl(241, 56%, 72%) 100%);
   padding: 0;
 }
 
@@ -250,7 +250,7 @@
   cursor: pointer;
   border-radius: 5px;
   gap: 0.2rem;
-  width: 100%;
+  width: 170px;
 }
 .historyItems > .item > .removeItem, .historyItems_multi > .item > .removeItem {
   display: inline-block;
@@ -281,15 +281,13 @@
     row-gap: 2rem;
     margin: 0 auto;
   }
-
   .mainTempContainer,
-.chipsHistoryContainer {
+  .chipsHistoryContainer {
     width: 100%;
     max-width: 700px;
     min-width: 490px;
     min-height: unset;
   }
-
   .mainTempContainer {
     min-height: unset;
   }
@@ -299,31 +297,25 @@
     right: unset;
     left: 0;
   }
-
   .weatherContainersContainer {
     width: calc(100% - 2rem);
   }
-
   .mainTempContainer,
-.chipsHistoryContainer {
+  .chipsHistoryContainer {
     min-width: unset;
   }
-
   .mainTempContainer {
     flex-basis: auto;
   }
-
   .chipsContainer,
-.historyContainer {
+  .historyContainer {
     height: auto !important;
   }
-
   .weatherIcon {
     width: 85px;
     min-width: 85px;
     min-height: 85px;
   }
-
   .mainTemp .temp {
     font-size: 5rem;
   }
@@ -331,18 +323,15 @@
     top: 1.4rem;
     font-size: 1.5em;
   }
-
   .nameDate .name {
     font-size: 21px;
   }
   .nameDate .date {
     font-size: 15px;
   }
-
   .additionalInfo.desktopOnly {
     display: none;
   }
-
   .additionalInfoMobileWrapper.mobileOnly {
     display: flex;
     padding: 0;
@@ -378,25 +367,24 @@
   .additionalInfoMobileWrapper.mobileOnly .infoBox > img {
     width: 27px;
   }
-
   .historyItems,
-.historyItems_multi {
+  .historyItems_multi {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     max-height: 200px;
   }
   .historyItems .item,
-.historyItems_multi .item {
+  .historyItems_multi .item {
     width: 100%;
+    max-width: 130px;
   }
   .historyItems .item > .text,
-.historyItems_multi .item > .text {
+  .historyItems_multi .item > .text {
     width: 100%;
   }
   .historyItems .item > .removeItem,
-.historyItems_multi .item > .removeItem {
+  .historyItems_multi .item > .removeItem {
     display: inline-block;
   }
-
   .historyContainer > .clearHistory {
     right: 0.75rem;
   }
