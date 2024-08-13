@@ -57,6 +57,7 @@ a {
   --primaryBtnTextColor: #3F1651;
   --primaryBtnTextColorHover: #E6E6FA;
   --num-slides: 5;
+  --primaryWhite: #F8F8FF;
 }
 
 .Typewriter {
