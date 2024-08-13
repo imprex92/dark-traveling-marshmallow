@@ -47,7 +47,7 @@ const WeatherMain = ({ fetchWeather, currentWeather, apiError, currentUser }) =>
         <div className={styles.chipsHistoryContainer}>
           <CityChips currentUser={currentUser} fetchWeather={fetchWeather} />
           <AdditionalWeatherInfoMobile currentWeather={currentWeather} isMetric={isMetric} fallback={fallback} />
-          <SearchHistory />
+          <SearchHistory fetchWeather={fetchWeather} currentUser={currentUser} />
         </div>
       </div>
     </>
