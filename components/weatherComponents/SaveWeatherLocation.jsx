@@ -17,7 +17,7 @@ const SaveWeatherLocation = ({ currentWeather }) => {
 
   const removeBookmark = () => {
     const index = weatherChips.findIndex(chip => chip.text.toLowerCase() === currentWeather?.data?.name.toLowerCase())
-    if(index === -1) {
+    if (index === -1) {
       M.toast({ text: 'Error removing bookmark.' });
       return;
     }
@@ -29,13 +29,13 @@ const SaveWeatherLocation = ({ currentWeather }) => {
       setIsWeatherChipsInitialized(true);
     }
   }, [weatherChips]);
-  
+
   if (!isWeatherChipsInitialized) {
     return (
       <span className={`${styles.rotateIcon} material-symbols-outlined`}>
         progress_activity
       </span>
-    ); 
+    );
   }
   return weatherChips?.some(chip => chip.text === currentWeather?.data?.name) ? (
     <span onClick={() => removeBookmark()} className={`${styles.bookmarkIcon} ${styles.saved} material-symbols-outlined`}>

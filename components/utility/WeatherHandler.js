@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export async function fetchWeatherByCoords( data ) {
+export async function fetchWeatherByCoords(data) {
     try {
-        if(!data.latitude || !data.longitude){
+        if (!data.latitude || !data.longitude) {
             throw new Error('Invalid coordinates')
         }
-        const units = localStorage.getItem('units') || 'metric'
+        const units = localStorage.getItem('units') || 'metric'
 
         const { latitude, longitude } = data
         let config = {
@@ -20,8 +20,8 @@ export async function fetchWeatherByCoords( data ) {
         throw new Error(error);
     }
 }
-export async function fetchWeatherByQuery (query){
-    const units = localStorage.getItem('units') || 'metric'
+export async function fetchWeatherByQuery(query) {
+    const units = localStorage.getItem('units') || 'metric'
 
     let config = {
         method: 'get',
@@ -36,7 +36,7 @@ export async function fetchWeatherByQuery (query){
         throw new Error(error);
     }
 }
-export async function fetchFallbackWeather(){
+export async function fetchFallbackWeather() {
     const fallbackCity = encodeURIComponent('New York')
     const config = {
         method: 'get',
@@ -44,6 +44,7 @@ export async function fetchFallbackWeather(){
     }
     try {
         const response = await axios(config)
+
         return response
     } catch (error) {
         console.error(error);
