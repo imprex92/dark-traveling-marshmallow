@@ -8,15 +8,28 @@ import { getGeolocation } from 'components/utility/GetGeolocation'
 import { getSs, setSs } from 'components/utility/StorageHandler'
 import SkeletonWeather from 'components/loaders/skeletons/SkeletonWeather'
 import useSiteSettings from 'store/siteSettings';
+import { updateWeatherSearchHistory } from 'components/utility/subscriptions'
 
 const weather = () => {
 	const { currentUser } = useAuth()
 	const isOnline = currentUser ? true : false
+	const { weatherSearchHistory = [] } = useSiteSettings(state => state.data)
+	const updateSearchHistory = useSiteSettings(state => state.setWeatherSearchHistory)
 	const updateInitialWeather = useSiteSettings(state => state.setLatestLocation)
-	
+
 	const [weatherObj, setWeatherObj] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [apiErr, setApiErr] = useState(null)
+	const [historyArray, setHistoryArray] = useState(weatherSearchHistory);
+
+	useEffect(() => {
+    const unsubscribe = useSiteSettings.subscribe(
+      (state) => state.data.weatherSearchHistory,
+      (newHistory) => setHistoryArray(newHistory)
+    );
+
+    return () => unsubscribe();
+  }, []);
 
 	useEffect(() => {
 		const permissionAndInitialWeather = async () => {
@@ -31,7 +44,7 @@ const weather = () => {
 							setWeatherObj(data);
 						} catch (error) {
 							console.error('Error fetching fallback weather', error);
-							setWeatherObj({data: { error }});							
+							setWeatherObj({ data: { error } });
 						}
 					} else if (res.state === 'granted' || res.state === 'prompt') {
 						await fetchWeather();
@@ -50,13 +63,13 @@ const weather = () => {
 					M.toast({ text: 'Permissions API not supported', classes: 'error' });
 				}
 			} catch (error) {
-				setWeatherObj({data: { error }});
+				setWeatherObj({ data: { error } });
 				console.error('Error in permissionAndInitialWeather', error);
 			} finally {
 				setIsLoading(false);
 			}
 		};
-	
+
 		const userGeoLatest = getSs('userGeoLatest');
 		if (userGeoLatest) {
 			setWeatherObj(userGeoLatest);
@@ -65,15 +78,24 @@ const weather = () => {
 			permissionAndInitialWeather();
 		}
 	}, []);
-	
-	const handleFetchWeather = async (location) => {
+
+	const handleSearchAndFetchWeather = async (location) => {
 		setApiErr(null);
 		try {
 			const data = await fetchWeatherByQuery(location);
 			setWeatherObj(data);
+			const result = await updateWeatherSearchHistory({ userID: currentUser.uid, payload: location });
+        if (result.error) {
+            console.error('Error updating search history:', result.error);
+            return;
+        }
+
+        const updatedHistory = result.data;
+
+        updateSearchHistory(updatedHistory);
 		} catch (error) {
 			setApiErr(error);
-			setWeatherObj({data: { error }});
+			setWeatherObj({ data: { error } });
 			M.toast({ text: error?.message.includes('404') ? 'City does not exists. Try Again.' : error, classes: 'error' });
 		}
 	};
@@ -84,23 +106,33 @@ const weather = () => {
 			if (!geoLocation) {
 				throw new Error('Geolocation not available');
 			}
-	
+
 			const coords = {
 				latitude: geoLocation.data.latitude,
 				longitude: geoLocation.data.longitude,
 			};
-	
+
 			try {
 				const data = await fetchWeatherByCoords(coords);
+				const result = await updateWeatherSearchHistory({ userID: currentUser.uid, payload: data?.name });
+        if (result.error) {
+            console.error('Error updating search history:', result.error);
+            return;
+        }
+
+        const updatedHistory = result.data;
+
+        updateSearchHistory(updatedHistory);
+
 				setWeatherObj(data);
 				updateInitialWeather(data);
 				setSs('userGeoLatest', data);
 			} catch (error) {
-				setWeatherObj({data: { error }});
+				setWeatherObj({ data: { error } });
 				console.error('Error fetching weather by coordinates', error);
 			}
 		} catch (error) {
-			setWeatherObj({data: { error }});
+			setWeatherObj({ data: { error } });
 			console.error('Error fetching weather', error);
 		} finally {
 			setIsLoading(false);
@@ -111,9 +143,9 @@ const weather = () => {
 		<>
 			<div className={styles.weather}>
 				<div className={styles.navigation}>
-					<SideNavLight/>
+					<SideNavLight />
 				</div>
-				{(weatherObj && !isLoading) && <WeatherMain isOnline={isOnline} fetchWeather={handleFetchWeather} currentWeather={weatherObj} apiError={apiErr} currentUser={currentUser} />}
+				{(weatherObj && !isLoading) && <WeatherMain isOnline={isOnline} fetchWeather={handleSearchAndFetchWeather} currentWeather={weatherObj} apiError={apiErr} currentUser={currentUser} />}
 				{isLoading && (
 					<div className='skeleton-container weather-skeleton'>
 						<SkeletonWeather position={'main'} />
@@ -121,7 +153,7 @@ const weather = () => {
 						<SkeletonWeather position={'additionalInfo'} />
 						<SkeletonWeather position={'history'} />
 					</div>
-				) }
+				)}
 			</div>
 		</>
 	)
