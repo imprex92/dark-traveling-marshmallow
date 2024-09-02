@@ -122,8 +122,8 @@ const Post = (props) => {
 					<SideNavLight/>
 				</div>
 				<div className={`${styles.singlepostWrapper}`}>
-					<div className={`row ${styles.imgRow}`}>
-						<div className={`col s12 ${styles.mainImageWrapper}`}>
+					<div className={`${styles.imgRow}`}>
+						<div className={`${styles.mainImageWrapper}`}>
 							{isImageLoaded ? (<img
 							src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0] || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
 							alt="Main image"
@@ -133,7 +133,7 @@ const Post = (props) => {
 							)}
 						</div>
 					</div>
-					<div className="row">
+					<div className={styles.postContent}>
 						<div className="col s10 offset-s1">
 							<h3>
 								<strong>{requestedBlog?.postTitle}</strong>

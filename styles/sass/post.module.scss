@@ -1,12 +1,17 @@
 @use 'variables';
 @mixin singlepostWrapper {
 	grid-area: wrap;
+	display: grid;
+	grid-template-areas: "postImg"
+												"content";
 
-	width: calc(100% - 3.5rem);
-	margin: 3.5rem 0 auto auto;
 	> .imgRow {
+		grid-area: postImg;
 	  display: flex;
 	  justify-content: center;
+	}
+	> .postContent {
+		grid-area: content;
 	}
 	& .locationDiv {
 	  text-indent: 1em;

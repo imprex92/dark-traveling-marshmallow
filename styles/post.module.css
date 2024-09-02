@@ -18,12 +18,16 @@
 
 .singlepostWrapper {
   grid-area: wrap;
-  width: calc(100% - 3.5rem);
-  margin: 3.5rem 0 auto auto;
+  display: grid;
+  grid-template-areas: "postImg" "content";
 }
 .singlepostWrapper > .imgRow {
+  grid-area: postImg;
   display: flex;
   justify-content: center;
+}
+.singlepostWrapper > .postContent {
+  grid-area: content;
 }
 .singlepostWrapper .locationDiv {
   text-indent: 1em;
@@ -72,12 +76,16 @@
 
 .singlepostWrapper_notFound {
   grid-area: wrap;
-  width: calc(100% - 3.5rem);
-  margin: 3.5rem 0 auto auto;
+  display: grid;
+  grid-template-areas: "postImg" "content";
 }
 .singlepostWrapper_notFound > .imgRow {
+  grid-area: postImg;
   display: flex;
   justify-content: center;
+}
+.singlepostWrapper_notFound > .postContent {
+  grid-area: content;
 }
 .singlepostWrapper_notFound .locationDiv {
   text-indent: 1em;
@@ -86,12 +94,16 @@
 .singlepostWrapper_error {
   color: red;
   grid-area: wrap;
-  width: calc(100% - 3.5rem);
-  margin: 3.5rem 0 auto auto;
+  display: grid;
+  grid-template-areas: "postImg" "content";
 }
 .singlepostWrapper_error > .imgRow {
+  grid-area: postImg;
   display: flex;
   justify-content: center;
+}
+.singlepostWrapper_error > .postContent {
+  grid-area: content;
 }
 .singlepostWrapper_error .locationDiv {
   text-indent: 1em;
@@ -99,12 +111,16 @@
 
 .singlepostWrapper_loading {
   grid-area: wrap;
-  width: calc(100% - 3.5rem);
-  margin: 3.5rem 0 auto auto;
+  display: grid;
+  grid-template-areas: "postImg" "content";
 }
 .singlepostWrapper_loading > .imgRow {
+  grid-area: postImg;
   display: flex;
   justify-content: center;
+}
+.singlepostWrapper_loading > .postContent {
+  grid-area: content;
 }
 .singlepostWrapper_loading .locationDiv {
   text-indent: 1em;
