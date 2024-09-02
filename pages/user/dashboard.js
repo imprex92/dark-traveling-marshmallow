@@ -12,6 +12,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import nookies from 'nookies'
 import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
 import SideNav from 'components/nav/sidenav'
+import { RANDOM_SENTENCES } from 'components/utility/constants'
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
 	const loggedInUserId = userAuth?.uid
@@ -20,19 +21,12 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 	const { currentUser } = useAuth()
 	const [UserFirstname, setUserFirstname] = useState(null)
 	const [searchText, setSearchText] = useState('')
-	const [broadcastMessage, setBroadcastMessage] = useState(null)
 	const [blogPosts, setBlogPosts] = useState([])
 	const [stayingHotels, setStayingHotels] = useState([])
 	const [dbUserData, setDbUserData] = useState([])
 	const [byCountrySearchTerm, setByCountrySearchTerm] = useState('')
 	const [randomIndex, setRandomIndex] = useState(0)
 	let blogsToSend;
-	const sentences = [
-		"Unlock the gateway to your uncharted adventures - Click here to craft your inaugural travel tale.",
-		"Dive into the enigma of unexplored destinations - Click here to pen your maiden travel chronicle.",
-		"Embark on a journey of secrets untold - Click here to embark on your inaugural travel odyssey.",
-		"Venture into the unknown and create your debut travel saga - Click here to start writing your first travel epic."
-	];
 
 	useEffect(() => {
 		//! ComponentWillMount!
@@ -67,7 +61,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 		blogPosts.length === 0 ? setBlogPosts(userBlogs) : ''
 	}, [])
 	useEffect(() => {
-		const randomIndex = Math.floor(Math.random() * sentences.length)
+		const randomIndex = Math.floor(Math.random() * RANDOM_SENTENCES.length)
 		setRandomIndex(randomIndex)
 	}, [])
 
@@ -130,7 +124,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 							{userBlogs.length > 0 ?
 								<Slides searchByText={searchText} countrySearchTerm={byCountrySearchTerm} userBlogs=
 									{blogPosts} />
-								: <AddFirstPost route={route} sentences={sentences} randomIndex={randomIndex} />
+								: <AddFirstPost route={route} sentences={RANDOM_SENTENCES} randomIndex={randomIndex} />
 							}
 						</div>
 					</div>
