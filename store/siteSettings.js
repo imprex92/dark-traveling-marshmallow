@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
+import { projectAuth, projectFirestore } from 'firebase/config'
 
 let siteSettings = (set, get) => ({
 	data: {
@@ -50,5 +51,64 @@ siteSettings = devtools(siteSettings)
 siteSettings = persist(siteSettings, { name: 'site_settings' })
 
 const useSiteSettings = create(subscribeWithSelector(siteSettings))
+
+projectAuth.onAuthStateChanged((user) => {
+	if (user) {
+			const { uid } = user
+			const userDbRef = projectFirestore.collection('testUserCollection').doc(uid)
+			console.log('User logged in, fetching site settings')
+
+			userDbRef.onSnapshot(snapshot => {
+					if (snapshot.exists) {
+							const settings = snapshot.data().settings
+							if (settings) {
+									console.log('Site settings snapshot', settings)
+									useSiteSettings.setState((state) => ({
+											data: {
+												...state.data,
+												...settings,
+											}
+									}))
+							} else {
+								const defaultSettings = {
+									name: get().data.name ?? '',
+									theme: get().data.theme ?? 'dark',
+									units: get().data.units ?? 'metric',
+									language: get().data.language ?? 'en',
+									timeFormat: get().data.timeFormat ?? 24,
+									dateFormat: get().data.dateFormat ?? 'dd/mm/yyyy',
+									showWeatherWidget: get().data.showWeatherWidget ?? true,
+								};
+									userDbRef.set({ settings: defaultSettings }, { merge: true })
+									console.log('Initialized settings with default state', defaultSettings)
+							}
+					}
+			})
+
+			useSiteSettings.subscribe(
+				(state) => ({
+					name: state.data.name,
+					theme: state.data.theme,
+					units: state.data.units,
+					language: state.data.language,
+					timeFormat: state.data.timeFormat,
+					dateFormat: state.data.dateFormat,
+					showWeatherWidget: state.data.showWeatherWidget,
+				}),
+				(data) => {
+					const validData = {
+						name: data.name ?? '',
+						theme: data.theme ?? 'dark',
+						units: data.units ?? 'metric',
+						language: data.language ?? 'en',
+						timeFormat: data.timeFormat ?? 24,
+						dateFormat: data.dateFormat ?? 'dd/mm/yyyy',
+						showWeatherWidget: data.showWeatherWidget ?? true,
+					};
+					userDbRef.set({ settings: validData }, { merge: true });
+				}
+			);
+	}
+})
 
 export default useSiteSettings

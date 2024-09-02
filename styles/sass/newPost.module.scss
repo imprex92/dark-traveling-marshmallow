@@ -88,13 +88,13 @@ $navTabListHeight: 53px;
 	&_active {
 		@extend .tab;
 		color: var(--primaryBtnTextColor);
+		background-color: var(--primaryBtnColor);
+		border-color: #144677;
 
 		&>.label {
 			color: var(--primaryBtnTextColor);
 		}
 
-		background-color: var(--primaryBtnColor);
-		border-color: #144677;
 	}
 
 	&_disabled {
@@ -117,12 +117,12 @@ $navTabListHeight: 53px;
 	&:hover {
 		color: var(--primaryBtnTextColorHover);
 		cursor: pointer;
+		background-color: var(--primaryBtnColorHover);
 
 		&>.label {
 			color: var(--primaryBtnTextColorHover);
 		}
 
-		background-color: var(--primaryBtnColorHover);
 	}
 }
 
@@ -163,6 +163,7 @@ $navTabListHeight: 53px;
 	}
 
 	.submitTab_active {
+		padding-bottom: 0.5rem;
 		display: grid;
 		height: 100%;
 		grid-template-rows: auto 1fr;

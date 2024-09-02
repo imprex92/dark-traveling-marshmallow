@@ -9,6 +9,7 @@ import Image from "next/image"
 import { fetchUserReceipts, handleSaveRecipt } from 'components/utility/subscriptions'
 import { projectFirestore } from 'firebase/config'
 import OutputGallery from 'components/gallery/OutputGallery'
+import { FILE_TYPE_IMAGES } from 'components/utility/constants'
 
 const receiptHome = () => {
   const { logout, currentUser } = useAuth()
@@ -27,7 +28,6 @@ const receiptHome = () => {
   const [userReceitps, setUserReceitps] = useState([])
   //* onUpload finish
 	const [uploadedURL, setUploadedURL] = useState(null)
-  const fileTypeImage = ['image/jpeg', 'image/png', 'image/raw', 'image/heif', 'image/webp', 'image/heic']
 
   useEffect(() => {
       let elems = document.querySelectorAll('.collapsible');
@@ -76,9 +76,9 @@ const receiptHome = () => {
   const handleimageUpload = (e, type) => {
     const selectedImage = e.target.files[0]
     console.log(e, type);
-    type === 'ATTACH_FILE' && fileTypeImage.includes(selectedImage.type) 
+    type === 'ATTACH_FILE' && FILE_TYPE_IMAGES.includes(selectedImage.type) 
     ? (setUserDefinedFile(selectedImage), setImgPreview(URL.createObjectURL(selectedImage))) 
-    : type === 'CAMERA_FILE' && fileTypeImage.includes(selectedImage.type) 
+    : type === 'CAMERA_FILE' && FILE_TYPE_IMAGES.includes(selectedImage.type) 
     ? (setUserDefinedCameraFile(selectedImage), setImgPreview(URL.createObjectURL(selectedImage)))
     : setHasError("You either didn't add a picture or file is not an image.")
     console.log(URL.createObjectURL(selectedImage), selectedImage);

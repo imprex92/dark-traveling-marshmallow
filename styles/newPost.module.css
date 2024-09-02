@@ -143,6 +143,7 @@
   }
 }
 .tabWrapper .submitTab_active {
+  padding-bottom: 0.5rem;
   display: grid;
   height: 100%;
   grid-template-rows: auto 1fr;
@@ -218,7 +219,7 @@ input.titleInput {
 }
 @media (max-width: 768px) {
   input.dateInput,
-input.titleInput {
+  input.titleInput {
     width: 100% !important;
   }
 }
@@ -275,7 +276,7 @@ input.titleInput {
 }
 @media (max-width: 640px) {
   .buttons .submitBtn,
-.buttons .overViewBtn {
+  .buttons .overViewBtn {
     flex: 1 1 100%;
     margin-top: 2rem;
   }

@@ -195,6 +195,10 @@
   display: block;
 }
 
+.fileField {
+  align-items: center;
+}
+
 .fileBtn {
   margin-left: 0.7rem;
   margin-top: 0.5rem;
@@ -254,7 +258,6 @@
     padding: 2rem;
     width: 95%;
   }
-
   .sidePanel {
     padding-right: 0;
     justify-content: space-around;
@@ -266,24 +269,19 @@
     bottom: 0;
     right: 0;
   }
-
   .sidePanelItems {
     padding-bottom: 1rem;
   }
-
   .mainPanel {
     margin-top: 1rem;
     padding-left: 0;
   }
-
   .addressForm_header {
     margin-bottom: 2rem;
   }
-
   .addressForm {
     padding-left: 0 !important;
   }
-
   .accountRemovalDialog {
     position: relative;
   }

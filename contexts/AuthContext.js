@@ -1,19 +1,14 @@
 import React, {createContext, useState, useEffect, useContext} from 'react'
 import { useRouter } from 'next/router'
-import { projectFirebase, projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "../firebase/config.js"
-import useMessageCenter from 'store/messageTransmitter'
-
+import { projectAuth, projectFirestore, projectGoogleAuthProvider, projectTimestampNow } from "firebase/config"
 import nookies  from 'nookies'
 
 const AuthContext = createContext({user: null});
 
 export function AuthProvider({children}) {
 	const router = useRouter()
-	const hasError = useMessageCenter((state) => state.setError)
 	const [user, setUser] = useState(null)
-	const [isLoading, setIsLoading] = useState(true)
 	const [dbUserDocument, setDbUserDocument] = useState([])
-	const [error, setError] = useState('')
 
 	useEffect(() => {
 		return projectAuth.onIdTokenChanged(async (user) => {
@@ -37,22 +32,12 @@ export function AuthProvider({children}) {
 
 		return () => clearInterval(handle)
 	}, [])
-
-/*	
-	useEffect(() => {
-		const unsubscribe = projectAuth.onAuthStateChanged( user => {
-				setUser(user)
-			setIsLoading(false)
-		})
-		return unsubscribe
-	}, [])
-*/
 	
 	function signup(email, password){
 		return new Promise((resolve, reject) => {
 			projectAuth.createUserWithEmailAndPassword(email, password)
 			.then((cred) => {
-				projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
+				const userObj = {
 					displayName: cred.user.displayName || null,
 					photoURL: cred.user.photoURL || null,
 					email: cred.user.email || null,
@@ -61,6 +46,9 @@ export function AuthProvider({children}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow,
 					uid: cred.user.uid,
+				}
+				projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
+					userInfo: userObj
 				}, { merge: true });
 				resolve({
 					status: 'OK',
@@ -110,7 +98,7 @@ export function AuthProvider({children}) {
 				.signInWithPopup(projectGoogleAuthProvider)
 				.then((result) => {
 					if(result.additionalUserInfo.isNewUser){
-						projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
+						const userObj = {
 							displayName: result.user.displayName || null,
 							photoURL: result.user.photoURL || null,
 							email: result.user.email || null,
@@ -119,6 +107,9 @@ export function AuthProvider({children}) {
 							providerId: result.additionalUserInfo.providerId,
 							created: projectTimestampNow,
 							uid: result.user.uid,
+						}
+						projectFirestore.collection('testUserCollection').doc(result.user.uid).set({
+							userInfo: userObj
 						}, { merge: true })
 						.then((doc) => {
 							setDbUserDocument(doc)
@@ -135,7 +126,6 @@ export function AuthProvider({children}) {
 					}
 				})
 				.catch((err) => {
-					hasError(err)
 					reject({
 						code: err.code ?? 'Unknown',
 						message: err.message ?? 'Unknown',
@@ -154,7 +144,6 @@ export function AuthProvider({children}) {
 	const value = {
 		currentUser: user,
 		dbUserDocument,
-		error,
 		signup,
 		login,
 		logout,
