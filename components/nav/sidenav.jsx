@@ -15,7 +15,7 @@ export default function SideNav ({dbUserData, dataFromChildToParent}) {
 	const route = router.route;
 	
 	useEffect(() => {
-		setCountriesVisited(dbUserData.countriesVisited)
+		setCountriesVisited(dbUserData?.countriesVisited)
 			var sidenav = document.querySelectorAll(".sidenav");
 			var instances = M.Sidenav.init(sidenav, {
 				onOpenEnd: (el) => { el.classList.toggle('nav-open') },

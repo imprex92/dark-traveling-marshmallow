@@ -1,8 +1,8 @@
-import { projectAuth, projectFirestore, projectStorage } from "firebase/config";
+import { projectAuth, projectFirestore, projectStorage, projectFirebase } from "firebase/config";
 
 // File handles operations regarding user accounts
 const user = projectAuth?.currentUser || '';
-const refToAccountDoc = user && projectFirestore
+const refToAccountDoc = projectFirestore
 	.collection('testUserCollection')
 	.doc(user.uid);
 const availableProviders = ['google.com']
@@ -58,7 +58,7 @@ function updatePassword(password) {
 async function deleteExistingFile(user) {
 	const listRef = projectStorage.app
 		.storage('gs://dark-traveling-marshmallow.appspot.com')
-		.ref(`userData/${user.uid}/profileData/profilePicture`)
+		.ref(`userData/${user}/profileData/profilePicture`)
 
 	try {
 		const fileList = await listRef.list()
@@ -70,27 +70,33 @@ async function deleteExistingFile(user) {
 		throw error;
 	}
 }
-async function uploadNewPic(data){
-	const refToAccountBucket = projectStorage.app
-        .storage('gs://dark-traveling-marshmallow.appspot.com')
-        .ref(`userData/${user.uid}/profileData/profilePicture/${data.file.name}`);
-
+async function updateProfilePicOrData(data){
+	
 	try {
-		await refToAccountBucket.put(data.file);
+		
+		const refToAccountBucket = projectStorage.app
+					.storage('gs://dark-traveling-marshmallow.appspot.com')
+					.ref(`userData/${data.uid}/profileData/profilePicture/${data?.file?.name}`);
+		data?.file && await refToAccountBucket.put(data.file);
 
-		const url = await refToAccountBucket.getDownloadURL();
+		const url = data?.file && await refToAccountBucket.getDownloadURL() || null;
+		//await user.updatePhoneNumber(data.number.value)
 		await user.updateProfile({
 			displayName: data.name.value,
-			phoneNumber: data.number.value,
-			photoURL: url,
+			...(data?.file && {photoURL: url})
 		})
+		
 
-		await refToAccountDoc.update({
-			photoURL: url,
+		const userInfo = {
 			displayName: data.name.value,
-			phoneNumber: data.number.value,
-		});
+			//phoneNumber: data.number.value,
+			...(data?.file && {photoURL: url})
+		}
 
+		await refToAccountDoc.set({
+			userInfo: userInfo
+		}, {merge: true});
+		
 		return {
 			status: 200,
 			message: 'Storage upload and profile update: OK',
@@ -103,8 +109,9 @@ async function uploadNewPic(data){
 
 async function updateAccountData(data){
 	try {
-		await deleteExistingFile(user)
-		const result = await uploadNewPic(data)
+		data?.file && await deleteExistingFile(data.uid)
+		const result = await updateProfilePicOrData(data)		
+
 		return result;
 	} catch (error) {
 		return {status: 406, message: error.message}
@@ -113,9 +120,15 @@ async function updateAccountData(data){
 
 /* END */
 
-async function updateAddress(addressData) {
-	try {
-		await refToAccountDoc.set(addressData, {merge: true});
+async function updateAddress(addressData, uid) {
+	const refToDoc = projectFirestore
+	.collection('testUserCollection')
+	.doc(uid);
+	
+	try {		
+		await refToDoc.set({
+			userAddress: addressData
+		}, {merge: true});
 		return {status: 200, message: 'Address update successful'};
 	} catch (error) {
 		throw {status: 500, message: `An error occurred while updating the address, ${error}`};
