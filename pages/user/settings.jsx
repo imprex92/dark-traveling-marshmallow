@@ -151,20 +151,21 @@ const settings = ({ userAuth, token, userAddress }) => {
 		}
 	};
 	const handlePictureUpload = (file) => {
-		const inputEl = document.getElementById('change-profilePic')
-		const imgToUpload = file.target.files[0]
+		const inputEl = document.getElementById('change-profilePic');
+		const imgToUpload = file.target.files[0];
 		if (imgToUpload && (FILE_TYPE_IMAGES.includes(imgToUpload.type) && imgToUpload.size <= PROFILE_IMG_MAX_SIZE)) {
 			inputEl.classList.remove('invalid');
-			inputEl.classList.add('valid')
-			fileInput.current = imgToUpload
-		}
-		else {
+			inputEl.classList.add('valid');
+			fileInput.current = imgToUpload;
+			document.querySelector('.file-path').value = imgToUpload.name;
+		} else {
 			inputEl.classList.remove('valid');
 			inputEl.classList.add('invalid');
-			fileInput.current = null
-			M.toast({ text: 'Please select a valid image with size less than 2mb' })
+			fileInput.current = null;
+			document.querySelector('.file-path').value = '';
+			M.toast({ text: 'Please select a valid image with size less than 2mb' });
 		}
-	}
+	};
 	const handleUpdateAccountInfo = async (e) => {
 		e.preventDefault();
 		setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: true }));
