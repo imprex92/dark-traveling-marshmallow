@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getGeolocation } from 'components/utility/GetGeolocation'
 import styles from 'styles/weatherWidget.module.css'
 import { fetchWeatherByCoords } from 'components/utility/WeatherHandler'
@@ -6,7 +6,6 @@ import useSiteSettings from 'store/siteSettings';
 import SkeletonWeatherWidget from 'components/loaders/skeletons/SkeletonWeatherWidget';
 import { toImperial } from 'components/utility/UnitConverter';
 import { projectTimestampNow } from 'firebase/config';
-import { getCurrentDate } from 'components/utility/getCurrentDate';
 import { isSameHour } from 'date-fns';
 
 const WeatherWidget = () => {
@@ -16,11 +15,10 @@ const WeatherWidget = () => {
 	const [isMaximized, setIsMaximized] = useState(false)
 	const [reversedGeolocation, setReversedGeolocation] = useState(null)
 	const [locationLoading, setLocationLoading] = useState(false)
-	const [userLocation, setUserLocation] = useState(null)
 	const [locationError, setLocationError] = useState({error: false, message: null})
 	const [weatherObj, setWeatherObj] = useState(null)
 	const { units, showWeatherWidget, latestWeather } = useSiteSettings(state => state.data)
-	const isMetric = units === 'metric' ? true : false
+	const isMetric = units === 'celcius' ? true : false
 	
 	useEffect(() => {
 	  const showWidget = useSiteSettings.getState().getShowWeatherWidget();
