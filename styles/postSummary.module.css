@@ -78,7 +78,7 @@
 }
 @media (max-width: 640px) {
   .infoBox > .weatherMood > .weather,
-.infoBox > .weatherMood .mood {
+  .infoBox > .weatherMood .mood {
     display: inline-block;
     width: calc(50% - 1rem);
     overflow: hidden;

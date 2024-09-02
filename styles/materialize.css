@@ -769,8 +769,7 @@
   --background-color-card: var(--surface-color);
   --tooltip-background-color: #313033;
   --tooltip-font-color: rgba(255, 255, 255, 0.77);
-  --separator-color: #DDDDDD;
-  /* borders between components */
+  --separator-color: #DDDDDD; /* borders between components */
   --error-color: #F44336;
   --slider-track-color: var(--md-sys-color-shadow-light);
   --switch-thumb-off-color: var(--md-ref-palette-primary100);
@@ -800,8 +799,7 @@
   --background-color-disabled: rgba(255, 255, 255, 0.12);
   --background-color-level-4dp: rgba(255, 255, 255, 0.09);
   --background-color-slight-emphasis: rgba(255, 255, 255, 0.05);
-  --separator-color: #424242;
-  /* borders between components */
+  --separator-color: #424242; /* borders between components */
   --error-color: #CF6679;
   --switch-thumb-off-color: #bababa;
   --md_sys_color_on-surface: 230, 225, 229;
@@ -2951,10 +2949,8 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 html {
-  line-height: 1.15;
-  /* 1 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
 }
 
 /* Sections
@@ -2989,12 +2985,9 @@ h1 {
  * 2. Show the overflow in Edge and IE.
  */
 hr {
-  box-sizing: content-box;
-  /* 1 */
-  height: 0;
-  /* 1 */
-  overflow: visible;
-  /* 2 */
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
 }
 
 /**
@@ -3002,10 +2995,8 @@ hr {
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 pre {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
 }
 
 /* Text-level semantics
@@ -3022,12 +3013,9 @@ a {
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 abbr[title] {
-  border-bottom: none;
-  /* 1 */
-  text-decoration: underline;
-  /* 2 */
-  text-decoration: underline dotted;
-  /* 2 */
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
 }
 
 /**
@@ -3045,10 +3033,8 @@ strong {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
 }
 
 /**
@@ -3098,14 +3084,10 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: inherit;
-  /* 1 */
-  font-size: 100%;
-  /* 1 */
-  line-height: 1.15;
-  /* 1 */
-  margin: 0;
-  /* 2 */
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
 }
 
 /**
@@ -3113,8 +3095,7 @@ textarea {
  * 1. Show the overflow in Edge.
  */
 button,
-input {
-  /* 1 */
+input { /* 1 */
   overflow: visible;
 }
 
@@ -3123,8 +3104,7 @@ input {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 button,
-select {
-  /* 1 */
+select { /* 1 */
   text-transform: none;
 }
 
@@ -3173,18 +3153,12 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 legend {
-  box-sizing: border-box;
-  /* 1 */
-  color: inherit;
-  /* 2 */
-  display: table;
-  /* 1 */
-  max-width: 100%;
-  /* 1 */
-  padding: 0;
-  /* 3 */
-  white-space: normal;
-  /* 1 */
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
 }
 
 /**
@@ -3207,10 +3181,8 @@ textarea {
  */
 [type=checkbox],
 [type=radio] {
-  box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
 }
 
 /**
@@ -3226,10 +3198,8 @@ textarea {
  * 2. Correct the outline style in Safari.
  */
 [type=search] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  outline-offset: -2px;
-  /* 2 */
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
 }
 
 /**
@@ -3244,10 +3214,8 @@ textarea {
  * 2. Change font properties to `inherit` in Safari.
  */
 ::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  /* 1 */
-  font: inherit;
-  /* 2 */
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
 }
 
 /* Interactive
@@ -3318,7 +3286,7 @@ a {
 }
 
 /* 2dp elevation modified*/
-.z-depth-1, .sidenav, .collapsible, .dropdown-content, .btn-floating, .btn, .btn-small, .btn-large, .toast, .card, .card-panel, nav {
+.z-depth-1, .sidenav, .collapsible, .dropdown-content, .btn-floating, .btn, .btn-small, .btn-large, .toast, .card, .card-panel, nav.nav-extended {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -3435,7 +3403,7 @@ video.responsive-video {
     width: 100%;
   }
   .pagination li.prev,
-.pagination li.next {
+  .pagination li.next {
     width: 10%;
   }
   .pagination li.pages {
@@ -3681,7 +3649,7 @@ td, th {
     content: " ";
   }
   table.responsive-table th,
-table.responsive-table td {
+  table.responsive-table td {
     margin: 0;
     vertical-align: top;
   }
@@ -4813,15 +4781,13 @@ table span.badge {
   }
 }
 
-nav {
+nav.nav-extended {
+  height: auto;
   color: var(--font-on-primary-color-main);
   background-color: var(--secondary-container-color);
   width: 100%;
   height: 56px;
   line-height: 56px;
-}
-nav.nav-extended {
-  height: auto;
 }
 nav.nav-extended .nav-wrapper {
   min-height: 56px;
@@ -4987,12 +4953,10 @@ nav .input-field label.active i {
   nav.nav-extended .nav-wrapper {
     min-height: 64px;
   }
-
   nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
     height: 64px;
     line-height: 64px;
   }
-
   .navbar-fixed {
     height: 64px;
   }
@@ -5630,9 +5594,9 @@ small {
 }
 
 .btn,
-.btn-floating,
-.btn-large,
 .btn-small,
+.btn-large,
+.btn-floating,
 .btn-flat {
   font-size: 14px;
   outline: 0;
@@ -6300,8 +6264,7 @@ textarea.materialize-textarea {
   clear: both;
 }
 .input-field input, .input-field textarea {
-  box-sizing: border-box;
-  /* https://stackoverflow.com/questions/1377719/padding-within-inputs-breaks-width-100*/
+  box-sizing: border-box; /* https://stackoverflow.com/questions/1377719/padding-within-inputs-breaks-width-100*/
   padding: 0 5px;
   padding-top: 20px;
   background-color: transparent;
@@ -6480,8 +6443,7 @@ textarea.materialize-textarea {
   padding-top: 26px !important;
   padding-bottom: 4px !important;
   line-height: normal;
-  overflow-y: hidden;
-  /* prevents scroll bar flash */
+  overflow-y: hidden; /* prevents scroll bar flash */
   resize: none;
   min-height: 3rem;
   box-sizing: border-box;
@@ -6491,10 +6453,8 @@ textarea.materialize-textarea {
   visibility: hidden;
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow-wrap: break-word;
-  /* future version of deprecated 'word-wrap' */
-  padding-top: 1.2rem;
-  /* prevents text jump on Enter keypress */
+  overflow-wrap: break-word; /* future version of deprecated 'word-wrap' */
+  padding-top: 1.2rem; /* prevents text jump on Enter keypress */
   position: absolute;
   top: 0;
   z-index: -1;
@@ -7593,70 +7553,54 @@ input[type=range]::-ms-thumb {
 @-webkit-keyframes fill-unfill-rotate {
   12.5% {
     -webkit-transform: rotate(135deg);
-  }
-  /* 0.5 * ARCSIZE */
+  } /* 0.5 * ARCSIZE */
   25% {
     -webkit-transform: rotate(270deg);
-  }
-  /* 1   * ARCSIZE */
+  } /* 1   * ARCSIZE */
   37.5% {
     -webkit-transform: rotate(405deg);
-  }
-  /* 1.5 * ARCSIZE */
+  } /* 1.5 * ARCSIZE */
   50% {
     -webkit-transform: rotate(540deg);
-  }
-  /* 2   * ARCSIZE */
+  } /* 2   * ARCSIZE */
   62.5% {
     -webkit-transform: rotate(675deg);
-  }
-  /* 2.5 * ARCSIZE */
+  } /* 2.5 * ARCSIZE */
   75% {
     -webkit-transform: rotate(810deg);
-  }
-  /* 3   * ARCSIZE */
+  } /* 3   * ARCSIZE */
   87.5% {
     -webkit-transform: rotate(945deg);
-  }
-  /* 3.5 * ARCSIZE */
+  } /* 3.5 * ARCSIZE */
   to {
     -webkit-transform: rotate(1080deg);
-  }
-  /* 4   * ARCSIZE */
+  } /* 4   * ARCSIZE */
 }
 @keyframes fill-unfill-rotate {
   12.5% {
     transform: rotate(135deg);
-  }
-  /* 0.5 * ARCSIZE */
+  } /* 0.5 * ARCSIZE */
   25% {
     transform: rotate(270deg);
-  }
-  /* 1   * ARCSIZE */
+  } /* 1   * ARCSIZE */
   37.5% {
     transform: rotate(405deg);
-  }
-  /* 1.5 * ARCSIZE */
+  } /* 1.5 * ARCSIZE */
   50% {
     transform: rotate(540deg);
-  }
-  /* 2   * ARCSIZE */
+  } /* 2   * ARCSIZE */
   62.5% {
     transform: rotate(675deg);
-  }
-  /* 2.5 * ARCSIZE */
+  } /* 2.5 * ARCSIZE */
   75% {
     transform: rotate(810deg);
-  }
-  /* 3   * ARCSIZE */
+  } /* 3   * ARCSIZE */
   87.5% {
     transform: rotate(945deg);
-  }
-  /* 3.5 * ARCSIZE */
+  } /* 3.5 * ARCSIZE */
   to {
     transform: rotate(1080deg);
-  }
-  /* 4   * ARCSIZE */
+  } /* 4   * ARCSIZE */
 }
 @-webkit-keyframes blue-fade-in-out {
   from {
@@ -7830,8 +7774,7 @@ input[type=range]::-ms-thumb {
 .circle-clipper .circle {
   width: 200%;
   height: 100%;
-  border-width: 3px;
-  /* STROKEWIDTH */
+  border-width: 3px; /* STROKEWIDTH */
   border-style: solid;
   border-color: inherit;
   border-bottom-color: transparent !important;
@@ -8406,21 +8349,17 @@ input[type=range]::-ms-thumb {
   .datepicker-modal {
     max-width: 625px;
   }
-
   .datepicker-container.modal-content {
     flex-direction: row;
   }
-
   .datepicker-date-display {
     flex: 0 1 270px;
   }
-
   .datepicker-controls,
-.datepicker-table,
-.datepicker-footer {
+  .datepicker-table,
+  .datepicker-footer {
     width: 320px;
   }
-
   .datepicker-day-button {
     line-height: 44px;
   }
@@ -8608,15 +8547,12 @@ input[type=text].text-primary {
   .timepicker-modal {
     max-width: 600px;
   }
-
   .timepicker-container.modal-content {
     flex-direction: row;
   }
-
   .timepicker-text-container {
     top: 32%;
   }
-
   .timepicker-display-am-pm {
     position: relative;
     right: auto;

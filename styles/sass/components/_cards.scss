@@ -63,6 +63,7 @@
 
   // Horizontal Cards
   &.horizontal {
+    display: flex;
     &.small, &.medium, &.large {
       .card-image {
         height: 100%;
@@ -75,7 +76,6 @@
       }
     }
 
-    display: flex;
 
     .card-image {
       max-width: 50%;
@@ -157,13 +157,13 @@
   }
 
   .card-action {
+    border-top: 1px solid $divider-color;
+    position: relative;
+    background-color: inherit;
     &:last-child {
       border-radius: 0 0 2px 2px;
     }
 
-    border-top: 1px solid $divider-color;
-    position: relative;
-    background-color: inherit;
 
     a {
       padding: 16px $card-padding;

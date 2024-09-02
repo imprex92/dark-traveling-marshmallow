@@ -69,8 +69,8 @@
 }
 
 .singlepostWrapper_error {
-  @include singlepostWrapper;
   color: red; // Additional specific style
+  @include singlepostWrapper;
 }
 
 .singlepostWrapper_loading {

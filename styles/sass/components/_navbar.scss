@@ -1,6 +1,13 @@
 nav {
   &.nav-extended {
     height: auto;
+    color: $navbar-font-color;
+    @extend .z-depth-1;
+    background-color: $secondary-container-color;
+  
+    width: 100%;
+    height: $navbar-height-mobile;
+    line-height: $navbar-line-height-mobile;
 
     .nav-wrapper {
       min-height: $navbar-height-mobile;
@@ -13,13 +20,6 @@ nav {
     }
   }
 
-  color: $navbar-font-color;
-  @extend .z-depth-1;
-  background-color: $secondary-container-color;
-
-  width: 100%;
-  height: $navbar-height-mobile;
-  line-height: $navbar-line-height-mobile;
 
   a {
     color: $navbar-font-color;
