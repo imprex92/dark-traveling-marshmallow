@@ -2,6 +2,7 @@
   "name": "dark-traveling-marshmello",
   "version": "0.1.0",
   "main": "functions.js",
+  "license": "GPL-3.0-only",
   "private": true,
   "browser": {
     "child_process": false
