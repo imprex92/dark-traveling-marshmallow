@@ -8,6 +8,7 @@
 }
 
 .widgetContainer {
+  box-sizing: border-box;
   position: relative;
   z-index: 2;
   width: 83px;
@@ -46,6 +47,9 @@
   padding: 0.35rem;
   background-color: maroon;
   border-radius: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @keyframes spin {

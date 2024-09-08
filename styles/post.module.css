@@ -28,6 +28,9 @@
 }
 .singlepostWrapper > .postContent {
   grid-area: content;
+  display: grid;
+  width: min(80%, 1500px);
+  margin-inline: auto;
 }
 .singlepostWrapper .locationDiv {
   text-indent: 1em;
@@ -86,6 +89,9 @@
 }
 .singlepostWrapper_notFound > .postContent {
   grid-area: content;
+  display: grid;
+  width: min(80%, 1500px);
+  margin-inline: auto;
 }
 .singlepostWrapper_notFound .locationDiv {
   text-indent: 1em;
@@ -104,6 +110,9 @@
 }
 .singlepostWrapper_error > .postContent {
   grid-area: content;
+  display: grid;
+  width: min(80%, 1500px);
+  margin-inline: auto;
 }
 .singlepostWrapper_error .locationDiv {
   text-indent: 1em;
@@ -121,9 +130,23 @@
 }
 .singlepostWrapper_loading > .postContent {
   grid-area: content;
+  display: grid;
+  width: min(80%, 1500px);
+  margin-inline: auto;
 }
 .singlepostWrapper_loading .locationDiv {
   text-indent: 1em;
+}
+
+.titleBox {
+  display: flex;
+  flex-direction: column;
+}
+.titleBox h3 {
+  margin-block: 0;
+}
+.titleBox h4 {
+  margin-top: 0;
 }
 
 /*# sourceMappingURL=post.module.css.map */

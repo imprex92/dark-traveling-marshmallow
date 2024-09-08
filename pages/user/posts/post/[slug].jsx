@@ -9,6 +9,7 @@ import usePostStorage from 'store/postStorage'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import SkeletonImage from 'components/loaders/skeletons/SkeletonImage'
 import styles from 'styles/post.module.css'
+import Image from 'next/image'
 
 const Post = (props) => {
   const { isSlug = true } = props;
@@ -45,7 +46,7 @@ const Post = (props) => {
     const slug = router.query.slug;
 
     // Check if the blog post is already available in the Zustand store
-	loadImage(`${requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]}`);
+	//loadImage(`${requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]}`);
     if (requestedBlog && requestedBlog.slug === slug) {
 		setIsLoading(false)
       return;
@@ -123,18 +124,20 @@ const Post = (props) => {
 				</div>
 				<div className={`${styles.singlepostWrapper}`}>
 					<div className={`${styles.imgRow}`}>
-						<div className={`${styles.mainImageWrapper}`}>
-							{isImageLoaded ? (<img
-							src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0] || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
-							alt="Main image"
-							/>
+						<div className={`${styles.mainImageWrapper}`} >
+							<Image src={requestedBlog?.imgURL} width={500} height={400} />
+							{/* {isImageLoaded ? (
+								<img
+									src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0] || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
+									alt="Main image"
+								/>
 							) : (
 								<SkeletonImage />
-							)}
+							)} */}
 						</div>
 					</div>
 					<div className={styles.postContent}>
-						<div className="col s10 offset-s1">
+						<div className={styles.titleBox}>
 							<h3>
 								<strong>{requestedBlog?.postTitle}</strong>
 							</h3>
@@ -143,7 +146,7 @@ const Post = (props) => {
 							</h4>							
 						</div>
 						<div className="row">
-							<div className="col s10 offset-s1">
+							<div className="col s10 offset-s2">
 								<p className="center-align">
 									{requestedBlog.postContent}
 								</p>
@@ -152,10 +155,13 @@ const Post = (props) => {
 						<div className="divider col s10 offset-s1"></div>
 						<div className="row">
 							<div className={`col m5 s12 offset-m1 ${styles.smallWrapperLeft}`}>
-								{/*<p><small> // ToDo weather
-									{requestedBlog.postWeather ?? 'none'} <br/>
-									{requestedBlog.postMood ?? 'none'}	
-								</small></p>*/}
+								<p>
+									<small>
+									{requestedBlog?.postWeather?.weatherUser ?? 'none'} 
+									<br/>
+									{requestedBlog?.postMood ?? 'none'}	
+									</small>
+								</p>
 							</div>
 							<div className={`col m6 s12 offset-m1 ${styles.smallWrapperRight}`}>
 								<p><small>

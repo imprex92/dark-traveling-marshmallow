@@ -3,7 +3,7 @@
 	grid-area: wrap;
 	display: grid;
 	grid-template-areas: "postImg"
-												"content";
+						"content";
 
 	> .imgRow {
 		grid-area: postImg;
@@ -12,6 +12,9 @@
 	}
 	> .postContent {
 		grid-area: content;
+		display: grid;
+		width: min(80%, 1500px);
+		margin-inline: auto;
 	}
 	& .locationDiv {
 	  text-indent: 1em;
@@ -80,4 +83,16 @@
 
 .singlepostWrapper_loading {
   @include singlepostWrapper;
+}
+
+.titleBox{
+	display: flex;
+	flex-direction: column;
+
+	& h3{
+		margin-block: 0;
+	}
+	& h4{
+		margin-top: 0;
+	}
 }
