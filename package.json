@@ -10,7 +10,7 @@
   "scripts": {
     "SASS-Watch": "sass --watch ./styles/sass:./styles",
     "SASS-Compile": "sass ./styles/sass:./styles",
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "dev-server": "node server.js",
     "build": "next build",
     "start": "next start",

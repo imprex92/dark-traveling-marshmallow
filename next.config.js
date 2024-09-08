@@ -1,7 +1,16 @@
 //const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
-
+	experimental: {
+		turbo: {
+		  rules: {
+			'*.svg': {
+			  loaders: ['@svgr/webpack'],
+			  as: '*.js',
+			},
+		  },
+		},
+	  },
 	serverRuntimeConfig: {
 		type:  process.env.ADMIN_FIREBASE_TYPE,
 		project_id: process.env.ADMIN_FIREBASE_PROJECT_ID,
