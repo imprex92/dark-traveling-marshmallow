@@ -1,3 +1,10 @@
+.errorBox {
+  padding: 10px 20px;
+  background-color: rgba(255, 230, 230, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+}
+
 .navigation {
   grid-area: nav;
 }
@@ -31,6 +38,13 @@
   display: grid;
   width: min(80%, 1500px);
   margin-inline: auto;
+  grid-template-areas: "titleBox" "mainContent" "divider" "lowerSection";
+  grid-template-rows: auto 0.5fr 15px auto;
+}
+@media (max-width: 640px) {
+  .singlepostWrapper > .postContent {
+    grid-template-rows: auto 0.8fr 15px auto;
+  }
 }
 .singlepostWrapper .locationDiv {
   text-indent: 1em;
@@ -59,94 +73,110 @@
   }
 }
 
-.small-wrapper-left {
-  text-align: left;
-}
-@media (max-width: 600px) {
-  .small-wrapper-left {
-    text-align: center;
-  }
-}
-
-.small-wrapper-right {
-  text-align: right;
-}
-@media (max-width: 600px) {
-  .small-wrapper-right {
-    text-align: center;
-  }
-}
-
-.singlepostWrapper_notFound {
-  grid-area: wrap;
-  display: grid;
-  grid-template-areas: "postImg" "content";
-}
-.singlepostWrapper_notFound > .imgRow {
-  grid-area: postImg;
-  display: flex;
-  justify-content: center;
-}
-.singlepostWrapper_notFound > .postContent {
-  grid-area: content;
-  display: grid;
-  width: min(80%, 1500px);
-  margin-inline: auto;
-}
-.singlepostWrapper_notFound .locationDiv {
-  text-indent: 1em;
-}
-
-.singlepostWrapper_error {
-  color: red;
-  grid-area: wrap;
-  display: grid;
-  grid-template-areas: "postImg" "content";
-}
-.singlepostWrapper_error > .imgRow {
-  grid-area: postImg;
-  display: flex;
-  justify-content: center;
-}
-.singlepostWrapper_error > .postContent {
-  grid-area: content;
-  display: grid;
-  width: min(80%, 1500px);
-  margin-inline: auto;
-}
-.singlepostWrapper_error .locationDiv {
-  text-indent: 1em;
-}
-
+.singlepostWrapper_notFound,
+.singlepostWrapper_error,
 .singlepostWrapper_loading {
   grid-area: wrap;
   display: grid;
   grid-template-areas: "postImg" "content";
+  place-content: center;
+  font-size: 18px;
 }
+.singlepostWrapper_notFound > .imgRow,
+.singlepostWrapper_error > .imgRow,
 .singlepostWrapper_loading > .imgRow {
   grid-area: postImg;
   display: flex;
   justify-content: center;
 }
+.singlepostWrapper_notFound > .postContent,
+.singlepostWrapper_error > .postContent,
 .singlepostWrapper_loading > .postContent {
   grid-area: content;
   display: grid;
   width: min(80%, 1500px);
   margin-inline: auto;
+  grid-template-areas: "titleBox" "mainContent" "divider" "lowerSection";
+  grid-template-rows: auto 0.5fr 15px auto;
 }
+@media (max-width: 640px) {
+  .singlepostWrapper_notFound > .postContent,
+  .singlepostWrapper_error > .postContent,
+  .singlepostWrapper_loading > .postContent {
+    grid-template-rows: auto 0.8fr 15px auto;
+  }
+}
+.singlepostWrapper_notFound .locationDiv,
+.singlepostWrapper_error .locationDiv,
 .singlepostWrapper_loading .locationDiv {
   text-indent: 1em;
 }
 
+.singlepostWrapper_error,
+.singlepostWrapper_notFound {
+  color: #ff0000;
+}
+
+.singlepostWrapper_loading {
+  color: #ffe6e6;
+}
+
 .titleBox {
+  grid-area: titleBox;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 }
 .titleBox h3 {
   margin-block: 0;
 }
 .titleBox h4 {
   margin-top: 0;
+}
+
+.mainContent, .titleBox {
+  padding-inline: 1rem;
+}
+
+.mainContent {
+  grid-area: mainContent;
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  padding-block: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.2);
+}
+.mainContent .text {
+  display: inline;
+  flex: 1 1 250px;
+  overflow: auto;
+  text-wrap: balance;
+  line-height: 1.6;
+  word-wrap: break-word;
+  font-size: 16px;
+  padding-right: 1rem;
+}
+
+.divider {
+  grid-area: divider;
+  margin-top: 1rem;
+}
+
+.lowerSection {
+  grid-area: lowerSection;
+  display: flex;
+  justify-content: flex-end;
+}
+.lowerSection .innerSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.lowerSection .moodWeather, .lowerSection .postedByText {
+  text-transform: capitalize;
+  text-align: right;
 }
 
 /*# sourceMappingURL=post.module.css.map */

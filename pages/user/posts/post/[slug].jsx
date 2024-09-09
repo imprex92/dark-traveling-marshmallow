@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useRouter, withRouter } from 'next/router'
 import { useAuth } from 'contexts/AuthContext'
 import { fetchDocumentByFieldName } from 'components/utility/subscriptions'
@@ -12,64 +12,40 @@ import styles from 'styles/post.module.css'
 import Image from 'next/image'
 
 const Post = (props) => {
-  const { isSlug = true } = props;
-  const router = useRouter();
-  const { currentUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [imageKey, setImageKey] = useState(Date.now());
-  const [hasError, setHasError] = useState(false);
-  const requestedBlog = usePostStorage((state) => state.data);
-  const setPreviouslyViewedPost = usePostStorage((state) => state.setPreviouslyViewedPost);
+	const router = useRouter();
+	const { currentUser } = useAuth();
+	const [isLoading, setIsLoading] = useState(true);
+	const [hasError, setHasError] = useState(false);
+	const requestedBlog = usePostStorage((state) => state.data);
+	const setPreviouslyViewedPost = usePostStorage((state) => state.setPreviouslyViewedPost);
 
-  const loadImage = (imgSrc) => {
-    const image = new Image();
-    image.src = imgSrc;
+	useEffect(() => {
+		if (!currentUser) {
+			return;
+		}
+		const logedInUserId = currentUser.uid;
+		const slug = router.query.slug;
+	
+		if (requestedBlog && requestedBlog.slug === slug) {
+			setIsLoading(false);
+			return;
+		}
 
-    image.onload = () => {
-      setIsImageLoaded(true);
-    };
+		fetchDocumentByFieldName({
+			fieldName: 'slug',
+			value: slug,
+			userID: logedInUserId,
+		})
+		.then((blog) => setPreviouslyViewedPost(blog))
+		.catch((err) => {
+			console.error(err);
+			setHasError({ error: true, message: 'ERROR: Post not found', code: err });
+		})
+		.finally(() => setIsLoading(false));
 
-    image.onerror = (err) => {
-      console.error('Failed to load image:', err);
-      setHasError({
-        error: true,
-        message: 'ERROR: Something went wrong loading image. Check your network.',
-        code: err,
-      });
-    };
-  };
+	}, [currentUser, router.query.slug, isLoading]);
 
-  useEffect(() => {
-	if(currentUser){
-    const logedInUserId = currentUser.uid;
-    const slug = router.query.slug;
-
-    // Check if the blog post is already available in the Zustand store
-	//loadImage(`${requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]}`);
-    if (requestedBlog && requestedBlog.slug === slug) {
-		setIsLoading(false)
-      return;
-    }
-
-    fetchDocumentByFieldName({
-      fieldName: 'slug',
-      value: slug,
-      userID: logedInUserId,
-    })
-      .then((blog) => {
-        setPreviouslyViewedPost(blog);
-		setIsLoading(false)
-      })
-      .catch((err) => {
-        console.error(err);
-        setHasError({ error: true, message: 'ERROR: Post not found', code: err });
-      });
-	}
-  }, [currentUser, router.query.slug, requestedBlog, imageKey]);
-	console.log('requestedBlog', requestedBlog);
-
-  	if(isLoading){
+	if (isLoading) {
 		return (
 			<div className={styles.singlePostMain}>
 				<div className='skeleton-container full-center loadingskeleton'>
@@ -79,102 +55,112 @@ const Post = (props) => {
 		)
 	}
 
-	if(hasError){
+	if (hasError) {
 		return (
 			<div className={styles.singlePostMain}>
 				<div className={`${styles.singlepostWrapper_error} hasError`}>
 					<div className={`${styles.navigation}`}>
-						<SideNavLight/>{hasError && hasError.message}
+						<SideNavLight />
+					</div>
+					<div className={styles.errorBox}>
+						{hasError && hasError.message ? hasError.message : 'ERROR: Something went wrong'}
 					</div>
 				</div>
 			</div>
 		)
 	}
 
-	if(requestedBlog === null){
+	if (requestedBlog === null) {
 		return (
 			<div className={styles.singlePostMain}>
 				<div className={`${styles.singlepostWrapper_loading} loading`}>
 					<div className={`${styles.navigation}`}>
-						<SideNavLight/>
+						<SideNavLight />
 					</div>
-					Loading...
+					<div className={styles.errorBox}>
+						Loading...
+					</div>
 				</div>
 			</div>
 		)
 	}
-	else if(requestedBlog.empty === true){
+	else if (requestedBlog.empty === true) {
 		return (
 			<div className={styles.singlePostMain}>
 				<div className={`${styles.singlepostWrapper_notFound} not-found`}>
 					<div className={`${styles.navigation}`}>
-						<SideNavLight/>
+						<SideNavLight />
 					</div>
-					Not found!
+					<div className={styles.errorBox}>
+						Not found!
+					</div>
 				</div>
 			</div>
 		)
 	}
 	else
-	return (
-		<>
-			<div className={`${styles.singlePostMain} is-found`}>
-				<div className={`${styles.navigation}`}>
-					<SideNavLight/>
-				</div>
-				<div className={`${styles.singlepostWrapper}`}>
-					<div className={`${styles.imgRow}`}>
-						<div className={`${styles.mainImageWrapper}`} >
-							<Image src={requestedBlog?.imgURL} width={500} height={400} />
-							{/* {isImageLoaded ? (
-								<img
-									src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0] || "https://firebasestorage.googleapis.com/v0/b/dark-traveling-marshmallow.appspot.com/o/userData%2FFP5M7soIZIbxLOFOCOEtkjtiUm53%2Fsea-164989.jpg?alt=media&token=255516f7-193c-432e-9a16-3cfa1c838f09"}
-									alt="Main image"
-								/>
-							) : (
-								<SkeletonImage />
-							)} */}
-						</div>
+		return (
+			<>
+				<div className={`${styles.singlePostMain} is-found`}>
+					<div className={`${styles.navigation}`}>
+						<SideNavLight />
 					</div>
-					<div className={styles.postContent}>
-						<div className={styles.titleBox}>
-							<h3>
-								<strong>{requestedBlog?.postTitle}</strong>
-							</h3>
-							<h4 className={`${styles.locationDiv}`}>
-								-- {requestedBlog?.postLocationData?.city + ', ' + requestedBlog?.postLocationData?.country}
-							</h4>							
+					<div className={`${styles.singlepostWrapper}`}>
+						<div className={`${styles.imgRow}`}>
+							<div className={`${styles.mainImageWrapper}`} >
+								<Image src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]} width={500} height={400} alt='Post image' />
+							</div>
 						</div>
-						<div className="row">
-							<div className="col s10 offset-s2">
-								<p className="center-align">
+						<div className={styles.postContent}>
+							<div className={styles.titleBox}>
+								<h3>
+									<strong>{requestedBlog?.postTitle}</strong>
+								</h3>
+								<h4 className={`${styles.locationDiv}`}>
+									-- {requestedBlog?.postLocationData?.city + ', ' + requestedBlog?.postLocationData?.country}
+								</h4>
+							</div>
+							<div className={styles.mainContent}>
+								<p className={styles.text}>
 									{requestedBlog.postContent}
 								</p>
 							</div>
-						</div>
-						<div className="divider col s10 offset-s1"></div>
-						<div className="row">
-							<div className={`col m5 s12 offset-m1 ${styles.smallWrapperLeft}`}>
-								<p>
-									<small>
-									{requestedBlog?.postWeather?.weatherUser ?? 'none'} 
-									<br/>
-									{requestedBlog?.postMood ?? 'none'}	
-									</small>
-								</p>
-							</div>
-							<div className={`col m6 s12 offset-m1 ${styles.smallWrapperRight}`}>
-								<p><small>
-									Posted by <a href="#">{requestedBlog.createdByUser}</a> <br/>
-									<span className="gray-text"><DateFormatter timestamp={requestedBlog?.timestamp?.seconds}/></span>
-								</small></p>
+							<div className={`${styles.divider} divider col s10 offset-s1`}></div>
+							<div className={styles.lowerSection}>
+								<div className={styles.innerSection}>
+									<div className={`${styles.smallWrapperLeft}`}>
+										<p className={styles.moodWeather}>
+											{requestedBlog?.postWeather && <small>
+												Weather that day - {' '}
+												<span>
+													{requestedBlog?.postWeather?.weatherUser}
+												</span>
+											</small>}
+											<br />
+											{requestedBlog?.postMood && <small>
+												Wood that day - {' '}
+												<span>
+													{requestedBlog?.postMood}
+												</span>
+											</small>
+											}
+										</p>
+									</div>
+									<div className={styles.postedBy}>
+										<p className={styles.postedByText}>
+											<small>
+												Posted by - <a href="#"> {' '} {requestedBlog.createdByUser}</a> <br />
+												<span className="gray-text"><DateFormatter timestamp={requestedBlog?.timestamp?.seconds} /></span>
+											</small>
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</>
-	)
+			</>
+		)
 }
 
 export default withPrivateRoute(Post)

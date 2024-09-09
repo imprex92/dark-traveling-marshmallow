@@ -15,10 +15,24 @@
 		display: grid;
 		width: min(80%, 1500px);
 		margin-inline: auto;
+		grid-template-areas: "titleBox"
+												"mainContent"
+												"divider"
+												"lowerSection";
+		grid-template-rows: auto 0.5fr 15px auto;
+		@media (max-width: variables.$breakpoint-phone-XXL) {
+			grid-template-rows: auto 0.80fr 15px auto;
+		}
 	}
 	& .locationDiv {
 	  text-indent: 1em;
 	}
+}
+.errorBox{
+	padding: 10px 20px;
+	background-color: rgba($color: #ffe6e6, $alpha: 0.2);
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
 }
 .navigation{
 	grid-area: nav;
@@ -59,40 +73,76 @@
 		}
 	}
 }
-.small-wrapper-left{
-	text-align: left;
-	@media ( max-width: 600px ){
-		text-align: center;
-	}
-}
-.small-wrapper-right{
-	text-align: right;
-	@media ( max-width: 600px ){
-		text-align: center;
-	}
+
+
+.singlepostWrapper_notFound, 
+.singlepostWrapper_error, 
+.singlepostWrapper_loading {
+  @include singlepostWrapper;
+	place-content: center;
+	font-size: 18px;
 }
 
+.singlepostWrapper_error, 
 .singlepostWrapper_notFound {
-  @include singlepostWrapper;
-}
-
-.singlepostWrapper_error {
-  color: red; // Additional specific style
-  @include singlepostWrapper;
+  color: #ff0000;
 }
 
 .singlepostWrapper_loading {
-  @include singlepostWrapper;
+  color: #ffe6e6;
 }
 
 .titleBox{
+	grid-area: titleBox;
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-end;
 
 	& h3{
 		margin-block: 0;
 	}
 	& h4{
 		margin-top: 0;
+	}
+}
+.mainContent, .titleBox{
+	padding-inline: 1rem;
+}
+.mainContent{
+	grid-area: mainContent;
+	display: flex;
+	flex-direction: column;
+	max-height: 500px;
+	padding-block: 1rem;
+	background-color: rgba($color: #000000, $alpha: 0.2);
+	border-radius: 5px;
+	box-shadow: 0 0 15px 10px rgba($color: #000000, $alpha: 0.2);
+	& .text{
+		display: inline;
+		flex: 1 1 250px;
+		overflow: auto;
+		text-wrap: balance;
+		line-height: 1.6;
+		word-wrap: break-word;
+		font-size: 16px;
+		padding-right: 1rem;
+	}
+}
+.divider{
+	grid-area: divider;
+	margin-top: 1rem;
+}
+.lowerSection{
+	grid-area: lowerSection;
+	display: flex;
+	justify-content: flex-end;
+	& .innerSection{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+	& .moodWeather, .postedByText{
+		text-transform: capitalize;
+		text-align: right;
 	}
 }
