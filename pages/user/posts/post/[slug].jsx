@@ -25,7 +25,7 @@ const Post = () => {
 		}
 		const logedInUserId = currentUser.uid;
 		const slug = router.query.slug;
-	
+
 		if (requestedBlog && requestedBlog.slug === slug) {
 			setIsLoading(false);
 			return;
@@ -35,29 +35,27 @@ const Post = () => {
 				value: slug,
 				userID: logedInUserId,
 			})
-			.then((blog) => setPreviouslyViewedPost(blog))
-			.catch((err) => {
-				console.error(err);
-				setHasError({ error: true, message: 'ERROR: Post not found', code: err });
-			})
-			.finally(() => setIsLoading(false));
+				.then((blog) => setPreviouslyViewedPost(blog))
+				.catch((err) => {
+					console.error(err);
+					setHasError({ error: true, message: 'ERROR: Post not found', code: err });
+				})
+				.finally(() => setIsLoading(false));
 		}
 	}, [currentUser, router.query.slug, isLoading]);
 
 	if (isLoading) {
 		return (
 			<div className={styles.singlePostMain}>
-				
 				<div className={`${styles.navigation}`}>
-						<SideNavLight />
-					</div>
-					<div className={`${styles.singlepostWrapper}`}>
+					<SideNavLight />
+				</div>
+				<div className={`${styles.singlepostWrapper}`}>
 					<div className={`${styles.isLoading_skeleton} skeleton-container full-center loadingskeleton`}>
 						<SkeletonSinglePost />
-						</div>
 					</div>
 				</div>
-			
+			</div>
 		)
 	}
 
