@@ -61,6 +61,11 @@ module.exports = {
 				hostname: 'dark-traveling-marshmallow.web.app',
 				pathname: '/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'images.unsplash.com',
+				pathname: '/**',
+			},
 		],
 	},
 	webpack(config, { isServer }) {
