@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useRouter, withRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useAuth } from 'contexts/AuthContext'
 import { fetchDocumentByFieldName } from 'components/utility/subscriptions'
 import SideNavLight from 'components/nav/SideNavLight'
@@ -11,7 +11,7 @@ import SkeletonImage from 'components/loaders/skeletons/SkeletonImage'
 import styles from 'styles/post.module.css'
 import Image from 'next/image'
 
-const Post = (props) => {
+const Post = () => {
 	const router = useRouter();
 	const { currentUser } = useAuth();
 	const [isLoading, setIsLoading] = useState(true);
@@ -29,29 +29,35 @@ const Post = (props) => {
 		if (requestedBlog && requestedBlog.slug === slug) {
 			setIsLoading(false);
 			return;
+		} else {
+			fetchDocumentByFieldName({
+				fieldName: 'slug',
+				value: slug,
+				userID: logedInUserId,
+			})
+			.then((blog) => setPreviouslyViewedPost(blog))
+			.catch((err) => {
+				console.error(err);
+				setHasError({ error: true, message: 'ERROR: Post not found', code: err });
+			})
+			.finally(() => setIsLoading(false));
 		}
-
-		fetchDocumentByFieldName({
-			fieldName: 'slug',
-			value: slug,
-			userID: logedInUserId,
-		})
-		.then((blog) => setPreviouslyViewedPost(blog))
-		.catch((err) => {
-			console.error(err);
-			setHasError({ error: true, message: 'ERROR: Post not found', code: err });
-		})
-		.finally(() => setIsLoading(false));
-
 	}, [currentUser, router.query.slug, isLoading]);
 
 	if (isLoading) {
 		return (
 			<div className={styles.singlePostMain}>
-				<div className='skeleton-container full-center loadingskeleton'>
-					<SkeletonSinglePost />
+				
+				<div className={`${styles.navigation}`}>
+						<SideNavLight />
+					</div>
+					<div className={`${styles.singlepostWrapper}`}>
+					<div className={`${styles.isLoading_skeleton} skeleton-container full-center loadingskeleton`}>
+						<SkeletonSinglePost />
+						</div>
+					</div>
 				</div>
-			</div>
+			
 		)
 	}
 

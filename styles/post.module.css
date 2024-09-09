@@ -76,11 +76,11 @@
 .singlepostWrapper_notFound,
 .singlepostWrapper_error,
 .singlepostWrapper_loading {
+  place-content: center;
+  font-size: 18px;
   grid-area: wrap;
   display: grid;
   grid-template-areas: "postImg" "content";
-  place-content: center;
-  font-size: 18px;
 }
 .singlepostWrapper_notFound > .imgRow,
 .singlepostWrapper_error > .imgRow,

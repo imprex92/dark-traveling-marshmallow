@@ -78,9 +78,9 @@
 .singlepostWrapper_notFound, 
 .singlepostWrapper_error, 
 .singlepostWrapper_loading {
-  @include singlepostWrapper;
 	place-content: center;
 	font-size: 18px;
+  @include singlepostWrapper;
 }
 
 .singlepostWrapper_error, 
