@@ -37,10 +37,10 @@ const withAuthentication = (WrappedComponent) => {
 
       fetchUserAuth();
     }, []);
-console.log(userAuth, props);
+
     if(!isLoading && userAuth)  {
       // If authenticated, pass the `user` prop to the component and render it
-      return <WrappedComponent {...props} isLoading={isLoading} userAuth={userAuth} ohBoy='ohboy ohboy' />;
+      return <WrappedComponent {...props} isLoading={isLoading} userAuth={userAuth} today={new Date()} />;
     }
     else if (!isLoading && !userAuth) {
       router.replace(login);
