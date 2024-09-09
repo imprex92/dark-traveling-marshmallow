@@ -1,7 +1,16 @@
 //const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
-
+	experimental: {
+		turbo: {
+		  rules: {
+			'*.svg': {
+			  loaders: ['@svgr/webpack'],
+			  as: '*.js',
+			},
+		  },
+		},
+	  },
 	serverRuntimeConfig: {
 		type:  process.env.ADMIN_FIREBASE_TYPE,
 		project_id: process.env.ADMIN_FIREBASE_PROJECT_ID,
@@ -19,12 +28,44 @@ module.exports = {
 	publicRuntimeConfig: {}, // Will be available on both server and client
 
 	images: {
-		domains: [
-			'firebasestorage.googleapis.com',
-			'lh3.googleusercontent.com',
-			'photos.app.goo.gl', 
-			'via.placeholder.com',
-			'dark-traveling-marshmallow.web.app'
+		//domains: [
+		//	'firebasestorage.googleapis.com',
+		//	'lh3.googleusercontent.com',
+		//	'photos.app.goo.gl', 
+		//	'via.placeholder.com',
+		//	'dark-traveling-marshmallow.web.app'
+		//],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'firebasestorage.googleapis.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'lh3.googleusercontent.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'photos.app.goo.gl',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'via.placeholder.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'dark-traveling-marshmallow.web.app',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'images.unsplash.com',
+				pathname: '/**',
+			},
 		],
 	},
 	webpack(config, { isServer }) {

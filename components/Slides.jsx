@@ -70,8 +70,8 @@ const Slides = ({searchByText, countrySearchTerm, userBlogs = []}) => {
 
 	return (
         <Link
-            as={`/user/posts/singlepost/${slide.slug}`}
-            href={`/user/posts/singlepost?slug=${slide.slug}`}
+            as={`/user/posts/post/${slide.slug}`}
+            href={`/user/posts/post?slug=${slide.slug}`}
             legacyBehavior>
 			<div
 				ref={ref}

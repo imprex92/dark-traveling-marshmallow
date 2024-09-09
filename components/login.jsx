@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useAuth } from '../contexts/AuthContext'
 import Googleicon from '../public/assets/icons8-google.svg'
 import { verifyEmail } from "../components/utility/verifyEmail";
-import useMessageCenter from 'store/messageTransmitter'
 import styles from 'styles/useGateway.module.css'
 import { sendResetPasswordEmail } from './utility/authOperations'
 
@@ -12,7 +11,6 @@ import { sendResetPasswordEmail } from './utility/authOperations'
 
 function login() {
 	//TODO Notify?
-	const notify = useMessageCenter(state => state.message)
 	const router = useRouter()
 	const [email, setEmail] = useState(router.query?.email || null)
 	const [password, setPassword] = useState(null)
