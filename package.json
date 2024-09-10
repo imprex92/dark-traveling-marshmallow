@@ -14,8 +14,8 @@
     "dev-server": "node server.js",
     "build": "next build",
     "start": "next start",
-    "start-server": "NODE_ENV=production node server.js",
-    "deploy": "yarn build && cross-env NODE_ENV=production firebase deploy --only functions,hosting",
+    "start-server": "NEXT_PUBLIC_NODE_ENV=production node server.js",
+    "deploy": "yarn build && cross-env NEXT_PUBLIC_NODE_ENV=production firebase deploy --only functions,hosting",
     "SASS-Watch-M": "sass --watch ./styles/sass/materialize.scss:./styles/materialize.css"
   },
   "dependencies": {

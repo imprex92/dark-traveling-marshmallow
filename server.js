@@ -1,7 +1,7 @@
 const express = require('express')
 const next = require('next')
 const config = require('./next.config.js')
-const dev = process.env.NODE_ENV !== 'production'
+const dev = process.env.NEXT_PUBLIC_NODE_ENV !== 'production'
 const app = next({ dev, config })
 const handle = app.getRequestHandler()
 

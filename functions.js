@@ -9,7 +9,7 @@ const { parse } = require('url')
 const app = express();
 
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NEXT_PUBLIC_NODE_ENV !== 'production';
 
 const server = next({
   dev: isDev,
