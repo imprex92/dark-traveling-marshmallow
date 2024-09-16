@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useAuth } from 'contexts/AuthContext'
 import styles from 'styles/mainNav.module.css'
 import SlideOut from './navComponents/SlideOut'
 import { closeSideNav } from './utils/functions/functions'
+import { MOCK_COUNTRY_LIST } from 'components/utility/constants'
 
 const VerticalSection = ({ dataFromChildToParent, countriesVisited }) => {
   const [currentFilter, setCurrentFilter] = useState('All')
@@ -23,47 +21,47 @@ const VerticalSection = ({ dataFromChildToParent, countriesVisited }) => {
   }
 
   return (
-    <div id="vertical-nav">
-      <div className="wrapper">
+    <div id={styles.verticalNav}>
+      <div className={styles.menuItems}>
         <a
           href="#"
           data-target="slide-out"
-          className="sidenav-trigger vertical-menu-btn"
+          className={`sidenav-trigger vertical-menu-btn ${styles.navBtn} ${styles.menuBtn}`}
         >
           <i className="material-icons">menu</i>
         </a>
-        <Link href="/user/newpost" onClick={closeSideNav}>
+        <Link href="/user/newpost" onClick={closeSideNav} className={styles.navBtn}>
           <i className="material-icons">add_box</i>
         </Link>
-        <a
-          onClick={handleFilter}
-          defaultValue="All"
-          className={`contact ${currentFilter === 'All' ? 'filterActive' : ''}`}
-          href="#"
-        >
-          All
-        </a>
-        {countriesVisited?.map((country, i) => {
-          return (
-            <a
-              onClick={handleFilter}
-              key={i}
-              defaultValue={country}
-              className={`contact ${country === currentFilter ? 'filterActive' : ''}`}
-              href="#"
-            >
-              {country}
-            </a>
-          )
-        })}
+          <a
+            onClick={handleFilter}
+            defaultValue="All"
+            className={`white-text ${currentFilter === 'All' ? styles.filterActive : ''} ${styles.filterOptionAll}`}
+            href="#"
+          >
+            All
+          </a>
+        <div className={styles.countryFilters}>
+          {MOCK_COUNTRY_LIST?.sort().map((country, i) => {
+            return (
+              <a
+                onClick={handleFilter}
+                key={i}
+                defaultValue={country}
+                className={`white-text ${country === currentFilter ? styles.filterActive : ''}`}
+                href="#"
+              >
+                {country}
+              </a>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
 }
 
 const SideNavReplacement = (props) => {
-  const { logout, currentUser } = useAuth()
-  const router = useRouter()
   return (
     <div id="pageNavigation" className={styles.navMain}>
       <VerticalSection />
@@ -71,7 +69,5 @@ const SideNavReplacement = (props) => {
     </div>
   )
 }
-
-SideNavReplacement.propTypes = {}
 
 export default SideNavReplacement

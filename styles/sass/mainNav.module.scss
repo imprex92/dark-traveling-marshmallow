@@ -3,3 +3,45 @@
   flex-direction: column;
   width: 50px;
 }
+#verticalNav {
+  padding-top: 3rem;
+  background-color: rgba(40, 48, 112, 0.5);
+  border-radius: 0 15px 15px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+}
+.menuItems{
+  row-gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.menuBtn {
+  transform: rotate(-90deg);
+  margin-left: 0.2rem;
+}
+.navBtn{
+  color: #fff;
+}
+.active {
+  background-color: var(--hover-color);
+}
+.countryFilters {
+  column-gap: 1.5rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.filterActive {
+  text-decoration: underline #ee6e73;
+  text-underline-offset: 9px;
+}
+.filterOptionAll {
+  transform: rotate(-90deg);
+}

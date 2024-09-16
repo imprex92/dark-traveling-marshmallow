@@ -1,6 +1,8 @@
 import { useRouter } from "next/navigation"
 
 export function closeSideNav() {
+  console.log('closeSideNav');
+  
   var instance = M.Sidenav.getInstance(document.querySelector('.sidenav'))
   instance.close()
 }

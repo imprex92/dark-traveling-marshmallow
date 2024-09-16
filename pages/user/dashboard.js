@@ -97,7 +97,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
   return (
     <div id="mainContainer" className={styles.dashboardMain}>
       {/* <SideNav dataFromChildToParent={filterCountry} dbUserData={dbUserData} /> */}
-      <SideNavReplacement />
+      <SideNavReplacement userAuth={userAuth} />
       <div id="mainContent" className={styles.wrapper}>
         <Geolocator />
         <div className="row valign-wrapper">
@@ -178,7 +178,7 @@ export const getServerSideProps = async (ctx) => {
     const cookies = nookies.get(ctx)
     const token = await firebaseAdminVerifyToken(cookies.token)
     const adminFirestore = getFirestore()
-    const { uid, email } = token
+    const { uid, email, name, picture } = token
     console.log('token', token)
 
     // Fetch data here
@@ -214,7 +214,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       props: {
         userBlogs,
-        //bobo: 'dfghj', Possible to add additional props here
+        userAuth: { uid, email, name, picture }
       },
     }
   } catch (err) {
