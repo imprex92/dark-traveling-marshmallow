@@ -13,11 +13,6 @@ import { ASIDE_MENU_BOTTOM, ASIDE_MENU_TOP } from 'components/utility/constants'
 const SlideOut = (props) => {
   const router = useRouter()
   const route = router.route
-  const {
-    dbUserData = [],
-    dataFromChildToParent = [],
-    userAuth
-  } = props
 
   useEffect(() => {
     var sidenav = document.querySelectorAll('.sidenav')
@@ -29,15 +24,22 @@ const SlideOut = (props) => {
         el.classList.toggle('nav-open')
       },
     })
-  }, [dbUserData])
+  }, [])
 
   return (
     <ul id="slide-out" className="sidenav">
-      <AsideUserInfo currentUser={userAuth} />
+      <AsideUserInfo {...props} />
       {ASIDE_MENU_TOP.map((menuItem, index) => {
         return (
-          <li key={index} onClick={menuItem.link === '#logout' ? handleLogout : closeSideNav} className={styles[menuItem.class]}>
-            <Link href={menuItem.link} className={`${route.includes(menuItem.link) ? styles.active : ''}`}>
+          <li
+            key={index}
+            onClick={menuItem.link === '#logout' ? handleLogout : closeSideNav}
+            className={styles[menuItem.class]}
+          >
+            <Link
+              href={menuItem.link}
+              className={`${route.includes(menuItem.link) ? styles.active : ''}`}
+            >
               <i className="material-icons">{menuItem.icon}</i>
               {menuItem.name}
             </Link>
@@ -52,9 +54,26 @@ const SlideOut = (props) => {
       </li>
       {ASIDE_MENU_BOTTOM.map((menuItem, index) => {
         return (
-          <li key={index} onClick={menuItem.link === '#newpost' ? handleNewPost : closeSideNav} className={styles[menuItem.class]}>
-            <Link href={menuItem.link} className={`${route.includes(menuItem.link) ? styles.active : ''} ${menuItem.link === '#close' && 'sidenav-close waves-effect'}`}>
-              <i className={menuItem.name === 'Weather' ? 'material-icons material-symbols-outlined' : 'material-icons'}>{menuItem.icon}</i>
+          <li
+            key={index}
+            onClick={
+              menuItem.link === '#newpost' ? handleNewPost : closeSideNav
+            }
+            className={styles[menuItem.class]}
+          >
+            <Link
+              href={menuItem.link}
+              className={`${route.includes(menuItem.link) ? styles.active : ''} ${menuItem.link === '#close' && 'sidenav-close waves-effect'}`}
+            >
+              <i
+                className={
+                  menuItem.name === 'Weather'
+                    ? 'material-icons material-symbols-outlined'
+                    : 'material-icons'
+                }
+              >
+                {menuItem.icon}
+              </i>
               {menuItem.name}
             </Link>
           </li>

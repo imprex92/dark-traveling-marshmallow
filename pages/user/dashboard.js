@@ -15,9 +15,8 @@ import { getFirestore } from 'firebase-admin/firestore'
 
 import nookies from 'nookies'
 import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
-import SideNav from 'components/nav/sidenav'
 import { RANDOM_SENTENCES } from 'components/utility/constants'
-import SideNavReplacement from 'components/nav/SideNavReplacement'
+import SidebarNavigation from 'components/nav/SidebarNavigation'
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
   const { uid, name = 'User' } = userAuth
@@ -96,8 +95,7 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
 
   return (
     <div id="mainContainer" className={styles.dashboardMain}>
-      {/* <SideNav dataFromChildToParent={filterCountry} dbUserData={dbUserData} /> */}
-      <SideNavReplacement userAuth={userAuth} />
+      <SidebarNavigation userAuthFromServerside={userAuth} />
       <div id="mainContent" className={styles.wrapper}>
         <Geolocator />
         <div className="row valign-wrapper">
@@ -179,7 +177,6 @@ export const getServerSideProps = async (ctx) => {
     const token = await firebaseAdminVerifyToken(cookies.token)
     const adminFirestore = getFirestore()
     const { uid, email, name, picture } = token
-    console.log('token', token)
 
     // Fetch data here
 
@@ -214,7 +211,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       props: {
         userBlogs,
-        userAuth: { uid, email, name, picture }
+        userAuth: { uid, email, name, picture },
       },
     }
   } catch (err) {
