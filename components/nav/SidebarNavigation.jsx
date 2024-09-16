@@ -31,35 +31,40 @@ const VerticalSection = () => {
         >
           <i className="material-icons">menu</i>
         </a>
-        <Link
-          href="/user/newpost"
-          onClick={closeSideNav}
-          className={styles.navBtn}
-        >
-          <i className="material-icons">add_box</i>
-        </Link>
+        <Tooltip text="Write new post" position="right">
+          <Link
+            href="/user/newpost"
+            onClick={closeSideNav}
+            className={styles.navBtn}
+          >
+            <i className="material-icons">add_box</i>
+          </Link>
+        </Tooltip>
         {VERTICAL_MENU.map((menuItem, index) => {
           const selectedClass = route.includes(menuItem.link)
             ? `${styles[menuItem.class]}_selected`
             : styles[menuItem.class]
+
           return (
-            <Tooltip key={index} text={menuItem.name} position="right">
-              <Link
-                key={index}
-                href={menuItem.link}
-                className={`${selectedClass} `}
-              >
-                <i
-                  className={
-                    menuItem.link === '/weather'
-                      ? 'material-symbols-outlined'
-                      : 'material-icons'
-                  }
+            <div className={styles.menuItemWrapper}>
+              <Tooltip key={index} text={menuItem.name} position="right">
+                <Link
+                  key={index}
+                  href={menuItem.link}
+                  className={selectedClass}
                 >
-                  {menuItem.icon}
-                </i>
-              </Link>
-            </Tooltip>
+                  <i
+                    className={
+                      menuItem.link === '/weather'
+                        ? 'material-symbols-outlined'
+                        : 'material-icons'
+                    }
+                  >
+                    {menuItem.icon}
+                  </i>
+                </Link>
+              </Tooltip>
+            </div>
           )
         })}
       </div>

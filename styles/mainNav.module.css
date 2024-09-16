@@ -22,8 +22,10 @@
   align-items: center;
   margin-bottom: 1rem;
 }
-.menuItems :last-child {
-  margin-top: auto;
+
+.menuItemWrapper:last-child {
+  position: fixed;
+  bottom: 1rem;
 }
 
 .menuBtn {

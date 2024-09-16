@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 50px;
 }
+
 #verticalNav {
   padding-top: 3rem;
   background-color: rgba(40, 48, 112, 0.5);
@@ -12,6 +13,7 @@
   flex-direction: column;
   width: 50px;
 }
+
 .menuItems {
   height: 100%;
   row-gap: 1.5rem;
@@ -19,15 +21,18 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
-
-  & :last-child {
-    margin-top: auto;
-  }
 }
+
+.menuItemWrapper:last-child {
+  position: fixed;
+  bottom: 1rem;
+}
+
 .menuBtn {
   transform: rotate(-90deg);
   margin-left: 0.2rem;
 }
+
 .navBtn,
 .verticalMenuItem {
   color: #fff;
@@ -36,6 +41,7 @@
     color: var(--primaryBtnColor);
   }
 }
+
 .active {
   background-color: var(--hover-color);
 }
