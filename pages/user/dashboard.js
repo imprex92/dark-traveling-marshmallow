@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { projectFirestore } from 'firebase/config'
-import { useAuth } from 'contexts/AuthContext'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import {
   fetchUserblog,
@@ -17,17 +16,16 @@ import nookies from 'nookies'
 import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
 import { RANDOM_SENTENCES } from 'components/utility/constants'
 import SidebarNavigation from 'components/nav/SidebarNavigation'
+import AddFirstPost from '../../components/blogComponents/AddFirstPost'
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
   const { uid, name = 'User' } = userAuth
   const userDbRef = projectFirestore.collection('testUserCollection').doc(uid)
-  const route = useRouter()
   const [searchText, setSearchText] = useState('')
   const [blogPosts, setBlogPosts] = useState([])
   const [stayingHotels, setStayingHotels] = useState([])
   const [dbUserData, setDbUserData] = useState([])
   const [byCountrySearchTerm, setByCountrySearchTerm] = useState('')
-  const [randomIndex, setRandomIndex] = useState(0)
   //let blogsToSend
 
   useEffect(() => {
@@ -51,9 +49,6 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
         M.toast({ text: `Subscribe to DB failed, ${err}` })
       },
     )
-
-    const lang = navigator.language || navigator.userLanguage
-    const language = lang.split('-')[0]
 
     return () => {
       unsubscribePosts()
@@ -143,29 +138,12 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
                 />
               ) : (
                 <AddFirstPost
-                  route={route}
-                  sentences={RANDOM_SENTENCES}
-                  randomIndex={randomIndex}
+                  isDashboard={true}
                 />
               )}
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  )
-}
-
-const AddFirstPost = ({ sentences, randomIndex, route }) => {
-  const redirect = () => route.push('/user/newpost')
-
-  return (
-    <div onClick={redirect} className={styles.noPosts_root}>
-      <div className={styles.noPostContainer}>
-        <h5 className={styles.sentence}>{sentences[randomIndex]}</h5>
-        <span className={`material-symbols-outlined ${styles.noPostIcon}`}>
-          edit_document
-        </span>
       </div>
     </div>
   )
