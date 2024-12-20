@@ -1,4 +1,4 @@
-.postItemsWrapper {
+.postItemsWrapper.gotPosts {
   max-width: 960px;
   margin: 9rem auto 3rem auto;
   display: grid;
@@ -6,7 +6,7 @@
   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
 }
 @media (max-width: 1024px) {
-  .postItemsWrapper {
+  .postItemsWrapper.gotPosts {
     padding: 0 1rem;
     gap: 1rem;
     max-width: unset;
@@ -14,37 +14,37 @@
   }
 }
 @media (max-width: 768px) {
-  .postItemsWrapper {
+  .postItemsWrapper.gotPosts {
     grid-template-columns: 1fr 1fr;
     max-width: unset;
   }
 }
 @media (max-width: 640px) {
-  .postItemsWrapper {
+  .postItemsWrapper.gotPosts {
     grid-template-columns: 1fr;
     max-width: unset;
   }
 }
 
-.container {
+.gotPosts .container {
   display: grid;
   background: var(--primaryBackground);
   grid-template-areas: "nav wrap";
   grid-template-columns: 50px 1fr;
 }
 
-.innerWrapper {
+.gotPosts .innerWrapper {
   grid-area: wrap;
   place-self: normal;
 }
 
-.itemsWrapper {
+.gotPosts .itemsWrapper {
   border-radius: var(--defaultBoxBorderRadius);
   background-size: cover;
   background-position: center;
 }
 
-.postItemWrapper {
+.gotPosts .postItemWrapper {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: var(--defaultBoxBorderRadius);
   cursor: pointer;
@@ -53,26 +53,26 @@
   padding: 0.5rem 1rem;
   color: white;
 }
-.postItemWrapper:hover {
+.gotPosts .postItemWrapper:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.postTextContent {
+.gotPosts .postTextContent {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
 }
-.postTextContent > .postInfo {
+.gotPosts .postTextContent > .postInfo {
   margin-bottom: 1rem;
 }
-.postTextContent .postTitle {
+.gotPosts .postTextContent .postTitle {
   font-size: 23px;
 }
-.postTextContent .postContent {
+.gotPosts .postTextContent .postContent {
   font-size: 15px;
 }
-.postTextContent .userLink:hover {
+.gotPosts .postTextContent .userLink:hover {
   text-decoration: underline;
 }
 

@@ -1,6 +1,6 @@
 @use 'variables';
 
-.postItemsWrapper {
+.postItemsWrapper.gotPosts {
 	max-width: 960px;
 	margin: 9rem auto 3rem auto;
 	display: grid;
@@ -25,25 +25,25 @@
 	}
 }
 
-.container {
+.gotPosts .container {
 	display: grid;
 	background: var(--primaryBackground);
 	grid-template-areas: "nav wrap";
 	grid-template-columns: 50px 1fr;
 }
 
-.innerWrapper {
+.gotPosts .innerWrapper {
 	grid-area: wrap;
 	place-self: normal;
 }
 
-.itemsWrapper {
+.gotPosts .itemsWrapper {
 	border-radius: var(--defaultBoxBorderRadius);
 	background-size: cover;
 	background-position: center;
 }
 
-.postItemWrapper {
+.gotPosts .postItemWrapper {
 	background-color: rgba(0, 0, 0, 0.05);
 	border-radius: var(--defaultBoxBorderRadius);
 	cursor: pointer;
@@ -57,7 +57,7 @@
 	}
 }
 
-.postTextContent {
+.gotPosts .postTextContent {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

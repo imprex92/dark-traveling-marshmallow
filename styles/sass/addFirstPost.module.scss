@@ -1,0 +1,73 @@
+@use 'variables';
+
+.noPostsRoot:hover{
+	border: 4px solid rgba(255, 255, 255, 0.43);
+	cursor: pointer;
+	border-radius: 20px;
+}
+.noPostsRoot{
+	border: 4px solid rgba(255, 255, 255, 0.21);
+	border-radius: 20px;
+}
+.noPostsRoot.elseWhere {
+	max-width: 800px;
+	max-height: 500px;
+	height: 100%;
+	width: calc(100% - 1rem);
+	place-self: center;
+}
+.noPostsRoot.onDashboard:hover{
+	border: 4px solid rgba(255, 255, 255, 0.43);
+	cursor: pointer;
+	border-radius: 20px;
+	> div{
+		height: 100%;
+	}
+}
+.noPostsRoot.onDashboard{
+	height: calc( 100% - 1rem );
+	border: 4px solid rgba(255, 255, 255, 0.21);
+	border-radius: 20px;
+	
+	@media ( min-width: 1100px ){
+		margin-top: 1rem;
+	}
+					
+	@media ( max-width: 450px ){
+		margin-top: 0rem;
+	}
+					
+}
+
+.noPostContainer{
+	height: 100%;
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	color: #c6c6c6;
+	row-gap: 2rem;
+	padding: 2rem;
+}
+
+.sentence{
+	text-align: center;
+}
+
+.noPostIcon{
+	font-size: 80px;
+}
+
+@media ( max-width: variables.$breakpoint-tablet ) {
+	.noPostIcon{
+		font-size: 60px;
+	}
+	.sentence{
+		font-size: 18px;
+		line-height: 145%;
+	}
+}
+
+.noPostsRoot:hover .noPostContainer{
+	color: #d9d9d9;
+	filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4));
+}

@@ -56,38 +56,8 @@
 				&_empty
 					@extend .postCarouselSection
 					height: calc( 100% - 1rem )
-					border: 4px solid rgba(255, 255, 255, 0.21)
-					border-radius: 20px
-					&:hover
-						border: 4px solid rgba(255, 255, 255, 0.43)
-						cursor: pointer
-					& > div
+					> .custom-body
 						height: 100%
-					& .noPosts_root
-						height: 100%
-						width: 100%
-						& > .noPostContainer
-							height: 100%
-							display: grid
-							place-content: center
-							justify-items: center
-							color: #c6c6c6
-							row-gap: 2rem
-							padding: 2rem
-							& > .sentence
-								text-align: center
-							& > .noPostIcon
-								font-size: 80px
-							@media ( max-width: variables.$breakpoint-tablet )
-								& > .sentence
-									font-size: 18px
-									line-height: 145%
-								& > .noPostIcon
-									font-size: 67px
-
-.postCarouselSection:hover .noPostContainer
-	color: #d9d9d9
-	filter: drop-shadow(4px 6px 2px rgb(0 0 0 / 0.4))
 
 .geoLocator
 	display: flex
