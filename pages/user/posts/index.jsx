@@ -9,6 +9,7 @@ import {
 } from 'components/utility/subscriptions'
 import styles from 'styles/blogPostsFeed.module.css'
 import SidebarNavigation from 'components/nav/SidebarNavigation'
+import AddFirstPost from 'components/blogComponents/AddFirstPost'
 
 const index = ({ userAuth }) => {
   const userDbRef = projectFirestore
@@ -67,9 +68,13 @@ const index = ({ userAuth }) => {
   }
 
   return (
-    <div id="mainContainer" className={styles.container}>
+    <div id="mainContainer" className={`${styles.container} ${blogPosts.length > 0 ? styles.gotPosts : ''}`}>
       <SidebarNavigation />
-      <BlogList countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts} />
+      { blogPosts.length < 0 ? 
+        <BlogList countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts} />
+        : 
+        <AddFirstPost /> 
+      }
     </div>
   )
 }

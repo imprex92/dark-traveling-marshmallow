@@ -9,12 +9,10 @@ import {
 import Geolocator from 'components/Geolocator'
 import Slides from 'components/Slides'
 import styles from 'styles/dashboard.module.css'
-import { useRouter } from 'next/router'
 import { getFirestore } from 'firebase-admin/firestore'
 
 import nookies from 'nookies'
 import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
-import { RANDOM_SENTENCES } from 'components/utility/constants'
 import SidebarNavigation from 'components/nav/SidebarNavigation'
 import AddFirstPost from '../../components/blogComponents/AddFirstPost'
 
@@ -58,10 +56,6 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
   }, [])
   useEffect(() => {
     blogPosts.length === 0 ? setBlogPosts(userBlogs) : ''
-  }, [])
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * RANDOM_SENTENCES.length)
-    setRandomIndex(randomIndex)
   }, [])
 
   //! 3 firestore listeners!
