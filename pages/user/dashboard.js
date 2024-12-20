@@ -176,7 +176,7 @@ export const getServerSideProps = async (ctx) => {
     const cookies = nookies.get(ctx)
     const token = await firebaseAdminVerifyToken(cookies.token)
     const adminFirestore = getFirestore()
-    const { uid, email, name, picture } = token
+    const { uid, email, name = null, picture = null } = token
 
     // Fetch data here
 

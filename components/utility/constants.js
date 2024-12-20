@@ -49,3 +49,5 @@ export const MOCK_COUNTRY_LIST = [
   'Argentina',
   'Chile',
 ]
+
+export const FALLBACK_AVATAR_URL = 'https://api.dicebear.com/9.x/bottts-neutral/svg'

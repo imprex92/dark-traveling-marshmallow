@@ -70,18 +70,19 @@ projectAuth.onAuthStateChanged((user) => {
 											}
 									}))
 							} else {
+								const currentState = useSiteSettings.getState();
 								const defaultSettings = {
-									name: get().data.name ?? '',
-									theme: get().data.theme ?? 'dark',
-									units: get().data.units ?? 'metric',
-									language: get().data.language ?? 'en',
-									timeFormat: get().data.timeFormat ?? 24,
-									dateFormat: get().data.dateFormat ?? 'dd/mm/yyyy',
-									showWeatherWidget: get().data.showWeatherWidget ?? true,
+								  name: currentState.data.name ?? '',
+								  theme: currentState.data.theme ?? 'dark',
+								  units: currentState.data.units ?? 'metric',
+								  language: currentState.data.language ?? 'en',
+								  timeFormat: currentState.data.timeFormat ?? 24,
+								  dateFormat: currentState.data.dateFormat ?? 'dd/mm/yyyy',
+								  showWeatherWidget: currentState.data.showWeatherWidget ?? true,
 								};
-									userDbRef.set({ settings: defaultSettings }, { merge: true })
-									console.log('Initialized settings with default state', defaultSettings)
-							}
+								userDbRef.set({ settings: defaultSettings }, { merge: true });
+								console.log('Initialized settings with default state', defaultSettings);
+							  }
 					}
 			})
 

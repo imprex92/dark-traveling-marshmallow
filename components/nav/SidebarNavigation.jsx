@@ -46,7 +46,7 @@ const VerticalSection = () => {
             : styles[menuItem.class]
 
           return (
-            <div className={styles.menuItemWrapper}>
+            <div className={styles.menuItemWrapper} key={index}>
               <Tooltip key={index} text={menuItem.name} position="right">
                 <Link
                   key={index}
