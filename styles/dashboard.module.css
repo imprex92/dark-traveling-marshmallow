@@ -91,5 +91,8 @@
 .geoLocator > .geoLocationSection > span > p > i {
   color: red;
 }
+.geoLocator .custom-body {
+  height: 100%;
+}
 
 /*# sourceMappingURL=dashboard.module.css.map */
