@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import fallbackUserImg from 'public/assets/icons8-test-account.png'
 import sideNavigationBackroundImg from 'public/assets/lighthouse-sidenav.jpg'
 import Image from 'next/image'
+import { FALLBACK_AVATAR_URL } from '../../utility/constants'
 
 const AsideUserInfo = (props) => {
   console.log('props', props)
@@ -15,7 +15,7 @@ const AsideUserInfo = (props) => {
   const {
     displayName = 'No Name',
     email,
-    photoURL = fallbackUserImg,
+    photoURL = null,
   } = userAuth
 
   return (
@@ -31,14 +31,13 @@ const AsideUserInfo = (props) => {
           />
         </div>
         <a href="#user">
-          <Image
+          <img
             style={{ objectFit: 'cover' }}
             className="circle"
-            src={photoURL}
+            src={photoURL || FALLBACK_AVATAR_URL}
             alt="User profile picture"
             width="96"
             height="96"
-            quality={60}
           />
         </a>
         <a href="#name">

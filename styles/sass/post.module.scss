@@ -16,9 +16,9 @@
 		width: min(80%, 1500px);
 		margin-inline: auto;
 		grid-template-areas: "titleBox"
-												"mainContent"
-												"divider"
-												"lowerSection";
+							"mainContent"
+							"divider"
+							"lowerSection";
 		grid-template-rows: auto 0.5fr 15px auto;
 		@media (max-width: variables.$breakpoint-phone-XXL) {
 			grid-template-rows: auto 0.80fr 15px auto;

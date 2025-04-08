@@ -7,8 +7,10 @@ import SkeletonSinglePost from 'components/loaders/skeletons/SkeletonSinglePost'
 import usePostStorage from 'store/postStorage'
 import withPrivateRoute from 'components/HOC/withPrivateRoute'
 import styles from 'styles/post.module.css'
-import Image from 'next/image'
 import SidebarNavigation from 'components/nav/SidebarNavigation'
+import Slider from 'components/imgSlider/Slider'
+
+// TODO slider using both old and new media structure
 
 const Post = () => {
   const router = useRouter()
@@ -115,12 +117,7 @@ const Post = () => {
           <div className={`${styles.singlepostWrapper}`}>
             <div className={`${styles.imgRow}`}>
               <div className={`${styles.mainImageWrapper}`}>
-                <Image
-                  src={requestedBlog?.imgURL || requestedBlog?.mediaURLs[0]}
-                  width={500}
-                  height={400}
-                  alt="Post image"
-                />
+                <Slider slideOnlyImgFiles={requestedBlog?.mediaURLs ? requestedBlog.mediaURLs : [requestedBlog.imgURL]} />
               </div>
             </div>
             <div className={styles.postContent}>

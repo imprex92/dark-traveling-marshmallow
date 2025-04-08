@@ -46,6 +46,7 @@ export function AuthProvider({children}) {
 					providerId: cred.additionalUserInfo.providerId,
 					created: projectTimestampNow,
 					uid: cred.user.uid,
+					name: null
 				}
 				projectFirestore.collection('testUserCollection').doc(cred.user.uid).set({
 					userInfo: userObj

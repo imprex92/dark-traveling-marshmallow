@@ -45,7 +45,9 @@
     "typewriter-effect": "^2.21.0",
     "use-places-autocomplete": "^1.8.1",
     "uuid": "^10.0.0",
-    "zustand": "^4.1.5"
+    "zustand": "^4.1.5",
+    "@dicebear/core": "^9.2.2",
+    "@dicebear/collection": "^9.2.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.0",
@@ -55,7 +57,9 @@
     "eslint": "^8.52.0",
     "prettier": "^3.0.0",
     "resolve-url-loader": "^5.0.0",
+    "typescript": "^5.6.2",
     "webpack": "^5.94.0",
     "webpack-stats-plugin": "^1.1.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

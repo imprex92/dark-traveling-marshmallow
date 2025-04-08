@@ -1,12 +1,31 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BtnSlider from './utils/BtnSlider';
 import TextContent from './TextContent';
+import { SLIDER_IMAGE_TYPES, SLIDER_VIDEO_TYPES } from '../utility/constants';
+import Image from 'next/image'
 
-const Slider = ({ formData }) => {
-	const { files } = formData;
+const Slider = ({ formData = [], slideOnlyImgFiles = [] }) => {
+	
+	const { files = [] } = formData;
 	const [slideIndex, setSlideIndex] = useState(1);
-	let numSlides = files.length || 0
+	const isSliderOnly = slideOnlyImgFiles.length > 0 && files.length === 0;
+	let numSlides = files?.length || slideOnlyImgFiles?.length || 0
+
+	const getFileExtension = (url) => {
+		const urlWithoutParams = url.split('?')[0];
+		return urlWithoutParams.split('.').pop();
+	  };
+
+	const isImage = (url) => {
+		const ext = getFileExtension(url);
+		return SLIDER_IMAGE_TYPES.includes(ext);
+	  };
+	  
+	  const isVideo = (url) => {
+		const ext = getFileExtension(url);
+		return SLIDER_VIDEO_TYPES.includes(ext);
+	  };
 
 	const nextSlide  = () => {
 		if(slideIndex !== numSlides){
@@ -33,7 +52,7 @@ const Slider = ({ formData }) => {
 				<div className="slider-content" style={{ '--num-slides': numSlides }}>
 					<BtnSlider moveSlide={prevSlide} direction={'prev'} />
 
-					{files.map((file, index) => (
+					{files.length > 0 ? files.map((file, index) => (
 						<div key={index} className={`slide position-${index + 1} ${slideIndex === index + 1 ? 'slide active-anim' : 'slide'}`}>
 							<div className="media">
 								{file.type.startsWith('image/') ? (
@@ -56,7 +75,26 @@ const Slider = ({ formData }) => {
 								</div>
 							</div>
 						</div>
-					))}
+					)) : slideOnlyImgFiles.length > 0 ? slideOnlyImgFiles.flatMap((url, index) => (
+						<div key={index} className={`slide position-${index + 1} ${slideIndex === index + 1 ? 'slide active-anim' : 'slide'}`}>
+							<div className="media">
+								{isImage(url) ? (
+								<Image
+								src={url}
+								alt="Post image"
+								fill={true}
+								style={{objectFit: "contain"}}
+								loading="lazy"
+							  />
+								) : isVideo(url) ? (
+								<video controls muted height={300}>
+									<source src={url} type={'video/mp4'} />
+									No support
+								</video>
+								) : null}
+							</div>
+						</div>
+					)) : null}
 
 					<BtnSlider moveSlide={nextSlide}  direction={'next'} />
 					<div className="container-dots">
@@ -71,9 +109,11 @@ const Slider = ({ formData }) => {
 						))}
 					</div>
 				</div>
-				<div className='text-content'>
-					<TextContent formData={formData} />
-				</div>
+				{(files.length > 0 && slideOnlyImgFiles.length === 0) && 
+					<div className='text-content'>
+						<TextContent formData={formData} />
+					</div>
+				}
 			</div>
 		</div>
 		<style scoped>{`
@@ -83,7 +123,7 @@ const Slider = ({ formData }) => {
 			}
 			.slider-container{
 				display: grid;
-				grid-template-rows: 300px auto;
+				grid-template-rows: ${isSliderOnly ? '500px' : '300px'} auto;
 				grid-template-areas: 'media'
 							'text';
 				position: relative;
@@ -92,7 +132,7 @@ const Slider = ({ formData }) => {
 				height: inherit;
 				grid-area: media;
 				position: relative;
-				width: 370px;
+				width: ${isSliderOnly ? '480px' : '370px'};
 				place-self: center;
 
 				@media screen and (max-width: 640px) {
@@ -152,8 +192,9 @@ const Slider = ({ formData }) => {
   );
 };
 
-//Slider.propTypes = {
-//  files: PropTypes.array.isRequired,
-//};
+Slider.propTypes = {
+ files: PropTypes.array,
+ slideOnlyImgFiles: PropTypes.array
+};
 
 export default Slider;

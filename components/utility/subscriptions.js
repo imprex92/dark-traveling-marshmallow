@@ -3,8 +3,6 @@ import useSiteSettings from 'store/siteSettings';
 import { dateMMDDYY } from '../formatters/DateFormatter'
 import { v4 as uuidv4 } from 'uuid';
 
-const baseQuery = projectFirestore.collection('testUserCollection')
-
 function fetchDbUserData(userID) {
 	return new Promise((resolve, reject) => {
 		projectFirestore.collection('testUserCollection').doc(userID).get()
@@ -207,16 +205,24 @@ const removeWeatherChip = async ({ userID, payload, currentChips }) => {
 const updateWeatherSearchHistory = async ({ userID, payload }) => {
 	if (!userID) return { data: null, error: 'No user ID provided' }
 	const userDbRef = projectFirestore.collection('testUserCollection').doc(userID)
+	const weatherDataRef = userDbRef.collection('weatherData').doc('SearchHistory');
 
 	try {
-		await userDbRef.collection('weatherData').doc('SearchHistory').set({
-			history: projectFirebase.firestore.FieldValue.arrayUnion(payload)
-		}, { merge: true });
-
-		const doc = await userDbRef.collection('weatherData').doc('SearchHistory').get();
-		const updatedHistory = doc.data().history;
-
-		return { data: updatedHistory, error: null };
+		// Check if the document exists
+		const doc = await weatherDataRef.get();
+		if (!doc.exists) {
+		  // Create the document if it does not exist
+		  await weatherDataRef.set({ weatherSearchHistory: [] });
+		}
+	
+		// Update the search history
+		await weatherDataRef.update({
+		  weatherSearchHistory: projectFirebase.firestore.FieldValue.arrayUnion(payload),
+		});
+	
+		console.log('Search history updated successfully');
+		const updatedDoc = await weatherDataRef.get();
+		return { data: updatedDoc.data().weatherSearchHistory };
 	} catch (error) {
 		return { data: null, error: error };
 	}

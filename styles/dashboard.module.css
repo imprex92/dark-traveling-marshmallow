@@ -66,48 +66,9 @@
 }
 .dashboardMain .wrapper .postSlides > .postCarouselSection_empty {
   height: calc(100% - 1rem);
-  border: 4px solid rgba(255, 255, 255, 0.21);
-  border-radius: 20px;
 }
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty:hover {
-  border: 4px solid rgba(255, 255, 255, 0.43);
-  cursor: pointer;
-}
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty > div {
+.dashboardMain .wrapper .postSlides > .postCarouselSection_empty > .custom-body {
   height: 100%;
-}
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root {
-  height: 100%;
-  width: 100%;
-}
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer {
-  height: 100%;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  color: #c6c6c6;
-  row-gap: 2rem;
-  padding: 2rem;
-}
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer > .sentence {
-  text-align: center;
-}
-.dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer > .noPostIcon {
-  font-size: 80px;
-}
-@media (max-width: 768px) {
-  .dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer > .sentence {
-    font-size: 18px;
-    line-height: 145%;
-  }
-  .dashboardMain .wrapper .postSlides > .postCarouselSection_empty .noPosts_root > .noPostContainer > .noPostIcon {
-    font-size: 67px;
-  }
-}
-
-.postCarouselSection:hover .noPostContainer, .dashboardMain .wrapper .postSlides > .postCarouselSection_empty:hover .noPostContainer {
-  color: #d9d9d9;
-  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.4));
 }
 
 .geoLocator {
@@ -129,6 +90,9 @@
 }
 .geoLocator > .geoLocationSection > span > p > i {
   color: red;
+}
+.geoLocator .custom-body {
+  height: 100%;
 }
 
 /*# sourceMappingURL=dashboard.module.css.map */

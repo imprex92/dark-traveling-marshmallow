@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from 'styles/weatherComponents.module.css'
 import WeatherMain from 'components/weatherComponents/WeatherMain'
-import { useAuth } from 'contexts/AuthContext'
 import {
   fetchWeatherByCoords,
   fetchWeatherByQuery,
@@ -14,9 +13,11 @@ import useSiteSettings from 'store/siteSettings'
 import { updateWeatherSearchHistory } from 'components/utility/subscriptions'
 import SidebarNavigation from 'components/nav/SidebarNavigation'
 
-const weather = () => {
-  const { currentUser } = useAuth()
-  const isOnline = currentUser ? true : false
+import nookies from 'nookies'
+import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
+
+const weather = ({userAuth}) => {
+  const isOnline = userAuth ? true : false
   const { weatherSearchHistory = [] } = useSiteSettings((state) => state.data)
   const updateSearchHistory = useSiteSettings(
     (state) => state.setWeatherSearchHistory,
@@ -93,7 +94,7 @@ const weather = () => {
       const data = await fetchWeatherByQuery(location)
       setWeatherObj(data)
       const result = await updateWeatherSearchHistory({
-        userID: currentUser.uid,
+        userID: userAuth.uid,
         payload: location,
       })
       if (result.error) {
@@ -117,6 +118,8 @@ const weather = () => {
   }
 
   const fetchWeather = async () => {
+    console.log('Fetching weather');
+    
     try {
       const geoLocation = await getGeolocation()
       if (!geoLocation) {
@@ -124,28 +127,30 @@ const weather = () => {
       }
 
       const coords = {
-        latitude: geoLocation.data.latitude,
-        longitude: geoLocation.data.longitude,
+        latitude: geoLocation?.data?.latitude || null,
+        longitude: geoLocation?.data?.longitude || null,
       }
-
       try {
         const data = await fetchWeatherByCoords(coords)
-        const result = await updateWeatherSearchHistory({
-          userID: currentUser.uid,
-          payload: data?.name,
-        })
-        if (result.error) {
-          console.error('Error updating search history:', result.error)
-          return
+        if (data?.data?.name){
+          try {
+            const result = await updateWeatherSearchHistory({
+              userID: userAuth.uid,
+              payload: data.data?.name,
+            })
+
+            const updatedHistory = result.data
+
+            updateSearchHistory(updatedHistory)
+
+            setWeatherObj(data)
+            updateInitialWeather(data)
+            setSs('userGeoLatest', data)
+          } catch (error) {
+            console.error('Error updating search history:', error)
+            return
+          }
         }
-
-        const updatedHistory = result.data
-
-        updateSearchHistory(updatedHistory)
-
-        setWeatherObj(data)
-        updateInitialWeather(data)
-        setSs('userGeoLatest', data)
       } catch (error) {
         setWeatherObj({ data: { error } })
         console.error('Error fetching weather by coordinates', error)
@@ -168,7 +173,7 @@ const weather = () => {
             fetchWeather={handleSearchAndFetchWeather}
             currentWeather={weatherObj}
             apiError={apiErr}
-            currentUser={currentUser}
+            currentUser={userAuth}
           />
         )}
         {isLoading && (
@@ -182,6 +187,29 @@ const weather = () => {
       </div>
     </>
   )
+}
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx)
+    const token = await firebaseAdminVerifyToken(cookies.token)
+    const { uid, email, name = null, picture = null } = token
+
+    return {
+      props: {
+        userAuth: { uid, email, name, picture },
+      },
+    }
+  } catch (err) {
+    console.error(err)
+    ctx.res.writeHead(302, {
+      Location:
+        err.code === 'auth/id-token-expired' ? '/login#tokenExpired' : '/login',
+    })
+    ctx.res.end()
+
+    return { props: {} }
+  }
 }
 
 export default weather
