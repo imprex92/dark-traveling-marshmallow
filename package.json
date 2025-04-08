@@ -8,7 +8,7 @@
     "child_process": false
   },
   "scripts": {
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "SASS-Watch": "sass --watch ./styles/sass:./styles",
     "SASS-Compile": "sass ./styles/sass:./styles",
     "dev": "next dev --turbo",

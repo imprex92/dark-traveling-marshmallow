@@ -1,7 +1,8 @@
-import React from 'react'
-import UnitSelectorDropdown from './UnitSelectorDropdown'
-import SaveWeatherLocation from './SaveWeatherLocation'
-import styles from 'styles/weatherComponents.module.css'
+import React from 'react';
+import styles from 'styles/weatherComponents.module.css';
+
+import UnitSelectorDropdown from './UnitSelectorDropdown';
+import SaveWeatherLocation from './SaveWeatherLocation';
 
 const Toolbox = ({ isMetric, setIsMetric, currentWeather }) => {
   return (
@@ -9,7 +10,7 @@ const Toolbox = ({ isMetric, setIsMetric, currentWeather }) => {
       <UnitSelectorDropdown isMetric={isMetric} setIsMetric={setIsMetric} />
       <SaveWeatherLocation currentWeather={currentWeather} />
     </div>
-  )
-}
+  );
+};
 
-export default Toolbox
+export default Toolbox;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { projectAuth } from '../../firebase/config';
 import { useRouter } from 'next/router';
+
+import { projectAuth } from '../../firebase/config';
 
 const login = '/login?redirected=true';
 
@@ -20,8 +21,8 @@ export const checkAuthState = async () => {
 const withAuthentication = (WrappedComponent) => {
   const AuthenticatedComponent = (props) => {
     const [userAuth, setUserAuth] = useState();
-    const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter()
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
       setIsLoading(true);
@@ -38,15 +39,21 @@ const withAuthentication = (WrappedComponent) => {
       fetchUserAuth();
     }, []);
 
-    if(!isLoading && userAuth)  {
+    if (!isLoading && userAuth) {
       // If authenticated, pass the `user` prop to the component and render it
-      return <WrappedComponent {...props} isLoading={isLoading} userAuth={userAuth} today={new Date()} />;
-    }
-    else if (!isLoading && !userAuth) {
+      return (
+        <WrappedComponent
+          {...props}
+          isLoading={isLoading}
+          userAuth={userAuth}
+          today={new Date()}
+        />
+      );
+    } else if (!isLoading && !userAuth) {
       router.replace(login);
     }
     // Render the WrappedComponent with userAuth once it's fetched
-    return null
+    return null;
   };
 
   return AuthenticatedComponent;

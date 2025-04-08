@@ -1,14 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const BtnSlider = ({ direction, moveSlide}) => {
-
+const BtnSlider = ({ direction, moveSlide }) => {
   return (
-	<>
-		<span className={`material-symbols-outlined btn-slide ${direction}`} onClick={moveSlide}>
-			{ direction === 'next' ? 'chevron_right' : 'chevron_left'}
-		</span>
-		<style>{`
+    <>
+      <span
+        className={`material-symbols-outlined btn-slide ${direction}`}
+        onClick={moveSlide}
+      >
+        {direction === 'next' ? 'chevron_right' : 'chevron_left'}
+      </span>
+      <style>{`
 			.btn-slide {
 				position: absolute;
 				top: 50%;
@@ -32,10 +34,10 @@ const BtnSlider = ({ direction, moveSlide}) => {
 			.prev { left: 0rem; }
 			.next { right: 0rem; }
 		`}</style>
-	</>
-  )
-}
+    </>
+  );
+};
 
-BtnSlider.propTypes = {}
+BtnSlider.propTypes = {};
 
-export default BtnSlider
+export default BtnSlider;

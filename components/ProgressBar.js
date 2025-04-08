@@ -1,34 +1,41 @@
-import {useEffect} from 'react'
-import uploadFiles  from "./hooks/useStorage";
+import { useEffect } from 'react';
 
-function ProgressBar({mainImage, additionalFiles, setUploadedURL, reciptFile, initiator, fireError, isUploading}) {
-	console.log(mainImage);
-	//console.log(additionalFiles);
-	const file = mainImage || reciptFile
-	
-	//const { url, progress } = uploadFiles(mainImage, initiator)
-	const { url, progress, error } = uploadFiles(file, initiator)
-	console.log(progress, url);
+import uploadFiles from './hooks/useStorage';
 
-useEffect(() => {
-	if(url){
-		setUploadedURL(url)
-		isUploading(false)
-		fireError(error)
-	}
-	return () => {
+function ProgressBar({
+  mainImage,
+  additionalFiles,
+  setUploadedURL,
+  reciptFile,
+  initiator,
+  fireError,
+  isUploading,
+}) {
+  console.log(mainImage);
+  //console.log(additionalFiles);
+  const file = mainImage || reciptFile;
 
-	}
-}, [url])
+  //const { url, progress } = uploadFiles(mainImage, initiator)
+  const { url, progress, error } = uploadFiles(file, initiator);
+  console.log(progress, url);
 
-	return (
-		<div className="progress-bar">
-			progress
-			<div className="progress">
-				<div className="determinate" style={{width: `${progress}%`}}></div>
-			</div>
-		</div>
-	)
+  useEffect(() => {
+    if (url) {
+      setUploadedURL(url);
+      isUploading(false);
+      fireError(error);
+    }
+    return () => {};
+  }, [url]);
+
+  return (
+    <div className="progress-bar">
+      progress
+      <div className="progress">
+        <div className="determinate" style={{ width: `${progress}%` }} />
+      </div>
+    </div>
+  );
 }
 
-export default ProgressBar
+export default ProgressBar;

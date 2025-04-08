@@ -1,11 +1,11 @@
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
-import { useAuth } from 'contexts/AuthContext'
-import styles from 'styles/newPost.module.css'
-import AddPostForm from 'components/postForm/AddPostForm'
-import SidebarNavigation from 'components/nav/SidebarNavigation'
+import withPrivateRoute from 'components/HOC/withPrivateRoute';
+import { useAuth } from 'contexts/AuthContext';
+import styles from 'styles/newPost.module.css';
+import AddPostForm from 'components/postForm/AddPostForm';
+import SidebarNavigation from 'components/nav/SidebarNavigation';
 
 const newpost = () => {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
   return (
     <div style={{ overflow: 'hidden' }}>
@@ -33,7 +33,7 @@ const newpost = () => {
 			}
 			`}</style>
     </div>
-  )
-}
+  );
+};
 
-export default withPrivateRoute(newpost)
+export default withPrivateRoute(newpost);

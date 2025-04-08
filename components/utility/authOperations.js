@@ -1,191 +1,237 @@
-import { projectAuth, projectFirestore, projectStorage, projectFirebase } from "firebase/config";
+import {
+  projectAuth,
+  projectFirestore,
+  projectStorage,
+  projectFirebase,
+} from 'firebase/config';
 
 // File handles operations regarding user accounts
 const user = projectAuth?.currentUser || '';
 const refToAccountDoc = projectFirestore
-	.collection('testUserCollection')
-	.doc(user.uid);
-const availableProviders = ['google.com']
+  .collection('testUserCollection')
+  .doc(user.uid);
+const availableProviders = ['google.com'];
 
+async function accountRemoval(reauthCallback) {
+  try {
+    const deletion = await user
+      .delete()
+      .then((data) => {
+        return { code: 200, message: 'Account deleted' };
+      })
+      .catch((err) => {
+        return err;
+      });
 
-async function accountRemoval (reauthCallback) {
-	try {
-		const deletion = await user.delete()
-		.then(data => {return {code: 200, message: 'Account deleted'}})
-		.catch(err => {return err})
-		
-		if(deletion.code === "auth/requires-recent-login"){
-			await reauthCallback(deletion)
-		}
-		return deletion
-	} catch (error) {
-		return error
-	}
+    if (deletion.code === 'auth/requires-recent-login') {
+      await reauthCallback(deletion);
+    }
+    return deletion;
+  } catch (error) {
+    return error;
+  }
 }
 
 function reAuthenticate(params) {
-	return new Promise((resolve, reject) => {
-		if(availableProviders.includes(params.providerId))
-			user.reauthenticateWithPopup(params).then(data => resolve(data)).catch(err => reject(err))
-		else if(params.providerId === 'password')
-			user.reauthenticateWithCredential(params).then(data => resolve(data)).catch(err => reject(err))
-		else
-			reject({code: 500, message: 'Something went wrong authenticating the user'})
-	})
+  return new Promise((resolve, reject) => {
+    if (availableProviders.includes(params.providerId)) {
+      user
+        .reauthenticateWithPopup(params)
+        .then((data) => resolve(data))
+        .catch((err) => reject(err));
+    } else if (params.providerId === 'password') {
+      user
+        .reauthenticateWithCredential(params)
+        .then((data) => resolve(data))
+        .catch((err) => reject(err));
+    } else {
+      reject({
+        code: 500,
+        message: 'Something went wrong authenticating the user',
+      });
+    }
+  });
 }
 
 function verifyUserEmail() {
-	return new Promise((resolve, reject) => {
-		projectAuth.useDeviceLanguage()
-		user.sendEmailVerification()
-		.then((data) => resolve({code: 200, message: 'Email sent!'}))
-		.catch((err) => reject(err))
-	})
+  return new Promise((resolve, reject) => {
+    projectAuth.useDeviceLanguage();
+    user
+      .sendEmailVerification()
+      .then((data) => resolve({ code: 200, message: 'Email sent!' }))
+      .catch((err) => reject(err));
+  });
 }
 function updateEmail(email) {
-	return new Promise((resolve, reject) => {
-		user.updateEmail(email).then(data => resolve(data)).catch(error =>  reject(error))
-	})
+  return new Promise((resolve, reject) => {
+    user
+      .updateEmail(email)
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
 }
 function updatePassword(password) {
-	return new Promise((resolve, reject) => {
-		user.updatePassword(password).then((data)=> resolve(data)).catch(error => reject(error))
-	})
+  return new Promise((resolve, reject) => {
+    user
+      .updatePassword(password)
+      .then((data) => resolve(data))
+      .catch((error) => reject(error));
+  });
 }
 
 /* START update account, delete existing profile picture + upload new + update account data accordingly */
 
 async function deleteExistingFile(user) {
-	const listRef = projectStorage.app
-		.storage('gs://dark-traveling-marshmallow.appspot.com')
-		.ref(`userData/${user}/profileData/profilePicture`)
+  const listRef = projectStorage.app
+    .storage('gs://dark-traveling-marshmallow.appspot.com')
+    .ref(`userData/${user}/profileData/profilePicture`);
 
-	try {
-		const fileList = await listRef.list()
-		if(fileList.items.length > 0){
-			await fileList.items[0].delete();
-		}
-	} catch (error) {
-		console.error('Error deleting existing file', error);
-		throw error;
-	}
+  try {
+    const fileList = await listRef.list();
+    if (fileList.items.length > 0) {
+      await fileList.items[0].delete();
+    }
+  } catch (error) {
+    console.error('Error deleting existing file', error);
+    throw error;
+  }
 }
-async function updateProfilePicOrData(data){
-	
-	try {
-		
-		const refToAccountBucket = projectStorage.app
-					.storage('gs://dark-traveling-marshmallow.appspot.com')
-					.ref(`userData/${data.uid}/profileData/profilePicture/${data?.file?.name}`);
-		data?.file && await refToAccountBucket.put(data.file);
+async function updateProfilePicOrData(data) {
+  try {
+    const refToAccountBucket = projectStorage.app
+      .storage('gs://dark-traveling-marshmallow.appspot.com')
+      .ref(
+        `userData/${data.uid}/profileData/profilePicture/${data?.file?.name}`
+      );
+    data?.file && (await refToAccountBucket.put(data.file));
 
-		const url = data?.file && await refToAccountBucket.getDownloadURL() || null;
-		//await user.updatePhoneNumber(data.number.value)
-		await user.updateProfile({
-			displayName: data.name.value,
-			...(data?.file && {photoURL: url})
-		})
-		
+    const url =
+      (data?.file && (await refToAccountBucket.getDownloadURL())) || null;
+    //await user.updatePhoneNumber(data.number.value)
+    await user.updateProfile({
+      displayName: data.name.value,
+      ...(data?.file && { photoURL: url }),
+    });
 
-		const userInfo = {
-			displayName: data.name.value,
-			//phoneNumber: data.number.value,
-			...(data?.file && {photoURL: url})
-		}
+    const userInfo = {
+      displayName: data.name.value,
+      //phoneNumber: data.number.value,
+      ...(data?.file && { photoURL: url }),
+    };
 
-		await refToAccountDoc.set({
-			userInfo: userInfo
-		}, {merge: true});
-		
-		return {
-			status: 200,
-			message: 'Storage upload and profile update: OK',
-			url
-		}
-	} catch (error) {
-		throw Error(`Error uploading new file or updating profile:\n${error}`);
-	}
+    await refToAccountDoc.set(
+      {
+        userInfo: userInfo,
+      },
+      { merge: true }
+    );
+
+    return {
+      status: 200,
+      message: 'Storage upload and profile update: OK',
+      url,
+    };
+  } catch (error) {
+    throw Error(`Error uploading new file or updating profile:\n${error}`);
+  }
 }
 
-async function updateAccountData(data){
-	try {
-		data?.file && await deleteExistingFile(data.uid)
-		const result = await updateProfilePicOrData(data)		
+async function updateAccountData(data) {
+  try {
+    data?.file && (await deleteExistingFile(data.uid));
+    const result = await updateProfilePicOrData(data);
 
-		return result;
-	} catch (error) {
-		return {status: 406, message: error.message}
-	}
+    return result;
+  } catch (error) {
+    return { status: 406, message: error.message };
+  }
 }
 
 /* END */
 
 async function updateAddress(addressData, uid) {
-	const refToDoc = projectFirestore
-	.collection('testUserCollection')
-	.doc(uid);
-	
-	try {		
-		await refToDoc.set({
-			userAddress: addressData
-		}, {merge: true});
-		return {status: 200, message: 'Address update successful'};
-	} catch (error) {
-		throw {status: 500, message: `An error occurred while updating the address, ${error}`};
-	}
+  const refToDoc = projectFirestore.collection('testUserCollection').doc(uid);
+
+  try {
+    await refToDoc.set(
+      {
+        userAddress: addressData,
+      },
+      { merge: true }
+    );
+    return { status: 200, message: 'Address update successful' };
+  } catch (error) {
+    throw {
+      status: 500,
+      message: `An error occurred while updating the address, ${error}`,
+    };
+  }
 }
 
 async function sendResetPasswordEmail(email) {
-	const actionSettings = {
-		handleCodeInApp: false,
-		url: process.env.NEXT_PUBLIC_BASE_URL + '/login'
-	}
-	try {
-		await projectAuth.sendPasswordResetEmail(email, actionSettings);
-		return { code: 202, message: 'Email sent' };
-	} catch (error) {
-		return { code: error.code, message: error.message };
-	}
+  const actionSettings = {
+    handleCodeInApp: false,
+    url: process.env.NEXT_PUBLIC_BASE_URL + '/login',
+  };
+  try {
+    await projectAuth.sendPasswordResetEmail(email, actionSettings);
+    return { code: 202, message: 'Email sent' };
+  } catch (error) {
+    return { code: error.code, message: error.message };
+  }
 }
 
-async function handleResetPassword(actionCode){
-	try {
-		const email = await projectAuth.verifyPasswordResetCode(actionCode)
-		
-		return {code: 202, email: email, message: 'Password has been reset, Redirecting...', redirect: true}
-	} catch (error) {
-		return {code: error.code, message: error.message, redirect: false}
-	}
-} 
+async function handleResetPassword(actionCode) {
+  try {
+    const email = await projectAuth.verifyPasswordResetCode(actionCode);
+
+    return {
+      code: 202,
+      email: email,
+      message: 'Password has been reset, Redirecting...',
+      redirect: true,
+    };
+  } catch (error) {
+    return { code: error.code, message: error.message, redirect: false };
+  }
+}
 //? Call confirmResetPassword if verification above is OK and user entered new password
-async function confirmResetPassword(actionCode, newPassword){
-	try {
-		await projectAuth.confirmPasswordReset(actionCode, newPassword)
-		return {success: true, code: 200, message: 'Password has been reset. \n Redirecting to login...'}
-	} catch (error) {
-		return {success: false, code: error.code, message: error.message}
-	}
+async function confirmResetPassword(actionCode, newPassword) {
+  try {
+    await projectAuth.confirmPasswordReset(actionCode, newPassword);
+    return {
+      success: true,
+      code: 200,
+      message: 'Password has been reset. \n Redirecting to login...',
+    };
+  } catch (error) {
+    return { success: false, code: error.code, message: error.message };
+  }
 }
 
 async function verifyEmailFromEmail(actionCode) {
-	try {
-		await projectAuth.applyActionCode(actionCode)
-		return {success: true, code: 200, message: 'Account has been verified. \n Redirecting to homepage...'}
-	} catch (error) {
-		return {success: false, code: error.code, message: error.message}
-	}
+  try {
+    await projectAuth.applyActionCode(actionCode);
+    return {
+      success: true,
+      code: 200,
+      message: 'Account has been verified. \n Redirecting to homepage...',
+    };
+  } catch (error) {
+    return { success: false, code: error.code, message: error.message };
+  }
 }
 
 export {
-	accountRemoval,
-	reAuthenticate,
-	verifyUserEmail,
-	verifyEmailFromEmail,
-	updateEmail,
-	updatePassword,
-	updateAccountData,
-	updateAddress,
-	sendResetPasswordEmail,
-	handleResetPassword,
-	confirmResetPassword,
-}
+  accountRemoval,
+  reAuthenticate,
+  verifyUserEmail,
+  verifyEmailFromEmail,
+  updateEmail,
+  updatePassword,
+  updateAccountData,
+  updateAddress,
+  sendResetPasswordEmail,
+  handleResetPassword,
+  confirmResetPassword,
+};

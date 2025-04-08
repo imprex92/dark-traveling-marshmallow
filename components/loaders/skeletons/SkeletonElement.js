@@ -1,35 +1,32 @@
-import React from "react";
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const SkeletonElement = ({ type, globalCSS, desktopCSS, mobileCSS }) => {
-	const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
 
-	const classes = `skeleton ${type}`;
+  const classes = `skeleton ${type}`;
 
-	const globalStyle = globalCSS || {}
-	const mobileStyle = isMobile ? mobileCSS || {} : {}
-	const desktopStyle = isMobile ? {} : desktopCSS || {}
+  const globalStyle = globalCSS || {};
+  const mobileStyle = isMobile ? mobileCSS || {} : {};
+  const desktopStyle = isMobile ? {} : desktopCSS || {};
 
-	const style = {
-		...globalStyle,
-		...mobileStyle,
-		...desktopStyle
-	}
+  const style = {
+    ...globalStyle,
+    ...mobileStyle,
+    ...desktopStyle,
+  };
 
-
-	return (
-		<div style={style} className={classes}></div>
-	)
-}
-
-SkeletonElement.propTypes = {
-	type: PropTypes.string.isRequired,
-	globalCSS: PropTypes.object,
-	mobileCSS: PropTypes.object,
-	desktopCSS: PropTypes.object,
+  return <div style={style} className={classes} />;
 };
 
-export default SkeletonElement
+SkeletonElement.propTypes = {
+  type: PropTypes.string.isRequired,
+  globalCSS: PropTypes.object,
+  mobileCSS: PropTypes.object,
+  desktopCSS: PropTypes.object,
+};
+
+export default SkeletonElement;
 
 // use globalCSS || desktopCSS || mobileCSS
 // ex write globalCSS={{ backgroundColor: "lightgray", width: "100px", height: "20px" }}

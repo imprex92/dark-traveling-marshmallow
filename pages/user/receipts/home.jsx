@@ -1,45 +1,45 @@
-import React, { useEffect, useState, useRef } from 'react'
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
-import ProgressBar from 'components/ProgressBar'
-import countries from 'components/utility/countries.json'
-import { useAuth } from 'contexts/AuthContext'
-import Deleteicon from 'public/assets/delete-forever.svg'
-import Image from 'next/image'
+import React, { useEffect, useState, useRef } from 'react';
+import withPrivateRoute from 'components/HOC/withPrivateRoute';
+import ProgressBar from 'components/ProgressBar';
+import countries from 'components/utility/countries.json';
+import { useAuth } from 'contexts/AuthContext';
+import Deleteicon from 'public/assets/delete-forever.svg';
+import Image from 'next/image';
 import {
   fetchUserReceipts,
   handleSaveRecipt,
-} from 'components/utility/subscriptions'
-import { projectFirestore } from 'firebase/config'
-import OutputGallery from 'components/gallery/OutputGallery'
-import { FILE_TYPE_IMAGES } from 'components/utility/constants'
-import SidebarNavigation from 'components/nav/SidebarNavigation'
+} from 'components/utility/subscriptions';
+import { projectFirestore } from 'firebase/config';
+import OutputGallery from 'components/gallery/OutputGallery';
+import { FILE_TYPE_IMAGES } from 'components/utility/constants';
+import SidebarNavigation from 'components/nav/SidebarNavigation';
 
 const receiptHome = () => {
-  const { logout, currentUser } = useAuth()
+  const { logout, currentUser } = useAuth();
   const DbRef = projectFirestore
     .collection('testUserCollection')
     .doc(currentUser?.uid)
-    .collection('userReceipts')
-  const [userDefinedFile, setUserDefinedFile] = useState(null)
-  const [userDefinedCameraFile, setUserDefinedCameraFile] = useState(null)
-  const [hasError, setHasError] = useState(null)
-  const [imgPreview, setImgPreview] = useState(null)
-  const [isUploading, setisUploading] = useState(null)
-  const [datePicker, setDatePicker] = useState(new Date())
-  const [formCountry, setFormCountry] = useState('')
-  const [isSuccessful, setIsSuccessful] = useState(null)
-  const postTitle = useRef(null)
-  const postStore = useRef(null)
-  const postCountry = useRef(null)
-  const [userReceitps, setUserReceitps] = useState([])
+    .collection('userReceipts');
+  const [userDefinedFile, setUserDefinedFile] = useState(null);
+  const [userDefinedCameraFile, setUserDefinedCameraFile] = useState(null);
+  const [hasError, setHasError] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
+  const [isUploading, setisUploading] = useState(null);
+  const [datePicker, setDatePicker] = useState(new Date());
+  const [formCountry, setFormCountry] = useState('');
+  const [isSuccessful, setIsSuccessful] = useState(null);
+  const postTitle = useRef(null);
+  const postStore = useRef(null);
+  const postCountry = useRef(null);
+  const [userReceitps, setUserReceitps] = useState([]);
   //* onUpload finish
-  const [uploadedURL, setUploadedURL] = useState(null)
+  const [uploadedURL, setUploadedURL] = useState(null);
 
   useEffect(() => {
-    let elems = document.querySelectorAll('.collapsible')
-    let datepicker = document.querySelectorAll('.datepicker')
-    let autocomplete = document.querySelectorAll('.autocomplete')
-    let instances = M.Collapsible.init(elems, {})
+    let elems = document.querySelectorAll('.collapsible');
+    let datepicker = document.querySelectorAll('.datepicker');
+    let autocomplete = document.querySelectorAll('.autocomplete');
+    let instances = M.Collapsible.init(elems, {});
     M.Datepicker.init(datepicker, {
       autoClose: true,
       format: 'mmmm d, yyyy',
@@ -48,44 +48,46 @@ const receiptHome = () => {
       firstDay: 1,
       maxDate: new Date(),
       onSelect: (date) => {
-        setDatePicker(date)
+        setDatePicker(date);
       },
-    })
+    });
     M.Autocomplete.init(autocomplete, {
       data: countries,
       minLength: 1,
       onAutocomplete: (selected) => setFormCountry(selected),
-    })
+    });
 
     return () => {
-      imgPreview && URL.revokeObjectURL(imgPreview)
-    }
-  }, [])
+      imgPreview && URL.revokeObjectURL(imgPreview);
+    };
+  }, []);
   useEffect(() => {
-    onImgSuccess()
+    onImgSuccess();
 
-    return () => {}
-  }, [uploadedURL])
+    return () => {};
+  }, [uploadedURL]);
   useEffect(() => {
     const unsubscribeReceipts = DbRef.onSnapshot(
       (querySnapshot) => {
-        let data = []
-        querySnapshot.forEach((doc) => data.push({ ...doc.data(), id: doc.id }))
-        setUserReceitps(data)
+        let data = [];
+        querySnapshot.forEach((doc) =>
+          data.push({ ...doc.data(), id: doc.id })
+        );
+        setUserReceitps(data);
       },
       (err) => {
-        console.error('error with snapshot', err)
-      },
-    )
+        console.error('error with snapshot', err);
+      }
+    );
 
     return () => {
-      unsubscribeReceipts()
-    }
-  }, [])
+      unsubscribeReceipts();
+    };
+  }, []);
 
   const handleimageUpload = (e, type) => {
-    const selectedImage = e.target.files[0]
-    console.log(e, type)
+    const selectedImage = e.target.files[0];
+    console.log(e, type);
     type === 'ATTACH_FILE' && FILE_TYPE_IMAGES.includes(selectedImage.type)
       ? (setUserDefinedFile(selectedImage),
         setImgPreview(URL.createObjectURL(selectedImage)))
@@ -93,17 +95,17 @@ const receiptHome = () => {
         ? (setUserDefinedCameraFile(selectedImage),
           setImgPreview(URL.createObjectURL(selectedImage)))
         : setHasError(
-            "You either didn't add a picture or file is not an image.",
-          )
-    console.log(URL.createObjectURL(selectedImage), selectedImage)
-  }
+            "You either didn't add a picture or file is not an image."
+          );
+    console.log(URL.createObjectURL(selectedImage), selectedImage);
+  };
 
   const onSubmit = (e) => {
-    e.preventDefault()
-    console.log('location', formCountry)
-    setisUploading(true)
+    e.preventDefault();
+    console.log('location', formCountry);
+    setisUploading(true);
     //! MOVING THEN ON TO onImgSuccess()!
-  }
+  };
   const onImgSuccess = () => {
     if (uploadedURL) {
       const formData = {
@@ -114,30 +116,30 @@ const receiptHome = () => {
           countryOfPurchase: postCountry.current.value,
           storeOfPurchase: postStore.current.value,
         },
-      }
+      };
       handleSaveRecipt({
         userID: currentUser.uid,
         dataToSave: formData,
       })
         .then((res) => {
-          console.log('Success! ID: ', res)
-          setIsSuccessful('Success! Post saved!')
-          document.getElementById('receipt-form').reset()
-          setUserDefinedCameraFile(null)
-          setUserDefinedFile(null)
-          setImgPreview(null)
-          setFormCountry(null)
-          postTitle.current.value = null
+          console.log('Success! ID: ', res);
+          setIsSuccessful('Success! Post saved!');
+          document.getElementById('receipt-form').reset();
+          setUserDefinedCameraFile(null);
+          setUserDefinedFile(null);
+          setImgPreview(null);
+          setFormCountry(null);
+          postTitle.current.value = null;
         })
         .catch((err) => {
-          console.log('Something went wrong! ', err)
-          setHasError('Sorry! Something went wrong while uploading')
-        })
+          console.log('Something went wrong! ', err);
+          setHasError('Sorry! Something went wrong while uploading');
+        });
     }
-  }
+  };
 
   function handleClick({ event, trigger, additional }) {
-    console.log(event, trigger, additional)
+    console.log(event, trigger, additional);
   }
 
   return (
@@ -220,7 +222,7 @@ const receiptHome = () => {
                         <input className="file-path validate" type="text" />
                         <div
                           onClick={() => {
-                            setUserDefinedCameraFile(null), setImgPreview(null)
+                            setUserDefinedCameraFile(null), setImgPreview(null);
                           }}
                         >
                           <Deleteicon />
@@ -246,7 +248,7 @@ const receiptHome = () => {
                         <input className="file-path validate" type="text" />
                         <div
                           onClick={() => {
-                            setUserDefinedFile(null), setImgPreview(null)
+                            setUserDefinedFile(null), setImgPreview(null);
                           }}
                         >
                           <Deleteicon />
@@ -322,7 +324,7 @@ const receiptHome = () => {
               <div key={elm.id} className={`item-wrapper item-${index}`}>
                 <OutputGallery data={{ elm, index }} />
               </div>
-            )
+            );
           })}
         </div>
       </div>
@@ -454,7 +456,7 @@ const receiptHome = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default withPrivateRoute(receiptHome)
+export default withPrivateRoute(receiptHome);

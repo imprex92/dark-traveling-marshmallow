@@ -1,12 +1,13 @@
-import React from 'react'
-import Link from 'next/link'
-import styles from 'styles/mainNav.module.css'
-import SlideOut from './navComponents/SlideOut'
-import { closeSideNav } from './utils/functions/functions'
-import { VERTICAL_MENU } from 'components/utility/constants'
-import { useRouter } from 'next/router'
-import Tooltip from 'components/utility/tooltip/Tooltip'
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import React from 'react';
+import Link from 'next/link';
+import styles from 'styles/mainNav.module.css';
+import { VERTICAL_MENU } from 'components/utility/constants';
+import { useRouter } from 'next/router';
+import Tooltip from 'components/utility/tooltip/Tooltip';
+import withPrivateRoute from 'components/HOC/withPrivateRoute';
+
+import { closeSideNav } from './utils/functions/functions';
+import SlideOut from './navComponents/SlideOut';
 
 const SidebarNavigation = (props) => {
   return (
@@ -14,12 +15,12 @@ const SidebarNavigation = (props) => {
       <VerticalSection />
       <SlideOut {...props} />
     </div>
-  )
-}
+  );
+};
 
 const VerticalSection = () => {
-  const router = useRouter()
-  const route = router.route
+  const router = useRouter();
+  const route = router.route;
 
   return (
     <div id={styles.verticalNav}>
@@ -43,7 +44,7 @@ const VerticalSection = () => {
         {VERTICAL_MENU.map((menuItem, index) => {
           const selectedClass = route.includes(menuItem.link)
             ? `${styles[menuItem.class]}_selected`
-            : styles[menuItem.class]
+            : styles[menuItem.class];
 
           return (
             <div className={styles.menuItemWrapper} key={index}>
@@ -65,11 +66,11 @@ const VerticalSection = () => {
                 </Link>
               </Tooltip>
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default withPrivateRoute(SidebarNavigation)
+export default withPrivateRoute(SidebarNavigation);
