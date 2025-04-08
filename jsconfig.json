@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src/**/*"],
+  "include": ["**/*"],
   "exclude": ["node_modules"]
 }
