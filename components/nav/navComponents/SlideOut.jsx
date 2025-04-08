@@ -1,30 +1,35 @@
-import React, { useEffect } from 'react'
-import styles from 'styles/mainNav.module.css'
+import React, { useEffect } from 'react';
+import styles from 'styles/mainNav.module.css';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import {
+  ASIDE_MENU_BOTTOM,
+  ASIDE_MENU_TOP,
+} from 'components/utility/constants';
+
 import {
   closeSideNav,
   handleLogout,
   handleNewPost,
-} from '../utils/functions/functions'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import AsideUserInfo from './AsideUserInfo'
-import { ASIDE_MENU_BOTTOM, ASIDE_MENU_TOP } from 'components/utility/constants'
+} from '../utils/functions/functions';
+
+import AsideUserInfo from './AsideUserInfo';
 
 const SlideOut = (props) => {
-  const router = useRouter()
-  const route = router.route
+  const router = useRouter();
+  const route = router.route;
 
   useEffect(() => {
-    var sidenav = document.querySelectorAll('.sidenav')
+    var sidenav = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(sidenav, {
       onOpenEnd: (el) => {
-        el.classList.toggle('nav-open')
+        el.classList.toggle('nav-open');
       },
       onCloseEnd: (el) => {
-        el.classList.toggle('nav-open')
+        el.classList.toggle('nav-open');
       },
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <ul id="slide-out" className="sidenav">
@@ -44,10 +49,10 @@ const SlideOut = (props) => {
               {menuItem.name}
             </Link>
           </li>
-        )
+        );
       })}
       <li>
-        <div className="divider"></div>
+        <div className="divider" />
       </li>
       <li>
         <a className="subheader">Submenu</a>
@@ -77,10 +82,10 @@ const SlideOut = (props) => {
               {menuItem.name}
             </Link>
           </li>
-        )
+        );
       })}
     </ul>
-  )
-}
+  );
+};
 
-export default SlideOut
+export default SlideOut;

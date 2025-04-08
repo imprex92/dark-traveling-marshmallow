@@ -1,22 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import sideNavigationBackroundImg from 'public/assets/lighthouse-sidenav.jpg'
-import Image from 'next/image'
-import { FALLBACK_AVATAR_URL } from '../../utility/constants'
+import React from 'react';
+import PropTypes from 'prop-types';
+import sideNavigationBackroundImg from 'public/assets/lighthouse-sidenav.jpg';
+import Image from 'next/image';
+
+import { FALLBACK_AVATAR_URL } from '../../utility/constants';
 
 const AsideUserInfo = (props) => {
-  console.log('props', props)
-  const { userAuthFromServerside = {} } = props
+  console.log('props', props);
+  const { userAuthFromServerside = {} } = props;
   const userAuth =
     Object.keys(userAuthFromServerside).length > 0
       ? userAuthFromServerside
-      : props.userAuth
+      : props.userAuth;
 
-  const {
-    displayName = 'No Name',
-    email,
-    photoURL = null,
-  } = userAuth
+  const { displayName = 'No Name', email, photoURL = null } = userAuth;
 
   return (
     <li>
@@ -48,8 +45,8 @@ const AsideUserInfo = (props) => {
         </a>
       </div>
     </li>
-  )
-}
+  );
+};
 
 AsideUserInfo.propTypes = {
   currentUser: PropTypes.object.isRequired,
@@ -58,6 +55,6 @@ AsideUserInfo.propTypes = {
     email: PropTypes.string,
     photoURL: PropTypes.string,
   }),
-}
+};
 
-export default AsideUserInfo
+export default AsideUserInfo;

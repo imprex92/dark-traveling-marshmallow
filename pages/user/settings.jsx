@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react'
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
-import { projectFirebase } from 'firebase/config'
-import styles from 'styles/settingsPage.module.css'
-import Googleicon from 'public/assets/icons8-google.svg'
+import React, { useState, useRef } from 'react';
+import withPrivateRoute from 'components/HOC/withPrivateRoute';
+import { projectFirebase } from 'firebase/config';
+import styles from 'styles/settingsPage.module.css';
+import Googleicon from 'public/assets/icons8-google.svg';
 import {
   accountRemoval,
   updateEmail,
@@ -10,19 +10,19 @@ import {
   verifyUserEmail,
   updateAccountData,
   reAuthenticate,
-} from 'components/utility/authOperations'
-import AddressForm from 'components/AddressForm'
-import CircularLoader from 'components/loaders/preloaders/CircularLoader'
-import { useRouter } from 'next/router'
-import { verifyEmail } from 'components/utility/verifyEmail'
-import { getFirestore } from 'firebase-admin/firestore'
-import nookies from 'nookies'
-import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
+} from 'components/utility/authOperations';
+import AddressForm from 'components/AddressForm';
+import CircularLoader from 'components/loaders/preloaders/CircularLoader';
+import { useRouter } from 'next/router';
+import { verifyEmail } from 'components/utility/verifyEmail';
+import { getFirestore } from 'firebase-admin/firestore';
+import nookies from 'nookies';
+import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin';
 import {
   FILE_TYPE_IMAGES,
   PROFILE_IMG_MAX_SIZE,
-} from 'components/utility/constants'
-import SidebarNavigation from 'components/nav/SidebarNavigation'
+} from 'components/utility/constants';
+import SidebarNavigation from 'components/nav/SidebarNavigation';
 
 const settings = ({ userAuth, token, userAddress }) => {
   const {
@@ -33,167 +33,170 @@ const settings = ({ userAuth, token, userAddress }) => {
     email_verified,
     phoneNumber = null,
     firebase,
-  } = token
-  const router = useRouter()
+  } = token;
+  const router = useRouter();
 
-  const [currentMenuItem, setCurrentMenuItem] = useState('about_me')
-  const [open, setOpen] = useState(false)
-  const [showReAuthDialog, setShowReAuthDialog] = useState(false)
+  const [currentMenuItem, setCurrentMenuItem] = useState('about_me');
+  const [open, setOpen] = useState(false);
+  const [showReAuthDialog, setShowReAuthDialog] = useState(false);
   const [loaders, setLoaders] = useState({
     verificationEmail: false,
     profileStatus: false,
     emailStatus: false,
     passwordStatus: false,
-  })
+  });
 
-  const phoneInput = useRef(phoneNumber)
-  const nameInput = useRef(name)
-  const fileInput = useRef()
-  const profileStatusMsg = useRef(null)
-  const emailStatusMsg = useRef(null)
-  const passwordStatusMsg = useRef(null)
-  const removeAccMsg = useRef(null)
-  const verificationEmailMsg = useRef(null)
+  const phoneInput = useRef(phoneNumber);
+  const nameInput = useRef(name);
+  const fileInput = useRef();
+  const profileStatusMsg = useRef(null);
+  const emailStatusMsg = useRef(null);
+  const passwordStatusMsg = useRef(null);
+  const removeAccMsg = useRef(null);
+  const verificationEmailMsg = useRef(null);
 
   const handleReauthCallback = () => {
-    setShowReAuthDialog(true)
-    M.toast({ text: 'Re-authentication needed!' })
-  }
+    setShowReAuthDialog(true);
+    M.toast({ text: 'Re-authentication needed!' });
+  };
   const handleAccountRemoval = async () => {
-    removeAccMsg.current = false
-    const deletion = await accountRemoval(handleReauthCallback)
+    removeAccMsg.current = false;
+    const deletion = await accountRemoval(handleReauthCallback);
     if (deletion.code === 200) {
-      M.toast({ text: `${deletion.message}! Redirecting...` })
-      router.replace('/login')
+      M.toast({ text: `${deletion.message}! Redirecting...` });
+      router.replace('/login');
     }
-  }
+  };
   const handleVerifyEmail = async () => {
-    setLoaders((prevLoaders) => ({ ...prevLoaders, verificationEmail: true }))
+    setLoaders((prevLoaders) => ({ ...prevLoaders, verificationEmail: true }));
 
     try {
-      const verification = await verifyUserEmail()
+      const verification = await verifyUserEmail();
       if (verification.code === 200) {
-        setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: false }))
-        verificationEmailMsg.current.style.color = 'lightgreen'
-        verificationEmailMsg.current.textContent = verification.message
-        verificationEmailMsg.current.style.display = 'inline'
+        setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: false }));
+        verificationEmailMsg.current.style.color = 'lightgreen';
+        verificationEmailMsg.current.textContent = verification.message;
+        verificationEmailMsg.current.style.display = 'inline';
         setTimeout(() => {
-          verificationEmailMsg.current.style.display = 'none'
-        }, 2000)
+          verificationEmailMsg.current.style.display = 'none';
+        }, 2000);
       }
-      M.toast({ text: verification.message })
+      M.toast({ text: verification.message });
     } catch (error) {
-      console.error('Error verifying email:', error)
-      M.toast({ text: 'Error verifying email' })
+      console.error('Error verifying email:', error);
+      M.toast({ text: 'Error verifying email' });
     } finally {
       setLoaders((prevLoaders) => ({
         ...prevLoaders,
         verificationEmail: false,
-      }))
+      }));
     }
-  }
+  };
   const handlePassEmailUpdate = async (type, data) => {
     if (type === 'email') {
       if (verifyEmail(data)) {
-        setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: true }))
-        document.getElementById('email').classList.add('valid')
-        document.getElementById('email').classList.remove('invalid')
+        setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: true }));
+        document.getElementById('email').classList.add('valid');
+        document.getElementById('email').classList.remove('invalid');
 
         try {
-          const emailUpdate = await updateEmail(data)
+          const emailUpdate = await updateEmail(data);
           if (emailUpdate.status === 200) {
-            emailStatusMsg.current.style.color = 'lightgreen'
-            emailStatusMsg.current.textContent = 'Update success!'
-            emailStatusMsg.current.style.display = 'inline'
+            emailStatusMsg.current.style.color = 'lightgreen';
+            emailStatusMsg.current.textContent = 'Update success!';
+            emailStatusMsg.current.style.display = 'inline';
             setTimeout(() => {
-              emailStatusMsg.current.style.display = 'none'
-            }, 2000)
+              emailStatusMsg.current.style.display = 'none';
+            }, 2000);
           } else {
-            emailStatusMsg.current.style.color = 'red'
-            emailStatusMsg.current.textContent = 'Update failed!'
-            emailStatusMsg.current.style.display = 'inline'
+            emailStatusMsg.current.style.color = 'red';
+            emailStatusMsg.current.textContent = 'Update failed!';
+            emailStatusMsg.current.style.display = 'inline';
             setTimeout(() => {
-              emailStatusMsg.current.style.display = 'none'
-            }, 2000)
+              emailStatusMsg.current.style.display = 'none';
+            }, 2000);
           }
         } catch (error) {
-          console.error('Error updating email:', error)
-          emailStatusMsg.current.style.color = 'red'
-          emailStatusMsg.current.textContent = 'Update failed!'
-          emailStatusMsg.current.style.display = 'inline'
+          console.error('Error updating email:', error);
+          emailStatusMsg.current.style.color = 'red';
+          emailStatusMsg.current.textContent = 'Update failed!';
+          emailStatusMsg.current.style.display = 'inline';
           setTimeout(() => {
-            emailStatusMsg.current.style.display = 'none'
-          }, 2000)
+            emailStatusMsg.current.style.display = 'none';
+          }, 2000);
         } finally {
-          setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: false }))
+          setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: false }));
         }
       } else {
-        setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: false }))
-        document.getElementById('email').classList.add('invalid')
-        document.getElementById('email').classList.remove('valid')
+        setLoaders((prevLoaders) => ({ ...prevLoaders, emailStatus: false }));
+        document.getElementById('email').classList.add('invalid');
+        document.getElementById('email').classList.remove('valid');
         M.toast({
           text: 'Password requirements: \n Between 6 - 20 characters. \n Contain at least: \n 1 number \n 1 uppercase and 1 lowercase.',
-        })
+        });
       }
     } else if (type === 'password') {
-      setLoaders((prevLoaders) => ({ ...prevLoaders, passwordStatus: true }))
+      setLoaders((prevLoaders) => ({ ...prevLoaders, passwordStatus: true }));
 
       try {
-        const passwordUpdate = await updatePassword(data)
+        const passwordUpdate = await updatePassword(data);
         if (passwordUpdate.status === 200) {
-          passwordStatusMsg.current.style.color = 'lightgreen'
-          passwordStatusMsg.current.textContent = 'Update success!'
-          passwordStatusMsg.current.style.display = 'inline'
+          passwordStatusMsg.current.style.color = 'lightgreen';
+          passwordStatusMsg.current.textContent = 'Update success!';
+          passwordStatusMsg.current.style.display = 'inline';
           setTimeout(() => {
-            passwordStatusMsg.current.style.display = 'none'
-          }, 2000)
+            passwordStatusMsg.current.style.display = 'none';
+          }, 2000);
         } else {
-          passwordStatusMsg.current.style.color = 'red'
-          passwordStatusMsg.current.textContent = 'Update failed!'
-          passwordStatusMsg.current.style.display = 'inline'
+          passwordStatusMsg.current.style.color = 'red';
+          passwordStatusMsg.current.textContent = 'Update failed!';
+          passwordStatusMsg.current.style.display = 'inline';
           setTimeout(() => {
-            passwordStatusMsg.current.style.display = 'none'
-          }, 2000)
+            passwordStatusMsg.current.style.display = 'none';
+          }, 2000);
         }
       } catch (error) {
-        console.error('Error updating password:', error)
-        passwordStatusMsg.current.style.color = 'red'
-        passwordStatusMsg.current.textContent = 'Update failed!'
-        passwordStatusMsg.current.style.display = 'inline'
+        console.error('Error updating password:', error);
+        passwordStatusMsg.current.style.color = 'red';
+        passwordStatusMsg.current.textContent = 'Update failed!';
+        passwordStatusMsg.current.style.display = 'inline';
         setTimeout(() => {
-          passwordStatusMsg.current.style.display = 'none'
-        }, 2000)
+          passwordStatusMsg.current.style.display = 'none';
+        }, 2000);
       } finally {
-        setLoaders((prevLoaders) => ({ ...prevLoaders, passwordStatus: false }))
+        setLoaders((prevLoaders) => ({
+          ...prevLoaders,
+          passwordStatus: false,
+        }));
       }
     } else {
-      setLoaders((prevLoaders) => ({ ...prevLoaders, passwordStatus: false }))
-      M.toast({ text: 'Something went wrong processing your request!' })
+      setLoaders((prevLoaders) => ({ ...prevLoaders, passwordStatus: false }));
+      M.toast({ text: 'Something went wrong processing your request!' });
     }
-  }
+  };
   const handlePictureUpload = (file) => {
-    const inputEl = document.getElementById('change-profilePic')
-    const imgToUpload = file.target.files[0]
+    const inputEl = document.getElementById('change-profilePic');
+    const imgToUpload = file.target.files[0];
     if (
       imgToUpload &&
       FILE_TYPE_IMAGES.includes(imgToUpload.type) &&
       imgToUpload.size <= PROFILE_IMG_MAX_SIZE
     ) {
-      inputEl.classList.remove('invalid')
-      inputEl.classList.add('valid')
-      fileInput.current = imgToUpload
-      document.querySelector('.file-path').value = imgToUpload.name
+      inputEl.classList.remove('invalid');
+      inputEl.classList.add('valid');
+      fileInput.current = imgToUpload;
+      document.querySelector('.file-path').value = imgToUpload.name;
     } else {
-      inputEl.classList.remove('valid')
-      inputEl.classList.add('invalid')
-      fileInput.current = null
-      document.querySelector('.file-path').value = ''
-      M.toast({ text: 'Please select a valid image with size less than 2mb' })
+      inputEl.classList.remove('valid');
+      inputEl.classList.add('invalid');
+      fileInput.current = null;
+      document.querySelector('.file-path').value = '';
+      M.toast({ text: 'Please select a valid image with size less than 2mb' });
     }
-  }
+  };
   const handleUpdateAccountInfo = async (e) => {
-    e.preventDefault()
-    setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: true }))
+    e.preventDefault();
+    setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: true }));
 
     try {
       let update = await updateAccountData({
@@ -202,69 +205,69 @@ const settings = ({ userAuth, token, userAddress }) => {
         ...(fileInput.current &&
           fileInput.current.lastModified && { file: fileInput.current }),
         uid: uid,
-      })
+      });
 
       if (update.status === 200) {
-        M.toast({ text: `${update.message}` })
-        profileStatusMsg.current.style.color = 'lightgreen'
-        profileStatusMsg.current.textContent = 'Update success!'
-        profileStatusMsg.current.style.display = 'inline'
+        M.toast({ text: `${update.message}` });
+        profileStatusMsg.current.style.color = 'lightgreen';
+        profileStatusMsg.current.textContent = 'Update success!';
+        profileStatusMsg.current.style.display = 'inline';
         setTimeout(() => {
-          profileStatusMsg.current.style.display = 'none'
-        }, 2000)
+          profileStatusMsg.current.style.display = 'none';
+        }, 2000);
       } else {
-        M.toast({ text: `Status: ${update.status}, ${update.message}` })
-        profileStatusMsg.current.style.color = 'red'
-        profileStatusMsg.current.textContent = 'Update failed!'
-        profileStatusMsg.current.style.display = 'inline'
+        M.toast({ text: `Status: ${update.status}, ${update.message}` });
+        profileStatusMsg.current.style.color = 'red';
+        profileStatusMsg.current.textContent = 'Update failed!';
+        profileStatusMsg.current.style.display = 'inline';
         setTimeout(() => {
-          profileStatusMsg.current.style.display = 'none'
-        }, 2000)
+          profileStatusMsg.current.style.display = 'none';
+        }, 2000);
       }
     } catch (error) {
-      console.log('Error updating account info', error)
-      M.toast({ text: `Error: ${error.message}` })
-      profileStatusMsg.current.style.color = 'red'
-      profileStatusMsg.current.textContent = 'Update failed!'
-      profileStatusMsg.current.style.display = 'inline'
+      console.log('Error updating account info', error);
+      M.toast({ text: `Error: ${error.message}` });
+      profileStatusMsg.current.style.color = 'red';
+      profileStatusMsg.current.textContent = 'Update failed!';
+      profileStatusMsg.current.style.display = 'inline';
       setTimeout(() => {
-        profileStatusMsg.current.style.display = 'none'
-      }, 2000)
+        profileStatusMsg.current.style.display = 'none';
+      }, 2000);
     } finally {
-      setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: false }))
+      setLoaders((prevLoaders) => ({ ...prevLoaders, profileStatus: false }));
     }
-  }
+  };
 
   const changeVisibility = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const passwordEl = document.getElementById('password')
-    const toggleBtn = document.getElementById('passwordToggleBtn')
+    const passwordEl = document.getElementById('password');
+    const toggleBtn = document.getElementById('passwordToggleBtn');
     if (passwordEl !== undefined && passwordEl.type == 'password') {
-      passwordEl.type = 'text'
-      toggleBtn.innerText = 'visibility'
+      passwordEl.type = 'text';
+      toggleBtn.innerText = 'visibility';
     } else if (passwordEl !== undefined && passwordEl.type == 'text') {
-      passwordEl.type = 'password'
-      toggleBtn.innerText = 'visibility_off'
+      passwordEl.type = 'password';
+      toggleBtn.innerText = 'visibility_off';
     }
-  }
+  };
   const ReAuthDialogComp = () => {
-    const [reauthEmail, setReauthEmail] = useState(null)
-    const [reauthPassword, setReauthPassword] = useState(null)
+    const [reauthEmail, setReauthEmail] = useState(null);
+    const [reauthPassword, setReauthPassword] = useState(null);
 
     const handleReauth = () => {
       const credentials = projectFirebase.auth.EmailAuthProvider.credential(
         reauthEmail,
-        reauthPassword,
-      )
+        reauthPassword
+      );
 
       reAuthenticate(credentials)
         .then((user) => {
-          const result = user.providerId && accountRemoval()
-          console.log('deletion result', result)
+          const result = user.providerId && accountRemoval();
+          console.log('deletion result', result);
         })
-        .catch((err) => console.error('my error', err))
-    }
+        .catch((err) => console.error('my error', err));
+    };
 
     return (
       <div className={styles.reAuthOverlay}>
@@ -346,8 +349,8 @@ const settings = ({ userAuth, token, userAddress }) => {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
   const AboutMeComp = () => {
     return (
       <>
@@ -402,7 +405,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                   type="file"
                   accept="image/*"
                   onChange={(file) => {
-                    handlePictureUpload(file)
+                    handlePictureUpload(file);
                   }}
                 />
               </div>
@@ -424,22 +427,19 @@ const settings = ({ userAuth, token, userAddress }) => {
             Save
             <i className="material-icons right">save</i>
           </button>
-          <span
-            ref={profileStatusMsg}
-            className={styles.status_operation}
-          ></span>
+          <span ref={profileStatusMsg} className={styles.status_operation} />
           {loaders.profileStatus ? (
             <CircularLoader loaderColor="default" loaderSize="small" />
           ) : null}
         </form>
         <AddressForm address={userAddress} M={M} />
       </>
-    )
-  }
+    );
+  };
   const AccountSettingsComp = () => {
-    const [emailNewValue, setEmailNewValue] = useState(email)
-    const emailPrevValue = email
-    let isSame = emailPrevValue === emailNewValue
+    const [emailNewValue, setEmailNewValue] = useState(email);
+    const emailPrevValue = email;
+    let isSame = emailPrevValue === emailNewValue;
 
     return (
       <div className={styles.accountSettingsComp}>
@@ -470,7 +470,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                     className="helper-text"
                     data-error="Doesn't look correct"
                     data-success="Looks good"
-                  ></span>
+                  />
                   {!isSame ? (
                     <>
                       <i
@@ -478,7 +478,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                         onClick={() => {
                           setEmailNewValue(emailPrevValue),
                             (document.getElementById('email').value =
-                              emailPrevValue)
+                              emailPrevValue);
                         }}
                       >
                         cancel
@@ -486,7 +486,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                       <i
                         className={`material-icons suffix ${styles.inputUpdate}`}
                         onClick={() => {
-                          handlePassEmailUpdate('email', emailNewValue)
+                          handlePassEmailUpdate('email', emailNewValue);
                         }}
                       >
                         edit
@@ -505,7 +505,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                   ref={emailStatusMsg}
                   style={{ position: 'absolute', left: '-5px', bottom: '-5px' }}
                   className={styles.status_operation}
-                ></span>
+                />
               </div>
               <div
                 style={{ position: 'relative' }}
@@ -523,7 +523,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                     className="material-icons"
                     id="passwordToggleBtn"
                     onClick={(e) => {
-                      changeVisibility(e)
+                      changeVisibility(e);
                     }}
                   >
                     visibility_off
@@ -546,7 +546,7 @@ const settings = ({ userAuth, token, userAddress }) => {
                     bottom: '-10px',
                   }}
                   className={styles.status_operation}
-                ></span>
+                />
               </div>
             </>
           ) : (
@@ -568,14 +568,8 @@ const settings = ({ userAuth, token, userAddress }) => {
             {email_verified ? 'done' : 'warning_amber'}
           </i>
         </button>
-        <span
-          ref={passwordStatusMsg}
-          className={styles.status_operation}
-        ></span>
-        <span
-          ref={verificationEmailMsg}
-          className={styles.status_operation}
-        ></span>
+        <span ref={passwordStatusMsg} className={styles.status_operation} />
+        <span ref={verificationEmailMsg} className={styles.status_operation} />
         {loaders.passwordStatus || loaders.emailStatus ? (
           <CircularLoader
             loaderColor="default"
@@ -584,12 +578,12 @@ const settings = ({ userAuth, token, userAddress }) => {
           />
         ) : null}
       </div>
-    )
-  }
+    );
+  };
   const RemoveAccountComp = () => {
     const AccountRemovalDialog = () => {
-      const [isChecked, setIsChecked] = useState(false)
-      const checkHandler = () => setIsChecked(!isChecked)
+      const [isChecked, setIsChecked] = useState(false);
+      const checkHandler = () => setIsChecked(!isChecked);
 
       return (
         <div className={styles.accountRemovalDialog}>
@@ -619,7 +613,7 @@ const settings = ({ userAuth, token, userAddress }) => {
             style={{ marginTop: '1rem' }}
             className={`${styles.removeForeverBtn} waves-effect waves-light btn-small red darken-1 ${isChecked ? '' : 'disabled'}`}
             onClick={() => {
-              handleAccountRemoval(), setOpen(false)
+              handleAccountRemoval(), setOpen(false);
             }}
           >
             <i className="material-icons right">delete_forever</i>I am
@@ -632,13 +626,13 @@ const settings = ({ userAuth, token, userAddress }) => {
             </small>
           </p>
         </div>
-      )
-    }
+      );
+    };
 
     return (
       <>
         {open ? (
-          <div onClick={() => setOpen(false)} className={styles.overlay}></div>
+          <div onClick={() => setOpen(false)} className={styles.overlay} />
         ) : null}
         <h6>Remove Account</h6>
         <a
@@ -655,10 +649,10 @@ const settings = ({ userAuth, token, userAddress }) => {
         ) : null}
         {open ? <AccountRemovalDialog /> : null}
       </>
-    )
-  }
+    );
+  };
   if (!userAuth) {
-    return <span>You need to be logged in to view this page</span>
+    return <span>You need to be logged in to view this page</span>;
   }
   return (
     <div id="mainContainer" className={styles.main}>
@@ -736,17 +730,17 @@ const settings = ({ userAuth, token, userAddress }) => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const cookies = nookies.get(ctx)
-    const token = await firebaseAdminVerifyToken(cookies.token)
-    const adminFirestore = getFirestore()
-    const { uid, email, email_verified, firebase, name, picture } = token
-    const userDbRef = adminFirestore.collection('testUserCollection').doc(uid)
-    const userData = await userDbRef.get()
+    const cookies = nookies.get(ctx);
+    const token = await firebaseAdminVerifyToken(cookies.token);
+    const adminFirestore = getFirestore();
+    const { uid, email, email_verified, firebase, name, picture } = token;
+    const userDbRef = adminFirestore.collection('testUserCollection').doc(uid);
+    const userData = await userDbRef.get();
 
     await userDbRef.set(
       {
@@ -757,30 +751,30 @@ export const getServerSideProps = async (ctx) => {
         uid: uid,
         providerId: firebase.sign_in_provider,
       },
-      { merge: true },
-    )
+      { merge: true }
+    );
 
     const userAddress = {
       ...userData.data()?.userAddress,
       uid: uid,
-    }
+    };
 
     return {
       props: {
         token,
         userAddress,
       },
-    }
+    };
   } catch (err) {
-    console.error(err)
+    console.error(err);
     ctx.res.writeHead(302, {
       Location:
         err.code === 'auth/id-token-expired' ? '/login#tokenExpired' : '/login',
-    })
-    ctx.res.end()
+    });
+    ctx.res.end();
 
-    return { props: {} }
+    return { props: {} };
   }
-}
+};
 
-export default withPrivateRoute(settings)
+export default withPrivateRoute(settings);

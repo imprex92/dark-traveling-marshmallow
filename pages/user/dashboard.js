@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react'
-import { projectFirestore } from 'firebase/config'
-import withPrivateRoute from 'components/HOC/withPrivateRoute'
+import { useState, useEffect } from 'react';
+import { projectFirestore } from 'firebase/config';
+import withPrivateRoute from 'components/HOC/withPrivateRoute';
 import {
   fetchUserblog,
   fetchUserHotels,
   fetchDbUserData,
-} from 'components/utility/subscriptions'
-import Geolocator from 'components/Geolocator'
-import Slides from 'components/Slides'
-import styles from 'styles/dashboard.module.css'
-import { getFirestore } from 'firebase-admin/firestore'
+} from 'components/utility/subscriptions';
+import Geolocator from 'components/Geolocator';
+import Slides from 'components/Slides';
+import styles from 'styles/dashboard.module.css';
+import { getFirestore } from 'firebase-admin/firestore';
+import nookies from 'nookies';
+import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin';
+import SidebarNavigation from 'components/nav/SidebarNavigation';
 
-import nookies from 'nookies'
-import { firebaseAdminVerifyToken } from 'firebase/firebaseAdmin'
-import SidebarNavigation from 'components/nav/SidebarNavigation'
-import AddFirstPost from '../../components/blogComponents/AddFirstPost'
+import AddFirstPost from '../../components/blogComponents/AddFirstPost';
 
 const dashboard = ({ userAuth, userBlogs = [] }) => {
-  const { uid, name = 'User' } = userAuth
-  const userDbRef = projectFirestore.collection('testUserCollection').doc(uid)
-  const [searchText, setSearchText] = useState('')
-  const [blogPosts, setBlogPosts] = useState([])
-  const [stayingHotels, setStayingHotels] = useState([])
-  const [dbUserData, setDbUserData] = useState([])
-  const [byCountrySearchTerm, setByCountrySearchTerm] = useState('')
+  const { uid, name = 'User' } = userAuth;
+  const userDbRef = projectFirestore.collection('testUserCollection').doc(uid);
+  const [searchText, setSearchText] = useState('');
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [stayingHotels, setStayingHotels] = useState([]);
+  const [dbUserData, setDbUserData] = useState([]);
+  const [byCountrySearchTerm, setByCountrySearchTerm] = useState('');
   //let blogsToSend
 
   useEffect(() => {
@@ -31,55 +31,55 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
     const unsubscribePosts = userDbRef
       .collection('blogPosts')
       .onSnapshot(blogPostListener, (err) => {
-        console.error('Subscribe to blogposts failed', err)
-        M.toast({ text: `Subscribe to blogposts failed, ${err}` })
-      })
+        console.error('Subscribe to blogposts failed', err);
+        M.toast({ text: `Subscribe to blogposts failed, ${err}` });
+      });
     const unsubscribeHotels = userDbRef
       .collection('stayingHotel')
       .onSnapshot(hotelListener, (err) => {
-        console.error('Subscribe to Hotels failed', err)
-        M.toast({ text: `Subscribe to hotels failed, ${err}` })
-      })
+        console.error('Subscribe to Hotels failed', err);
+        M.toast({ text: `Subscribe to hotels failed, ${err}` });
+      });
     const unsubscribeDbUserData = userDbRef.onSnapshot(
       DbUserDataListener,
       (err) => {
-        console.error('Subscribe to DB failed', err)
-        M.toast({ text: `Subscribe to DB failed, ${err}` })
-      },
-    )
+        console.error('Subscribe to DB failed', err);
+        M.toast({ text: `Subscribe to DB failed, ${err}` });
+      }
+    );
 
     return () => {
-      unsubscribePosts()
-      unsubscribeHotels()
-      unsubscribeDbUserData()
-    }
-  }, [])
+      unsubscribePosts();
+      unsubscribeHotels();
+      unsubscribeDbUserData();
+    };
+  }, []);
   useEffect(() => {
-    blogPosts.length === 0 ? setBlogPosts(userBlogs) : ''
-  }, [])
+    blogPosts.length === 0 ? setBlogPosts(userBlogs) : '';
+  }, []);
 
   //! 3 firestore listeners!
   function blogPostListener() {
     fetchUserblog(uid).then((blogs) => {
       //blogsToSend = blogs
-      setBlogPosts(blogs)
-    })
+      setBlogPosts(blogs);
+    });
   }
   function hotelListener() {
     fetchUserHotels(uid).then((userHotels) => {
-      setStayingHotels(userHotels)
-    })
+      setStayingHotels(userHotels);
+    });
   }
   function DbUserDataListener() {
     fetchDbUserData(uid).then((user) => {
-      setDbUserData(user)
-    })
+      setDbUserData(user);
+    });
   }
 
   //! SearchTerm, filter vid click på land i navbar, kommer från navbar, skickas vidare till Slides componenten
   function filterCountry(dataFromChildToParent) {
-    console.log('User wants to search for: ', dataFromChildToParent)
-    setByCountrySearchTerm(dataFromChildToParent)
+    console.log('User wants to search for: ', dataFromChildToParent);
+    setByCountrySearchTerm(dataFromChildToParent);
   }
 
   return (
@@ -131,29 +131,27 @@ const dashboard = ({ userAuth, userBlogs = [] }) => {
                   userBlogs={blogPosts}
                 />
               ) : (
-                <AddFirstPost
-                  isDashboard={true}
-                />
+                <AddFirstPost isDashboard={true} />
               )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const cookies = nookies.get(ctx)
-    const token = await firebaseAdminVerifyToken(cookies.token)
-    const adminFirestore = getFirestore()
-    const { uid, email, name = null, picture = null } = token
+    const cookies = nookies.get(ctx);
+    const token = await firebaseAdminVerifyToken(cookies.token);
+    const adminFirestore = getFirestore();
+    const { uid, email, name = null, picture = null } = token;
 
     // Fetch data here
 
-    let userBlogs = []
-    const userDbRef = adminFirestore.collection('testUserCollection').doc(uid)
+    let userBlogs = [];
+    const userDbRef = adminFirestore.collection('testUserCollection').doc(uid);
 
     await userDbRef
       .collection('blogPosts')
@@ -161,41 +159,41 @@ export const getServerSideProps = async (ctx) => {
       .then((docSet) => {
         if (docSet !== null) {
           docSet.forEach((doc) => {
-            let postData = doc.data()
+            let postData = doc.data();
             // Check and convert GeoPoint to a serializable object
             if (
               postData.postLocationData &&
               postData.postLocationData.geopoint
             ) {
-              const geopoint = postData.postLocationData.geopoint
+              const geopoint = postData.postLocationData.geopoint;
               postData.postLocationData.geopoint = {
                 latitude: geopoint.latitude,
                 longitude: geopoint.longitude,
-              }
+              };
             }
             // Ensure the entire postData object is serializable
-            postData = JSON.parse(JSON.stringify(postData))
-            userBlogs.push({ ...postData, id: doc.id })
-          })
+            postData = JSON.parse(JSON.stringify(postData));
+            userBlogs.push({ ...postData, id: doc.id });
+          });
         }
-      })
+      });
 
     return {
       props: {
         userBlogs,
         userAuth: { uid, email, name, picture },
       },
-    }
+    };
   } catch (err) {
-    console.error(err)
+    console.error(err);
     ctx.res.writeHead(302, {
       Location:
         err.code === 'auth/id-token-expired' ? '/login#tokenExpired' : '/login',
-    })
-    ctx.res.end()
+    });
+    ctx.res.end();
 
-    return { props: {} }
+    return { props: {} };
   }
-}
+};
 
-export default withPrivateRoute(dashboard)
+export default withPrivateRoute(dashboard);

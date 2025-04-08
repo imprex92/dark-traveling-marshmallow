@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Tooltip = ({ text, children, position = 'top' }) => {
   return (
@@ -61,13 +61,13 @@ const Tooltip = ({ text, children, position = 'top' }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 Tooltip.propTypes = {
   text: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   position: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-}
+};
 
-export default Tooltip
+export default Tooltip;

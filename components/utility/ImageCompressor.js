@@ -1,3 +1,1 @@
-export function processImg(event) {
-	
-}
+export function processImg(event) {}
