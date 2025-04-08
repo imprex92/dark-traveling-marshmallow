@@ -66,11 +66,11 @@ const index = ({ userAuth }) => {
       setDbUserData(user)
     })
   }
-
+  
   return (
     <div id="mainContainer" className={`${styles.container} ${blogPosts.length > 0 ? styles.gotPosts : ''}`}>
       <SidebarNavigation />
-      { blogPosts.length < 0 ? 
+      { blogPosts.length > 0 ? 
         <BlogList countrySearchTerm={byCountrySearchTerm} userBlogs={blogPosts} />
         : 
         <AddFirstPost /> 

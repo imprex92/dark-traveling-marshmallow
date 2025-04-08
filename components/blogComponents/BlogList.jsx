@@ -21,7 +21,7 @@ const BlogList = ({ searchByText, countrySearchTerm, userBlogs }) => {
 
   return (
     <div id="mainContent" className={styles.innerWrapper}>
-      <div className={styles.postItemsWrapper}>
+      <div className={`${styles.postItemsWrapper} ${filteredBlogs.length > 0 ? styles.gotPosts : ''}`}>
         {filteredBlogs.map((blog) => {
           //! change to mediaURLs when ready
           const url =

@@ -1,5 +1,7 @@
 export const FILE_TYPE_IMAGES = ['image/jpeg', 'image/gif', 'image/png', 'image/raw', 'image/heif', 'image/webp', 'image/heic'];
 export const FILE_TYPE_VIDEOS_IMAGES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/mov', 'video/avi', 'video/wmv', 'video/mpeg', 'video/ogg', 'video/webm', 'video/quicktime', 'video/3gpp', 'video/3gpp2']
+export const SLIDER_IMAGE_TYPES = ['jpeg', 'jpg', 'gif', 'png'];
+export const SLIDER_VIDEO_TYPES = ['mp4', 'mov', 'avi', 'wmv', 'flv', 'mkv'];
 
 export const PROFILE_IMG_MAX_SIZE = 2097152;
 export const IMG_UNIT_MAX_SIZE = 10485760;
