@@ -1,0 +1,42 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "rules": {
+    // React-specific rules
+    "react/jsx-props-no-spreading": "warn", // Warn against prop spreading
+    "react/jsx-no-useless-fragment": "error", // Disallow unnecessary fragments
+    "react/self-closing-comp": "error", // Enforce self-closing tags for components without children
+
+    // Accessibility rules
+    "jsx-a11y/anchor-is-valid": "warn", // Ensure <a> tags are valid (use next/link for navigation)
+    "jsx-a11y/alt-text": "error", // Enforce alt text for all images
+    "jsx-a11y/no-autofocus": "warn", // Prevent autoFocus attribute for accessibility
+
+    // General JavaScript rules
+    "no-console": ["warn", { "allow": ["warn", "error"] }], // Allow console.warn and console.error but warn on others
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }], // Ignore unused variables prefixed with _
+    "eqeqeq": ["error", "always"], // Enforce strict equality (=== and !==)
+    "curly": ["error", "all"], // Require curly braces for all control statements
+
+    // Import-related rules
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ], // Enforce a consistent import order
+    "import/no-default-export": "warn", // Encourage named exports over default exports
+    "import/no-unresolved": "error", // Ensure imports resolve correctly
+
+    // Prettier integration (if using Prettier)
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": true,
+        "trailingComma": "es5",
+        "printWidth": 80
+      }
+    ]
+  }
+}

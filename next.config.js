@@ -1,6 +1,9 @@
 //const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = {
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
   experimental: {
     turbo: {
       rules: {
